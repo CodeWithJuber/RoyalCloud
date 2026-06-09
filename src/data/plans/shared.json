@@ -17,7 +17,16 @@
       "summary": "Perfect for a first website or blog.",
       "cta": "Get Started",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=1",
-      "features": ["1 Website", "10 GB SSD Storage", "100 GB Bandwidth", "3 Databases", "5 Email Accounts", "Free SSL Certificate", "Free 1-Click Installer"]
+      "features": [
+        "1 Website",
+        "10 GB SSD Storage",
+        "100 GB Bandwidth",
+        "3 Databases",
+        "5 Email Accounts",
+        "Free SSL Certificate",
+        "Free 1-Click Installer"
+      ],
+      "priceAnnual": "1.59"
     },
     {
       "name": "Economy",
@@ -27,7 +36,16 @@
       "summary": "Great for growing personal sites.",
       "cta": "Get Started",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=2",
-      "features": ["3 Websites", "20 GB SSD Storage", "200 GB Bandwidth", "10 Databases", "25 Email Accounts", "Free SSL Certificate", "Free 1-Click Installer"]
+      "features": [
+        "3 Websites",
+        "20 GB SSD Storage",
+        "200 GB Bandwidth",
+        "10 Databases",
+        "25 Email Accounts",
+        "Free SSL Certificate",
+        "Free 1-Click Installer"
+      ],
+      "priceAnnual": "3.19"
     },
     {
       "name": "Deluxe",
@@ -37,7 +55,16 @@
       "summary": "Our most popular plan for businesses.",
       "cta": "Get Started",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=3",
-      "features": ["10 Websites", "30 GB SSD Storage", "300 GB Bandwidth", "Unlimited Databases", "100 Email Accounts", "Free SSL Certificate", "Free Domain (1 yr)"]
+      "features": [
+        "10 Websites",
+        "30 GB SSD Storage",
+        "300 GB Bandwidth",
+        "Unlimited Databases",
+        "100 Email Accounts",
+        "Free SSL Certificate",
+        "Free Domain (1 yr)"
+      ],
+      "priceAnnual": "4.79"
     },
     {
       "name": "Ultimate",
@@ -47,7 +74,16 @@
       "summary": "For high-traffic and store sites.",
       "cta": "Get Started",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=4",
-      "features": ["25 Websites", "50 GB SSD Storage", "500 GB Bandwidth", "Unlimited Databases", "Unlimited Email Accounts", "Free SSL Certificate", "Free Domain (1 yr)"]
+      "features": [
+        "25 Websites",
+        "50 GB SSD Storage",
+        "500 GB Bandwidth",
+        "Unlimited Databases",
+        "Unlimited Email Accounts",
+        "Free SSL Certificate",
+        "Free Domain (1 yr)"
+      ],
+      "priceAnnual": "7.19"
     },
     {
       "name": "Expert",
@@ -57,13 +93,38 @@
       "summary": "Maximum power for agencies.",
       "cta": "Get Started",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=5",
-      "features": ["Unlimited Websites", "100 GB SSD Storage", "Unlimited Bandwidth", "Unlimited Databases", "Unlimited Email Accounts", "Free SSL Certificate", "Free Domain (1 yr)"]
+      "features": [
+        "Unlimited Websites",
+        "100 GB SSD Storage",
+        "Unlimited Bandwidth",
+        "Unlimited Databases",
+        "Unlimited Email Accounts",
+        "Free SSL Certificate",
+        "Free Domain (1 yr)"
+      ],
+      "priceAnnual": "10.00"
     }
   ],
   "highlights": [
-    { "icon": "bolt", "title": "LiteSpeed + LSCache", "text": "Serve pages up to 15x faster than standard Apache HDD hosting." },
-    { "icon": "shield", "title": "Free SSL & DDoS Protection", "text": "Every site is encrypted and shielded with Cloudflare and free SSL." },
-    { "icon": "apps", "title": "150+ 1-Click Apps", "text": "Install WordPress, Joomla, Drupal and more in seconds via Softaculous." },
-    { "icon": "headset", "title": "24/7 Friendly Support", "text": "Real hosting specialists on live chat, email and tickets, around the clock." }
+    {
+      "icon": "bolt",
+      "title": "LiteSpeed + LSCache",
+      "text": "Serve pages up to 15x faster than standard Apache HDD hosting."
+    },
+    {
+      "icon": "shield",
+      "title": "Free SSL & DDoS Protection",
+      "text": "Every site is encrypted and shielded with Cloudflare and free SSL."
+    },
+    {
+      "icon": "apps",
+      "title": "150+ 1-Click Apps",
+      "text": "Install WordPress, Joomla, Drupal and more in seconds via Softaculous."
+    },
+    {
+      "icon": "headset",
+      "title": "24/7 Friendly Support",
+      "text": "Real hosting specialists on live chat, email and tickets, around the clock."
+    }
   ]
 }

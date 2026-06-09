@@ -1,9 +1,9 @@
 ---
 interface Crumb { label: string; href?: string; }
-interface Props { items: Crumb[]; light?: boolean; }
-const { items, light = false } = Astro.props;
+interface Props { items: Crumb[]; }
+const { items } = Astro.props;
 ---
-<nav class={`breadcrumbs${light ? " is-light" : ""}`} aria-label="Breadcrumb">
+<nav class="crumbs" aria-label="Breadcrumb">
   <ol>
     <li><a href="/">Home</a></li>
     {items.map((c, i) => (
@@ -15,14 +15,10 @@ const { items, light = false } = Astro.props;
 </nav>
 
 <style>
-  .breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; font-size: 0.88rem; }
-  .breadcrumbs li { display: flex; align-items: center; gap: 0.5rem; color: var(--rc-muted); }
-  .breadcrumbs li:not(:first-child)::before { content: "/"; color: var(--rc-line); }
-  .breadcrumbs a { color: var(--rc-muted); font-weight: 600; }
-  .breadcrumbs a:hover { color: var(--rc-primary); }
-  .breadcrumbs [aria-current="page"] span { color: var(--rc-ink); font-weight: 700; }
-  .breadcrumbs.is-light li, .breadcrumbs.is-light a { color: rgba(255,255,255,0.75); }
-  .breadcrumbs.is-light li:not(:first-child)::before { color: rgba(255,255,255,0.35); }
-  .breadcrumbs.is-light a:hover { color: #fff; }
-  .breadcrumbs.is-light [aria-current="page"] span { color: #fff; }
+  .crumbs ol { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; font-size: 0.86rem; }
+  .crumbs li { display: flex; align-items: center; gap: 0.5rem; color: var(--muted); }
+  .crumbs li:not(:first-child)::before { content: "/"; color: var(--border-strong); }
+  .crumbs a { color: var(--muted); font-weight: 550; }
+  .crumbs a:hover { color: var(--brand-ink); }
+  .crumbs [aria-current="page"] span { color: var(--ink); font-weight: 650; }
 </style>

@@ -1,16 +1,18 @@
-# Cloudflare config for this site.
+# Cloudflare config — Worker + static assets.
 #
-# The repo is connected to Cloudflare via the Workers Builds Git integration,
-# whose deploy command is `npx wrangler deploy`. This is an assets-only Worker
-# (no server code) — `wrangler deploy` uploads the static `dist/` output and
-# Cloudflare serves it directly from its edge.
+# A small Worker (src/worker.ts) runs in front of the static `dist/` output to
+# (a) gate the site behind Basic Auth while in preview, and (b) add security
+# headers. `run_worker_first = true` makes the Worker handle every request,
+# then it serves files via the ASSETS binding once authorized.
 #
-# `name` matches the Cloudflare project ("royalfront"). Change it here if you
-# rename the project.
+# Preview lock: set the BASIC_AUTH_USER / BASIC_AUTH_PASS secrets on the Worker
+# to require a login; remove them to make the site public. See README.
 name = "royalfront"
+main = "src/worker.ts"
 compatibility_date = "2025-01-01"
 
 [assets]
 directory = "./dist"
-# Serve dist/404.html for unmatched routes (our Astro 404 page).
+binding = "ASSETS"
+run_worker_first = true
 not_found_handling = "404-page"

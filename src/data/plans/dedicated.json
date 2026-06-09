@@ -17,7 +17,16 @@
       "summary": "A solid first dedicated server.",
       "cta": "Configure",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=21",
-      "features": ["8 Cores @ 2.26 GHz", "24 GB DDR3 RAM", "250 GB SSD Storage", "10 TB Bandwidth", "5 Dedicated IPv4", "Free Setup", "Full Root Access"]
+      "features": [
+        "8 Cores @ 2.26 GHz",
+        "24 GB DDR3 RAM",
+        "250 GB SSD Storage",
+        "10 TB Bandwidth",
+        "5 Dedicated IPv4",
+        "Free Setup",
+        "Full Root Access"
+      ],
+      "priceAnnual": "104"
     },
     {
       "name": "DS Pro",
@@ -27,7 +36,16 @@
       "summary": "Balanced power for production.",
       "cta": "Configure",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=22",
-      "features": ["12 Cores @ 2.6 GHz", "64 GB DDR4 RAM", "2 x 480 GB SSD", "20 TB Bandwidth", "5 Dedicated IPv4", "Free Setup", "Full Root Access"]
+      "features": [
+        "12 Cores @ 2.6 GHz",
+        "64 GB DDR4 RAM",
+        "2 x 480 GB SSD",
+        "20 TB Bandwidth",
+        "5 Dedicated IPv4",
+        "Free Setup",
+        "Full Root Access"
+      ],
+      "priceAnnual": "159"
     },
     {
       "name": "DS Max",
@@ -37,13 +55,38 @@
       "summary": "Maximum compute and storage.",
       "cta": "Configure",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=23",
-      "features": ["24 Cores @ 2.9 GHz", "128 GB DDR4 RAM", "2 x 960 GB NVMe SSD", "Unmetered Bandwidth", "5 Dedicated IPv4", "Free Setup", "Full Root Access"]
+      "features": [
+        "24 Cores @ 2.9 GHz",
+        "128 GB DDR4 RAM",
+        "2 x 960 GB NVMe SSD",
+        "Unmetered Bandwidth",
+        "5 Dedicated IPv4",
+        "Free Setup",
+        "Full Root Access"
+      ],
+      "priceAnnual": "239"
     }
   ],
   "highlights": [
-    { "icon": "database", "title": "Single-Tenant Hardware", "text": "Every core, every byte of RAM and storage is yours alone — no neighbours." },
-    { "icon": "bolt", "title": "Pure SSD & NVMe", "text": "Enterprise RAID SSD/NVMe arrays for blazing disk throughput." },
-    { "icon": "settings", "title": "Managed or Unmanaged", "text": "Run it yourself or let our team handle OS, security and monitoring." },
-    { "icon": "shield", "title": "99.99% Uptime SLA", "text": "Redundant power, network and cooling keep your hardware online." }
+    {
+      "icon": "database",
+      "title": "Single-Tenant Hardware",
+      "text": "Every core, every byte of RAM and storage is yours alone — no neighbours."
+    },
+    {
+      "icon": "bolt",
+      "title": "Pure SSD & NVMe",
+      "text": "Enterprise RAID SSD/NVMe arrays for blazing disk throughput."
+    },
+    {
+      "icon": "settings",
+      "title": "Managed or Unmanaged",
+      "text": "Run it yourself or let our team handle OS, security and monitoring."
+    },
+    {
+      "icon": "shield",
+      "title": "99.99% Uptime SLA",
+      "text": "Redundant power, network and cooling keep your hardware online."
+    }
   ]
 }

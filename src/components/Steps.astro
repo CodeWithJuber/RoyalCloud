@@ -1,0 +1,26 @@
+---
+import Icon from "./Icon.astro";
+import steps from "../data/steps.json";
+---
+<div class="steps">
+  {steps.items.map((s, i) => (
+    <div class="step reveal" style={`--d:${i * 0.08}s`}>
+      <div class="step__num"><Icon name={s.icon} size={22} /><span>{i + 1}</span></div>
+      <h3>{s.title}</h3>
+      <p>{s.text}</p>
+    </div>
+  ))}
+</div>
+
+<style>
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: clamp(1.25rem, 3vw, 2rem); position: relative; }
+  .step { position: relative; }
+  .step__num { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 16px; background: var(--brand-soft); color: var(--brand-ink); border: 1px solid color-mix(in srgb, var(--brand) 18%, transparent); margin-bottom: 1.1rem; transition-delay: var(--d); }
+  .step__num span { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: var(--brand); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; display: grid; place-items: center; box-shadow: var(--shadow-brand); }
+  .step h3 { font-size: 1.2rem; margin-bottom: 0.45rem; }
+  .step p { color: var(--muted); font-size: 0.96rem; }
+  /* connector line between steps on wide screens */
+  @media (min-width: 760px) {
+    .step:not(:last-child)::after { content: ""; position: absolute; top: 28px; left: 70px; right: -1rem; height: 2px; background: linear-gradient(90deg, var(--border-strong), transparent); }
+  }
+</style>

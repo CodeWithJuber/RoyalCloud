@@ -1,0 +1,35 @@
+---
+import Icon from "./Icon.astro";
+---
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+  <span class="theme-toggle__icon theme-toggle__sun"><Icon name="sun" size={18} /></span>
+  <span class="theme-toggle__icon theme-toggle__moon"><Icon name="moon" size={18} /></span>
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 42px; height: 42px; border-radius: var(--r-pill);
+    border: 1px solid var(--border-strong); background: var(--surface);
+    color: var(--ink); position: relative; box-shadow: var(--shadow-xs);
+    transition: border-color .2s ease, transform .2s ease, background .2s ease;
+  }
+  .theme-toggle:hover { border-color: var(--brand); transform: translateY(-1px); }
+  .theme-toggle__icon { position: absolute; display: inline-flex; transition: opacity .25s ease, transform .35s cubic-bezier(.2,.7,.3,1); }
+  .theme-toggle__moon { opacity: 0; transform: rotate(-45deg) scale(.6); }
+  .theme-toggle__sun { opacity: 1; transform: rotate(0) scale(1); }
+  :global([data-theme="dark"]) .theme-toggle__sun { opacity: 0; transform: rotate(45deg) scale(.6); }
+  :global([data-theme="dark"]) .theme-toggle__moon { opacity: 1; transform: rotate(0) scale(1); }
+</style>
+
+<script>
+  const btn = document.getElementById("themeToggle");
+  btn?.addEventListener("click", () => {
+    const root = document.documentElement;
+    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("rc-theme", next); } catch {}
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", next === "dark" ? "#0a0c16" : "#ffffff");
+  });
+</script>

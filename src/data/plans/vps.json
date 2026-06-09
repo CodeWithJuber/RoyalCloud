@@ -17,7 +17,16 @@
       "summary": "Ideal for a single app or dev box.",
       "cta": "Deploy Now",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=11",
-      "features": ["1 vCPU Core", "1 GB RAM", "10 GB SSD Storage", "500 GB Bandwidth", "1 Dedicated IPv4", "Full Root Access", "Free Setup"]
+      "features": [
+        "1 vCPU Core",
+        "1 GB RAM",
+        "10 GB SSD Storage",
+        "500 GB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ],
+      "priceAnnual": "6"
     },
     {
       "name": "VPS 2",
@@ -27,7 +36,16 @@
       "summary": "Best value for production workloads.",
       "cta": "Deploy Now",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=12",
-      "features": ["2 vCPU Cores", "4 GB RAM", "40 GB SSD Storage", "2 TB Bandwidth", "1 Dedicated IPv4", "Full Root Access", "Free Setup"]
+      "features": [
+        "2 vCPU Cores",
+        "4 GB RAM",
+        "40 GB SSD Storage",
+        "2 TB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ],
+      "priceAnnual": "13"
     },
     {
       "name": "VPS 4",
@@ -37,7 +55,16 @@
       "summary": "For busy sites and small clusters.",
       "cta": "Deploy Now",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=13",
-      "features": ["4 vCPU Cores", "8 GB RAM", "80 GB SSD Storage", "4 TB Bandwidth", "1 Dedicated IPv4", "Full Root Access", "Free Setup"]
+      "features": [
+        "4 vCPU Cores",
+        "8 GB RAM",
+        "80 GB SSD Storage",
+        "4 TB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ],
+      "priceAnnual": "26"
     },
     {
       "name": "VPS 8",
@@ -47,13 +74,38 @@
       "summary": "Heavy applications and databases.",
       "cta": "Deploy Now",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=14",
-      "features": ["8 vCPU Cores", "16 GB RAM", "160 GB SSD Storage", "8 TB Bandwidth", "2 Dedicated IPv4", "Full Root Access", "Free Setup"]
+      "features": [
+        "8 vCPU Cores",
+        "16 GB RAM",
+        "160 GB SSD Storage",
+        "8 TB Bandwidth",
+        "2 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ],
+      "priceAnnual": "51"
     }
   ],
   "highlights": [
-    { "icon": "cpu", "title": "Guaranteed Resources", "text": "KVM virtualization gives you dedicated CPU, RAM and SSD — never shared." },
-    { "icon": "bolt", "title": "Instant Deployment", "text": "Your server is provisioned and online within minutes of ordering." },
-    { "icon": "terminal", "title": "Full Root Access", "text": "Install any software, choose your OS and configure it exactly your way." },
-    { "icon": "shield", "title": "Free DDoS Protection", "text": "Built-in network filtering keeps your VPS online under attack." }
+    {
+      "icon": "cpu",
+      "title": "Guaranteed Resources",
+      "text": "KVM virtualization gives you dedicated CPU, RAM and SSD — never shared."
+    },
+    {
+      "icon": "bolt",
+      "title": "Instant Deployment",
+      "text": "Your server is provisioned and online within minutes of ordering."
+    },
+    {
+      "icon": "terminal",
+      "title": "Full Root Access",
+      "text": "Install any software, choose your OS and configure it exactly your way."
+    },
+    {
+      "icon": "shield",
+      "title": "Free DDoS Protection",
+      "text": "Built-in network filtering keeps your VPS online under attack."
+    }
   ]
 }

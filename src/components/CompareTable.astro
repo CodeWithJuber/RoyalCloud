@@ -1,0 +1,49 @@
+---
+import Icon from "./Icon.astro";
+import compare from "../data/compare.json";
+const { columns, rows } = compare;
+---
+<div class="cmp card">
+  <table class="cmp__table">
+    <thead>
+      <tr>
+        <th class="cmp__feat"></th>
+        {columns.map((c, i) => (
+          <th class={i === 0 ? "cmp__us" : ""}>{i === 0 && <span class="cmp__crown"><Icon name="sparkle" size={14} /></span>}{c}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          <td class="cmp__feat">{row.label}</td>
+          {row.values.map((v, i) => (
+            <td class={i === 0 ? "cmp__us" : ""}>
+              {v === true ? <span class="cmp__yes"><Icon name="check" size={16} /></span>
+               : v === false ? <span class="cmp__no"><Icon name="x" size={15} /></span>
+               : <span class={i === 0 ? "cmp__val cmp__val--us" : "cmp__val"}>{v}</span>}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .cmp { padding: 0; overflow: hidden; overflow-x: auto; }
+  .cmp__table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  .cmp__table th, .cmp__table td { padding: 1rem 1.1rem; text-align: center; font-size: 0.92rem; border-bottom: 1px solid var(--border); }
+  .cmp__table thead th { font-family: var(--font-display); font-weight: 650; color: var(--ink); font-size: 0.95rem; padding-block: 1.2rem; }
+  .cmp__feat { text-align: left !important; color: var(--text); font-weight: 500; }
+  thead .cmp__feat { width: 34%; }
+  .cmp__us { position: relative; background: var(--brand-soft); }
+  thead .cmp__us { color: var(--brand-ink); }
+  .cmp__us:first-of-type {}
+  tbody tr:last-child td { border-bottom: none; }
+  .cmp__crown { display: inline-flex; margin-right: 0.4rem; color: var(--brand); vertical-align: middle; }
+  .cmp__yes { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 8px; background: var(--success-soft); color: var(--success); }
+  .cmp__no { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 8px; background: var(--bg-inset); color: var(--muted); }
+  .cmp__val { color: var(--text); }
+  .cmp__val--us { color: var(--brand-ink); font-weight: 650; }
+</style>

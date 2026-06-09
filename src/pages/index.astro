@@ -1,7 +1,15 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Icon from "../components/Icon.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
 import FeatureGrid from "../components/FeatureGrid.astro";
+import WorldMap from "../components/WorldMap.astro";
+import TerminalWindow from "../components/TerminalWindow.astro";
+import PricingCards from "../components/PricingCards.astro";
+import CompareTable from "../components/CompareTable.astro";
+import Stats from "../components/Stats.astro";
+import Steps from "../components/Steps.astro";
 import Testimonials from "../components/Testimonials.astro";
 import DomainSearch from "../components/DomainSearch.astro";
 import Faq from "../components/Faq.astro";
@@ -13,166 +21,179 @@ import shared from "../data/plans/shared.json";
 import vps from "../data/plans/vps.json";
 import dedicated from "../data/plans/dedicated.json";
 
-const summary = [
-  { icon: "server", name: "SSD Shared Hosting", price: shared.tiers[0].price, href: "/shared-hosting", points: ["10 GB SSD Storage", "Free SSL & Domain", "1-Click Installer", "Unlimited Bandwidth*"] },
-  { icon: "cpu", name: "KVM VPS Hosting", price: vps.tiers[0].price, href: "/kvm-vps-hosting", points: ["Full Root Access", "Pure SSD Storage", "Dedicated IPv4", "Instant Deployment"] },
-  { icon: "database", name: "Dedicated Servers", price: dedicated.tiers[0].price, href: "/dedicated-servers", points: ["Single-Tenant Power", "Up to 128 GB RAM", "10 TB+ Bandwidth", "Managed Options"] },
+const products = [
+  { icon: "server", name: "SSD Shared Hosting", price: shared.tiers[0].price, href: "/shared-hosting", desc: "Fast, secure hosting for sites of every size.", points: ["NVMe SSD storage", "Free SSL & domain", "1-click app installer"] },
+  { icon: "cpu", name: "KVM VPS Hosting", price: vps.tiers[0].price, href: "/kvm-vps-hosting", desc: "Guaranteed resources with full root access.", points: ["Full root access", "Dedicated IPv4", "Instant deployment"] },
+  { icon: "database", name: "Dedicated Servers", price: dedicated.tiers[0].price, href: "/dedicated-servers", desc: "Single-tenant power for demanding workloads.", points: ["Up to 128 GB RAM", "10 TB+ bandwidth", "Managed options"] },
 ];
 
 const stats = [
   { value: "99.99%", label: "Uptime SLA" },
-  { value: "15x", label: "Faster with SSD" },
-  { value: "24/7/365", label: "Friendly Support" },
-  { value: "9.6/10", label: "Average Rating" },
+  { value: "15", label: "× Faster with NVMe" },
+  { value: "30", label: "+ Global locations" },
+  { value: "24/7", label: "Expert support" },
 ];
 
-// FAQ structured data (Yoast-style FAQ schema) for rich results.
 const faqLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: faqs.general.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
+  mainEntity: faqs.general.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
 };
 ---
-<BaseLayout
-  title={`${site.name} — ${site.tagline}`}
-  description={site.description}
-  jsonLd={[faqLd]}
->
-  {/* ============ HERO ============ */}
-  <section class="hero">
-    <div class="container hero__inner">
-      <div class="hero__copy">
-        <span class="hero__badge"><Icon name="bolt" size={15} /> Up to 30% Off Domains &amp; Hosting</span>
-        <h1>Premium, <span class="text-gradient">Speed-Optimized</span> Hosting with 24/7 Friendly Support</h1>
-        <p class="hero__lead">Launch faster on pure SSD + LiteSpeed servers with free SSL, a 1-click app installer and a money-back guarantee — starting at just {site.startingPrice}/month.</p>
-        <div class="hero__actions">
-          <a href="/shared-hosting" class="btn btn--gradient">Get Started at {site.startingPrice}/mo</a>
-          <a href="#plans" class="btn btn--outline">View Plans</a>
-        </div>
-        <ul class="hero__trust">
-          {site.trustBadges.map((b) => (<li><Icon name="check" size={16} /> {b}</li>))}
-        </ul>
-      </div>
-      <div class="hero__visual" aria-hidden="true">
-        <div class="hero__cloud">
-          <Icon name="cloud" size={120} />
-        </div>
-        <div class="hero__chip hero__chip--1"><Icon name="bolt" size={18} /> LiteSpeed Cache</div>
-        <div class="hero__chip hero__chip--2"><Icon name="shield" size={18} /> Free SSL</div>
-        <div class="hero__chip hero__chip--3"><Icon name="uptime" size={18} /> 99.99% Uptime</div>
-      </div>
+<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description} jsonLd={[faqLd]}>
+  <Hero />
+
+  {/* Trusted by */}
+  <section class="section-sm logos">
+    <div class="container">
+      <p class="logos__label">Trusted by thousands of websites worldwide</p>
+      <Marquee />
     </div>
   </section>
 
-  {/* ============ BENEFITS ============ */}
+  {/* Benefits */}
   <section class="section">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Why Royal Clouds</span>
-        <h2>Everything you need to launch &amp; grow online</h2>
-        <p class="lead">Powerful features, friendly support and prices that make sense — for first-timers and seasoned developers alike.</p>
+        <h2>Everything you need to launch &amp; grow</h2>
+        <p class="lead">Powerful features, friendly support, and prices that make sense — for first-timers and seasoned developers alike.</p>
       </div>
       <FeatureGrid items={features.benefits} columns={3} />
     </div>
   </section>
 
-  {/* ============ PLAN SUMMARY ============ */}
-  <section class="section section--tint" id="plans">
+  {/* Performance split — world map */}
+  <section class="section section--tint">
+    <div class="container split">
+      <div class="split__copy reveal">
+        <span class="eyebrow">Global &amp; fast</span>
+        <h2>A network built for speed, everywhere</h2>
+        <p class="lead">Pure NVMe SSDs, LiteSpeed servers and the Cloudflare CDN deliver sub-second load times to visitors anywhere — backed by a 99.99% uptime SLA.</p>
+        <ul class="ticks">
+          <li><Icon name="check" size={18} /> 30+ global edge & datacenter locations</li>
+          <li><Icon name="check" size={18} /> LiteSpeed + LSCache + HTTP/3</li>
+          <li><Icon name="check" size={18} /> Free Cloudflare CDN & DDoS protection</li>
+        </ul>
+        <a href="/shared-hosting" class="btn btn--outline mt-3">Explore hosting <Icon name="arrow" size={18} /></a>
+      </div>
+      <div class="split__media reveal d1"><WorldMap /></div>
+    </div>
+  </section>
+
+  {/* Developer split — terminal */}
+  <section class="section">
+    <div class="container split split--rev">
+      <div class="split__media reveal"><TerminalWindow /></div>
+      <div class="split__copy reveal d1">
+        <span class="eyebrow">For developers</span>
+        <h2>Full control, zero hassle</h2>
+        <p class="lead">Spin up a KVM VPS in minutes with full root access, your choice of OS, and one-click stacks. Or let us fully manage it — your call.</p>
+        <ul class="ticks">
+          <li><Icon name="check" size={18} /> Root access & custom OS / ISO</li>
+          <li><Icon name="check" size={18} /> SSH, SFTP & one-click app stacks</li>
+          <li><Icon name="check" size={18} /> Scale up in a single click</li>
+        </ul>
+        <a href="/kvm-vps-hosting" class="btn btn--outline mt-3">Deploy a VPS <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  {/* Product cards */}
+  <section class="section section--tint">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">Hosting Plans</span>
-        <h2>A wide range of hosting plans</h2>
-        <p class="lead">Whether you're a professional developer or have never run a website before, we have a hosting solution to meet your unique needs.</p>
+        <span class="eyebrow">Hosting plans</span>
+        <h2>Find the right fit for your project</h2>
+        <p class="lead">From your first blog to high-traffic stores and dedicated hardware — we scale with you.</p>
       </div>
-      <div class="summary-grid">
-        {summary.map((p) => (
-          <div class="summary-card reveal">
-            <span class="icon-badge"><Icon name={p.icon} /></span>
+      <div class="prods">
+        {products.map((p, i) => (
+          <a href={p.href} class={`prod reveal ${i === 1 ? "d1" : i === 2 ? "d2" : ""}`}>
+            <span class="icon-tile"><Icon name={p.icon} /></span>
             <h3>{p.name}</h3>
-            <div class="summary-card__price">Starting at <strong>${p.price}</strong><span>/mo</span></div>
-            <ul>
-              {p.points.map((pt) => (<li><Icon name="check" size={17} /> {pt}</li>))}
-            </ul>
-            <a href={p.href} class="btn btn--outline btn--block">Plans &amp; Pricing</a>
-          </div>
+            <p class="prod__desc">{p.desc}</p>
+            <ul>{p.points.map((pt) => (<li><Icon name="check" size={16} /> {pt}</li>))}</ul>
+            <div class="prod__foot">
+              <span class="prod__price">from <strong>${p.price}</strong>/mo</span>
+              <span class="prod__go"><Icon name="arrow" size={18} /></span>
+            </div>
+          </a>
         ))}
       </div>
     </div>
   </section>
 
-  {/* ============ DOMAIN SEARCH ============ */}
-  <section class="section">
-    <div class="container">
-      <DomainSearch />
-    </div>
+  {/* Stats */}
+  <section class="section-sm">
+    <div class="container"><Stats items={stats} /></div>
   </section>
 
-  {/* ============ WHY US (alternating) ============ */}
-  <section class="section section--tint">
-    <div class="container">
+  {/* Pricing */}
+  <section class="section section--tint" id="plans">
+    <div class="container container-wide">
       <div class="section-head">
-        <span class="eyebrow">So why choose us</span>
-        <h2>Simple, fast &amp; reliable hosting</h2>
+        <span class="eyebrow">Simple pricing</span>
+        <h2>Plans that grow with you</h2>
+        <p class="lead">Transparent pricing with free SSL, free migration and a 30-day money-back guarantee on every shared plan.</p>
       </div>
-      <FeatureGrid items={features.whyUs} columns={3} />
+      <PricingCards tiers={shared.tiers} currency={shared.currency} />
     </div>
   </section>
 
-  {/* ============ STATS ============ */}
-  <section class="section--ink stats-section">
-    <div class="container">
-      <div class="stats-grid">
-        {stats.map((s) => (
-          <div class="stat reveal">
-            <span class="stat__value">{s.value}</span>
-            <span class="stat__label">{s.label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  {/* ============ MANAGED ============ */}
+  {/* Comparison */}
   <section class="section">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">Fully managed</span>
-        <h2>Letting us manage your server</h2>
-        <p class="lead">Stay 100% focused on your product — we'll manage the servers, updates, security and backups for you.</p>
+        <span class="eyebrow">How we compare</span>
+        <h2>More speed &amp; value, less compromise</h2>
+        <p class="lead">See how Royal Clouds stacks up against typical budget and big-brand hosts.</p>
       </div>
-      <FeatureGrid items={features.managed} columns={3} />
+      <CompareTable />
     </div>
   </section>
 
-  {/* ============ TESTIMONIALS ============ */}
+  {/* Security */}
   <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Security first</span>
+        <h2>Your site, protected around the clock</h2>
+        <p class="lead">Multiple layers of protection keep your sites, data and visitors safe — 24/7.</p>
+      </div>
+      <FeatureGrid items={features.security} columns={3} />
+    </div>
+  </section>
+
+  {/* Testimonials */}
+  <section class="section">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Customer love</span>
-        <h2>What customers say about Royal Clouds</h2>
+        <h2>Loved by thousands of website owners</h2>
       </div>
       <Testimonials limit={3} />
       <div class="text-center mt-4"><a href="/testimonials" class="btn btn--outline">See all testimonials</a></div>
     </div>
   </section>
 
-  {/* ============ SECURITY ============ */}
-  <section class="section">
+  {/* Migration steps */}
+  <section class="section section--tint">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">Security first</span>
-        <h2>Secure web hosting solutions</h2>
-        <p class="lead">Multiple layers of protection keep your sites, data and visitors safe — around the clock.</p>
+        <span class="eyebrow">Get started in minutes</span>
+        <h2>Switching is simple — we do the heavy lifting</h2>
       </div>
-      <FeatureGrid items={features.security} columns={3} />
+      <Steps />
     </div>
   </section>
 
-  {/* ============ FAQ ============ */}
+  {/* Domain */}
+  <section class="section">
+    <div class="container"><DomainSearch /></div>
+  </section>
+
+  {/* FAQ */}
   <section class="section section--tint">
     <div class="container">
       <div class="section-head">
@@ -187,50 +208,30 @@ const faqLd = {
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .hero { position: relative; overflow: hidden; background: var(--rc-gradient-soft); padding-block: clamp(3rem, 7vw, 5.5rem); }
-  .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 90% 10%, rgba(105,56,239,0.12), transparent 40%); pointer-events: none; }
-  .hero__inner { position: relative; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-  .hero__badge { display: inline-flex; align-items: center; gap: 0.45rem; background: #fff; color: var(--rc-primary-700); font-family: var(--rc-font-sans); font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: var(--rc-radius-pill); box-shadow: var(--rc-shadow-sm); }
-  .hero h1 { margin-top: 1.25rem; }
-  .hero__lead { font-size: 1.2rem; color: var(--rc-body); margin-top: 1.25rem; max-width: 560px; }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 1.75rem; }
-  .hero__trust { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; margin-top: 1.75rem; }
-  .hero__trust li { display: flex; align-items: center; gap: 0.4rem; font-family: var(--rc-font-sans); font-weight: 600; font-size: 0.9rem; color: var(--rc-ink); }
-  .hero__trust :global(svg) { color: var(--rc-success); }
+  .logos__label { text-align: center; color: var(--muted); font-size: 0.92rem; margin-bottom: 1.75rem; font-weight: 500; }
 
-  .hero__visual { position: relative; height: 360px; display: grid; place-items: center; }
-  .hero__cloud { width: 230px; height: 230px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: var(--rc-gradient); box-shadow: var(--rc-shadow-lg); animation: floaty 6s ease-in-out infinite; }
-  .hero__chip { position: absolute; display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; border: 1px solid var(--rc-line); border-radius: var(--rc-radius-pill); padding: 0.6rem 1rem; font-family: var(--rc-font-sans); font-weight: 700; font-size: 0.85rem; color: var(--rc-ink); box-shadow: var(--rc-shadow); }
-  .hero__chip :global(svg) { color: var(--rc-primary); }
-  .hero__chip--1 { top: 8%; left: -4%; animation: floaty 5s ease-in-out infinite; }
-  .hero__chip--2 { bottom: 14%; left: 2%; animation: floaty 7s ease-in-out infinite 0.5s; }
-  .hero__chip--3 { top: 24%; right: -2%; animation: floaty 6s ease-in-out infinite 1s; }
-  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-  @media (prefers-reduced-motion: reduce) { .hero__cloud, .hero__chip { animation: none; } }
-
-  /* Plan summary cards */
-  .summary-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-  .summary-card { background: #fff; border: 1px solid var(--rc-line); border-radius: var(--rc-radius-lg); padding: 2rem 1.75rem; box-shadow: var(--rc-shadow-sm); display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
-  .summary-card:hover { transform: translateY(-5px); box-shadow: var(--rc-shadow); }
-  .summary-card h3 { font-size: 1.3rem; }
-  .summary-card__price { margin: 0.75rem 0 1.25rem; color: var(--rc-muted); font-weight: 600; }
-  .summary-card__price strong { font-family: var(--rc-font-sans); font-size: 2rem; color: var(--rc-ink); letter-spacing: -0.02em; }
-  .summary-card__price span { color: var(--rc-muted); }
-  .summary-card ul { display: grid; gap: 0.6rem; margin-bottom: 1.75rem; }
-  .summary-card li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.94rem; color: var(--rc-body); }
-  .summary-card li :global(svg) { color: var(--rc-success); flex: none; }
-  .summary-card .btn { margin-top: auto; }
-
-  /* Stats */
-  .stats-section { padding-block: clamp(2.5rem, 5vw, 3.5rem); }
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; text-align: center; }
-  .stat__value { display: block; font-family: var(--rc-font-sans); font-weight: 800; font-size: clamp(2rem, 4vw, 2.8rem); color: #fff; letter-spacing: -0.03em; }
-  .stat__label { display: block; color: #b8b3d6; margin-top: 0.35rem; font-weight: 600; }
-
-  @media (max-width: 880px) {
-    .hero__inner { grid-template-columns: 1fr; }
-    .hero__visual { height: 280px; order: -1; }
-    .hero__cloud { width: 180px; height: 180px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .split__copy .eyebrow { margin-bottom: 1rem; }
+  .ticks { display: grid; gap: 0.7rem; margin-top: 1.5rem; }
+  .ticks li { display: flex; align-items: center; gap: 0.6rem; color: var(--text); font-weight: 500; }
+  .ticks :global(svg) { color: var(--success); flex: none; }
+  .split__media { display: flex; justify-content: center; }
+  @media (max-width: 860px) {
+    .split { grid-template-columns: 1fr; }
+    .split--rev .split__media { order: 2; }
   }
+
+  .prods { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .prod { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 1.9rem 1.75rem; box-shadow: var(--shadow-xs); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, border-color .22s ease; }
+  .prod:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
+  .prod:hover .prod__go { transform: translateX(3px); color: var(--brand-ink); }
+  .prod h3 { font-size: 1.3rem; margin: 1rem 0 0.4rem; }
+  .prod__desc { color: var(--muted); font-size: 0.95rem; }
+  .prod ul { display: grid; gap: 0.55rem; margin: 1.25rem 0 1.5rem; }
+  .prod li { display: flex; align-items: center; gap: 0.55rem; font-size: 0.92rem; color: var(--text); }
+  .prod li :global(svg) { color: var(--success); flex: none; }
+  .prod__foot { margin-top: auto; padding-top: 1.1rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .prod__price { color: var(--muted); font-size: 0.95rem; }
+  .prod__price strong { font-family: var(--font-display); font-size: 1.45rem; color: var(--ink); letter-spacing: -0.02em; }
+  .prod__go { color: var(--muted); transition: transform .2s ease, color .2s ease; }
 </style>

@@ -1,33 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#1c1640"/>
-      <stop offset="0.55" stop-color="#2a1d63"/>
-      <stop offset="1" stop-color="#14112e"/>
+    <linearGradient id="brand" x1="90" y1="110" x2="230" y2="250" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6d4aff"/><stop offset="0.55" stop-color="#8b6dff"/><stop offset="1" stop-color="#2f6bff"/>
     </linearGradient>
-    <linearGradient id="brand" x1="120" y1="150" x2="320" y2="350" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#6938ef"/>
-      <stop offset="0.5" stop-color="#8b5cf6"/>
-      <stop offset="1" stop-color="#2f7bff"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="0.85" cy="0.1" r="0.6">
-      <stop stop-color="#6938ef" stop-opacity="0.5"/>
-      <stop offset="1" stop-color="#6938ef" stop-opacity="0"/>
+    <radialGradient id="glow" cx="0.82" cy="0.12" r="0.7">
+      <stop stop-color="#6d4aff" stop-opacity="0.16"/><stop offset="1" stop-color="#6d4aff" stop-opacity="0"/>
     </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#eceef5" stroke-width="1"/>
+    </pattern>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.7"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
 
-  <!-- brand glyph -->
-  <g transform="translate(120,150)">
-    <path d="M0 70l24 30 48-54 48 54 24-30v44H0z" fill="url(#brand)"/>
-    <path d="M30 188a36 36 0 0 1-3.6-71.8A48 48 0 0 1 120 122a39 39 0 0 1-6 78z" fill="url(#brand)"/>
+  <g transform="translate(96,104)">
+    <rect width="84" height="84" rx="24" fill="url(#brand)"/>
+    <path d="M22 33l7 7.6L42 28l13 12.6 7-7.6v9.5H22z" fill="#fff" fill-opacity="0.95" transform="scale(0.86) translate(7,6)"/>
+    <path d="M34 62a10 10 0 0 1-1-20 13 13 0 0 1 24.5 4.5A10.5 10.5 0 0 1 55 62z" fill="#fff" transform="scale(0.86) translate(7,6)"/>
   </g>
 
-  <text x="120" y="430" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif" font-size="74" font-weight="800" fill="#ffffff" letter-spacing="-2">Royal Clouds</text>
-  <text x="120" y="500" font-family="'Inter','Segoe UI',Arial,sans-serif" font-size="36" fill="#b8b3d6">Premium SSD Hosting · KVM VPS · Dedicated Servers</text>
-  <g transform="translate(120,536)">
-    <rect width="290" height="58" rx="29" fill="url(#brand)"/>
-    <text x="145" y="38" text-anchor="middle" font-family="'Plus Jakarta Sans',Arial,sans-serif" font-size="26" font-weight="700" fill="#fff">Starting at $1.99/mo</text>
+  <text x="200" y="158" font-family="'Sora','Segoe UI',Arial,sans-serif" font-size="46" font-weight="800" fill="#0e1020" letter-spacing="-1">Royal Clouds</text>
+
+  <text x="96" y="330" font-family="'Sora','Segoe UI',Arial,sans-serif" font-size="76" font-weight="800" fill="#0e1020" letter-spacing="-3">Premium hosting,</text>
+  <text x="96" y="418" font-family="'Sora','Segoe UI',Arial,sans-serif" font-size="76" font-weight="800" letter-spacing="-3" fill="url(#brand)">engineered for speed.</text>
+
+  <text x="96" y="486" font-family="'Inter','Segoe UI',Arial,sans-serif" font-size="30" fill="#71768f">SSD Web Hosting · KVM VPS · Dedicated Servers · Managed Cloud</text>
+
+  <g transform="translate(96,520)">
+    <rect width="300" height="60" rx="30" fill="url(#brand)"/>
+    <text x="150" y="39" text-anchor="middle" font-family="'Sora',Arial,sans-serif" font-size="25" font-weight="700" fill="#fff">Starting at $1.99/mo</text>
   </g>
+  <g transform="translate(420,520)" fill="none" stroke="#dfe1ec" stroke-width="1.5">
+    <rect width="220" height="60" rx="30" fill="#fff"/>
+  </g>
+  <text x="530" y="557" text-anchor="middle" font-family="'Inter',Arial,sans-serif" font-size="22" font-weight="600" fill="#0e1020">99.99% Uptime SLA</text>
 </svg>

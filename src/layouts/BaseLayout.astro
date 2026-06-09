@@ -1,5 +1,5 @@
 ---
-import "@fontsource-variable/plus-jakarta-sans";
+import "@fontsource-variable/sora";
 import "@fontsource-variable/inter";
 import "../styles/global.css";
 import Seo from "../components/Seo.astro";
@@ -27,11 +27,26 @@ const tawkId = site.liveChat.provider === "tawk" ? site.liveChat.tawkPropertyId 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#6938ef" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={`${site.name} Blog`} href="/rss.xml" />
+    {/* Set theme before paint to avoid a flash of the wrong theme. */}
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem("rc-theme");
+          if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", t);
+          if (t === "dark") {
+            var m = document.querySelector('meta[name="theme-color"]');
+            if (m) m.setAttribute("content", "#0a0c16");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <Seo {...seo} />
   </head>
   <body class={bodyClass}>
@@ -45,42 +60,23 @@ const tawkId = site.liveChat.provider === "tawk" ? site.liveChat.tawkPropertyId 
     {tawkId && (
       <script type="text/javascript" is:inline set:html={`
         var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();
-        (function(){
-          var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-          s1.async=true;
-          s1.src='https://embed.tawk.to/${tawkId}/${site.liveChat.tawkWidgetId}';
-          s1.charset='UTF-8';s1.setAttribute('crossorigin','*');
-          s0.parentNode.insertBefore(s1,s0);
-        })();
+        (function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+          s1.async=true;s1.src='https://embed.tawk.to/${tawkId}/${site.liveChat.tawkWidgetId}';
+          s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();
       `} />
     )}
 
     <script>
-      // Reveal-on-scroll progressive enhancement.
-      const els = document.querySelectorAll(".reveal");
+      // Reveal-on-scroll
+      const els = document.querySelectorAll<HTMLElement>(".reveal");
       if ("IntersectionObserver" in window && els.length) {
         const io = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              io.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12 });
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+        }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
         els.forEach((el) => io.observe(el));
       } else {
-        els.forEach((el) => el.classList.add("is-visible"));
+        els.forEach((el) => el.classList.add("in"));
       }
     </script>
   </body>
 </html>
-
-<style is:global>
-  .skip-link {
-    position: absolute; left: 50%; transform: translateX(-50%) translateY(-120%);
-    top: 8px; z-index: 200; background: var(--rc-primary); color: #fff;
-    padding: 0.6rem 1.2rem; border-radius: var(--rc-radius-pill); font-weight: 700;
-    transition: transform .2s ease;
-  }
-  .skip-link:focus { transform: translateX(-50%) translateY(0); color: #fff; }
-</style>

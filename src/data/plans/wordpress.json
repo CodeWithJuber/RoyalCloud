@@ -17,7 +17,16 @@
       "summary": "Launch a single WordPress site.",
       "cta": "Get Started",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=31",
-      "features": ["1 WordPress Site", "15 GB SSD Storage", "~25,000 Visits/mo", "Free SSL Certificate", "LiteSpeed Cache", "Daily Backups", "Free Migration"]
+      "features": [
+        "1 WordPress Site",
+        "15 GB SSD Storage",
+        "~25,000 Visits/mo",
+        "Free SSL Certificate",
+        "LiteSpeed Cache",
+        "Daily Backups",
+        "Free Migration"
+      ],
+      "priceAnnual": "2.79"
     },
     {
       "name": "WP Grow",
@@ -27,7 +36,16 @@
       "summary": "Best for growing businesses.",
       "cta": "Get Started",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=32",
-      "features": ["5 WordPress Sites", "40 GB SSD Storage", "~100,000 Visits/mo", "Free SSL Certificate", "LiteSpeed Cache", "Daily Backups", "Free Domain (1 yr)"]
+      "features": [
+        "5 WordPress Sites",
+        "40 GB SSD Storage",
+        "~100,000 Visits/mo",
+        "Free SSL Certificate",
+        "LiteSpeed Cache",
+        "Daily Backups",
+        "Free Domain (1 yr)"
+      ],
+      "priceAnnual": "5.59"
     },
     {
       "name": "WP Scale",
@@ -37,13 +55,38 @@
       "summary": "For agencies and high traffic.",
       "cta": "Get Started",
       "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=33",
-      "features": ["Unlimited WP Sites", "100 GB SSD Storage", "~500,000 Visits/mo", "Free SSL Certificate", "LiteSpeed Cache", "Daily Backups", "Free Domain (1 yr)"]
+      "features": [
+        "Unlimited WP Sites",
+        "100 GB SSD Storage",
+        "~500,000 Visits/mo",
+        "Free SSL Certificate",
+        "LiteSpeed Cache",
+        "Daily Backups",
+        "Free Domain (1 yr)"
+      ],
+      "priceAnnual": "10.00"
     }
   ],
   "highlights": [
-    { "icon": "bolt", "title": "Up to 10x Faster", "text": "LiteSpeed + LSCache + NVMe SSD deliver sub-second WordPress page loads." },
-    { "icon": "refresh", "title": "Automatic Updates", "text": "Core, theme and plugin updates handled safely with staging and rollback." },
-    { "icon": "shield", "title": "Hardened Security", "text": "Malware scanning, firewall and free SSL keep your WordPress site safe." },
-    { "icon": "backup", "title": "Daily Backups", "text": "Restore your whole site in one click from automatic remote backups." }
+    {
+      "icon": "bolt",
+      "title": "Up to 10x Faster",
+      "text": "LiteSpeed + LSCache + NVMe SSD deliver sub-second WordPress page loads."
+    },
+    {
+      "icon": "refresh",
+      "title": "Automatic Updates",
+      "text": "Core, theme and plugin updates handled safely with staging and rollback."
+    },
+    {
+      "icon": "shield",
+      "title": "Hardened Security",
+      "text": "Malware scanning, firewall and free SSL keep your WordPress site safe."
+    },
+    {
+      "icon": "backup",
+      "title": "Daily Backups",
+      "text": "Restore your whole site in one click from automatic remote backups."
+    }
   ]
 }

@@ -73,7 +73,8 @@ collections:
             widget: list
             fields:
               - { name: name, label: "Tier Name", widget: string }
-              - { name: price, label: "Price", widget: string }
+              - { name: price, label: "Monthly Price", widget: string }
+              - { name: priceAnnual, label: "Annual Price (per month, billed yearly)", widget: string, required: false }
               - { name: period, label: "Period", widget: string, default: "/mo" }
               - { name: popular, label: "Most Popular", widget: boolean, default: false }
               - { name: summary, label: "Short Summary", widget: string, required: false }
