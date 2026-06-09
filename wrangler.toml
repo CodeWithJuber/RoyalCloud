@@ -1,6 +1,16 @@
-# Cloudflare Pages project config.
-# Used by `wrangler pages deploy` in CI, and auto-detected if you connect the
-# repo directly in the Cloudflare dashboard (Workers & Pages → Create → Pages).
-name = "royalclouds"
+# Cloudflare config for this site.
+#
+# The repo is connected to Cloudflare via the Workers Builds Git integration,
+# whose deploy command is `npx wrangler deploy`. This is an assets-only Worker
+# (no server code) — `wrangler deploy` uploads the static `dist/` output and
+# Cloudflare serves it directly from its edge.
+#
+# `name` matches the Cloudflare project ("royalfront"). Change it here if you
+# rename the project.
+name = "royalfront"
 compatibility_date = "2025-01-01"
-pages_build_output_dir = "dist"
+
+[assets]
+directory = "./dist"
+# Serve dist/404.html for unmatched routes (our Astro 404 page).
+not_found_handling = "404-page"

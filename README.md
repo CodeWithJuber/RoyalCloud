@@ -19,8 +19,8 @@ via GitHub Actions.
 | Content editing | Decap CMS (Git-backed, at `/admin`) |
 | Blog content | Markdown/MDX content collections |
 | SEO | Per-page `<Seo>` component, JSON-LD, `@astrojs/sitemap`, RSS |
-| Hosting | Cloudflare Pages (custom domain `royalclouds.net`) |
-| CI/CD | GitHub Actions → Cloudflare Pages (`.github/workflows/deploy.yml`) |
+| Hosting | Cloudflare (Workers Static Assets, custom domain `royalclouds.net`) |
+| CI/CD | Cloudflare Workers Builds (Git integration → `npx wrangler deploy`) |
 
 ## Local development
 
@@ -100,45 +100,44 @@ Built in automatically: canonical URLs, Open Graph + Twitter cards, JSON-LD
 `FAQPage`, `BreadcrumbList`), `sitemap-index.xml`, `robots.txt` and an RSS feed
 at `/rss.xml`.
 
-## Deployment (Cloudflare Pages)
+## Deployment (Cloudflare — Workers Static Assets)
 
-Works with a **private** repo and keeps your Cloudflare DNS. Pick one of two
-ways — both build with `npm run build` and publish `./dist`.
+The repo is connected to Cloudflare via the **Workers Builds** Git integration,
+which works with a **private** repo and keeps your Cloudflare DNS. On every push
+to `main`, Cloudflare runs:
 
-### Option A — GitHub Actions (set up in this repo)
+- **Build command:** `npm run build` → outputs static files to `dist/`
+- **Deploy command:** `npx wrangler deploy` → publishes `dist/` as an
+  **assets-only Worker** (no server code), per `wrangler.toml`.
 
-`.github/workflows/deploy.yml` builds on every push to `main` and deploys to
-Cloudflare Pages via Wrangler. One-time setup:
+`wrangler.toml` is the single source of truth:
 
-1. **Create the Pages project** (once). Either run
-   `npx wrangler pages project create royalclouds --production-branch=main`,
-   or create it in the Cloudflare dashboard (Workers & Pages → Create → Pages).
-   The project name must be `royalclouds` (or edit it in `deploy.yml` and
-   `wrangler.toml`).
-2. **Create a Cloudflare API token** with the *Cloudflare Pages → Edit*
-   permission (My Profile → API Tokens), and note your **Account ID**.
-3. In GitHub: **Settings → Secrets and variables → Actions → New secret**, add:
-   - `CLOUDFLARE_API_TOKEN`
-   - `CLOUDFLARE_ACCOUNT_ID`
-4. Push to `main` (or re-run the workflow). Until the secrets exist, the
-   workflow logs a warning and skips — it does not fail.
+```toml
+name = "royalfront"
+compatibility_date = "2025-01-01"
 
-### Option B — Cloudflare dashboard Git integration (no secrets, no Actions)
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"   # serves dist/404.html for unmatched routes
+```
 
-In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to
-Git**, pick this repo, and set:
+Validate the config locally any time with:
 
-- **Build command:** `npm run build`
-- **Build output directory:** `dist`
-
-Cloudflare then builds and deploys on every push automatically (it reads
-`wrangler.toml`). If you use this, you can delete `.github/workflows/deploy.yml`.
+```bash
+npm run build
+npx wrangler deploy --dry-run   # checks config + assets, publishes nothing
+```
 
 ### Custom domain
 
-In the Pages project: **Custom domains → Set up a domain → `royalclouds.net`**.
-Since DNS is already on Cloudflare, the record is added for you. Cloudflare
-issues the TLS certificate automatically — no `CNAME` file is needed.
+In the Cloudflare project (**Workers & Pages → royalfront → Domains**), add
+`royalclouds.net`. Since DNS is already on Cloudflare, the record is created for
+you and TLS is issued automatically — no `CNAME` file needed.
+
+> The previous GitHub Actions workflow was removed, since Cloudflare now builds
+> and deploys directly from Git. To re-add CI-based deploys instead, use
+> `cloudflare/wrangler-action` with a `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
+> secret and the command `deploy`.
 
 ## CMS auth
 
