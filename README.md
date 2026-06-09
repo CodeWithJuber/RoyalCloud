@@ -19,8 +19,8 @@ via GitHub Actions.
 | Content editing | Decap CMS (Git-backed, at `/admin`) |
 | Blog content | Markdown/MDX content collections |
 | SEO | Per-page `<Seo>` component, JSON-LD, `@astrojs/sitemap`, RSS |
-| Hosting | GitHub Pages (custom domain `royalclouds.net`) |
-| CI/CD | GitHub Actions (`.github/workflows/deploy.yml`) |
+| Hosting | Cloudflare Pages (custom domain `royalclouds.net`) |
+| CI/CD | GitHub Actions → Cloudflare Pages (`.github/workflows/deploy.yml`) |
 
 ## Local development
 
@@ -100,17 +100,45 @@ Built in automatically: canonical URLs, Open Graph + Twitter cards, JSON-LD
 `FAQPage`, `BreadcrumbList`), `sitemap-index.xml`, `robots.txt` and an RSS feed
 at `/rss.xml`.
 
-## Deployment (GitHub Pages)
+## Deployment (Cloudflare Pages)
 
-1. In the repo: **Settings → Pages → Build and deployment → Source = GitHub Actions**.
-2. Push to `main` (or merge a PR). The workflow builds and deploys `./dist`.
-3. **Custom domain:** `public/CNAME` is set to `royalclouds.net`. In your DNS,
-   point the domain at GitHub Pages:
-   - `A` records → `185.199.108.153`, `185.199.109.153`,
-     `185.199.110.153`, `185.199.111.153`
-   - or a `CNAME` for `www` → `<user>.github.io`
-   - If you keep Cloudflare in front, set those records to **DNS-only** (grey
-     cloud) first so Pages can issue the TLS certificate, then re-enable proxy.
+Works with a **private** repo and keeps your Cloudflare DNS. Pick one of two
+ways — both build with `npm run build` and publish `./dist`.
+
+### Option A — GitHub Actions (set up in this repo)
+
+`.github/workflows/deploy.yml` builds on every push to `main` and deploys to
+Cloudflare Pages via Wrangler. One-time setup:
+
+1. **Create the Pages project** (once). Either run
+   `npx wrangler pages project create royalclouds --production-branch=main`,
+   or create it in the Cloudflare dashboard (Workers & Pages → Create → Pages).
+   The project name must be `royalclouds` (or edit it in `deploy.yml` and
+   `wrangler.toml`).
+2. **Create a Cloudflare API token** with the *Cloudflare Pages → Edit*
+   permission (My Profile → API Tokens), and note your **Account ID**.
+3. In GitHub: **Settings → Secrets and variables → Actions → New secret**, add:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+4. Push to `main` (or re-run the workflow). Until the secrets exist, the
+   workflow logs a warning and skips — it does not fail.
+
+### Option B — Cloudflare dashboard Git integration (no secrets, no Actions)
+
+In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to
+Git**, pick this repo, and set:
+
+- **Build command:** `npm run build`
+- **Build output directory:** `dist`
+
+Cloudflare then builds and deploys on every push automatically (it reads
+`wrangler.toml`). If you use this, you can delete `.github/workflows/deploy.yml`.
+
+### Custom domain
+
+In the Pages project: **Custom domains → Set up a domain → `royalclouds.net`**.
+Since DNS is already on Cloudflare, the record is added for you. Cloudflare
+issues the TLS certificate automatically — no `CNAME` file is needed.
 
 ## CMS auth
 
