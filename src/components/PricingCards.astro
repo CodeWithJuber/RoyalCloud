@@ -1,0 +1,71 @@
+---
+import Icon from "./Icon.astro";
+
+interface Tier {
+  name: string;
+  price: string;
+  period: string;
+  popular?: boolean;
+  summary?: string;
+  cta: string;
+  ctaUrl: string;
+  features: string[];
+}
+interface Props {
+  tiers: Tier[];
+  currency?: string;
+}
+const { tiers, currency = "$" } = Astro.props;
+---
+<div class="pricing" data-count={tiers.length}>
+  {tiers.map((tier) => (
+    <div class={`pricing-card${tier.popular ? " is-popular" : ""} reveal`}>
+      {tier.popular && <span class="pricing-card__badge">Most Popular</span>}
+      <h3 class="pricing-card__name">{tier.name}</h3>
+      {tier.summary && <p class="pricing-card__summary">{tier.summary}</p>}
+      <div class="pricing-card__price">
+        <span class="pricing-card__currency">{currency}</span>
+        <span class="pricing-card__amount">{tier.price}</span>
+        <span class="pricing-card__period">{tier.period}</span>
+      </div>
+      <a href={tier.ctaUrl} class={`btn ${tier.popular ? "btn--gradient" : "btn--outline"} btn--block`}>{tier.cta}</a>
+      <ul class="pricing-card__features">
+        {tier.features.map((f) => (
+          <li><Icon name="check" size={18} /> <span>{f}</span></li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
+<style>
+  .pricing { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); align-items: stretch; }
+  .pricing[data-count="5"] { grid-template-columns: repeat(auto-fit, minmax(216px, 1fr)); }
+
+  .pricing-card {
+    position: relative; display: flex; flex-direction: column;
+    background: #fff; border: 1px solid var(--rc-line); border-radius: var(--rc-radius-lg);
+    padding: 1.75rem 1.5rem; box-shadow: var(--rc-shadow-sm);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .pricing-card:hover { transform: translateY(-6px); box-shadow: var(--rc-shadow); }
+  .pricing-card.is-popular {
+    border-color: var(--rc-primary); box-shadow: var(--rc-shadow-lg);
+    background: linear-gradient(180deg, var(--rc-primary-50) 0%, #fff 22%);
+  }
+  .pricing-card__badge {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: var(--rc-gradient); color: #fff; font-family: var(--rc-font-sans);
+    font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.35rem 0.9rem; border-radius: var(--rc-radius-pill); box-shadow: var(--rc-shadow-primary);
+  }
+  .pricing-card__name { font-size: 1.3rem; }
+  .pricing-card__summary { color: var(--rc-muted); font-size: 0.9rem; margin-top: 0.35rem; min-height: 2.4em; }
+  .pricing-card__price { display: flex; align-items: flex-start; gap: 2px; margin: 1.1rem 0 1.25rem; color: var(--rc-ink); }
+  .pricing-card__currency { font-family: var(--rc-font-sans); font-weight: 700; font-size: 1.2rem; margin-top: 0.45rem; }
+  .pricing-card__amount { font-family: var(--rc-font-sans); font-weight: 800; font-size: 2.8rem; line-height: 1; letter-spacing: -0.03em; }
+  .pricing-card__period { color: var(--rc-muted); font-weight: 600; align-self: flex-end; margin-bottom: 0.4rem; }
+  .pricing-card__features { margin-top: 1.5rem; display: grid; gap: 0.7rem; }
+  .pricing-card__features li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.92rem; color: var(--rc-body); }
+  .pricing-card__features :global(svg) { color: var(--rc-success); flex: none; margin-top: 2px; }
+</style>

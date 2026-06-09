@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import { getPublishedPosts, getAllTags, tagSlug } from "../../lib/blog";
+
+const posts = await getPublishedPosts();
+const tags = await getAllTags();
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const rest = posts.filter((p) => p.id !== featured?.id);
+---
+<BaseLayout
+  title="Blog — Hosting Tips, Guides & News"
+  description="Web hosting guides, WordPress tips, performance tutorials and Royal Clouds news to help you build a faster, safer website."
+>
+  <PageHero
+    eyebrow="Blog"
+    title="Hosting tips, guides &amp; news"
+    subtitle="Practical advice on web hosting, WordPress, performance and security — straight from the Royal Clouds team."
+    crumbs={[{ label: "Blog" }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      {tags.length > 0 && (
+        <div class="blog-tags">
+          <span class="blog-tags__label">Topics:</span>
+          {tags.map((t) => (<a href={`/blog/tag/${tagSlug(t)}`} class="blog-tag">{t}</a>))}
+        </div>
+      )}
+
+      {posts.length === 0 ? (
+        <p class="lead text-center">No posts yet — check back soon!</p>
+      ) : (
+        <div class="blog-grid">
+          {featured && <BlogCard post={featured} featured />}
+          {rest.map((post) => (<BlogCard post={post} />))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 2rem; }
+  .blog-tags__label { font-family: var(--rc-font-sans); font-weight: 700; color: var(--rc-ink); }
+  .blog-tag { font-size: 0.85rem; font-weight: 600; color: var(--rc-primary-700); background: var(--rc-primary-50); padding: 0.35rem 0.85rem; border-radius: var(--rc-radius-pill); }
+  .blog-tag:hover { background: var(--rc-primary-100); }
+  .blog-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+</style>

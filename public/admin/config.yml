@@ -1,0 +1,179 @@
+# Decap CMS configuration — the visual editor served at /admin.
+# Edits are committed straight to the GitHub repo, which triggers the
+# GitHub Actions workflow to rebuild and redeploy the site.
+#
+# Auth: uses GitHub backend. You must connect an OAuth provider so editors
+# can log in (see README → "Editing content with the CMS"). To preview the
+# CMS locally, run `npx decap-server` and uncomment `local_backend: true`.
+
+backend:
+  name: github
+  repo: codewithjuber/royalfront
+  branch: main
+  commit_messages:
+    create: "content: create {{collection}} “{{slug}}”"
+    update: "content: update {{collection}} “{{slug}}”"
+    delete: "content: delete {{collection}} “{{slug}}”"
+    uploadMedia: "content: upload {{path}}"
+    deleteMedia: "content: delete {{path}}"
+
+# local_backend: true   # uncomment + run `npx decap-server` for local editing
+
+media_folder: "public/assets/uploads"
+public_folder: "/assets/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+  # ---------------- Blog ----------------
+  - name: blog
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    preview_path: "blog/{{slug}}"
+    summary: "{{title}} — {{publishDate}}"
+    sortable_fields: ["publishDate", "title"]
+    fields:
+      - { name: title, label: "Title", widget: string, hint: "Used as the SEO <title> and H1." }
+      - { name: description, label: "Meta Description", widget: text, hint: "150–160 chars. Shown in Google results & social shares." }
+      - { name: publishDate, label: "Publish Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+      - { name: updatedDate, label: "Updated Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false }
+      - { name: author, label: "Author", widget: string, default: "Royal Clouds Team" }
+      - { name: category, label: "Category", widget: string, default: "Hosting" }
+      - { name: tags, label: "Tags", widget: list, default: [], required: false }
+      - { name: image, label: "Featured Image", widget: image, required: false, hint: "Used for social cards and the article header." }
+      - { name: imageAlt, label: "Image Alt Text", widget: string, required: false }
+      - { name: canonical, label: "Canonical URL", widget: string, required: false, hint: "Only set if this content is published elsewhere." }
+      - { name: featured, label: "Feature on blog homepage", widget: boolean, default: false }
+      - { name: noindex, label: "Hide from search engines (noindex)", widget: boolean, default: false }
+      - { name: draft, label: "Draft (don't publish)", widget: boolean, default: false }
+      - { name: body, label: "Content", widget: markdown }
+
+  # ---------------- Hosting Plans ----------------
+  - name: plans
+    label: "Hosting Plans & Pricing"
+    label_singular: "Hosting Plan"
+    files:
+      - name: shared
+        label: "SSD Shared Hosting"
+        file: "src/data/plans/shared.json"
+        fields: &planFields
+          - { name: name, label: "Product Name", widget: string }
+          - { name: eyebrow, label: "Eyebrow Label", widget: string }
+          - { name: title, label: "Page Heading", widget: string }
+          - { name: subtitle, label: "Page Subtitle", widget: text }
+          - { name: currency, label: "Currency Symbol", widget: string, default: "$" }
+          - { name: billingNote, label: "Billing Note", widget: string, required: false }
+          - name: tiers
+            label: "Pricing Tiers"
+            widget: list
+            fields:
+              - { name: name, label: "Tier Name", widget: string }
+              - { name: price, label: "Price", widget: string }
+              - { name: period, label: "Period", widget: string, default: "/mo" }
+              - { name: popular, label: "Most Popular", widget: boolean, default: false }
+              - { name: summary, label: "Short Summary", widget: string, required: false }
+              - { name: cta, label: "Button Label", widget: string, default: "Get Started" }
+              - { name: ctaUrl, label: "Button URL (order link)", widget: string }
+              - { name: features, label: "Features", widget: list }
+          - name: highlights
+            label: "Highlight Cards"
+            widget: list
+            fields:
+              - { name: icon, label: "Icon Name", widget: string }
+              - { name: title, label: "Title", widget: string }
+              - { name: text, label: "Text", widget: text }
+      - { name: vps, label: "KVM VPS Hosting", file: "src/data/plans/vps.json", fields: *planFields }
+      - { name: wordpress, label: "Managed WordPress", file: "src/data/plans/wordpress.json", fields: *planFields }
+      - { name: cloud, label: "Managed Cloud", file: "src/data/plans/cloud.json", fields: *planFields }
+      - { name: dedicated, label: "Dedicated Servers", file: "src/data/plans/dedicated.json", fields: *planFields }
+      - { name: reseller, label: "Reseller Hosting", file: "src/data/plans/reseller.json", fields: *planFields }
+
+  # ---------------- Site-wide content ----------------
+  - name: settings
+    label: "Site Settings"
+    files:
+      - name: site
+        label: "General / Contact / Links"
+        file: "src/data/site.json"
+        fields:
+          - { name: name, label: "Site Name", widget: string }
+          - { name: tagline, label: "Tagline", widget: string }
+          - { name: description, label: "Default Meta Description", widget: text }
+          - { name: shortDescription, label: "Short Description", widget: text }
+          - { name: startingPrice, label: "Starting Price", widget: string }
+          - name: contact
+            label: "Contact"
+            widget: object
+            fields:
+              - { name: email, label: "Support Email", widget: string }
+              - { name: salesEmail, label: "Sales Email", widget: string }
+              - { name: phone, label: "Phone", widget: string, required: false }
+              - { name: addressLocality, label: "City/Region", widget: string, required: false }
+              - { name: addressCountry, label: "Country Code", widget: string, required: false }
+          - name: portal
+            label: "Client Portal Links (WHMCS)"
+            widget: object
+            fields:
+              - { name: base, label: "Portal Base URL", widget: string }
+              - { name: clientArea, label: "Client Area", widget: string }
+              - { name: login, label: "Login", widget: string }
+              - { name: register, label: "Register", widget: string }
+              - { name: cart, label: "Cart / Order", widget: string }
+              - { name: domainChecker, label: "Domain Checker", widget: string }
+              - { name: submitTicket, label: "Submit Ticket", widget: string }
+              - { name: affiliates, label: "Affiliates", widget: string }
+              - { name: knowledgebase, label: "Knowledge Base", widget: string }
+          - name: social
+            label: "Social Links"
+            widget: object
+            fields:
+              - { name: facebook, label: "Facebook", widget: string, required: false }
+              - { name: twitter, label: "Twitter / X", widget: string, required: false }
+              - { name: instagram, label: "Instagram", widget: string, required: false }
+              - { name: github, label: "GitHub", widget: string, required: false }
+              - { name: linkedin, label: "LinkedIn", widget: string, required: false }
+          - name: liveChat
+            label: "Live Chat"
+            widget: object
+            fields:
+              - { name: provider, label: "Provider", widget: string, default: "tawk" }
+              - { name: tawkPropertyId, label: "Tawk.to Property ID", widget: string, required: false }
+              - { name: tawkWidgetId, label: "Tawk.to Widget ID", widget: string, default: "default" }
+          - { name: trustBadges, label: "Trust Badges", widget: list }
+
+  # ---------------- Testimonials ----------------
+  - name: testimonials
+    label: "Testimonials"
+    files:
+      - name: testimonials
+        label: "Customer Testimonials"
+        file: "src/data/testimonials.json"
+        fields:
+          - name: items
+            label: "Testimonials"
+            widget: list
+            fields:
+              - { name: name, label: "Customer Name", widget: string }
+              - { name: site, label: "Website / Company", widget: string }
+              - { name: rating, label: "Rating (1–5)", widget: number, default: 5, min: 1, max: 5 }
+              - { name: quote, label: "Quote", widget: text }
+
+  # ---------------- FAQs ----------------
+  - name: faqs
+    label: "FAQs"
+    files:
+      - name: faqs
+        label: "Frequently Asked Questions"
+        file: "src/data/faqs.json"
+        fields:
+          - name: general
+            label: "General FAQs"
+            widget: list
+            fields:
+              - { name: q, label: "Question", widget: string }
+              - { name: a, label: "Answer", widget: text }

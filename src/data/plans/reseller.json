@@ -1,0 +1,49 @@
+{
+  "id": "reseller",
+  "name": "Reseller Hosting",
+  "slug": "reseller-hosting",
+  "icon": "users",
+  "eyebrow": "Reseller",
+  "title": "Start Your Own Hosting Business",
+  "subtitle": "White-label reseller hosting with WHM/cPanel, free SSL and free WHMCS billing. Create unlimited cPanel accounts and bill your clients under your own brand.",
+  "currency": "$",
+  "billingNote": "White-label · Free WHMCS · Free SSL · WHM/cPanel control.",
+  "tiers": [
+    {
+      "name": "Reseller R1",
+      "price": "12.99",
+      "period": "/mo",
+      "popular": false,
+      "summary": "Launch your hosting brand.",
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=51",
+      "features": ["30 GB SSD Storage", "300 GB Bandwidth", "25 cPanel Accounts", "Free WHM/cPanel", "Free WHMCS Billing", "White-Label", "Free SSL"]
+    },
+    {
+      "name": "Reseller R2",
+      "price": "22.99",
+      "period": "/mo",
+      "popular": true,
+      "summary": "Best value as you grow.",
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=52",
+      "features": ["60 GB SSD Storage", "600 GB Bandwidth", "60 cPanel Accounts", "Free WHM/cPanel", "Free WHMCS Billing", "White-Label", "Free SSL"]
+    },
+    {
+      "name": "Reseller R3",
+      "price": "39.99",
+      "period": "/mo",
+      "popular": false,
+      "summary": "For established resellers.",
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=53",
+      "features": ["120 GB SSD Storage", "Unlimited Bandwidth", "Unlimited cPanel Accounts", "Free WHM/cPanel", "Free WHMCS Billing", "White-Label", "Free SSL"]
+    }
+  ],
+  "highlights": [
+    { "icon": "users", "title": "White-Label Everything", "text": "Private nameservers and branding — your clients only ever see your brand." },
+    { "icon": "apps", "title": "Free WHM & cPanel", "text": "Industry-standard control panels to manage every client account." },
+    { "icon": "billing", "title": "Free WHMCS Billing", "text": "Automate signups, invoicing and provisioning out of the box." },
+    { "icon": "headset", "title": "24/7 Support", "text": "We support you, so you can support your customers with confidence." }
+  ]
+}
