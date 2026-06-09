@@ -42,7 +42,7 @@ const tawkId = site.liveChat.provider === "tawk" ? site.liveChat.tawkPropertyId 
           document.documentElement.setAttribute("data-theme", t);
           if (t === "dark") {
             var m = document.querySelector('meta[name="theme-color"]');
-            if (m) m.setAttribute("content", "#0a0c16");
+            if (m) m.setAttribute("content", "#07140e");
           }
         } catch (e) {}
       })();
@@ -67,15 +67,19 @@ const tawkId = site.liveChat.provider === "tawk" ? site.liveChat.tawkPropertyId 
     )}
 
     <script>
-      // Reveal-on-scroll
-      const els = document.querySelectorAll<HTMLElement>(".reveal");
+      // Reveal-on-scroll with a hard fail-safe so content is NEVER left hidden.
+      const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+      const showAll = () => els.forEach((el) => el.classList.add("in"));
       if ("IntersectionObserver" in window && els.length) {
         const io = new IntersectionObserver((entries) => {
           entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-        }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+        }, { threshold: 0.05, rootMargin: "0px 0px 200px 0px" });
         els.forEach((el) => io.observe(el));
+        // Fail-safe: reveal everything shortly after load (covers full-page
+        // renders, print, fast scroll, or any observer miss).
+        window.addEventListener("load", () => setTimeout(showAll, 1200));
       } else {
-        els.forEach((el) => el.classList.add("in"));
+        showAll();
       }
     </script>
   </body>
