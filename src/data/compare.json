@@ -1,0 +1,14 @@
+{
+  "columns": ["Royal Clouds", "Typical budget host", "Big-brand host"],
+  "rows": [
+    { "label": "Pure NVMe SSD storage", "values": [true, false, false] },
+    { "label": "LiteSpeed + LSCache", "values": [true, false, false] },
+    { "label": "Free SSL on every plan", "values": [true, true, "Paid add-on"] },
+    { "label": "Free website migration", "values": [true, false, "Paid"] },
+    { "label": "Daily backups included", "values": [true, "Weekly", "Paid add-on"] },
+    { "label": "Cloudflare CDN & DDoS protection", "values": [true, false, "Limited"] },
+    { "label": "24/7 live chat support", "values": [true, "Email only", true] },
+    { "label": "99.99% uptime SLA", "values": [true, false, true] },
+    { "label": "30-day money-back guarantee", "values": [true, "7 days", true] }
+  ]
+}

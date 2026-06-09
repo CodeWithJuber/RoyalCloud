@@ -19,7 +19,9 @@ via GitHub Actions.
 | Content editing | Decap CMS (Git-backed, at `/admin`) |
 | Blog content | Markdown/MDX content collections |
 | SEO | Per-page `<Seo>` component, JSON-LD, `@astrojs/sitemap`, RSS |
-| Hosting | Cloudflare (Workers Static Assets, custom domain `royalclouds.net`) |
+| UI | Light + dark themes (header toggle, no-FOUC), premium design system in `src/styles/global.css` |
+| Hosting | Cloudflare Worker (`src/worker.ts`) serving static `dist/` assets, custom domain `royalclouds.net` |
+| Privacy | Optional Basic Auth preview lock via Worker secrets (see Deployment) |
 | CI/CD | Cloudflare Workers Builds (Git integration → `npx wrangler deploy`) |
 
 ## Local development
@@ -107,26 +109,48 @@ which works with a **private** repo and keeps your Cloudflare DNS. On every push
 to `main`, Cloudflare runs:
 
 - **Build command:** `npm run build` → outputs static files to `dist/`
-- **Deploy command:** `npx wrangler deploy` → publishes `dist/` as an
-  **assets-only Worker** (no server code), per `wrangler.toml`.
+- **Deploy command:** `npx wrangler deploy` → publishes the site (a small Worker
+  serving the `dist/` assets), per `wrangler.toml`.
 
 `wrangler.toml` is the single source of truth:
 
 ```toml
 name = "royalfront"
+main = "src/worker.ts"          # preview-lock + security headers
 compatibility_date = "2025-01-01"
 
 [assets]
 directory = "./dist"
-not_found_handling = "404-page"   # serves dist/404.html for unmatched routes
+binding = "ASSETS"
+run_worker_first = true
+not_found_handling = "404-page" # serves dist/404.html for unmatched routes
 ```
 
 Validate the config locally any time with:
 
 ```bash
 npm run build
-npx wrangler deploy --dry-run   # checks config + assets, publishes nothing
+npx wrangler deploy --dry-run   # checks worker + assets, publishes nothing
 ```
+
+### Preview lock (hide the site until launch)
+
+`src/worker.ts` runs in front of the assets. While the **`BASIC_AUTH_USER`** and
+**`BASIC_AUTH_PASS`** secrets are set on the Worker, the whole site is gated
+behind an HTTP Basic Auth prompt — the public can't see it.
+
+**To lock it** (Cloudflare dashboard → Workers & Pages → `royalfront` →
+Settings → Variables & Secrets → *Add secret*), or via CLI:
+
+```bash
+npx wrangler secret put BASIC_AUTH_USER   # e.g. royal
+npx wrangler secret put BASIC_AUTH_PASS   # a strong password
+```
+
+**To go public at launch:** delete those two secrets. No code change, no
+redeploy needed — when the credentials are absent the Worker serves everyone.
+The Worker also adds security headers (nosniff, frame, referrer, HSTS,
+permissions-policy) on every response.
 
 ### Custom domain
 

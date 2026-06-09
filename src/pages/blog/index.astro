@@ -43,8 +43,8 @@ const rest = posts.filter((p) => p.id !== featured?.id);
 
 <style>
   .blog-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 2rem; }
-  .blog-tags__label { font-family: var(--rc-font-sans); font-weight: 700; color: var(--rc-ink); }
-  .blog-tag { font-size: 0.85rem; font-weight: 600; color: var(--rc-primary-700); background: var(--rc-primary-50); padding: 0.35rem 0.85rem; border-radius: var(--rc-radius-pill); }
-  .blog-tag:hover { background: var(--rc-primary-100); }
+  .blog-tags__label { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+  .blog-tag { font-size: 0.85rem; font-weight: 600; color: var(--brand-ink); background: var(--brand-soft); padding: 0.35rem 0.85rem; border-radius: var(--r-pill); transition: border-color .15s ease; border: 1px solid transparent; }
+  .blog-tag:hover { border-color: color-mix(in srgb, var(--brand) 30%, transparent); }
   .blog-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 </style>

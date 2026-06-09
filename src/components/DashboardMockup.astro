@@ -1,0 +1,90 @@
+---
+import Icon from "./Icon.astro";
+/**
+ * Glassy control-panel mockup used in the hero. Pure CSS/SVG — shows an uptime
+ * graph, resource meters and a "deploy successful" toast. Calm, no bouncing.
+ */
+---
+<div class="mock" role="img" aria-label="Royal Clouds control panel showing 99.99% uptime and healthy server resources">
+  <div class="mock__bar">
+    <span class="mock__dot" style="--c:#ff5f57"></span>
+    <span class="mock__dot" style="--c:#febc2e"></span>
+    <span class="mock__dot" style="--c:#28c840"></span>
+    <span class="mock__url"><Icon name="lock" size={12} /> app.royalclouds.net</span>
+  </div>
+  <div class="mock__body">
+    <div class="mock__row mock__row--head">
+      <div>
+        <span class="mock__label">Uptime · last 30 days</span>
+        <strong class="mock__big">99.99%</strong>
+      </div>
+      <span class="mock__badge"><span class="mock__pulse"></span> All systems operational</span>
+    </div>
+
+    <svg class="mock__chart" viewBox="0 0 320 90" fill="none" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="mockFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#6d4aff" stop-opacity="0.28"/>
+          <stop offset="1" stop-color="#6d4aff" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path class="mock__area" d="M0 70 L26 60 L52 64 L78 44 L104 50 L130 32 L156 38 L182 22 L208 30 L234 18 L260 26 L286 12 L320 20 L320 90 L0 90 Z" fill="url(#mockFill)"/>
+      <path class="mock__line" d="M0 70 L26 60 L52 64 L78 44 L104 50 L130 32 L156 38 L182 22 L208 30 L234 18 L260 26 L286 12 L320 20" stroke="#6d4aff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <div class="mock__meters">
+      <div class="mock__meter">
+        <span>CPU</span><div class="mock__track"><i style="width:34%"></i></div><b>34%</b>
+      </div>
+      <div class="mock__meter">
+        <span>RAM</span><div class="mock__track"><i style="width:52%"></i></div><b>52%</b>
+      </div>
+      <div class="mock__meter">
+        <span>SSD</span><div class="mock__track"><i style="width:41%"></i></div><b>41%</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="mock__toast">
+    <span class="mock__check"><Icon name="check" size={14} /></span>
+    <span><strong>Deploy successful</strong><br/>build #128 · 1.2s · LiteSpeed</span>
+  </div>
+</div>
+
+<style>
+  .mock { position: relative; width: 100%; max-width: 480px; border-radius: var(--r-xl); background: var(--surface); border: 1px solid var(--border-strong); box-shadow: var(--shadow-lg); overflow: visible; }
+  [data-theme="dark"] .mock { background: rgba(20,23,42,0.85); backdrop-filter: blur(12px); }
+  .mock__bar { display: flex; align-items: center; gap: 7px; padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); }
+  .mock__dot { width: 11px; height: 11px; border-radius: 50%; background: var(--c); }
+  .mock__url { margin-left: 0.6rem; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; color: var(--muted); background: var(--bg-inset); padding: 0.25rem 0.7rem; border-radius: var(--r-pill); }
+  .mock__body { padding: 1.3rem 1.4rem 1.5rem; }
+  .mock__row--head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .mock__label { display: block; font-size: 0.78rem; color: var(--muted); }
+  .mock__big { font-family: var(--font-display); font-size: 2rem; color: var(--ink); letter-spacing: -0.03em; line-height: 1.2; }
+  .mock__badge { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.76rem; font-weight: 600; color: var(--success); background: var(--success-soft); padding: 0.35rem 0.7rem; border-radius: var(--r-pill); white-space: nowrap; }
+  .mock__pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 60%, transparent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 55%, transparent); } 70% { box-shadow: 0 0 0 7px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+  .mock__chart { width: 100%; height: 86px; margin: 1rem 0 1.2rem; }
+  .mock__line { stroke-dasharray: 520; stroke-dashoffset: 520; animation: draw 2.2s ease forwards .25s; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .mock__meters { display: grid; gap: 0.7rem; }
+  .mock__meter { display: grid; grid-template-columns: 38px 1fr 42px; align-items: center; gap: 0.7rem; font-size: 0.8rem; color: var(--muted); }
+  .mock__meter b { color: var(--ink); text-align: right; font-weight: 600; }
+  .mock__track { height: 7px; border-radius: var(--r-pill); background: var(--bg-inset); overflow: hidden; }
+  .mock__track i { display: block; height: 100%; border-radius: var(--r-pill); background: var(--brand-gradient); animation: grow 1.2s cubic-bezier(.2,.7,.3,1) forwards .3s; transform-origin: left; transform: scaleX(0); }
+  @keyframes grow { to { transform: scaleX(1); } }
+
+  .mock__toast { position: absolute; right: -18px; bottom: -22px; display: flex; align-items: center; gap: 0.7rem; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-md); padding: 0.7rem 0.95rem; box-shadow: var(--shadow-md); font-size: 0.8rem; color: var(--text); }
+  [data-theme="dark"] .mock__toast { background: var(--bg-inset); }
+  .mock__toast strong { color: var(--ink); }
+  .mock__check { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 8px; background: var(--success-soft); color: var(--success); flex: none; }
+
+  @media (max-width: 520px) { .mock__toast { right: 8px; bottom: -18px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .mock__line { stroke-dashoffset: 0; animation: none; }
+    .mock__track i { transform: none; animation: none; }
+    .mock__pulse { animation: none; }
+  }
+</style>

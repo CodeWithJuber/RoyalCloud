@@ -1,0 +1,50 @@
+---
+interface Stat { value: string; label: string; }
+interface Props { items: Stat[]; }
+const { items } = Astro.props;
+---
+<div class="stats">
+  {items.map((s) => (
+    <div class="stat reveal">
+      <span class="stat__value" data-count={s.value}>{s.value}</span>
+      <span class="stat__label">{s.label}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; text-align: center; }
+  .stat { padding: 1.25rem 0.5rem; }
+  .stat__value { display: block; font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: -0.03em; line-height: 1; background: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat__label { display: block; color: var(--muted); margin-top: 0.5rem; font-weight: 500; font-size: 0.95rem; }
+  .stat + .stat { border-left: 1px solid var(--border); }
+  @media (max-width: 640px) { .stat + .stat { border-left: none; } }
+</style>
+
+<script>
+  // Count-up animation for numeric stats on first view.
+  const els = document.querySelectorAll<HTMLElement>(".stat__value");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const animate = (el: HTMLElement) => {
+    const raw = el.dataset.count || el.textContent || "";
+    const m = raw.match(/^([^\d]*)([\d.]+)(.*)$/);
+    if (!m || reduce) return;
+    const [, pre, num, post] = m;
+    const target = parseFloat(num);
+    const decimals = (num.split(".")[1] || "").length;
+    const dur = 1100; const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + (target * eased).toFixed(decimals) + post;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { animate(e.target as HTMLElement); io.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    els.forEach((el) => io.observe(el));
+  }
+</script>

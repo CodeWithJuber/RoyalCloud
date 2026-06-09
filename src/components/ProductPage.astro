@@ -9,36 +9,31 @@ import site from "../data/site.json";
 import faqs from "../data/faqs.json";
 
 interface Plan {
-  name: string;
-  eyebrow: string;
-  title: string;
-  subtitle: string;
-  currency: string;
-  billingNote?: string;
-  tiers: any[];
+  name: string; eyebrow: string; title: string; subtitle: string;
+  currency: string; billingNote?: string; tiers: any[];
   highlights: { icon: string; title: string; text: string }[];
 }
 interface Props { plan: Plan; }
 const { plan } = Astro.props;
 ---
-<section class="product-hero">
-  <div class="container">
-    <div class="product-hero__crumbs"><Breadcrumbs items={[{ label: plan.name }]} light /></div>
+<section class="phero">
+  <div class="phero__grid bg-grid" aria-hidden="true"></div>
+  <div class="phero__mesh bg-mesh" aria-hidden="true"></div>
+  <div class="container phero__inner">
+    <div class="phero__crumbs"><Breadcrumbs items={[{ label: plan.name }]} /></div>
     <span class="eyebrow">{plan.eyebrow}</span>
     <h1>{plan.title}</h1>
-    <p class="product-hero__subtitle">{plan.subtitle}</p>
-    <ul class="product-hero__badges">
-      {site.trustBadges.map((b) => (
-        <li><Icon name="check" size={16} /> {b}</li>
-      ))}
+    <p class="phero__sub">{plan.subtitle}</p>
+    <ul class="phero__badges">
+      {site.trustBadges.map((b) => (<li><Icon name="check" size={15} /> {b}</li>))}
     </ul>
   </div>
 </section>
 
 <section class="section">
-  <div class="container">
+  <div class="container container-wide">
     <PricingCards tiers={plan.tiers} currency={plan.currency} />
-    {plan.billingNote && <p class="product-billing-note">{plan.billingNote}</p>}
+    {plan.billingNote && <p class="pbilling">{plan.billingNote}</p>}
   </div>
 </section>
 
@@ -65,14 +60,14 @@ const { plan } = Astro.props;
 <CTASection />
 
 <style>
-  .product-hero { position: relative; background: var(--rc-gradient-ink); color: #d9d6ec; padding-block: clamp(2.5rem, 6vw, 4.25rem); overflow: hidden; }
-  .product-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 85% -10%, rgba(105,56,239,0.45), transparent 45%), radial-gradient(circle at 0% 110%, rgba(47,123,255,0.3), transparent 45%); pointer-events: none; }
-  .product-hero .container { position: relative; max-width: 900px; }
-  .product-hero__crumbs { margin-bottom: 1.25rem; }
-  .product-hero h1 { color: #fff; }
-  .product-hero__subtitle { color: #b8b3d6; font-size: 1.15rem; margin-top: 1rem; max-width: 700px; }
-  .product-hero__badges { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-top: 1.75rem; }
-  .product-hero__badges li { display: flex; align-items: center; gap: 0.45rem; font-family: var(--rc-font-sans); font-weight: 600; font-size: 0.92rem; color: #e7e4f6; }
-  .product-hero__badges :global(svg) { color: #8be0b0; }
-  .product-billing-note { text-align: center; color: var(--rc-muted); margin-top: 1.5rem; font-size: 0.95rem; }
+  .phero { position: relative; overflow: hidden; padding-block: clamp(2.75rem, 6vw, 4.25rem); border-bottom: 1px solid var(--border); }
+  .phero__grid { position: absolute; inset: 0; opacity: .5; }
+  .phero__mesh { position: absolute; inset: -20% -10% auto; height: 140%; }
+  .phero__inner { position: relative; max-width: 880px; }
+  .phero__crumbs { margin-bottom: 1.25rem; }
+  .phero__sub { color: var(--muted); font-size: 1.18rem; margin-top: 1rem; max-width: 700px; }
+  .phero__badges { display: flex; flex-wrap: wrap; gap: 0.7rem 1.5rem; margin-top: 1.75rem; }
+  .phero__badges li { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--font-display); font-weight: 550; font-size: 0.9rem; color: var(--text); }
+  .phero__badges :global(svg) { color: var(--success); }
+  .pbilling { text-align: center; color: var(--muted); margin-top: 1.5rem; font-size: 0.95rem; }
 </style>

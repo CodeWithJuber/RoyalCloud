@@ -1,34 +1,33 @@
 ---
 import Logo from "./Logo.astro";
 import Icon from "./Icon.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 import nav from "../data/nav.json";
 import site from "../data/site.json";
 ---
-<header class="site-header" id="siteHeader">
-  <div class="container site-header__inner">
-    <a href="/" class="site-header__brand" aria-label={`${site.name} home`}>
-      <Logo />
-    </a>
+<header class="hdr" id="hdr">
+  <div class="container-wide container hdr__inner">
+    <a href="/" class="hdr__brand" aria-label={`${site.name} home`}><Logo /></a>
 
-    <nav class="site-nav" aria-label="Primary">
-      <ul class="site-nav__list">
+    <nav class="hdr__nav" aria-label="Primary">
+      <ul>
         {nav.primary.map((item) => (
-          <li class={item.children && item.children.length ? "has-dropdown" : ""}>
-            <a href={item.href} class="site-nav__link">
+          <li class={item.children && item.children.length ? "has-mega" : ""}>
+            <a href={item.href} class="hdr__link">
               {item.label}
               {item.children && item.children.length > 0 && (
-                <svg class="caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                <svg class="caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
               )}
             </a>
             {item.children && item.children.length > 0 && (
-              <div class="dropdown">
-                <div class="dropdown__grid">
-                  {item.children.map((child) => (
-                    <a href={child.href} class="dropdown__item">
-                      <span class="dropdown__icon"><Icon name={child.icon ?? "server"} size={20} /></span>
-                      <span>
-                        <span class="dropdown__title">{child.label}</span>
-                        <span class="dropdown__desc">{child.desc}</span>
+              <div class="mega">
+                <div class="mega__grid">
+                  {item.children.map((c) => (
+                    <a href={c.href} class="mega__item">
+                      <span class="mega__icon"><Icon name={c.icon ?? "server"} size={20} /></span>
+                      <span class="mega__copy">
+                        <span class="mega__title">{c.label}</span>
+                        <span class="mega__desc">{c.desc}</span>
                       </span>
                     </a>
                   ))}
@@ -40,126 +39,95 @@ import site from "../data/site.json";
       </ul>
     </nav>
 
-    <div class="site-header__actions">
-      <a href={site.portal.login} class="site-header__login">Login</a>
+    <div class="hdr__actions">
+      <ThemeToggle />
+      <a href={site.portal.login} class="hdr__login">Sign in</a>
       <a href={site.portal.cart} class="btn btn--gradient btn--sm">Get Started</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-        <span></span><span></span><span></span>
+      <button class="hdr__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
+        <Icon name="menu" size={22} />
       </button>
     </div>
   </div>
 
-  {/* Mobile menu */}
-  <div class="mobile-menu" id="mobileMenu" hidden>
-    <ul class="mobile-menu__list">
+  <div class="mnav" id="mnav" hidden>
+    <ul>
       {nav.primary.map((item) => (
         <li>
           <a href={item.href}>{item.label}</a>
           {item.children && item.children.length > 0 && (
-            <ul class="mobile-menu__sub">
-              {item.children.map((child) => (
-                <li><a href={child.href}>{child.label}</a></li>
-              ))}
+            <ul class="mnav__sub">
+              {item.children.map((c) => (<li><a href={c.href}>{c.label}</a></li>))}
             </ul>
           )}
         </li>
       ))}
     </ul>
-    <div class="mobile-menu__actions">
-      <a href={site.portal.login} class="btn btn--outline btn--block">Login</a>
+    <div class="mnav__cta">
+      <a href={site.portal.login} class="btn btn--outline btn--block">Sign in</a>
       <a href={site.portal.cart} class="btn btn--gradient btn--block mt-2">Get Started</a>
     </div>
   </div>
 </header>
 
 <style>
-  .site-header {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid transparent;
-    transition: border-color .2s ease, box-shadow .2s ease;
-  }
-  .site-header.is-scrolled { border-bottom-color: var(--rc-line); box-shadow: var(--rc-shadow-sm); }
-  .site-header__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 76px; }
-  .site-header__brand { display: inline-flex; }
+  .hdr { position: sticky; top: 0; z-index: 100; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: saturate(180%) blur(14px); border-bottom: 1px solid transparent; transition: border-color .25s ease, background .25s ease; }
+  .hdr.scrolled { border-bottom-color: var(--border); }
+  .hdr__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 74px; }
 
-  .site-nav__list { display: flex; align-items: center; gap: 0.25rem; }
-  .site-nav__link {
-    display: inline-flex; align-items: center; gap: 0.3rem;
-    font-family: var(--rc-font-sans); font-weight: 600; font-size: 0.98rem;
-    color: var(--rc-ink); padding: 0.6rem 0.9rem; border-radius: var(--rc-radius-pill);
-    transition: background .15s ease, color .15s ease;
-  }
-  .site-nav__link:hover { background: var(--rc-primary-50); color: var(--rc-primary-700); }
-  .caret { transition: transform .2s ease; }
-  .has-dropdown { position: relative; }
-  .has-dropdown:hover .caret { transform: rotate(180deg); }
+  .hdr__nav > ul { display: flex; align-items: center; gap: 0.15rem; }
+  .hdr__link { display: inline-flex; align-items: center; gap: 0.35rem; font-family: var(--font-display); font-weight: 550; font-size: 0.96rem; color: var(--text); padding: 0.55rem 0.85rem; border-radius: var(--r-pill); transition: color .15s ease, background .15s ease; }
+  .hdr__link:hover { color: var(--ink); background: var(--bg-inset); }
+  .caret { transition: transform .2s ease; opacity: .6; }
+  .has-mega { position: relative; }
+  .has-mega:hover .caret { transform: rotate(180deg); }
 
-  .dropdown {
-    position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(8px);
-    min-width: 340px; background: #fff; border: 1px solid var(--rc-line);
-    border-radius: var(--rc-radius); box-shadow: var(--rc-shadow-lg); padding: 0.6rem;
-    opacity: 0; visibility: hidden; transition: opacity .18s ease, transform .18s ease;
-  }
-  .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown {
-    opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
-  }
-  .dropdown::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
-  .dropdown__grid { display: grid; gap: 0.2rem; }
-  .dropdown__item { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.7rem 0.8rem; border-radius: var(--rc-radius-sm); transition: background .15s ease; }
-  .dropdown__item:hover { background: var(--rc-surface-2); }
-  .dropdown__icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: none; border-radius: 10px; background: var(--rc-gradient-soft); color: var(--rc-primary); }
-  .dropdown__title { display: block; font-family: var(--rc-font-sans); font-weight: 700; color: var(--rc-ink); font-size: 0.95rem; }
-  .dropdown__desc { display: block; font-size: 0.82rem; color: var(--rc-muted); line-height: 1.4; }
+  .mega { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(8px); min-width: 360px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: 0.55rem; opacity: 0; visibility: hidden; transition: opacity .18s ease, transform .18s ease; }
+  [data-theme="dark"] .mega { background: var(--bg-inset); }
+  .has-mega:hover .mega, .has-mega:focus-within .mega { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .mega::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
+  .mega__grid { display: grid; gap: 0.15rem; }
+  .mega__item { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.7rem 0.8rem; border-radius: var(--r-md); transition: background .15s ease; }
+  .mega__item:hover { background: var(--bg-subtle); }
+  [data-theme="dark"] .mega__item:hover { background: rgba(255,255,255,0.05); }
+  .mega__icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: none; border-radius: 11px; background: var(--brand-soft); color: var(--brand-ink); }
+  .mega__title { display: block; font-family: var(--font-display); font-weight: 650; color: var(--ink); font-size: 0.94rem; }
+  .mega__desc { display: block; font-size: 0.82rem; color: var(--muted); line-height: 1.45; margin-top: 1px; }
 
-  .site-header__actions { display: flex; align-items: center; gap: 0.75rem; }
-  .site-header__login { font-family: var(--rc-font-sans); font-weight: 600; color: var(--rc-ink); font-size: 0.95rem; }
-  .site-header__login:hover { color: var(--rc-primary); }
+  .hdr__actions { display: flex; align-items: center; gap: 0.6rem; }
+  .hdr__login { font-family: var(--font-display); font-weight: 600; color: var(--ink); font-size: 0.95rem; padding: 0 0.4rem; }
+  .hdr__login:hover { color: var(--brand-ink); }
+  .hdr__burger { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid var(--border-strong); color: var(--ink); }
 
-  .nav-toggle { display: none; flex-direction: column; gap: 5px; width: 44px; height: 44px; align-items: center; justify-content: center; background: var(--rc-surface-2); border: 1px solid var(--rc-line); border-radius: 12px; }
-  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--rc-ink); border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
-  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mnav { display: none; border-top: 1px solid var(--border); background: var(--bg); padding: 1rem clamp(1.1rem,4vw,2rem) 1.5rem; }
+  .mnav > ul > li { border-bottom: 1px solid var(--border); }
+  .mnav > ul > li > a { display: block; font-family: var(--font-display); font-weight: 650; color: var(--ink); padding: 0.85rem 0; font-size: 1.05rem; }
+  .mnav__sub { padding: 0 0 0.7rem 0.4rem; }
+  .mnav__sub a { display: block; color: var(--text); padding: 0.4rem 0; font-size: 0.95rem; }
+  .mnav__cta { margin-top: 1.25rem; }
 
-  .mobile-menu { display: none; border-top: 1px solid var(--rc-line); background: #fff; padding: 1rem clamp(1rem, 4vw, 2rem) 1.5rem; }
-  .mobile-menu__list > li { border-bottom: 1px solid var(--rc-line); }
-  .mobile-menu__list > li > a { display: block; font-family: var(--rc-font-sans); font-weight: 700; color: var(--rc-ink); padding: 0.9rem 0; font-size: 1.05rem; }
-  .mobile-menu__sub { padding: 0 0 0.8rem 0.5rem; }
-  .mobile-menu__sub a { display: block; color: var(--rc-body); padding: 0.4rem 0; font-size: 0.95rem; }
-  .mobile-menu__actions { margin-top: 1.25rem; }
-
-  @media (max-width: 960px) {
-    .site-nav, .site-header__login, .site-header__actions .btn { display: none; }
-    .nav-toggle { display: flex; }
-    .mobile-menu.is-open { display: block; }
+  @media (max-width: 980px) {
+    .hdr__nav, .hdr__login { display: none; }
+    .hdr__actions .btn--gradient { display: none; }
+    .hdr__burger { display: inline-flex; }
+    .mnav.open { display: block; }
   }
 </style>
 
 <script>
-  const header = document.getElementById("siteHeader");
-  const toggle = document.getElementById("navToggle");
-  const menu = document.getElementById("mobileMenu");
-
-  const onScroll = () => header?.classList.toggle("is-scrolled", window.scrollY > 8);
+  const hdr = document.getElementById("hdr");
+  const burger = document.getElementById("burger");
+  const mnav = document.getElementById("mnav");
+  const onScroll = () => hdr?.classList.toggle("scrolled", window.scrollY > 6);
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
-
-  toggle?.addEventListener("click", () => {
-    const open = menu?.classList.toggle("is-open");
-    if (menu) menu.hidden = !open;
-    toggle.setAttribute("aria-expanded", String(!!open));
-    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  burger?.addEventListener("click", () => {
+    const open = mnav?.classList.toggle("open");
+    if (mnav) mnav.hidden = !open;
+    burger.setAttribute("aria-expanded", String(!!open));
     document.body.style.overflow = open ? "hidden" : "";
   });
-
-  menu?.querySelectorAll("a").forEach((a) =>
-    a.addEventListener("click", () => {
-      menu.classList.remove("is-open");
-      menu.hidden = true;
-      toggle?.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-    })
-  );
+  mnav?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => {
+    mnav.classList.remove("open"); mnav.hidden = true;
+    burger?.setAttribute("aria-expanded", "false"); document.body.style.overflow = "";
+  }));
 </script>

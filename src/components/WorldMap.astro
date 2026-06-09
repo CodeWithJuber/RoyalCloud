@@ -1,0 +1,39 @@
+---
+/**
+ * Abstract global-network visual: glowing datacenter nodes connected by soft
+ * arcs over a faint dotted field. Suggests worldwide infrastructure without a
+ * literal map. Pure SVG/CSS, reduced-motion aware.
+ */
+const nodes = [
+  { x: 120, y: 120, big: false }, { x: 200, y: 95, big: true }, { x: 270, y: 150, big: false },
+  { x: 360, y: 110, big: true }, { x: 430, y: 90, big: false }, { x: 470, y: 160, big: true },
+  { x: 540, y: 120, big: false }, { x: 610, y: 100, big: true }, { x: 660, y: 170, big: false },
+  { x: 310, y: 200, big: false }, { x: 500, y: 215, big: false },
+];
+const links = [[1,3],[3,5],[5,7],[0,1],[3,4],[7,8],[1,9],[5,10],[9,10],[3,6]];
+---
+<div class="netmap" aria-hidden="true">
+  <svg viewBox="0 0 760 300" fill="none" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <radialGradient id="nodeGlow"><stop offset="0" stop-color="#6d4aff" stop-opacity="0.5"/><stop offset="1" stop-color="#6d4aff" stop-opacity="0"/></radialGradient>
+    </defs>
+    {links.map(([a, b]) => (
+      <line x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y} stroke="currentColor" stroke-width="1" class="netmap__link" />
+    ))}
+    {nodes.map((n, i) => (
+      <g class="netmap__node" style={`--i:${i}`}>
+        <circle cx={n.x} cy={n.y} r={n.big ? 16 : 11} fill="url(#nodeGlow)" />
+        <circle cx={n.x} cy={n.y} r={n.big ? 4.5 : 3} fill="#6d4aff" />
+      </g>
+    ))}
+  </svg>
+</div>
+
+<style>
+  .netmap { position: relative; width: 100%; color: var(--border-strong); }
+  .netmap svg { width: 100%; height: auto; }
+  .netmap__link { opacity: .55; stroke-dasharray: 4 5; }
+  .netmap__node circle:last-child { animation: nodePulse 3s ease-in-out infinite; animation-delay: calc(var(--i) * 0.25s); }
+  @keyframes nodePulse { 0%,100% { opacity: .7; } 50% { opacity: 1; r: 5; } }
+  @media (prefers-reduced-motion: reduce) { .netmap__node circle:last-child { animation: none; } }
+</style>
