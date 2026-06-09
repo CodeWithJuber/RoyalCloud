@@ -1,0 +1,32 @@
+---
+interface Item { q: string; a: string; }
+interface Props { items: Item[]; }
+const { items } = Astro.props;
+---
+<div class="faq">
+  {items.map((item, i) => (
+    <details class="faq-item" open={i === 0}>
+      <summary>
+        <span>{item.q}</span>
+        <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      </summary>
+      <div class="faq-answer"><p>{item.a}</p></div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq { max-width: 820px; margin-inline: auto; display: grid; gap: 0.85rem; }
+  .faq-item { background: #fff; border: 1px solid var(--rc-line); border-radius: var(--rc-radius); overflow: hidden; transition: box-shadow .2s ease, border-color .2s ease; }
+  .faq-item[open] { border-color: var(--rc-primary-200); box-shadow: var(--rc-shadow-sm); }
+  .faq-item summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1.15rem 1.4rem; cursor: pointer; list-style: none;
+    font-family: var(--rc-font-sans); font-weight: 700; color: var(--rc-ink); font-size: 1.05rem;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-icon { flex: none; color: var(--rc-primary); transition: transform .2s ease; }
+  .faq-item[open] .faq-icon { transform: rotate(45deg); }
+  .faq-answer { padding: 0 1.4rem 1.25rem; }
+  .faq-answer p { color: var(--rc-muted); }
+</style>

@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Testimonials from "../components/Testimonials.astro";
+import CTASection from "../components/CTASection.astro";
+---
+<BaseLayout
+  title="Customer Testimonials"
+  description="See what customers say about Royal Clouds hosting — superfast SSD servers, reliable uptime and friendly 24/7 support."
+>
+  <PageHero
+    eyebrow="Testimonials"
+    title="Loved by thousands of website owners"
+    subtitle="Don't just take our word for it — here's what real Royal Clouds customers have to say about our speed, reliability and support."
+    crumbs={[{ label: "Testimonials" }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <Testimonials />
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

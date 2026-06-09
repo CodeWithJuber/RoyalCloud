@@ -1,0 +1,48 @@
+---
+import Icon from "./Icon.astro";
+import site from "../data/site.json";
+const tlds = [".com", ".net", ".org", ".info", ".in", ".store"];
+---
+<div class="domain-search" id="domain-search">
+  <div class="domain-search__inner">
+    <div class="domain-search__head">
+      <h2>Find your perfect domain name</h2>
+      <p class="lead">Search for the domain of your choice — register it in seconds with free DNS management.</p>
+    </div>
+    <form class="domain-form" id="domainForm" action={site.portal.domainChecker} method="get">
+      <span class="domain-form__icon"><Icon name="search" size={20} /></span>
+      <input type="text" id="domainInput" name="query" placeholder="yourbrand.com" autocomplete="off" aria-label="Domain name" />
+      <button type="submit" class="btn btn--gradient">Search</button>
+    </form>
+    <ul class="domain-tlds">
+      {tlds.map((t) => (<li>{t}</li>))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .domain-search { background: var(--rc-gradient); border-radius: var(--rc-radius-lg); padding: clamp(2rem, 5vw, 3.25rem); color: #fff; box-shadow: var(--rc-shadow-lg); position: relative; overflow: hidden; }
+  .domain-search::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 80% 0%, rgba(255,255,255,0.18), transparent 50%); pointer-events: none; }
+  .domain-search__inner { position: relative; max-width: 760px; margin-inline: auto; text-align: center; }
+  .domain-search h2 { color: #fff; }
+  .domain-search .lead { color: rgba(255,255,255,0.88); margin-top: 0.5rem; }
+  .domain-form { display: flex; align-items: center; gap: 0.5rem; background: #fff; border-radius: var(--rc-radius-pill); padding: 0.45rem 0.45rem 0.45rem 1rem; margin-top: 1.75rem; box-shadow: var(--rc-shadow); }
+  .domain-form__icon { color: var(--rc-muted); display: inline-flex; }
+  .domain-form input { flex: 1; min-width: 0; border: 0; outline: 0; font: inherit; font-size: 1.05rem; color: var(--rc-ink); padding: 0.6rem 0.4rem; background: transparent; }
+  .domain-tlds { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem 1.25rem; margin-top: 1.25rem; font-family: var(--rc-font-sans); font-weight: 700; color: rgba(255,255,255,0.92); }
+  @media (max-width: 520px) { .domain-form { flex-wrap: wrap; border-radius: var(--rc-radius); } .domain-form .btn { width: 100%; } }
+</style>
+
+<script>
+  // Append the typed domain to the WHMCS domain checker query so the search
+  // lands directly on the availability results in the client portal.
+  const form = document.getElementById("domainForm") as HTMLFormElement | null;
+  const input = document.getElementById("domainInput") as HTMLInputElement | null;
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const value = (input?.value || "").trim();
+    const base = form.getAttribute("action") || "";
+    const url = value ? `${base}&query=${encodeURIComponent(value)}` : base;
+    window.open(url, "_blank", "noopener");
+  });
+</script>

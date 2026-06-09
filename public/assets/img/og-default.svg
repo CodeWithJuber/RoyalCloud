@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1c1640"/>
+      <stop offset="0.55" stop-color="#2a1d63"/>
+      <stop offset="1" stop-color="#14112e"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="120" y1="150" x2="320" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6938ef"/>
+      <stop offset="0.5" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#2f7bff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.1" r="0.6">
+      <stop stop-color="#6938ef" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#6938ef" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- brand glyph -->
+  <g transform="translate(120,150)">
+    <path d="M0 70l24 30 48-54 48 54 24-30v44H0z" fill="url(#brand)"/>
+    <path d="M30 188a36 36 0 0 1-3.6-71.8A48 48 0 0 1 120 122a39 39 0 0 1-6 78z" fill="url(#brand)"/>
+  </g>
+
+  <text x="120" y="430" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif" font-size="74" font-weight="800" fill="#ffffff" letter-spacing="-2">Royal Clouds</text>
+  <text x="120" y="500" font-family="'Inter','Segoe UI',Arial,sans-serif" font-size="36" fill="#b8b3d6">Premium SSD Hosting · KVM VPS · Dedicated Servers</text>
+  <g transform="translate(120,536)">
+    <rect width="290" height="58" rx="29" fill="url(#brand)"/>
+    <text x="145" y="38" text-anchor="middle" font-family="'Plus Jakarta Sans',Arial,sans-serif" font-size="26" font-weight="700" fill="#fff">Starting at $1.99/mo</text>
+  </g>
+</svg>

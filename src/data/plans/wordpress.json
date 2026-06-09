@@ -1,0 +1,49 @@
+{
+  "id": "wordpress",
+  "name": "Managed WordPress Hosting",
+  "slug": "managed-wordpress-hosting",
+  "icon": "wordpress",
+  "eyebrow": "WordPress",
+  "title": "Managed WordPress Hosting — Up to 10x Faster",
+  "subtitle": "Purpose-built WordPress hosting on LiteSpeed and pure SSD, with automatic updates, daily backups and LSCache pre-configured. You focus on content, we handle the rest.",
+  "currency": "$",
+  "billingNote": "Auto updates · Daily backups · LiteSpeed Cache · Free SSL & migration.",
+  "tiers": [
+    {
+      "name": "WP Start",
+      "price": "3.49",
+      "period": "/mo",
+      "popular": false,
+      "summary": "Launch a single WordPress site.",
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=31",
+      "features": ["1 WordPress Site", "15 GB SSD Storage", "~25,000 Visits/mo", "Free SSL Certificate", "LiteSpeed Cache", "Daily Backups", "Free Migration"]
+    },
+    {
+      "name": "WP Grow",
+      "price": "6.99",
+      "period": "/mo",
+      "popular": true,
+      "summary": "Best for growing businesses.",
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=32",
+      "features": ["5 WordPress Sites", "40 GB SSD Storage", "~100,000 Visits/mo", "Free SSL Certificate", "LiteSpeed Cache", "Daily Backups", "Free Domain (1 yr)"]
+    },
+    {
+      "name": "WP Scale",
+      "price": "12.99",
+      "period": "/mo",
+      "popular": false,
+      "summary": "For agencies and high traffic.",
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=33",
+      "features": ["Unlimited WP Sites", "100 GB SSD Storage", "~500,000 Visits/mo", "Free SSL Certificate", "LiteSpeed Cache", "Daily Backups", "Free Domain (1 yr)"]
+    }
+  ],
+  "highlights": [
+    { "icon": "bolt", "title": "Up to 10x Faster", "text": "LiteSpeed + LSCache + NVMe SSD deliver sub-second WordPress page loads." },
+    { "icon": "refresh", "title": "Automatic Updates", "text": "Core, theme and plugin updates handled safely with staging and rollback." },
+    { "icon": "shield", "title": "Hardened Security", "text": "Malware scanning, firewall and free SSL keep your WordPress site safe." },
+    { "icon": "backup", "title": "Daily Backups", "text": "Restore your whole site in one click from automatic remote backups." }
+  ]
+}

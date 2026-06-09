@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Icon from "../components/Icon.astro";
+import site from "../data/site.json";
+
+const channels = [
+  { icon: "chat", title: "Live Chat", text: "Fastest way to reach us — available 24/7.", action: "Start a chat", href: site.portal.clientArea },
+  { icon: "mail", title: "Email Support", text: site.contact.email, action: "Send an email", href: `mailto:${site.contact.email}` },
+  { icon: "ticket", title: "Support Ticket", text: "Open a ticket and track it to resolution.", action: "Submit a ticket", href: site.portal.submitTicket },
+  { icon: "billing", title: "Sales Enquiries", text: site.contact.salesEmail, action: "Contact sales", href: `mailto:${site.contact.salesEmail}` },
+];
+---
+<BaseLayout
+  title="Contact Royal Clouds"
+  description="Get in touch with the Royal Clouds team via live chat, email or support ticket — friendly hosting specialists available 24/7."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="We'd love to help"
+    subtitle="Questions about plans, migrations or your account? Our friendly hosting specialists are available around the clock."
+    crumbs={[{ label: "Contact" }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-layout">
+        <div class="contact-channels">
+          {channels.map((c) => (
+            <a class="contact-card card" href={c.href}>
+              <span class="icon-badge"><Icon name={c.icon} /></span>
+              <div>
+                <h3>{c.title}</h3>
+                <p>{c.text}</p>
+                <span class="contact-card__action">{c.action} <Icon name="arrow" size={16} /></span>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div class="contact-form-wrap card">
+          <h2>Send us a message</h2>
+          <p class="contact-form-note">Fill in the form and we'll get back to you as soon as possible. For urgent issues, please use live chat or open a ticket.</p>
+          <form class="contact-form" id="contactForm">
+            <div class="contact-form__row">
+              <label>Name<input type="text" name="name" required placeholder="Your name" /></label>
+              <label>Email<input type="email" name="email" required placeholder="you@example.com" /></label>
+            </div>
+            <label>Subject<input type="text" name="subject" placeholder="How can we help?" /></label>
+            <label>Message<textarea name="message" rows="5" required placeholder="Tell us a bit more…"></textarea></label>
+            <button type="submit" class="btn btn--gradient">Send Message</button>
+            <p class="contact-form__sent" id="contactSent" hidden>Thanks! Your message has been noted — please also reach us on live chat for an instant reply.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-layout { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(1.5rem, 4vw, 2.5rem); align-items: start; }
+  .contact-channels { display: grid; gap: 1rem; }
+  .contact-card { display: flex; gap: 1rem; align-items: flex-start; }
+  .contact-card .icon-badge { margin-bottom: 0; flex: none; }
+  .contact-card h3 { font-size: 1.1rem; }
+  .contact-card p { color: var(--rc-muted); font-size: 0.92rem; margin-top: 0.2rem; }
+  .contact-card__action { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.6rem; font-family: var(--rc-font-sans); font-weight: 700; color: var(--rc-primary); font-size: 0.9rem; }
+
+  .contact-form-wrap h2 { font-size: 1.6rem; }
+  .contact-form-note { color: var(--rc-muted); margin-top: 0.5rem; }
+  .contact-form { display: grid; gap: 1rem; margin-top: 1.5rem; }
+  .contact-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .contact-form label { display: grid; gap: 0.4rem; font-family: var(--rc-font-sans); font-weight: 600; color: var(--rc-ink); font-size: 0.92rem; }
+  .contact-form input, .contact-form textarea { font: inherit; padding: 0.75rem 1rem; border: 1px solid var(--rc-line); border-radius: var(--rc-radius-sm); background: var(--rc-surface-2); color: var(--rc-ink); }
+  .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--rc-primary); background: #fff; }
+  .contact-form .btn { justify-self: start; }
+  .contact-form__sent { color: var(--rc-success); font-weight: 600; font-size: 0.92rem; }
+
+  @media (max-width: 860px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-form__row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById("contactForm") as HTMLFormElement | null;
+  const sent = document.getElementById("contactSent");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (sent) sent.hidden = false;
+    form.reset();
+  });
+</script>

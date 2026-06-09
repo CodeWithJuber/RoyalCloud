@@ -1,0 +1,96 @@
+---
+import site from "../data/site.json";
+
+/**
+ * Per-page SEO: title, description, canonical, robots, Open Graph,
+ * Twitter cards, and optional JSON-LD structured data blocks.
+ * Mirrors the on-page controls Yoast SEO provides in WordPress.
+ */
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+  /** Extra JSON-LD objects to embed (Product, FAQPage, Article, etc.) */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = site.description,
+  image = site.ogImage,
+  canonical,
+  type = "website",
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+  jsonLd = [],
+} = Astro.props;
+
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const canonicalUrl = new URL(canonical ?? Astro.url.pathname, site.url).href.replace(/\/$/, "") || site.url;
+const imageUrl = new URL(image, site.url).href;
+
+// Site-wide Organization + WebSite graph (rendered on every page).
+const orgLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${site.url}/#organization`,
+      name: site.name,
+      url: site.url,
+      logo: new URL(site.logo, site.url).href,
+      description: site.shortDescription,
+      sameAs: Object.values(site.social).filter(Boolean),
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: site.contact.email,
+        availableLanguage: ["en"],
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      description: site.shortDescription,
+      publisher: { "@id": `${site.url}/#organization` },
+    },
+  ],
+};
+---
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex
+  ? <meta name="robots" content="noindex, nofollow" />
+  : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
+
+{/* Open Graph */}
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:locale" content="en_US" />
+{type === "article" && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{type === "article" && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+
+{/* Twitter */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+{/* Structured data */}
+<script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
+{jsonLd.map((block) => (
+  <script type="application/ld+json" set:html={JSON.stringify(block)} />
+))}

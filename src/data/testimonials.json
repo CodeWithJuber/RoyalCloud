@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "name": "Shailendra Gayakwad",
+      "site": "BollywoodPapa.com",
+      "rating": 5,
+      "quote": "I got the best services here and that too at very affordable prices. I had really bad experiences at other hosting providers, but all of my problems were solved after moving to Royal Clouds."
+    },
+    {
+      "name": "Satyam Shastri",
+      "site": "Noonecares.net",
+      "rating": 5,
+      "quote": "Using Royal Clouds for a long time and must say they are super awesome at support, with superfast and reliable servers. They actually care for their clients."
+    },
+    {
+      "name": "Aditya Saini",
+      "site": "Sarcsam.co",
+      "rating": 5,
+      "quote": "I had a wonderful experience using the dedicated hosting at Royal Clouds. It is super easy to use even for beginners and I'd recommend it to everyone."
+    },
+    {
+      "name": "Priya Nair",
+      "site": "thecraftstudio.in",
+      "rating": 5,
+      "quote": "Migration was completely free and there was zero downtime. My WordPress store loads in under a second now. Genuinely the best support team I've worked with."
+    },
+    {
+      "name": "Rahul Mehta",
+      "site": "devmehta.io",
+      "rating": 5,
+      "quote": "Full root access on the KVM VPS, deployed in minutes, and rock-solid uptime. Exactly what I needed to ship my SaaS without worrying about the infrastructure."
+    },
+    {
+      "name": "Ananya Verma",
+      "site": "vermastudios.com",
+      "rating": 5,
+      "quote": "Affordable, fast and reliable — and the live chat actually solves problems instead of reading from a script. Royal Clouds has earned a customer for life."
+    }
+  ]
+}

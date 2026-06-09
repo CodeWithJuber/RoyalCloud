@@ -1,0 +1,25 @@
+{
+  "primary": [
+    {
+      "label": "Hosting",
+      "href": "/shared-hosting",
+      "children": [
+        { "label": "SSD Shared Hosting", "href": "/shared-hosting", "desc": "Fast, secure shared hosting from $1.99/mo", "icon": "server" },
+        { "label": "Managed WordPress", "href": "/managed-wordpress-hosting", "desc": "Up to 10x faster WordPress hosting", "icon": "wordpress" },
+        { "label": "Reseller Hosting", "href": "/reseller-hosting", "desc": "Start your own hosting business", "icon": "users" }
+      ]
+    },
+    {
+      "label": "Servers",
+      "href": "/kvm-vps-hosting",
+      "children": [
+        { "label": "KVM VPS Hosting", "href": "/kvm-vps-hosting", "desc": "Full root access KVM virtual servers", "icon": "cpu" },
+        { "label": "Managed Cloud", "href": "/managed-digitalocean-cloud-hosting", "desc": "Fully managed DigitalOcean cloud", "icon": "cloud" },
+        { "label": "Dedicated Servers", "href": "/dedicated-servers", "desc": "Raw enterprise-grade hardware", "icon": "database" }
+      ]
+    },
+    { "label": "Domains", "href": "/#domain-search", "children": [] },
+    { "label": "Blog", "href": "/blog", "children": [] },
+    { "label": "Contact", "href": "/contact", "children": [] }
+  ]
+}

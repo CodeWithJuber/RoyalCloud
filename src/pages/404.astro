@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../data/site.json";
+---
+<BaseLayout title="Page Not Found" description="The page you're looking for can't be found." noindex>
+  <section class="notfound">
+    <div class="container">
+      <span class="notfound__code text-gradient">404</span>
+      <h1>This page drifted into the clouds</h1>
+      <p class="lead">The page you're looking for doesn't exist or has moved. Let's get you back on track.</p>
+      <div class="notfound__actions">
+        <a href="/" class="btn btn--gradient">Back to Home</a>
+        <a href="/shared-hosting" class="btn btn--outline">View Hosting Plans</a>
+        <a href={site.portal.submitTicket} class="btn btn--outline">Contact Support</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound { text-align: center; padding-block: clamp(4rem, 10vw, 8rem); }
+  .notfound__code { font-family: var(--rc-font-sans); font-weight: 800; font-size: clamp(5rem, 16vw, 10rem); line-height: 1; letter-spacing: -0.04em; }
+  .notfound h1 { margin-top: 0.5rem; }
+  .notfound .lead { max-width: 520px; margin: 1rem auto 0; }
+  .notfound__actions { display: flex; flex-wrap: wrap; gap: 0.85rem; justify-content: center; margin-top: 2rem; }
+</style>

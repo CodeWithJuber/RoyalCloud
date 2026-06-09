@@ -1,0 +1,131 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import footer from "../data/footer.json";
+import site from "../data/site.json";
+const year = new Date().getFullYear();
+
+const supportCards = [
+  { icon: "chat", title: "Live Chat", text: "We're always available to chat and reply instantly.", href: site.portal.clientArea, cta: "Start Chat" },
+  { icon: "mail", title: "Send Email", text: "Email us 24/7 — we'll get back to you right away.", href: `mailto:${site.contact.email}`, cta: "Email Support" },
+  { icon: "ticket", title: "Submit a Ticket", text: "Open a ticket any time and track it to resolution.", href: site.portal.submitTicket, cta: "Open Ticket" },
+];
+
+const socials = [
+  { name: "facebook", href: site.social.facebook, label: "Facebook" },
+  { name: "twitter", href: site.social.twitter, label: "Twitter / X" },
+  { name: "instagram", href: site.social.instagram, label: "Instagram" },
+  { name: "linkedin", href: site.social.linkedin, label: "LinkedIn" },
+].filter((s) => s.href);
+---
+<section class="support-strip section--tint">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">We're here for you</span>
+      <h2>Need help? Chat with our friendly team 24/7</h2>
+      <p class="lead">Live chat, email any time, or post a ticket — real hosting specialists, around the clock.</p>
+    </div>
+    <div class="grid grid-3">
+      {supportCards.map((c) => (
+        <a class="support-card card" href={c.href}>
+          <span class="icon-badge"><Icon name={c.icon} /></span>
+          <h3>{c.title}</h3>
+          <p>{c.text}</p>
+          <span class="support-card__cta">{c.cta} <Icon name="arrow" size={18} /></span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a href="/" aria-label={`${site.name} home`}><Logo variant="white" /></a>
+        <p>{site.shortDescription}</p>
+        <div class="site-footer__social">
+          {socials.map((s) => (
+            <a href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer">
+              <Icon name="globe" size={18} />
+            </a>
+          ))}
+        </div>
+        <form class="newsletter" id="newsletterForm">
+          <label for="newsletterEmail" class="sr-only">Email address</label>
+          <input id="newsletterEmail" type="email" name="email" placeholder="Your email for offers & updates" required />
+          <button type="submit" class="btn btn--gradient btn--sm">Subscribe</button>
+        </form>
+        <p class="newsletter__note" id="newsletterNote" hidden>Thanks! You're on the list.</p>
+      </div>
+
+      <div class="site-footer__cols">
+        {footer.columns.map((col) => (
+          <div class="footer-col">
+            <h4>{col.title}</h4>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href} {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>&copy; {year} {site.name}. All rights reserved.</p>
+      <ul class="site-footer__legal">
+        {footer.legal.map((l) => (<li><a href={l.href}>{l.label}</a></li>))}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .support-strip { padding-block: var(--rc-section-y); }
+  .support-card { display: flex; flex-direction: column; }
+  .support-card h3 { margin-bottom: 0.4rem; }
+  .support-card__cta { margin-top: auto; padding-top: 1rem; display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--rc-font-sans); font-weight: 700; color: var(--rc-primary); }
+  .support-card:hover .support-card__cta { gap: 0.7rem; }
+
+  .site-footer { background: var(--rc-gradient-ink); color: #b8b3d6; padding-block: clamp(3rem, 6vw, 4.5rem) 2rem; }
+  .site-footer__top { display: grid; grid-template-columns: 1.3fr 2fr; gap: clamp(2rem, 5vw, 4rem); }
+  .site-footer__brand p { color: #b8b3d6; margin-top: 1rem; max-width: 320px; }
+  .site-footer__social { display: flex; gap: 0.6rem; margin-top: 1.25rem; }
+  .site-footer__social a { display: inline-flex; width: 38px; height: 38px; align-items: center; justify-content: center; border-radius: 10px; background: rgba(255,255,255,0.08); color: #fff; transition: background .15s ease; }
+  .site-footer__social a:hover { background: var(--rc-primary); }
+
+  .newsletter { display: flex; gap: 0.5rem; margin-top: 1.5rem; max-width: 380px; }
+  .newsletter input { flex: 1; min-width: 0; padding: 0.7rem 1rem; border-radius: var(--rc-radius-pill); border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #fff; font: inherit; font-size: 0.9rem; }
+  .newsletter input::placeholder { color: #9b96bd; }
+  .newsletter__note { color: #8be0b0; margin-top: 0.6rem; font-size: 0.9rem; }
+
+  .site-footer__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .footer-col h4 { color: #fff; font-size: 1rem; margin-bottom: 1rem; }
+  .footer-col a { color: #b8b3d6; font-size: 0.92rem; display: inline-block; padding: 0.3rem 0; transition: color .15s ease; }
+  .footer-col a:hover { color: #fff; }
+
+  .site-footer__bottom { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; margin-top: clamp(2.5rem, 5vw, 3.5rem); padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.88rem; }
+  .site-footer__legal { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+  .site-footer__legal a { color: #b8b3d6; }
+  .site-footer__legal a:hover { color: #fff; }
+
+  @media (max-width: 860px) {
+    .site-footer__top { grid-template-columns: 1fr; }
+    .site-footer__cols { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<script>
+  // Lightweight newsletter UX (no backend). Wire to a real endpoint later.
+  const form = document.getElementById("newsletterForm") as HTMLFormElement | null;
+  const note = document.getElementById("newsletterNote");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (note) note.hidden = false;
+    form.reset();
+  });
+</script>

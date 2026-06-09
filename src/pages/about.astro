@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import FeatureGrid from "../components/FeatureGrid.astro";
+import CTASection from "../components/CTASection.astro";
+import features from "../data/features.json";
+import site from "../data/site.json";
+
+const values = [
+  { icon: "rocket", title: "Performance Obsessed", text: "Pure SSD, LiteSpeed and Cloudflare on every plan — because a fast site wins customers and ranks higher." },
+  { icon: "headset", title: "Support That Cares", text: "Real specialists on live chat, email and tickets 24/7/365 — not scripts, not bots." },
+  { icon: "shield", title: "Secure by Default", text: "Free SSL, managed firewalls, malware scanning and remote backups keep you protected." },
+  { icon: "billing", title: "Honest Pricing", text: "Transparent plans from $1.99/mo with no hidden fees and a 30-day money-back guarantee." },
+];
+---
+<BaseLayout
+  title="About Royal Clouds"
+  description="Royal Clouds delivers premium SSD web hosting, KVM VPS and dedicated servers with friendly 24/7 support — built for speed, security and reliability."
+>
+  <PageHero
+    eyebrow="About Us"
+    title="Hosting built for speed, backed by people who care"
+    subtitle="Royal Clouds has helped thousands of businesses and creators get online faster, with premium SSD infrastructure and genuinely friendly support."
+    crumbs={[{ label: "About" }]}
+  />
+
+  <section class="section">
+    <div class="container container-narrow">
+      <p class="lead">We started Royal Clouds with a simple belief: great hosting should be fast, secure, affordable and human. Too many providers overpromise and underdeliver — slow servers, hidden fees and support that reads from a script.</p>
+      <p class="mt-3">So we built the opposite. Every Royal Clouds plan runs on enterprise RAID-10 SSD storage with LiteSpeed web servers and the Cloudflare CDN, making sites up to 15x faster than traditional HDD hosting. Behind it all is a support team that treats your project like their own — available 24/7/365 whenever you need them.</p>
+      <p class="mt-3">From your first blog to a high-traffic store or a fleet of client sites, we have a solution that scales with you — shared hosting, managed WordPress, KVM VPS, managed cloud and dedicated servers, all backed by a 99.99% uptime SLA.</p>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What we stand for</span>
+        <h2>Our values</h2>
+      </div>
+      <FeatureGrid items={values} columns={4} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Why customers stay</span>
+        <h2>Simple, fast &amp; reliable</h2>
+      </div>
+      <FeatureGrid items={features.whyUs} columns={3} />
+    </div>
+  </section>
+
+  <CTASection
+    title="Become part of the Royal Clouds family"
+    text={`Join thousands of websites running faster on premium SSD hosting from ${site.startingPrice}/mo.`}
+  />
+</BaseLayout>
