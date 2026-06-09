@@ -30,6 +30,6 @@ import Icon from "./Icon.astro";
     root.setAttribute("data-theme", next);
     try { localStorage.setItem("rc-theme", next); } catch {}
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", next === "dark" ? "#0a0c16" : "#ffffff");
+    if (meta) meta.setAttribute("content", next === "dark" ? "#07140e" : "#ffffff");
   });
 </script>

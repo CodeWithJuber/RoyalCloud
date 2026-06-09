@@ -1,0 +1,7 @@
+---
+import { Icon as Iconify } from "astro-icon/components";
+/** Real coloured brand/tech logos (Iconify "logos" set). */
+interface Props { name: string; size?: number; class?: string; }
+const { name, size = 28, class: className = "" } = Astro.props;
+---
+<Iconify name={`logos:${name}`} width={size} height={size} class={className} />
