@@ -1,0 +1,6 @@
+# Cloudflare Pages project config.
+# Used by `wrangler pages deploy` in CI, and auto-detected if you connect the
+# repo directly in the Cloudflare dashboard (Workers & Pages → Create → Pages).
+name = "royalclouds"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "dist"
