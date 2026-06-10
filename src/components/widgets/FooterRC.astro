@@ -1,55 +1,76 @@
 ---
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 import logoWhite from '~/assets/images/brand/logo-white.png';
-const PORTAL = 'https://my.royalclouds.net';
+import { footerData } from '~/navigation';
+import site from '~/data/site.json';
+
 const year = new Date().getFullYear();
+const external = (href: string) => /^https?:\/\//.test(href);
+const { links: columns, secondaryLinks, socialLinks } = footerData;
 ---
 
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <Image src={logoWhite} alt="Royal Clouds" width={160} height={55} />
-        <p>Premium SSD web hosting, KVM VPS, managed WordPress and dedicated servers — built for speed with LiteSpeed, free SSL and friendly 24/7 support.</p>
+        <Image src={logoWhite} alt={site.name} width={160} height={55} />
+        <p>{site.description}</p>
+        <div class="footer-social">
+          {
+            socialLinks.map((s) => (
+              <a
+                href={s.href}
+                aria-label={s.ariaLabel}
+                {...external(s.href) ? { target: '_blank', rel: 'noopener' } : {}}
+              >
+                <Icon name={s.icon} />
+              </a>
+            ))
+          }
+        </div>
       </div>
-      <div class="fcol">
-        <h5>Hosting</h5>
-        <ul>
-          <li><a href="/shared-hosting">SSD Shared Hosting</a></li>
-          <li><a href="/cpanel-hosting">cPanel Hosting</a></li>
-          <li><a href="/managed-wordpress-hosting">WordPress Hosting</a></li>
-          <li><a href="/kvm-vps-hosting">KVM VPS</a></li>
-          <li><a href="/cyberpanel-vps-hosting">CyberPanel VPS</a></li>
-          <li><a href="/dedicated-servers">Dedicated Servers</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="/about">About Us</a></li>
-          <li><a href="/testimonials">Testimonials</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="mailto:sales@royalclouds.net">Contact Sales</a></li>
-          <li><a href={`${PORTAL}/affiliates.php`} target="_blank" rel="noopener">Affiliates</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <h5>Support</h5>
-        <ul>
-          <li><a href={`${PORTAL}/submitticket.php`} target="_blank" rel="noopener">Submit a Ticket</a></li>
-          <li><a href={`${PORTAL}/knowledgebase.php`} target="_blank" rel="noopener">Knowledge Base</a></li>
-          <li><a href={`${PORTAL}/clientarea.php`} target="_blank" rel="noopener">Client Area</a></li>
-          <li><a href="mailto:support@royalclouds.net">support@royalclouds.net</a></li>
-        </ul>
-      </div>
+      {
+        columns.map((col) => (
+          <div class="fcol">
+            <h5>{col.title}</h5>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href} {...external(l.href) ? { target: '_blank', rel: 'noopener' } : {}}>
+                    {l.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
     </div>
     <div class="footer-bottom">
-      <span>© {year} Royal Clouds. All rights reserved.</span>
+      <span>© {year} {site.legalName}. All rights reserved.</span>
+      <div class="footer-legal">
+        {secondaryLinks.map((l) => <a href={l.href}>{l.text}</a>)}
+      </div>
       <div class="footer-badges">
-        <span>99.99% Uptime SLA</span>
-        <span>30-Day Money-Back</span>
-        <span>Instant Setup</span>
+        {site.trustBadges.slice(0, 3).map((b) => <span>{b}</span>)}
       </div>
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+  .footer-social a {
+    width: 36px; height: 36px; border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    display: grid; place-items: center;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .footer-social a:hover { color: #fff; border-color: rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.06); }
+  .footer-social :global(svg) { width: 17px; height: 17px; }
+  .footer-legal { display: flex; gap: 16px; }
+  .footer-legal a { color: rgba(255, 255, 255, 0.55); transition: color 0.15s ease; }
+  .footer-legal a:hover { color: #fff; }
+</style>
