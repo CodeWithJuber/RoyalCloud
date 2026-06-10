@@ -1955,12 +1955,6 @@ h2 em {
   outline-color: var(--rc-yellow);
 }
 
-/* below-fold rendering hint */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 640px;
-}
-
 /* ---------- Responsive ---------- */
 @media (max-width: 1180px) {
   .nav {
