@@ -2,7 +2,8 @@
 import Layout from '~/layouts/PageLayout.astro';
 import ProductHero from '~/components/widgets/ProductHero.astro';
 import PlanGridRC from '~/components/widgets/PlanGridRC.astro';
-import { type Plan } from '~/utils/plans';
+import { Icon } from 'astro-icon/components';
+import { tablerIcon, type Plan } from '~/utils/plans';
 import faqsData from '~/data/faqs.json';
 
 interface Props {
@@ -44,6 +45,7 @@ const metadata = {
       <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
         {plan.highlights.map((h) => (
           <div class="card feature-card reveal">
+            <div class="f-icon f-icon-grad"><Icon name={tablerIcon(h.icon)} /></div>
             <h3>{h.title}</h3>
             <p>{h.text}</p>
           </div>

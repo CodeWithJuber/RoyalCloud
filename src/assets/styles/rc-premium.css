@@ -555,3 +555,37 @@ body[data-cards='glass'] .card {
   .support-grid { grid-template-columns: 1fr; gap: 36px; }
   .support-cards { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   Icon craftsmanship pass — crisp Tabler icons + real partner logos
+   ============================================================ */
+
+/* gradient icon tiles (features, speed points) */
+.f-icon-grad {
+  background: var(--rc-gradient) !important;
+  border: none !important;
+  box-shadow: 0 10px 24px -10px rgba(118, 82, 242, 0.55);
+}
+.f-icon-grad svg { width: 28px; height: 28px; color: #fff; }
+.point .p-ic.f-icon-grad svg { width: 24px; height: 24px; }
+
+/* hero chips: icon sizing */
+.chip .ic svg { width: 18px; height: 18px; }
+
+/* real partner logos: grayscale, colorize on hover */
+.partner-row .mark svg { height: 30px; width: auto; display: block; }
+.partner-row .mark {
+  filter: grayscale(1); opacity: 0.55;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+.partner-row .mark:hover { filter: grayscale(0); opacity: 1; }
+
+/* testimonial stars: icon stars instead of text glyphs */
+.testi .stars { display: inline-flex; gap: 3px; letter-spacing: 0; }
+.testi .stars svg { width: 17px; height: 17px; color: var(--rc-yellow); }
+
+/* support card icons */
+.support-card .s-ic svg { width: 22px; height: 22px; }
+
+/* buttons with icons */
+.btn svg { width: 18px; height: 18px; }

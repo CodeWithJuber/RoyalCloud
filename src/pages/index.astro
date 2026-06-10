@@ -5,19 +5,12 @@ import FooterRC from '~/components/widgets/FooterRC.astro';
 import PlanGridRC from '~/components/widgets/PlanGridRC.astro';
 import RevealScript from '~/components/widgets/RevealScript.astro';
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 
 import cloudServer from '~/assets/images/brand/cloud-server.png';
 import mascot from '~/assets/images/brand/mascot.png';
-import separator from '~/assets/images/brand/separator.svg';
-import shapeOne from '~/assets/images/brand/shape-one.png';
 import shapeFive from '~/assets/images/brand/shape-five.png';
 import shapeSeven from '~/assets/images/brand/shape-seven.png';
-import icWordpress from '~/assets/images/brand/ic-wordpress.svg';
-import icBandwidth from '~/assets/images/brand/ic-bandwidth.svg';
-import icDatabase from '~/assets/images/brand/ic-database.svg';
-import icDatacenter from '~/assets/images/brand/ic-data-center.svg';
-import icCloud from '~/assets/images/brand/cloud.svg';
-import icDevelopment from '~/assets/images/brand/ic-development.svg';
 import photoDatacenter from '~/assets/images/photos/datacenter.jpg';
 import photoSupport from '~/assets/images/photos/support.jpg';
 
@@ -29,12 +22,23 @@ const PORTAL = 'https://my.royalclouds.net';
 const initialsOf = (name: string) => name.split(' ').map((w) => w[0]).slice(0, 2).join('');
 
 const features = [
-  { icon: icWordpress, title: 'Softaculous 1-Click Installer', text: 'Install WordPress, Joomla, Drupal and 400+ apps in seconds, with automatic updates.' },
-  { icon: icBandwidth, title: 'Super-Fast Performance', text: 'Pure SSD RAID-10 storage, LiteSpeed, CloudLinux and the Cloudflare CDN make sites up to 15× faster.' },
-  { icon: icDatabase, title: 'Free SSL & Daily Backups', text: 'Every site is encrypted with a free auto-renewing SSL and backed up daily — restore in one click.' },
-  { icon: icDatacenter, title: 'DDoS Protection', text: 'A DDoS-protected network and hardened firewall keep your sites online under attack.' },
-  { icon: icCloud, title: '99.99% Uptime SLA', text: 'KernelCare live patching, redundant power and network underpin our uptime guarantee.' },
-  { icon: icDevelopment, title: 'Friendly 24/7 Support', text: 'Real hosting specialists on live chat, email and tickets, around the clock, 365 days a year.' },
+  { icon: 'tabler:apps', title: 'Softaculous 1-Click Installer', text: 'Install WordPress, Joomla, Drupal and 400+ apps in seconds, with automatic updates.' },
+  { icon: 'tabler:bolt', title: 'Super-Fast Performance', text: 'Pure SSD RAID-10 storage, LiteSpeed, CloudLinux and the Cloudflare CDN make sites up to 15× faster.' },
+  { icon: 'tabler:shield-lock', title: 'Free SSL & Daily Backups', text: 'Every site is encrypted with a free auto-renewing SSL and backed up daily — restore in one click.' },
+  { icon: 'tabler:wall', title: 'DDoS Protection', text: 'A DDoS-protected network and hardened firewall keep your sites online under attack.' },
+  { icon: 'tabler:activity-heartbeat', title: '99.99% Uptime SLA', text: 'KernelCare live patching, redundant power and network underpin our uptime guarantee.' },
+  { icon: 'tabler:headset', title: 'Friendly 24/7 Support', text: 'Real hosting specialists on live chat, email and tickets, around the clock, 365 days a year.' },
+];
+
+const partners = [
+  { icon: 'logos:cloudflare', label: 'Cloudflare' },
+  { icon: 'logos:cpanel', label: 'cPanel' },
+  { icon: 'logos:cloudlinux', label: 'CloudLinux' },
+  { icon: 'logos:intel', label: 'Intel' },
+  { icon: 'logos:letsencrypt', label: "Let's Encrypt" },
+  { icon: 'logos:ubuntu', label: 'Ubuntu' },
+  { icon: 'logos:mysql', label: 'MySQL' },
+  { icon: 'logos:php', label: 'PHP' },
 ];
 
 const metadata = {
@@ -48,8 +52,6 @@ const metadata = {
 
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <!-- original royalclouds.net floating banner shapes -->
-    <Image src={shapeOne} alt="" width={420} height={248} class="hero-shape hero-shape-1" aria-hidden="true" />
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <span class="hero-eyebrow"><span class="dot"></span>Premium Web Hosting</span>
@@ -87,9 +89,9 @@ const metadata = {
           <!-- orbiting cloud platforms from the original site -->
           <Image src={shapeFive} alt="" width={96} height={69} class="hero-orbit hero-orbit-1" aria-hidden="true" />
           <Image src={shapeSeven} alt="" width={96} height={74} class="hero-orbit hero-orbit-2" aria-hidden="true" />
-          <div class="chip chip-uptime"><span class="ic">↑</span><span><span class="num">99.99%</span><br /><span class="lbl">Uptime SLA</span></span></div>
-          <div class="chip chip-speed"><span class="ic">⚡</span><span><span class="num">15× faster</span><br /><span class="lbl">LiteSpeed + SSD</span></span></div>
-          <div class="chip chip-ssl"><span class="ic">✓</span><span><span class="num">Free SSL</span><br /><span class="lbl">Auto-renewing</span></span></div>
+          <div class="chip chip-uptime"><span class="ic"><Icon name="tabler:activity-heartbeat" /></span><span><span class="num">99.99%</span><br /><span class="lbl">Uptime SLA</span></span></div>
+          <div class="chip chip-speed"><span class="ic"><Icon name="tabler:bolt" /></span><span><span class="num">15× faster</span><br /><span class="lbl">LiteSpeed + SSD</span></span></div>
+          <div class="chip chip-ssl"><span class="ic"><Icon name="tabler:shield-check" /></span><span><span class="num">Free SSL</span><br /><span class="lbl">Auto-renewing</span></span></div>
         </div>
       </div>
     </div>
@@ -100,14 +102,9 @@ const metadata = {
     <div class="wrap">
       <p class="lead">Powered by industry-leading technology</p>
       <div class="partner-row">
-        <span class="mark">cloudflare</span>
-        <span class="mark">cPanel</span>
-        <span class="mark">CloudLinux</span>
-        <span class="mark">LiteSpeed</span>
-        <span class="mark">intel</span>
-        <span class="mark">Let's Encrypt</span>
-        <span class="mark">ubuntu</span>
-        <span class="mark">MySQL</span>
+        {partners.map((p) => (
+          <span class="mark" title={p.label}><Icon name={p.icon} /></span>
+        ))}
       </div>
     </div>
   </div>
@@ -123,7 +120,7 @@ const metadata = {
       <div class="feature-grid">
         {features.map((f) => (
           <div class="card feature-card reveal">
-            <div class="f-icon"><Image src={f.icon} alt="" width={34} height={34} /></div>
+            <div class="f-icon f-icon-grad"><Icon name={f.icon} /></div>
             <h3>{f.title}</h3>
             <p>{f.text}</p>
           </div>
@@ -145,15 +142,15 @@ const metadata = {
         <p>Faster pages mean happier visitors, better SEO and more sales.</p>
         <div class="point-list">
           <div class="point">
-            <div class="p-ic"><Image src={icBandwidth} alt="" width={26} height={26} /></div>
+            <div class="p-ic f-icon-grad"><Icon name="tabler:database-star" /></div>
             <div><h4>Pure SSD RAID-10 + LiteSpeed</h4><p>Up to 15× faster than standard HDD hosting, with LSCache serving pages in milliseconds.</p></div>
           </div>
           <div class="point">
-            <div class="p-ic"><Image src={icCloud} alt="" width={26} height={26} /></div>
+            <div class="p-ic f-icon-grad"><Icon name="tabler:world-bolt" /></div>
             <div><h4>Cloudflare CDN &amp; HTTP/3</h4><p>Your content is cached at edge locations worldwide for fast loads anywhere.</p></div>
           </div>
           <div class="point">
-            <div class="p-ic"><Image src={icDatacenter} alt="" width={26} height={26} /></div>
+            <div class="p-ic f-icon-grad"><Icon name="tabler:shield-half-filled" /></div>
             <div><h4>CloudLinux isolation</h4><p>Every account is isolated for consistent performance, even under heavy neighbour load.</p></div>
           </div>
         </div>
@@ -224,7 +221,7 @@ const metadata = {
       <div class="testi-grid">
         {testimonialsData.items.slice(0, 6).map((t) => (
           <div class="card testi reveal">
-            <div class="stars">★★★★★</div>
+            <div class="stars">{[0,1,2,3,4].map(() => (<Icon name="tabler:star-filled" />))}</div>
             <blockquote>“{t.quote}”</blockquote>
             <div class="who">
               <span class="avatar">{initialsOf(t.name)}</span>
@@ -258,7 +255,7 @@ const metadata = {
   <section class="support-sec" id="support">
     <div class="wrap support-grid">
       <div class="support-figure reveal">
-        <Image src={icCloud} alt="" width={96} height={96} class="c" aria-hidden="true" />
+        <Image src={shapeFive} alt="" width={96} height={69} class="c" aria-hidden="true" />
         <Image src={mascot} alt="RC — the Royal Clouds mascot" width={170} height={353} class="m" />
       </div>
       <div>
@@ -269,17 +266,17 @@ const metadata = {
         </div>
         <div class="support-cards">
           <a class="card support-card reveal" href={`${PORTAL}/clientarea.php`} target="_blank" rel="noopener">
-            <span class="s-ic">💬</span>
+            <span class="s-ic"><Icon name="tabler:message-circle" /></span>
             <h4>Live Chat</h4>
             <p>We are always available to chat. We will reply to you instantly.</p>
           </a>
           <a class="card support-card reveal" href="mailto:support@royalclouds.net">
-            <span class="s-ic">✉️</span>
+            <span class="s-ic"><Icon name="tabler:mail" /></span>
             <h4>Send Email</h4>
             <p>We are available via email 24/7. We will get back to you immediately.</p>
           </a>
           <a class="card support-card reveal" href={`${PORTAL}/submitticket.php`} target="_blank" rel="noopener">
-            <span class="s-ic">🎫</span>
+            <span class="s-ic"><Icon name="tabler:ticket" /></span>
             <h4>Submit Ticket</h4>
             <p>You can submit tickets any time you need help and track them to resolution.</p>
           </a>
@@ -295,7 +292,7 @@ const metadata = {
         <h2>Ready to launch faster?</h2>
         <p>Join thousands of sites running on premium SSD hosting — free SSL, free migration and a 30-day money-back guarantee.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href={`${PORTAL}/cart.php`} target="_blank" rel="noopener">🚀 Get Started</a>
+          <a class="btn btn-primary" href={`${PORTAL}/cart.php`} target="_blank" rel="noopener"><Icon name="tabler:rocket" /> Get Started</a>
           <a class="btn btn-ghost-light" href="mailto:sales@royalclouds.net">Talk to sales</a>
         </div>
       </div>
