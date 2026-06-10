@@ -1,0 +1,97 @@
+---
+/**
+ * Design-handoff pricing grid (plan cards + monthly/annual bill toggle).
+ * Server-renders both prices; a tiny script swaps the visible one.
+ */
+interface Tier {
+  name: string;
+  price: string;
+  priceAnnual?: string;
+  popular?: boolean;
+  summary?: string;
+  cta?: string;
+  ctaUrl: string;
+  features: string[];
+}
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  tiers: Tier[];
+  note?: string;
+  showToggle?: boolean;
+}
+const { id = 'pricing', eyebrow, title, subtitle, tiers, note, showToggle = true } = Astro.props;
+const cols = Math.min(tiers.length, 5);
+---
+
+<section class="pricing" id={id} style="background: var(--bg-tint);">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h2>{title}</h2>
+      {subtitle && <p>{subtitle}</p>}
+    </div>
+    {showToggle && (
+      <div style="text-align: center;">
+        <div class="bill-toggle" role="group" aria-label="Billing period">
+          <button type="button" class="active" data-bill="monthly">Monthly</button>
+          <button type="button" data-bill="annual">Annual <span class="save">SAVE 20%</span></button>
+        </div>
+      </div>
+    )}
+    <div class="plan-grid" style={`grid-template-columns: repeat(${cols}, 1fr);`} data-plan-grid>
+      {tiers.map((t) => (
+        <div class={`card plan${t.popular ? ' popular' : ''}`}>
+          {t.popular && <span class="pop-tag">Most Popular</span>}
+          <h3>{t.name}</h3>
+          <p class="summary">{t.summary}</p>
+          <div class="price-row">
+            <span class="cur">$</span>
+            <span class="price" data-monthly={t.price} data-annual={t.priceAnnual ?? t.price}>{t.price}</span>
+            <span class="period">/mo</span>
+          </div>
+          <ul class="feat">
+            {t.features.map((f) => (<li>{f}</li>))}
+          </ul>
+          <a class={`btn ${t.popular ? 'btn-primary' : 'btn-plan'}`} href={t.ctaUrl} target="_blank" rel="noopener">{t.cta ?? 'Get Started'}</a>
+        </div>
+      ))}
+    </div>
+    {note && <p class="pricing-note">{note}</p>}
+  </div>
+</section>
+
+<style>
+  /* keep the design's responsive plan-grid rules when columns are inlined */
+  @media (max-width: 1080px) {
+    .plan-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  }
+  @media (max-width: 860px) {
+    .plan-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 560px) {
+    .plan-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+
+<script>
+  function rcPlansInit() {
+    document.querySelectorAll('.pricing').forEach((sec) => {
+      const buttons = sec.querySelectorAll('.bill-toggle button');
+      const prices = sec.querySelectorAll('.price[data-monthly]');
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const bill = btn.getAttribute('data-bill') || 'monthly';
+          buttons.forEach((b) => b.classList.toggle('active', b === btn));
+          prices.forEach((p) => {
+            p.textContent = p.getAttribute(bill === 'annual' ? 'data-annual' : 'data-monthly');
+          });
+        });
+      });
+    });
+  }
+  rcPlansInit();
+  document.addEventListener('astro:after-swap', rcPlansInit);
+</script>
