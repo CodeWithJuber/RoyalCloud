@@ -61,11 +61,11 @@
   @apply inline-flex items-center justify-center rounded-full bg-transparent font-bold text-center text-sm uppercase tracking-wider text-[#22105f] leading-snug transition-all py-4 px-8 duration-150 cursor-pointer;
 }
 
-/* Primary CTA = solid brand orange (royalclouds.net) */
+/* Primary CTA = original royalclouds.net yellow pill */
 @utility btn-primary {
-  @apply btn font-bold text-white;
-  background-color: #ed6a00;
-  box-shadow: 0 10px 22px -10px rgba(237, 106, 0, 0.6);
+  @apply btn font-bold text-[#22105f];
+  background-color: #fdd700;
+  box-shadow: 0 10px 22px -10px rgba(200, 170, 0, 0.55);
 }
 @utility btn-secondary {
   @apply btn text-[#22105f] bg-white border border-[#d9d2f1] hover:text-[#7652f2] hover:border-[#7652f2];

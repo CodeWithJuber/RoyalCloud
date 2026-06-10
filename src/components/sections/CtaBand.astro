@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import mascot from "~/assets/images/brand/mascot.png";
+
 interface Cta {
   text: string;
   href: string;
@@ -26,7 +29,15 @@ const target = (cta?: Cta) =>
 
 <section class="final-cta cv-auto">
   <div class="wrap">
-    <div class="cta-band reveal">
+    <div class="cta-band reveal rv-scale">
+      <Image
+        src={mascot}
+        alt=""
+        width={120}
+        height={250}
+        class="cta-mascot"
+        aria-hidden="true"
+      />
       <h2 set:html={title} />
       {subtitle && <p set:html={subtitle} />}
       <div class="hero-ctas">

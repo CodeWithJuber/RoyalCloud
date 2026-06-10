@@ -1,4 +1,8 @@
 ---
+import { Image } from "astro:assets";
+import mascot from "~/assets/images/brand/mascot.png";
+import cloud from "~/assets/images/brand/cloud.png";
+
 interface Props {
   eyebrow?: string;
   title?: string;
@@ -19,18 +23,24 @@ const { eyebrow, title, subtitle, items } = Astro.props;
         </div>
       )
     }
-    <div class="step-list" style="max-width: 720px; margin: 0 auto;">
-      {
-        items.map((s, i) => (
-          <div class={`step reveal reveal-d${(i % 4) + 1}`}>
-            <span class="step-num" />
-            <div>
-              <h4>{s.title}</h4>
-              <p>{s.text}</p>
+    <div class="steps-grid">
+      <div class="step-list">
+        {
+          items.map((s, i) => (
+            <div class={`step reveal reveal-d${(i % 4) + 1}`}>
+              <span class="step-num" />
+              <div>
+                <h4>{s.title}</h4>
+                <p>{s.text}</p>
+              </div>
             </div>
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
+      <div class="steps-figure reveal rv-right" aria-hidden="true">
+        <Image src={cloud} alt="" width={92} height={70} class="c" />
+        <Image src={mascot} alt="" width={190} height={395} class="m" />
+      </div>
     </div>
   </div>
 </section>
