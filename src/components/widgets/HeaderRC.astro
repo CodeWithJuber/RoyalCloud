@@ -4,6 +4,7 @@ import { Icon } from "astro-icon/components";
 import logoDark from "~/assets/images/brand/logo-dark.png";
 import { headerData } from "~/navigation";
 import { tablerIcon } from "~/utils/plans";
+import site from "~/data/site.json";
 
 /**
  * Royal Clouds header — clean white, always sticky.
@@ -28,6 +29,13 @@ const isGroup = (i: Item): i is { text: string; links: Link[] } => "links" in i;
 const external = (href: string) => /^https?:\/\//.test(href);
 ---
 
+{
+  "promo" in site && site.promo && (
+    <div class="promo-bar">
+      <span set:html={site.promo} />
+    </div>
+  )
+}
 <header class={`site-header ${solid ? "scrolled solid" : ""}`} id="siteHeader">
   <div class="wrap header-inner">
     <a class="header-logo" href="/" aria-label="Royal Clouds home">

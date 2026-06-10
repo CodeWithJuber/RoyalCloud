@@ -1,0 +1,24 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto('http://localhost:4321/', { waitUntil: 'networkidle' });
+await p.waitForTimeout(1500);
+await p.screenshot({ path: '/tmp/v2-hero.png' });
+await p.evaluate(() => document.querySelector('.features')?.scrollIntoView()); await p.waitForTimeout(1000);
+await p.screenshot({ path: '/tmp/v2-tiles.png' });
+await p.evaluate(() => document.querySelector('#pricing')?.scrollIntoView()); await p.waitForTimeout(1000);
+await p.screenshot({ path: '/tmp/v2-pricing.png' });
+await p.evaluate(() => document.querySelector('.domain-sec')?.scrollIntoView({block:'center'})); await p.waitForTimeout(1000);
+await p.screenshot({ path: '/tmp/v2-domain.png' });
+await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight)); await p.waitForTimeout(1000);
+await p.screenshot({ path: '/tmp/v2-footer.png' });
+await p.goto('http://localhost:4321/shared-hosting', { waitUntil: 'networkidle' }); await p.waitForTimeout(1200);
+await p.screenshot({ path: '/tmp/v2-product.png' });
+// mobile
+const m = await b.newPage({ viewport: { width: 390, height: 844 } });
+await m.goto('http://localhost:4321/', { waitUntil: 'networkidle' });
+await m.waitForTimeout(1500);
+await m.screenshot({ path: '/tmp/v2-mob-hero.png' });
+await m.evaluate(() => window.scrollTo(0, document.body.scrollHeight)); await m.waitForTimeout(1200);
+await m.screenshot({ path: '/tmp/v2-mob-footer.png' });
+await b.close();

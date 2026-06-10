@@ -1,5 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import HeroRC from "~/components/widgets/HeroRC.astro";
+import cloud from "~/assets/images/brand/cloud.png";
+import cloudServer from "~/assets/images/brand/cloud-server.png";
 
 interface Cta {
   text: string;
@@ -59,46 +62,55 @@ const target = (cta?: Cta) =>
   variant === "product" && (
     <section class="p-hero">
       <div class="wrap inner">
-        {eyebrow && (
-          <span class="hero-eyebrow">
-            <span class="dot" />
-            {eyebrow}
-          </span>
-        )}
-        <h1 set:html={title} />
-        {offer && <span class="offer">{offer}</span>}
-        {subtitle && <p class="sub" set:html={subtitle} />}
-        {(primaryCta || secondaryCta) && (
-          <div class="hero-ctas">
-            {primaryCta && (
-              <a
-                class="btn btn-primary"
-                href={primaryCta.href}
-                target={target(primaryCta)}
-                rel={target(primaryCta) && "noopener"}
-              >
-                {primaryCta.text}
-              </a>
-            )}
-            {secondaryCta && (
-              <a
-                class="btn btn-ghost-light"
-                href={secondaryCta.href}
-                target={target(secondaryCta)}
-                rel={target(secondaryCta) && "noopener"}
-              >
-                {secondaryCta.text}
-              </a>
-            )}
-          </div>
-        )}
-        {badges && badges.length > 0 && (
-          <div class="hero-badges">
-            {badges.map((b) => (
-              <span class="b glass">{b}</span>
-            ))}
-          </div>
-        )}
+        <div class="p-hero-copy">
+          {eyebrow && (
+            <span class="hero-eyebrow">
+              <span class="dot" />
+              {eyebrow}
+            </span>
+          )}
+          <h1 set:html={title} />
+          {subtitle && <p class="sub" set:html={subtitle} />}
+          {badges && badges.length > 0 && (
+            <div class="hero-badges">
+              {badges.map((b) => (
+                <span class="b">{b}</span>
+              ))}
+            </div>
+          )}
+          {offer && <span class="offer" set:html={offer} />}
+          {(primaryCta || secondaryCta) && (
+            <div class="hero-ctas">
+              {primaryCta && (
+                <a
+                  class="btn btn-primary btn-lg"
+                  href={primaryCta.href}
+                  target={target(primaryCta)}
+                  rel={target(primaryCta) && "noopener"}
+                >
+                  {primaryCta.text}
+                </a>
+              )}
+              {secondaryCta && (
+                <a
+                  class="btn btn-ghost-dark btn-lg"
+                  href={secondaryCta.href}
+                  target={target(secondaryCta)}
+                  rel={target(secondaryCta) && "noopener"}
+                >
+                  {secondaryCta.text}
+                </a>
+              )}
+            </div>
+          )}
+          <p class="cta-fine">30-day money-back guarantee · Instant setup</p>
+        </div>
+        <div class="p-hero-art" aria-hidden="true">
+          <div class="disc" />
+          <Image src={cloud} alt="" width={120} height={90} class="c1" />
+          <Image src={cloud} alt="" width={90} height={70} class="c2" />
+          <Image src={cloudServer} alt="" width={240} height={240} />
+        </div>
       </div>
     </section>
   )

@@ -1,13 +1,17 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import mascot from "~/assets/images/brand/mascot.png";
 import cloud from "~/assets/images/brand/cloud.png";
 import cloudServer from "~/assets/images/brand/cloud-server.png";
+import site from "~/data/site.json";
 
 /**
  * Royal Clouds home hero — light, friendly, illustration-led.
- * Headline + CTAs on the left; the brand mascot on a soft cloud disc with
- * floating proof cards (uptime, speed, SSL) on the right.
+ * SiteGround anatomy: offer chip, huge ink headline, check bullets,
+ * orange pill CTA with money-back fine print; the brand mascot on a
+ * soft cloud disc with floating proof cards on the right; a
+ * Trustpilot-style rating strip across the bottom.
  */
 interface Action {
   text: string;
@@ -25,7 +29,7 @@ interface Props {
 const {
   title = "Experience the <em>Premium</em> &amp; Speed-Optimized Hosting",
   subtitle = "Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL, daily backups and genuinely friendly 24/7 support.",
-  offer = "Up to 30% off domains &amp; hosting · from $1.99/mo",
+  offer = "Up to 30% off domains &amp; hosting",
   primary = {
     text: "Get Started",
     href: "https://my.royalclouds.net/cart.php",
@@ -44,11 +48,17 @@ const {
 <section class="rc-hero">
   <div class="wrap rc-hero-grid">
     <div class="rc-hero-copy">
-      <span class="rc-offer"
+      <span class="hero-eyebrow"
         ><span class="dot"></span><span set:html={offer} /></span
       >
       <h1 set:html={title} />
       <p class="rc-sub" set:html={subtitle} />
+      <ul class="hero-badges rc-badges">
+        {badges.map((b) => <li class="b">{b}</li>)}
+      </ul>
+      <p class="rc-from">
+        From <em>{site.startingPrice}/mo</em> · Free SSL &amp; migration
+      </p>
       <div class="hero-ctas">
         <a
           href={primary.href}
@@ -62,9 +72,9 @@ const {
           class="btn btn-ghost-dark btn-lg">{secondary.text}</a
         >
       </div>
-      <ul class="hero-badges rc-badges">
-        {badges.map((b) => <li class="b">{b}</li>)}
-      </ul>
+      <p class="cta-fine">
+        Risk free: 30-day money-back guarantee · Instant setup
+      </p>
     </div>
 
     <div class="rc-hero-art" aria-hidden="true">
@@ -144,6 +154,23 @@ const {
       </div>
     </div>
   </div>
+
+  <div class="wrap">
+    <div class="rating-strip rc-rating">
+      <span class="stars" aria-hidden="true">
+        <Icon name="tabler:star-filled" />
+        <Icon name="tabler:star-filled" />
+        <Icon name="tabler:star-filled" />
+        <Icon name="tabler:star-filled" />
+        <Icon name="tabler:star-filled" />
+      </span>
+      <span
+        ><b>Excellent</b> — rated {site.rating}/{site.ratingMax} by our customers</span
+      >
+      <span class="rc-rating-sep" aria-hidden="true"></span>
+      <span>Trusted by thousands of website owners</span>
+    </div>
+  </div>
 </section>
 
 <style>
@@ -153,58 +180,63 @@ const {
     background:
       radial-gradient(
         640px 420px at 86% 18%,
-        rgba(0, 167, 245, 0.1) 0%,
+        rgba(0, 167, 245, 0.08) 0%,
         transparent 70%
       ),
-      linear-gradient(180deg, #ffffff 0%, #f6f4fd 100%);
-    padding: clamp(56px, 7vw, 96px) 0 clamp(64px, 7vw, 96px);
+      linear-gradient(180deg, #ffffff 0%, #f8f6fe 100%);
+    padding: clamp(48px, 6vw, 84px) 0 clamp(40px, 5vw, 56px);
   }
   .rc-hero-grid {
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1.08fr 0.92fr;
     gap: 56px;
     align-items: center;
   }
 
-  .rc-offer {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    background: #fff;
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-xs);
-    color: var(--rc-violet);
-    font-family: var(--font-heading);
-    font-size: 13px;
-    font-weight: 700;
-    padding: 8px 18px;
-    border-radius: 999px;
-    margin-bottom: 26px;
-  }
-  .rc-offer .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--rc-orange);
-    flex: none;
-  }
   .rc-hero h1 {
-    font-size: clamp(36px, 4.5vw, 56px);
+    font-size: clamp(36px, 4.6vw, 58px);
     font-weight: 700;
-    letter-spacing: -0.025em;
-    margin-bottom: 22px;
+    letter-spacing: -0.028em;
+    margin: 24px 0 0;
   }
   .rc-sub {
-    font-size: 18.5px;
+    font-size: 18px;
     line-height: 1.7;
     color: var(--text-muted);
     max-width: 530px;
-    margin-bottom: 34px;
+    margin: 20px 0 0;
   }
   .rc-badges {
     list-style: none;
-    margin: 34px 0 0;
+    margin: 24px 0 0;
     padding: 0;
+  }
+  .rc-from {
+    font-family: var(--font-heading);
+    font-size: 17.5px;
+    font-weight: 700;
+    color: var(--rc-ink);
+    margin: 24px 0 0;
+  }
+  .rc-from em {
+    font-style: normal;
+    color: var(--rc-orange-dark);
+  }
+  .rc-hero .hero-ctas {
+    margin-top: 20px;
+  }
+
+  /* rating strip across the bottom */
+  .rc-rating {
+    margin-top: clamp(40px, 5vw, 56px);
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+  }
+  .rc-rating-sep {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--line-strong);
   }
 
   /* illustration */
@@ -275,6 +307,12 @@ const {
     border-radius: 14px;
     padding: 11px 16px;
     box-shadow: var(--shadow-md);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .rc-chip:hover {
+    box-shadow: var(--shadow-lg);
   }
   .rc-chip b {
     display: block;
@@ -353,20 +391,30 @@ const {
       animation: rcRise 0.7s cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
     }
     .rc-hero-copy > :nth-child(2) {
-      animation-delay: 0.08s;
+      animation-delay: 0.07s;
     }
     .rc-hero-copy > :nth-child(3) {
-      animation-delay: 0.16s;
+      animation-delay: 0.14s;
     }
     .rc-hero-copy > :nth-child(4) {
-      animation-delay: 0.24s;
+      animation-delay: 0.21s;
     }
     .rc-hero-copy > :nth-child(5) {
-      animation-delay: 0.32s;
+      animation-delay: 0.28s;
+    }
+    .rc-hero-copy > :nth-child(6) {
+      animation-delay: 0.35s;
+    }
+    .rc-hero-copy > :nth-child(7) {
+      animation-delay: 0.42s;
     }
     .rc-hero-art {
       opacity: 0;
       animation: rcRise 0.8s cubic-bezier(0.2, 0.65, 0.25, 1) 0.2s forwards;
+    }
+    .rc-rating {
+      opacity: 0;
+      animation: rcRise 0.8s cubic-bezier(0.2, 0.65, 0.25, 1) 0.5s forwards;
     }
     @keyframes rcRise {
       to {

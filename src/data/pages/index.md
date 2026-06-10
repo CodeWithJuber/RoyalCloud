@@ -15,7 +15,7 @@ sections:
     subtitle: >-
       Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL,
       daily backups and genuinely friendly 24/7 support.
-    offer: Up to 30% off domains &amp; hosting · from $1.99/mo · Free SSL
+    offer: Up to 30% off domains &amp; hosting
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -45,31 +45,40 @@ sections:
     title: One platform, every kind of hosting
     subtitle: From a first blog to bare-metal power — pick the plan that fits and upgrade any time.
     columns: 4
+    variant: tiles
     items:
       - icon: server
         title: SSD Shared Hosting
         text: Fast cPanel hosting on pure SSD with free SSL and migration. From $1.99/mo.
+        href: /shared-hosting
       - icon: wordpress
         title: Managed WordPress
         text: WordPress tuned on LiteSpeed with auto-updates and daily backups.
+        href: /managed-wordpress-hosting
       - icon: cpu
         title: KVM VPS Hosting
         text: Full root access, dedicated resources and any Linux distro in one click.
+        href: /kvm-vps-hosting
       - icon: database
         title: Dedicated Servers
         text: The entire machine is yours — custom configs and premium network.
+        href: /dedicated-servers
       - icon: terminal
         title: CyberPanel VPS
         text: LiteSpeed-powered CyberPanel servers for modern, fast deployments.
+        href: /cyberpanel-vps-hosting
       - icon: cloud
         title: Managed Cloud
         text: Scalable cloud infrastructure, fully managed by our engineers.
+        href: /cloud-ssd-hosting
       - icon: users
         title: Reseller Hosting
         text: White-label cPanel hosting to grow your own hosting business.
+        href: /reseller-hosting
       - icon: globe
         title: Domain Names
         text: Register or transfer domains with free DNS management.
+        href: /domains
   - type: pricing
     id: pricing
     plan: shared

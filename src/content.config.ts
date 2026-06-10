@@ -88,6 +88,7 @@ const iconItemSchema = z.object({
   icon: z.string().optional(),
   title: z.string().optional(),
   text: z.string().optional(),
+  href: z.string().optional(),
 });
 
 export const sectionSchema = z.discriminatedUnion("type", [
@@ -116,6 +117,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
     type: z.literal("features"),
     ...base,
     columns: z.number().optional(),
+    variant: z.enum(["cards", "tiles"]).optional(),
     items: z.array(iconItemSchema),
   }),
   z.object({

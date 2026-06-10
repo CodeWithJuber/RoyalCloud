@@ -1,7 +1,9 @@
 ---
 /**
- * Design-handoff pricing grid (plan cards + monthly/annual bill toggle).
- * Server-renders both prices; a tiny script swaps the visible one.
+ * Pricing grid — SiteGround card anatomy on Royal Clouds branding.
+ * Defaults to annual pricing: big discounted price, struck monthly
+ * "regular" price with a SAVE chip, and a renews fine print. The
+ * monthly/annual toggle swaps everything client-side.
  */
 interface Tier {
   name: string;
@@ -32,9 +34,20 @@ const {
   showToggle = true,
 } = Astro.props;
 const cols = Math.min(tiers.length, 5);
+
+const savePct = (t: Tier) => {
+  const m = parseFloat(t.price);
+  const a = parseFloat(t.priceAnnual ?? t.price);
+  if (!m || !a || a >= m) return 0;
+  return Math.round((1 - a / m) * 100);
+};
+const hasAnnual = tiers.some((t) => savePct(t) > 0);
+const defaultBill = hasAnnual && showToggle ? "annual" : "monthly";
+const shownPrice = (t: Tier) =>
+  defaultBill === "annual" ? (t.priceAnnual ?? t.price) : t.price;
 ---
 
-<section class="pricing" id={id}>
+<section class="pricing" id={id} data-bill={defaultBill}>
   <div class="wrap">
     <div class="sec-head center reveal">
       {eyebrow && <span class="eyebrow">{eyebrow}</span>}
@@ -45,10 +58,18 @@ const cols = Math.min(tiers.length, 5);
       showToggle && (
         <div style="text-align: center;">
           <div class="bill-toggle" role="group" aria-label="Billing period">
-            <button type="button" class="active" data-bill="monthly">
+            <button
+              type="button"
+              class={defaultBill === "monthly" ? "active" : ""}
+              data-bill="monthly"
+            >
               Monthly
             </button>
-            <button type="button" data-bill="annual">
+            <button
+              type="button"
+              class={defaultBill === "annual" ? "active" : ""}
+              data-bill="annual"
+            >
               Annual <span class="save">SAVE 20%</span>
             </button>
           </div>
@@ -65,9 +86,17 @@ const cols = Math.min(tiers.length, 5);
           <div
             class={`plan reveal reveal-d${(i % 4) + 1}${t.popular ? " popular" : ""}`}
           >
-            {t.popular && <span class="pop-tag">Most Popular</span>}
+            {t.popular && <span class="plan-band">Best Value</span>}
             <h3>{t.name}</h3>
             <p class="summary">{t.summary}</p>
+            <div class="was-row">
+              {savePct(t) > 0 && (
+                <>
+                  <span class="was">${t.price}</span>
+                  <span class="save-chip">SAVE {savePct(t)}%</span>
+                </>
+              )}
+            </div>
             <div class="price-row">
               <span class="cur">$</span>
               <span
@@ -75,18 +104,10 @@ const cols = Math.min(tiers.length, 5);
                 data-monthly={t.price}
                 data-annual={t.priceAnnual ?? t.price}
               >
-                {t.price}
+                {shownPrice(t)}
               </span>
               <span class="period">/mo</span>
             </div>
-            <p
-              class="price-note"
-              data-bill-note
-              data-monthly="billed monthly"
-              data-annual="billed annually"
-            >
-              billed monthly
-            </p>
             <a
               class={`btn ${t.popular ? "btn-primary" : "btn-plan"}`}
               href={t.ctaUrl}
@@ -95,6 +116,16 @@ const cols = Math.min(tiers.length, 5);
             >
               {t.cta ?? "Get Started"}
             </a>
+            <p
+              class="price-note"
+              data-bill-note
+              data-monthly="Billed monthly. Cancel anytime."
+              data-annual={`Renews at $${t.price}/mo. Billed annually.`}
+            >
+              {defaultBill === "annual"
+                ? `Renews at $${t.price}/mo. Billed annually.`
+                : "Billed monthly. Cancel anytime."}
+            </p>
             <ul class="feat">
               {t.features.map((f) => (
                 <li>{f}</li>
@@ -131,14 +162,15 @@ const cols = Math.min(tiers.length, 5);
   function rcPlansInit() {
     document.querySelectorAll(".pricing").forEach((sec) => {
       const buttons = sec.querySelectorAll(".bill-toggle button");
-      const prices = sec.querySelectorAll(
+      const swaps = sec.querySelectorAll(
         ".price[data-monthly], [data-bill-note]",
       );
       buttons.forEach((btn) => {
         btn.addEventListener("click", () => {
           const bill = btn.getAttribute("data-bill") || "monthly";
+          (sec as HTMLElement).dataset.bill = bill;
           buttons.forEach((b) => b.classList.toggle("active", b === btn));
-          prices.forEach((p) => {
+          swaps.forEach((p) => {
             p.textContent = p.getAttribute(
               bill === "annual" ? "data-annual" : "data-monthly",
             );
