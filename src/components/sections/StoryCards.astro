@@ -1,0 +1,162 @@
+---
+/**
+ * Success-story cards — SiteGround-style customer stories with a
+ * business-type tag and an oversized highlighted metric.
+ */
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  items: {
+    tag: string;
+    metric: string;
+    metricLabel: string;
+    quote: string;
+    name: string;
+    site?: string;
+  }[];
+}
+const { eyebrow, title, subtitle, items } = Astro.props;
+---
+
+<section class="stories">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="sec-head center reveal">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="story-grid" data-cols={Math.min(items.length, 3)}>
+      {
+        items.map((s, i) => (
+          <article class={`story reveal reveal-d${(i % 3) + 1}`}>
+            <span class="tag">{s.tag}</span>
+            <div class="metric">
+              <strong>{s.metric}</strong>
+              <small>{s.metricLabel}</small>
+            </div>
+            <blockquote>“{s.quote}”</blockquote>
+            <footer>
+              <span class="avatar">{s.name.slice(0, 1)}</span>
+              <span>
+                <b>{s.name}</b>
+                {s.site && <small>{s.site}</small>}
+              </span>
+            </footer>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .stories {
+    background: var(--bg-tint);
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .story-grid[data-cols="2"] {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 880px;
+    margin-inline: auto;
+  }
+  .story {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-panel);
+    padding: 30px 28px 26px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .story:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  .tag {
+    align-self: flex-start;
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--theme-accent);
+    background: var(--theme-soft);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .metric {
+    margin-top: 18px;
+  }
+  .metric strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(34px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--theme-accent);
+    letter-spacing: -0.02em;
+  }
+  .metric small {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  blockquote {
+    margin: 16px 0 22px;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text-default);
+    flex: 1;
+  }
+  footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--theme-art-a), var(--theme-art-b));
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+  }
+  footer b {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 13.5px;
+    color: var(--rc-ink);
+    line-height: 1.3;
+  }
+  footer small {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  @media (max-width: 900px) {
+    .story-grid,
+    .story-grid[data-cols="2"] {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      margin-inline: auto;
+    }
+  }
+</style>

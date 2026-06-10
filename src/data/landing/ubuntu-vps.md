@@ -3,8 +3,8 @@ title: Ubuntu VPS
 metadata:
   title: Fast Ubuntu VPS Hosting - Best Ubuntu SSD VPS Hosting India
   description: >-
-    Order your Ubuntu VPS and choose the software version you prefer. Order now and experience our SSD Ubuntu VPS
-    Hosting speed. Deploy now!
+    Order your Ubuntu VPS and choose the software version you prefer. Order now and experience our SSD Ubuntu
+    VPS Hosting speed. Deploy now!
   ignoreTitleTemplate: true
 breadcrumb:
   - text: KVM VPS Hosting
@@ -16,8 +16,8 @@ sections:
     eyebrow: Ubuntu VPS
     title: Ubuntu VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Ubuntu pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup, DDoS
-      protection and friendly 24/7 support.
+      Ubuntu pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup,
+      DDoS protection and friendly 24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -29,6 +29,24 @@ sections:
       - Full Root Access
       - Pure SSD Storage
       - 99.99% Uptime SLA
+    art: terminal:ubuntu
+  - type: osstrip
+    eyebrow: Operating Systems
+    title: Your distro, ready in one click
+    items:
+      - name: Ubuntu
+        color: "#e95420"
+        active: true
+      - name: Debian
+        color: "#a81d33"
+      - name: CentOS
+        color: "#932279"
+      - name: Fedora
+        color: "#3c6eb4"
+      - name: openSUSE
+        color: "#73ba25"
+      - name: Scientific
+        color: "#7a99ac"
   - type: pricing
     id: pricing
     plan: vps
@@ -36,6 +54,21 @@ sections:
     title: Choose your ubuntu vps plan
     showToggle: true
     note: 30-day money-back guarantee · Instant setup · Free migration.
+  - type: content
+    eyebrow: Why This Distro
+    title: Why developers pick <em>Ubuntu</em> here
+    items:
+      - icon: rocket
+        title: LTS images, always current
+        text: Ubuntu 22.04 and 24.04 LTS templates stay patched and deploy in seconds.
+      - icon: package
+        title: The biggest ecosystem
+        text: apt gives you the largest package universe — every tutorial just works.
+      - icon: refresh
+        title: One-click reinstall
+        text: Rebuild a clean Ubuntu image from the panel any time, in under a minute.
+    image: datacenter
+    reverse: true
   - type: features
     eyebrow: Why Royal Clouds
     title: Everything your ubuntu vps needs
@@ -59,14 +92,6 @@ sections:
       - icon: headset
         title: 24/7 Expert Support
         text: Real engineers on live chat and tickets around the clock, every day of the year.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Technology partners we build on
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
   - type: faq
     eyebrow: FAQ
     title: Ubuntu VPS — common questions
@@ -74,20 +99,20 @@ sections:
     items:
       - q: What do I get with Ubuntu VPS?
         a: >-
-          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization with
-          guaranteed resources, DDoS protection and 24/7 support.
+          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization
+          with guaranteed resources, DDoS protection and 24/7 support.
       - q: Which Ubuntu versions are available?
         a: >-
-          We keep current Ubuntu releases ready to deploy, and you can reload your VPS with any supported version from
-          the control panel at any time.
+          We keep current Ubuntu releases ready to deploy, and you can reload your VPS with any supported
+          version from the control panel at any time.
       - q: How fast is my VPS deployed?
         a: >-
-          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login details are
-          emailed to you.
+          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login
+          details are emailed to you.
       - q: Can I upgrade later?
         a: >-
-          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the resources
-          change.
+          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
+          resources change.
   - type: cta
     title: Launch your ubuntu vps today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
@@ -95,4 +120,5 @@ sections:
       text: Get Started Now
       href: https://my.royalclouds.net/cart.php
       external: true
+theme: linux
 ---

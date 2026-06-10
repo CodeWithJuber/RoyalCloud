@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import HeroRC from "~/components/widgets/HeroRC.astro";
+import SectionArt from "./SectionArt.astro";
 import cloud from "~/assets/images/brand/cloud.png";
 import cloudServer from "~/assets/images/brand/cloud-server.png";
 
@@ -15,6 +16,8 @@ interface Props {
   title?: string;
   subtitle?: string;
   offer?: string;
+  /** Themed illustration scene replacing the default hero art (see SectionArt). */
+  art?: string;
   primaryCta?: Cta;
   secondaryCta?: Cta;
   badges?: string[];
@@ -25,6 +28,7 @@ const {
   title,
   subtitle,
   offer,
+  art,
   primaryCta,
   secondaryCta,
   badges,
@@ -39,6 +43,7 @@ const target = (cta?: Cta) =>
       title={title}
       subtitle={subtitle}
       offer={offer ?? eyebrow}
+      art={art}
       primary={
         primaryCta && {
           text: primaryCta.text,
@@ -109,7 +114,11 @@ const target = (cta?: Cta) =>
           <div class="disc" />
           <Image src={cloud} alt="" width={120} height={90} class="c1" />
           <Image src={cloud} alt="" width={90} height={70} class="c2" />
-          <Image src={cloudServer} alt="" width={240} height={240} />
+          {art ? (
+            <SectionArt kind={art} bare />
+          ) : (
+            <Image src={cloudServer} alt="" width={240} height={240} />
+          )}
         </div>
       </div>
     </section>

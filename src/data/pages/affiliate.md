@@ -1,4 +1,5 @@
 ---
+theme: money
 title: Affiliate Program
 metadata:
   title: Royal Clouds Affiliate - Earn 30% Per Sale

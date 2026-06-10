@@ -3,8 +3,8 @@ title: Cheap VPS Hosting
 metadata:
   title: Cheap VPS Hosting - Buy Cheapest KVM VPS Hosting Server India
   description: >-
-    Buy Cheap VPS Hosting Server For Your Website or Blog. Royal Clouds Providing Fast, Secured & Cheapest KVM VPS
-    Hosting Server in India. Starting @4$/M
+    Buy Cheap VPS Hosting Server For Your Website or Blog. Royal Clouds Providing Fast, Secured & Cheapest KVM
+    VPS Hosting Server in India. Starting @4$/M
   ignoreTitleTemplate: true
 breadcrumb:
   - text: KVM VPS Hosting
@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap VPS Hosting
     title: Cheap VPS Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
-      support.
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and
+      friendly 24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -29,6 +29,22 @@ sections:
       - Full Root Access
       - Pure SSD Storage
       - 99.99% Uptime SLA
+    art: rocket
+  - type: benchmark
+    eyebrow: Speed Test
+    title: Why sites feel instantly faster here
+    note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
+    items:
+      - label: Royal Clouds (SSD + LiteSpeed)
+        value: 0.4
+        display: 0.4s
+        highlight: true
+      - label: Typical shared hosting
+        value: 1.9
+        display: 1.9s
+      - label: Budget HDD server
+        value: 3.2
+        display: 3.2s
   - type: pricing
     id: pricing
     plan: vps
@@ -36,6 +52,11 @@ sections:
     title: Choose your cheap vps hosting plan
     showToggle: true
     note: 30-day money-back guarantee · Instant setup · Free migration.
+  - type: mapband
+    eyebrow: Global Reach
+    title: Low latency, wherever your visitors are
+    subtitle: Premium network blends and smart routing keep round-trips short.
+    note: Pick your server location at checkout — more regions coming online.
   - type: features
     eyebrow: Why Royal Clouds
     title: Everything your cheap vps hosting needs
@@ -59,14 +80,6 @@ sections:
       - icon: headset
         title: 24/7 Expert Support
         text: Real engineers on live chat and tickets around the clock, every day of the year.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Technology partners we build on
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
   - type: faq
     eyebrow: FAQ
     title: Cheap VPS Hosting — common questions
@@ -74,20 +87,20 @@ sections:
     items:
       - q: What do I get with Cheap VPS Hosting?
         a: >-
-          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization with
-          guaranteed resources, DDoS protection and 24/7 support.
+          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization
+          with guaranteed resources, DDoS protection and 24/7 support.
       - q: Which operating systems can I install?
         a: >-
-          Ubuntu, Debian, CentOS, Fedora, openSUSE and Scientific Linux are available out of the box, and you can
-          reinstall any of them in one click.
+          Ubuntu, Debian, CentOS, Fedora, openSUSE and Scientific Linux are available out of the box, and you
+          can reinstall any of them in one click.
       - q: How fast is my VPS deployed?
         a: >-
-          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login details are
-          emailed to you.
+          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login
+          details are emailed to you.
       - q: Can I upgrade later?
         a: >-
-          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the resources
-          change.
+          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
+          resources change.
   - type: cta
     title: Launch your cheap vps hosting today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
@@ -95,4 +108,5 @@ sections:
       text: Get Started Now
       href: https://my.royalclouds.net/cart.php
       external: true
+theme: speed
 ---

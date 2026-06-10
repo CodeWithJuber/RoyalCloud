@@ -1,4 +1,5 @@
 ---
+theme: domains
 title: Domains
 metadata:
   title: Register a Domain Name - Cheap Domains | Royal Clouds

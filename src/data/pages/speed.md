@@ -1,8 +1,11 @@
 ---
+theme: speed
 title: Top Speed Solutions
 metadata:
   title: Speed Technology | Royal Clouds
-  description: Royal Clouds delivers up to 15x faster websites with pure SSD RAID-10 storage, the LiteSpeed Web Server, LSCache and the Cloudflare CDN.
+  description: >-
+    Royal Clouds delivers up to 15x faster websites with pure SSD RAID-10 storage, the LiteSpeed Web Server,
+    LSCache and the Cloudflare CDN.
   ignoreTitleTemplate: true
 breadcrumb: []
 transparentHeader: true
@@ -12,8 +15,8 @@ sections:
     eyebrow: Top Speed Solutions
     title: Websites that load <em>up to 15x faster</em>
     subtitle: >-
-      Speed isn't a feature you bolt on — it's engineered into every layer of
-      the Royal Clouds platform, from the SSD array to the edge cache.
+      Speed isn't a feature you bolt on — it's engineered into every layer of the Royal Clouds platform, from
+      the SSD array to the edge cache.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -29,9 +32,8 @@ sections:
     eyebrow: The Stack
     title: Engineered for raw speed
     subtitle: >-
-      Pure SSD RAID-10 storage gives blistering disk I/O, the LiteSpeed Web
-      Server with LSCache serves cached pages in milliseconds, and CloudLinux
-      keeps every account fast and isolated even under load.
+      Pure SSD RAID-10 storage gives blistering disk I/O, the LiteSpeed Web Server with LSCache serves cached
+      pages in milliseconds, and CloudLinux keeps every account fast and isolated even under load.
     image: datacenter
     items:
       - icon: gauge
@@ -46,6 +48,21 @@ sections:
       - icon: cpu
         title: CloudLinux Isolation
         text: Guaranteed resources per account so a busy neighbour never slows you down.
+  - type: benchmark
+    eyebrow: Speed Test
+    title: Measured, not promised
+    note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
+    items:
+      - label: Royal Clouds (SSD + LiteSpeed)
+        value: 0.4
+        display: 0.4s
+        highlight: true
+      - label: Typical shared hosting
+        value: 1.9
+        display: 1.9s
+      - label: Budget HDD server
+        value: 3.2
+        display: 3.2s
   - type: stats
     items:
       - value: 15x

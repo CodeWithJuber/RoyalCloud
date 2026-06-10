@@ -1,4 +1,5 @@
 ---
+theme: panel
 title: CyberPanel VPS
 metadata:
   title: CyberPanel VPS Hosting - OpenLiteSpeed KVM VPS | Royal Clouds

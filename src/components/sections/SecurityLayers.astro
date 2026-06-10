@@ -1,0 +1,165 @@
+---
+/**
+ * Security layers — shield scene beside a numbered protection stack,
+ * with an optional proof-stat row underneath.
+ */
+import ArtShield from "./art/ArtShield.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  layers: { title: string; text: string }[];
+  stats?: { value: string; label: string }[];
+}
+const { eyebrow, title, subtitle, layers, stats } = Astro.props;
+---
+
+<section class="sec-layers">
+  <div class="wrap">
+    <div class="sl-grid">
+      <div class="sl-art reveal rv-left">
+        <ArtShield />
+      </div>
+      <div class="sl-body reveal reveal-d1 rv-right">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        {title && <h2 set:html={title} />}
+        {subtitle && <p class="sl-sub" set:html={subtitle} />}
+        <ol class="sl-list">
+          {
+            layers.map((l) => (
+              <li>
+                <h4>{l.title}</h4>
+                <p>{l.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+    {
+      stats && stats.length > 0 && (
+        <div class="sl-stats reveal">
+          {stats.map((s) => (
+            <div class="sl-stat">
+              <b>{s.value}</b>
+              <small>{s.label}</small>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .sec-layers {
+    background: var(--bg-tint);
+  }
+  .sl-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(36px, 5vw, 72px);
+    align-items: center;
+  }
+  .sl-body h2 {
+    font-size: clamp(28px, 3.6vw, 40px);
+    letter-spacing: -0.02em;
+    margin: 12px 0 0;
+  }
+  .sl-sub {
+    margin-top: 16px;
+    font-size: 17px;
+    color: var(--text-muted);
+  }
+  .sl-list {
+    list-style: none;
+    margin: 28px 0 0;
+    padding: 0;
+    counter-reset: layer;
+  }
+  .sl-list li {
+    position: relative;
+    counter-increment: layer;
+    padding: 0 0 22px 58px;
+  }
+  .sl-list li:last-child {
+    padding-bottom: 0;
+  }
+  .sl-list li::before {
+    content: counter(layer);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1.5px solid var(--theme-accent);
+    color: var(--theme-accent);
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: var(--shadow-xs);
+  }
+  .sl-list li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 19.5px;
+    top: 44px;
+    bottom: 4px;
+    width: 1.5px;
+    background: var(--line-strong);
+  }
+  .sl-list h4 {
+    font-size: 16.5px;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+  .sl-list p {
+    font-size: 14.5px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .sl-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-top: clamp(40px, 5vw, 64px);
+  }
+  .sl-stat {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 20px 22px;
+    box-shadow: var(--shadow-xs);
+    text-align: center;
+  }
+  .sl-stat b {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--theme-accent);
+  }
+  .sl-stat small {
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  @media (max-width: 860px) {
+    .sl-grid {
+      grid-template-columns: 1fr;
+    }
+    .sl-art {
+      order: 2;
+      display: flex;
+      justify-content: center;
+    }
+    .sl-body {
+      order: 1;
+    }
+  }
+</style>

@@ -1,4 +1,5 @@
 ---
+theme: panel
 title: Support
 metadata:
   title: Contact Royal Clouds 24/7 Tech Support

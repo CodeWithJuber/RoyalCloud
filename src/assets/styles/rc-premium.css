@@ -49,6 +49,12 @@
   --pastel-sky: #e6f6fe;
   --pastel-butter: #fff6d6;
   --pastel-peach: #ffeede;
+
+  /* per-page theme hooks (overridden by main[data-theme=…] at end of file) */
+  --theme-accent: var(--rc-violet);
+  --theme-soft: var(--pastel-lavender);
+  --theme-art-a: #7652f2;
+  --theme-art-b: #00a7f5;
   --line: #e9e6f6;
   --line-strong: #d9d2f1;
   /* status + accent surfaces */
@@ -148,7 +154,7 @@ h2 em {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--rc-violet);
+  color: var(--theme-accent);
 }
 .sec-head {
   max-width: 780px;
@@ -2224,4 +2230,79 @@ h2 em {
     flex: 0 0 84%;
     scroll-snap-align: center;
   }
+}
+
+/* ============================================================
+   Page themes — per-page visual identity via main[data-theme].
+   Only accent + tint variables change; ink, headings, buttons
+   and typography stay constant so the system reads consistent.
+   ============================================================ */
+main[data-theme="speed"] {
+  --theme-accent: #d63647;
+  --theme-soft: #ffeceb;
+  --theme-art-a: #ff7a18;
+  --theme-art-b: #fb3e58;
+  --bg-tint: #fff4ee;
+  --bg-tint-strong: #ffe7db;
+  --bg-sky: #fff9f2;
+}
+main[data-theme="security"] {
+  --theme-accent: #0e9f6e;
+  --theme-soft: #e3f7ef;
+  --theme-art-a: #0e9f6e;
+  --theme-art-b: #00a7f5;
+  --bg-tint: #effaf5;
+  --bg-tint-strong: #ddf3e9;
+  --bg-sky: #f2fbf7;
+}
+main[data-theme="server"] {
+  --theme-accent: #0284c7;
+  --theme-soft: #e4f4fd;
+  --theme-art-a: #0284c7;
+  --theme-art-b: #7652f2;
+  --bg-tint: #eff8fe;
+  --bg-tint-strong: #ddeffc;
+  --bg-sky: #f3fafe;
+}
+main[data-theme="panel"] {
+  --theme-accent: var(--rc-violet);
+  --theme-soft: var(--pastel-lavender);
+  --theme-art-a: #7652f2;
+  --theme-art-b: #00a7f5;
+}
+main[data-theme="wordpress"] {
+  --theme-accent: #0a6e9e;
+  --theme-soft: #e2f2fa;
+  --theme-art-a: #0a86bf;
+  --theme-art-b: #7652f2;
+  --bg-tint: #eef7fc;
+  --bg-tint-strong: #dceefa;
+  --bg-sky: #f2fafe;
+}
+main[data-theme="linux"] {
+  --theme-accent: #0f766e;
+  --theme-soft: #def4f1;
+  --theme-art-a: #0f9b8e;
+  --theme-art-b: #22105f;
+  --bg-tint: #eefaf8;
+  --bg-tint-strong: #dcf3ef;
+  --bg-sky: #f1fbf9;
+}
+main[data-theme="money"] {
+  --theme-accent: #b45309;
+  --theme-soft: #fff1dc;
+  --theme-art-a: #f59e0b;
+  --theme-art-b: #fb3e58;
+  --bg-tint: #fff7e9;
+  --bg-tint-strong: #ffefd6;
+  --bg-sky: #fffaf0;
+}
+main[data-theme="domains"] {
+  --theme-accent: #0079b1;
+  --theme-soft: var(--pastel-sky);
+  --theme-art-a: #00a7f5;
+  --theme-art-b: #7652f2;
+  --bg-tint: #eef9ff;
+  --bg-tint-strong: #dcf2fd;
+  --bg-sky: #f3fbff;
 }

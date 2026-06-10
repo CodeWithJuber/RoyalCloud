@@ -1,4 +1,5 @@
 ---
+theme: server
 title: Managed Cloud
 metadata:
   title: Cloud SSD Hosting - Best Cloud SSD Hosting With SSD India

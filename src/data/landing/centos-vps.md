@@ -3,8 +3,8 @@ title: Centos VPS
 metadata:
   title: Fast Centos VPS Hosting - Best Centos SSD VPS Hosting India
   description: >-
-    Order your Centos VPS and choose the software version you prefer. Order now and experience our SSD Centos VPS
-    Hosting speed. Deploy now!
+    Order your Centos VPS and choose the software version you prefer. Order now and experience our SSD Centos
+    VPS Hosting speed. Deploy now!
   ignoreTitleTemplate: true
 breadcrumb:
   - text: KVM VPS Hosting
@@ -16,8 +16,8 @@ sections:
     eyebrow: Centos VPS
     title: Centos VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      CentOS pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup, DDoS
-      protection and friendly 24/7 support.
+      CentOS pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup,
+      DDoS protection and friendly 24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -29,6 +29,24 @@ sections:
       - Full Root Access
       - Pure SSD Storage
       - 99.99% Uptime SLA
+    art: terminal:centos
+  - type: osstrip
+    eyebrow: Operating Systems
+    title: Your distro, ready in one click
+    items:
+      - name: Ubuntu
+        color: "#e95420"
+      - name: Debian
+        color: "#a81d33"
+      - name: CentOS
+        color: "#932279"
+        active: true
+      - name: Fedora
+        color: "#3c6eb4"
+      - name: openSUSE
+        color: "#73ba25"
+      - name: Scientific
+        color: "#7a99ac"
   - type: pricing
     id: pricing
     plan: vps
@@ -36,6 +54,21 @@ sections:
     title: Choose your centos vps plan
     showToggle: true
     note: 30-day money-back guarantee · Instant setup · Free migration.
+  - type: content
+    eyebrow: Why This Distro
+    title: Enterprise Linux, <em>RHEL-compatible</em>
+    items:
+      - icon: building
+        title: Enterprise lineage
+        text: CentOS-family images (incl. AlmaLinux) track Red Hat Enterprise Linux.
+      - icon: layout
+        title: cPanel's favourite home
+        text: The control-panel ecosystem is built and tested on EL distributions first.
+      - icon: refresh
+        title: One-click reinstall
+        text: Reimage to any EL release from the panel whenever you need a clean start.
+    image: datacenter
+    reverse: true
   - type: features
     eyebrow: Why Royal Clouds
     title: Everything your centos vps needs
@@ -59,14 +92,6 @@ sections:
       - icon: headset
         title: 24/7 Expert Support
         text: Real engineers on live chat and tickets around the clock, every day of the year.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Technology partners we build on
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
   - type: faq
     eyebrow: FAQ
     title: Centos VPS — common questions
@@ -74,20 +99,20 @@ sections:
     items:
       - q: What do I get with Centos VPS?
         a: >-
-          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization with
-          guaranteed resources, DDoS protection and 24/7 support.
+          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization
+          with guaranteed resources, DDoS protection and 24/7 support.
       - q: Which CentOS versions are available?
         a: >-
-          We keep current CentOS releases ready to deploy, and you can reload your VPS with any supported version from
-          the control panel at any time.
+          We keep current CentOS releases ready to deploy, and you can reload your VPS with any supported
+          version from the control panel at any time.
       - q: How fast is my VPS deployed?
         a: >-
-          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login details are
-          emailed to you.
+          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login
+          details are emailed to you.
       - q: Can I upgrade later?
         a: >-
-          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the resources
-          change.
+          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
+          resources change.
   - type: cta
     title: Launch your centos vps today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
@@ -95,4 +120,5 @@ sections:
       text: Get Started Now
       href: https://my.royalclouds.net/cart.php
       external: true
+theme: linux
 ---
