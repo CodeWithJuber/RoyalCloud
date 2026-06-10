@@ -1,4 +1,5 @@
 ---
+/** Inner-page hero in the design-handoff language (compact dark-indigo). */
 interface Props {
   eyebrow?: string;
   title: string;
@@ -7,28 +8,26 @@ interface Props {
 }
 const { eyebrow, title, subtitle, price } = Astro.props;
 const PORTAL = 'https://my.royalclouds.net';
-const badges = ['99.99% Uptime', 'Free SSL', '30-Day Money-Back', 'Free Migration'];
+const badges = ['99.99% Uptime SLA', 'Free SSL Certificate', '30-Day Money-Back', 'Free Migration'];
 ---
 
-<section class="relative overflow-hidden bg-[#faf9ff] border-b border-[#efeafe]">
-  <div class="pointer-events-none absolute -z-10 top-[-10rem] right-[-8rem] h-[24rem] w-[24rem] rounded-full opacity-[0.12] blur-3xl" style="background:radial-gradient(circle,#7652f2,transparent 60%)"></div>
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-14 pb-12 md:pt-16 md:pb-14 text-center">
-    {eyebrow && (
-      <span class="inline-block rounded-full bg-[#f1ecff] text-[#5b34d6] px-3.5 py-1.5 text-sm font-semibold uppercase tracking-wide">{eyebrow}</span>
-    )}
-    <h1 class="mt-5 font-extrabold tracking-tight text-3xl md:text-5xl leading-tight text-[#22105f]" style="font-family:var(--aw-font-heading)">{title}</h1>
-    <p class="mt-4 text-lg text-[#4a4a68] max-w-2xl mx-auto">{subtitle}</p>
-    <div class="mt-7 flex flex-wrap gap-3 justify-center">
-      <a href={`${PORTAL}/cart.php`} target="_blank" class="btn-cta">{price ? `From ${price}/mo` : 'Get Started'}</a>
-      <a href="#pricing" class="btn-outline">View Pricing</a>
+<section class="hero rc-inner-hero">
+  <div class="wrap" style="position: relative; max-width: 880px; text-align: center;">
+    {eyebrow && <span class="hero-eyebrow"><span class="dot"></span>{eyebrow}</span>}
+    <h1>{title}</h1>
+    <p class="sub" style="margin-left: auto; margin-right: auto;">{subtitle}</p>
+    <div class="hero-ctas" style="justify-content: center;">
+      <a class="btn btn-primary" href={`${PORTAL}/cart.php`} target="_blank" rel="noopener">{price ? `From ${price}/mo` : 'Get Started'} →</a>
+      <a class="btn btn-ghost-light" href="#pricing">View Pricing</a>
     </div>
-    <ul class="mt-7 flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm font-medium text-[#4a4a68]">
-      {badges.map((b) => (
-        <li class="inline-flex items-center gap-1.5">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-          {b}
-        </li>
-      ))}
-    </ul>
+    <div class="hero-trust" style="justify-content: center;">
+      {badges.map((b) => (<span class="t">{b}</span>))}
+    </div>
   </div>
 </section>
+
+<style>
+  .rc-inner-hero { padding: 64px 0 72px; }
+  .rc-inner-hero h1 { font-size: clamp(32px, 4vw, 48px); }
+  .rc-inner-hero .hero-trust { margin-top: 34px; }
+</style>

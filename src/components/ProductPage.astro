@@ -1,11 +1,8 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import ProductHero from '~/components/widgets/ProductHero.astro';
-import Pricing from '~/components/widgets/Pricing.astro';
-import Features from '~/components/widgets/Features.astro';
-import FAQs from '~/components/widgets/FAQs.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
-import { toPrices, toFeatureItems, type Plan } from '~/utils/plans';
+import PlanGridRC from '~/components/widgets/PlanGridRC.astro';
+import { type Plan } from '~/utils/plans';
 import faqsData from '~/data/faqs.json';
 
 interface Props {
@@ -28,35 +25,68 @@ const metadata = {
     price={`${plan.currency}${plan.tiers[0].price}`}
   />
 
-  <Pricing
+  <PlanGridRC
     id="pricing"
+    eyebrow="Pricing"
     title={`${plan.name} plans`}
     subtitle={plan.billingNote}
-    tagline="Pricing"
-    prices={toPrices(plan)}
+    tiers={plan.tiers}
+    note="30-day money-back guarantee on every plan."
   />
 
-  <Features
-    tagline={`Why ${plan.name}`}
-    title="Built for performance, security & peace of mind"
-    columns={2}
-    items={toFeatureItems(plan)}
-  />
+  <!-- Highlights in the design's feature-card language -->
+  <section class="features">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow">Why {plan.name}</span>
+        <h2>Built for performance, security &amp; peace of mind</h2>
+      </div>
+      <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+        {plan.highlights.map((h) => (
+          <div class="card feature-card reveal">
+            <h3>{h.title}</h3>
+            <p>{h.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  <FAQs
-    title="Frequently asked questions"
-    tagline="FAQ"
-    classes={{ container: 'max-w-6xl' }}
-    items={faqsData.general.map((f) => ({ title: f.q, description: f.a }))}
-  />
+  <!-- FAQ in the design accordion -->
+  <section class="faq-sec" style="background: var(--bg-tint);">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Frequently asked questions</h2>
+      </div>
+      <div class="faq-list">
+        {faqsData.general.map((f, i) => (
+          <details class="faq reveal" open={i === 0}>
+            <summary>{f.q}<span class="pm">+</span></summary>
+            <p class="ans">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  <CallToAction
-    actions={[
-      { variant: 'primary', text: 'Get Started', href: `${PORTAL}/cart.php`, target: '_blank', icon: 'tabler:rocket' },
-      { text: 'Live chat', href: `${PORTAL}/clientarea.php`, target: '_blank' },
-    ]}
-  >
-    <Fragment slot="title">Ready to get started?</Fragment>
-    <Fragment slot="subtitle">Free SSL, free migration and a 30-day money-back guarantee on every plan.</Fragment>
-  </CallToAction>
+  <!-- Final CTA band -->
+  <section class="final-cta" style="padding-top: 64px;">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <h2>Ready to get started?</h2>
+        <p>Free SSL, free migration and a 30-day money-back guarantee on every plan.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href={`${PORTAL}/cart.php`} target="_blank" rel="noopener">🚀 Get Started</a>
+          <a class="btn btn-ghost-light" href={`${PORTAL}/clientarea.php`} target="_blank" rel="noopener">Live chat</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  @media (max-width: 720px) {
+    .feature-grid { grid-template-columns: 1fr !important; }
+  }
+</style>

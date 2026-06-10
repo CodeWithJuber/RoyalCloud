@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '~/assets/images/brand/logo-white.png';
+const PORTAL = 'https://my.royalclouds.net';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <Image src={logoWhite} alt="Royal Clouds" width={160} height={55} />
+        <p>Premium SSD web hosting, KVM VPS, managed WordPress and dedicated servers — built for speed with LiteSpeed, free SSL and friendly 24/7 support.</p>
+      </div>
+      <div class="fcol">
+        <h5>Hosting</h5>
+        <ul>
+          <li><a href="/shared-hosting">SSD Shared Hosting</a></li>
+          <li><a href="/cpanel-hosting">cPanel Hosting</a></li>
+          <li><a href="/managed-wordpress-hosting">WordPress Hosting</a></li>
+          <li><a href="/kvm-vps-hosting">KVM VPS</a></li>
+          <li><a href="/cyberpanel-vps-hosting">CyberPanel VPS</a></li>
+          <li><a href="/dedicated-servers">Dedicated Servers</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/testimonials">Testimonials</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="mailto:sales@royalclouds.net">Contact Sales</a></li>
+          <li><a href={`${PORTAL}/affiliates.php`} target="_blank" rel="noopener">Affiliates</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h5>Support</h5>
+        <ul>
+          <li><a href={`${PORTAL}/submitticket.php`} target="_blank" rel="noopener">Submit a Ticket</a></li>
+          <li><a href={`${PORTAL}/knowledgebase.php`} target="_blank" rel="noopener">Knowledge Base</a></li>
+          <li><a href={`${PORTAL}/clientarea.php`} target="_blank" rel="noopener">Client Area</a></li>
+          <li><a href="mailto:support@royalclouds.net">support@royalclouds.net</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} Royal Clouds. All rights reserved.</span>
+      <div class="footer-badges">
+        <span>99.99% Uptime SLA</span>
+        <span>30-Day Money-Back</span>
+        <span>Instant Setup</span>
+      </div>
+    </div>
+  </div>
+</footer>
