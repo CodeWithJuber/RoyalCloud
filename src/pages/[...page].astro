@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, metadata = {}, breadcrumb, transparentHeader, sections } = entry.data;
+const { title, metadata = {}, breadcrumb, transparentHeader, redirect, sections } = entry.data;
 const { Content } = await render(entry);
 const hasBody = Boolean(entry.body?.trim());
 
@@ -40,6 +40,16 @@ const pageUrl = new URL(Astro.url.pathname, site.url).href;
 ---
 
 <PageLayout metadata={meta} transparentHeader={overlayHeader}>
+  {
+    redirect && (
+      <>
+        <meta http-equiv="refresh" content={`0; url=${redirect}`} />
+        <script is:inline define:vars={{ redirect }}>
+          window.location.replace(redirect);
+        </script>
+      </>
+    )
+  }
   <SectionRenderer sections={sections} />
   {
     hasBody && (

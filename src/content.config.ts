@@ -199,6 +199,7 @@ const pageSchema = z.object({
   metadata: pageMetadataSchema,
   breadcrumb: z.array(z.object({ text: z.string(), href: z.string() })).optional(),
   transparentHeader: z.boolean().optional(),
+  redirect: z.string().optional(),
   sections: z.array(sectionSchema).default([]),
 });
 
