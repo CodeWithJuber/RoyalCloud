@@ -12,6 +12,8 @@ import Metadata from '~/components/common/Metadata.astro';
 import SiteVerification from '~/components/common/SiteVerification.astro';
 import Analytics from '~/components/common/Analytics.astro';
 import BasicScripts from '~/components/common/BasicScripts.astro';
+import StructuredData from '~/components/common/StructuredData.astro';
+import { organization, webSite } from '~/utils/structuredData';
 
 // Comment the line below to disable View Transitions
 import { ClientRouter } from 'astro:transitions';
@@ -36,6 +38,8 @@ const { language, textDirection } = I18N;
     <Metadata {...metadata} />
     <SiteVerification />
     <Analytics />
+    <StructuredData schema={organization()} />
+    <StructuredData schema={webSite()} />
 
     <link rel="preconnect" href="https://images.unsplash.com" />
 

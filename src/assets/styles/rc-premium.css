@@ -631,7 +631,7 @@ h1 em, h2 em {
   background-clip: text;
   color: transparent;
 }
-.hero h1 em { background: linear-gradient(100deg, #ffe978 0%, #6fd0ff 100%); -webkit-background-clip: text; background-clip: text; }
+.hero h1 em, .rc-hero h1 em { background: linear-gradient(100deg, #ffe978 0%, #6fd0ff 100%); -webkit-background-clip: text; background-clip: text; }
 
 /* glass chips on gradient backgrounds */
 .glass {
@@ -724,8 +724,8 @@ h1 em, h2 em {
 .p-hero .hero-ctas { justify-content: center; margin-bottom: 0; }
 .p-hero .hero-badges { justify-content: center; }
 
-/* simple hero (legal / utility pages) */
-.s-hero { background: var(--bg-tint); border-bottom: 1px solid #efecfa; padding: 150px 0 56px; }
+/* simple hero (legal / utility pages) — rendered under the solid sticky header */
+.s-hero { background: var(--bg-tint); border-bottom: 1px solid #efecfa; padding: 56px 0; }
 .s-hero h1 { font-size: clamp(28px, 3.6vw, 42px); margin-top: 14px; }
 .s-hero .sub { font-size: 17px; color: var(--text-muted); margin-top: 12px; max-width: 640px; }
 
@@ -789,5 +789,5 @@ h1 em, h2 em {
 @media (max-width: 860px) {
   .dd-panel.mega { min-width: 0; grid-template-columns: 1fr; }
   .p-hero { padding: 140px 0 64px; }
-  .s-hero { padding: 128px 0 44px; }
+  .s-hero { padding: 44px 0; }
 }

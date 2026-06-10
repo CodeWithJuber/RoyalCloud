@@ -1,0 +1,56 @@
+---
+/**
+ * Page-builder route — renders every native page from src/data/pages and
+ * src/data/landing. Slug = filename; the clone catch-all automatically stops
+ * serving any slug that exists here (see src/utils/migratedSlugs.ts).
+ */
+import { getCollection, render } from 'astro:content';
+import PageLayout from '~/layouts/PageLayout.astro';
+import SectionRenderer from '~/components/sections/SectionRenderer.astro';
+import StructuredData from '~/components/common/StructuredData.astro';
+import { breadcrumbList } from '~/utils/structuredData';
+import site from '~/data/site.json';
+
+export async function getStaticPaths() {
+  const [pages, landing] = await Promise.all([getCollection('pages'), getCollection('landing')]);
+  return [...pages, ...landing].map((entry) => ({
+    params: { page: entry.id === 'index' ? undefined : entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { title, metadata = {}, breadcrumb, transparentHeader, sections } = entry.data;
+const { Content } = await render(entry);
+const hasBody = Boolean(entry.body?.trim());
+
+const first = sections[0];
+const overlayHeader =
+  transparentHeader ?? (first?.type === 'hero' && (first.variant === 'gradient' || first.variant === 'product'));
+
+const meta = {
+  title: metadata.title || title,
+  description: metadata.description,
+  ignoreTitleTemplate: metadata.ignoreTitleTemplate,
+  ...(metadata.canonical ? { canonical: new URL(metadata.canonical, site.url).href } : {}),
+  ...(metadata.noindex ? { robots: { index: false, follow: true } } : {}),
+};
+
+const pageUrl = new URL(Astro.url.pathname, site.url).href;
+---
+
+<PageLayout metadata={meta} transparentHeader={overlayHeader}>
+  <SectionRenderer sections={sections} />
+  {
+    hasBody && (
+      <section class="prose-sec">
+        <div class="wrap">
+          <div class="prose-body">
+            <Content />
+          </div>
+        </div>
+      </section>
+    )
+  }
+  {breadcrumb && breadcrumb.length > 0 && <StructuredData schema={breadcrumbList(breadcrumb, title, pageUrl)} />}
+</PageLayout>

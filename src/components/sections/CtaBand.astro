@@ -1,0 +1,45 @@
+---
+interface Cta {
+  text: string;
+  href: string;
+  external?: boolean;
+}
+interface Props {
+  title?: string;
+  subtitle?: string;
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+}
+const {
+  title = 'Ready to get started?',
+  subtitle,
+  primaryCta = { text: 'Get Started Now', href: 'https://my.royalclouds.net/cart.php', external: true },
+  secondaryCta,
+} = Astro.props;
+const target = (cta?: Cta) => (cta?.external || /^https?:\/\//.test(cta?.href ?? '') ? '_blank' : undefined);
+---
+
+<section class="final-cta cv-auto">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2 set:html={title} />
+      {subtitle && <p set:html={subtitle} />}
+      <div class="hero-ctas">
+        {
+          primaryCta && (
+            <a class="btn btn-primary" href={primaryCta.href} target={target(primaryCta)} rel={target(primaryCta) && 'noopener'}>
+              {primaryCta.text}
+            </a>
+          )
+        }
+        {
+          secondaryCta && (
+            <a class="btn btn-ghost-light" href={secondaryCta.href} target={target(secondaryCta)} rel={target(secondaryCta) && 'noopener'}>
+              {secondaryCta.text}
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

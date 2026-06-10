@@ -213,7 +213,13 @@ const landingCollection = defineCollection({
 });
 
 const plansCollection = defineCollection({
-  loader: glob({ pattern: '*.json', base: 'src/data/plans' }),
+  // generateId: ignore the legacy `slug` field inside the JSON — plan ids are
+  // the filenames (shared, vps, wordpress, ...) referenced by pricing sections.
+  loader: glob({
+    pattern: '*.json',
+    base: 'src/data/plans',
+    generateId: ({ entry }) => entry.replace(/\.json$/, ''),
+  }),
   schema: z.object({
     id: z.string(),
     name: z.string(),

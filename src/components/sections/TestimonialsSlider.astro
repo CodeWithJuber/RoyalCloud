@@ -1,0 +1,62 @@
+---
+import { Icon } from 'astro-icon/components';
+import testimonialsData from '~/data/testimonials.json';
+
+interface Testimonial {
+  name: string;
+  site?: string;
+  rating?: number;
+  quote: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  source?: 'global' | 'inline';
+  limit?: number;
+  items?: Testimonial[];
+}
+const { eyebrow = 'Reviews', title = 'Loved by website owners', subtitle, source = 'global', limit, items } = Astro.props;
+
+let list: Testimonial[] = source === 'inline' && items?.length ? items : (testimonialsData.items as Testimonial[]);
+if (limit) list = list.slice(0, limit);
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
+---
+
+<section class="testi-sec cv-auto">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {title && <h2 set:html={title} />}
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+    <div class="testi-grid slider">
+      {
+        list.map((t, i) => (
+          <div class={`card testi reveal reveal-d${(i % 3) + 1}`}>
+            <div class="stars" aria-label={`${t.rating ?? 5} out of 5 stars`}>
+              {Array.from({ length: t.rating ?? 5 }).map(() => (
+                <Icon name="tabler:star-filled" />
+              ))}
+            </div>
+            <blockquote>“{t.quote}”</blockquote>
+            <div class="who">
+              <span class="avatar">{initials(t.name)}</span>
+              <div>
+                <div class="name">{t.name}</div>
+                {t.site && <div class="site">{t.site}</div>}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

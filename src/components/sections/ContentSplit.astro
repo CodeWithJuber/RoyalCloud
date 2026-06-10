@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { marked } from 'marked';
+import { tablerIcon } from '~/utils/plans';
+import { resolveSectionImage } from '~/utils/sectionImages';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  image?: string;
+  reverse?: boolean;
+  body?: string;
+  items?: { icon?: string; title?: string; text?: string }[];
+}
+const { eyebrow, title, subtitle, image, reverse = false, body, items } = Astro.props;
+const img = resolveSectionImage(image);
+const html = body ? await marked.parse(body) : undefined;
+---
+
+<section class="cv-auto">
+  <div class={`wrap split ${reverse ? 'rev' : ''}`}>
+    {
+      img && (
+        <div class="split-media reveal">
+          {typeof img === 'string' ? (
+            <img src={img} alt={title ?? ''} loading="lazy" decoding="async" />
+          ) : (
+            <Image src={img} alt={title ?? ''} widths={[480, 760]} sizes="(max-width: 860px) 100vw, 560px" loading="lazy" />
+          )}
+        </div>
+      )
+    }
+    <div class="split-body reveal reveal-d1">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {title && <h2 set:html={title} />}
+      {subtitle && <p set:html={subtitle} />}
+      {html && <div class="split-prose" set:html={html} />}
+      {
+        items && items.length > 0 && (
+          <div class="point-list">
+            {items.map((p) => (
+              <div class="point">
+                <div class="p-ic f-icon-grad">
+                  <Icon name={tablerIcon(p.icon ?? 'bolt')} />
+                </div>
+                <div>
+                  <h4>{p.title}</h4>
+                  <p>{p.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .split-prose { font-size: 16px; color: var(--text-default); }
+  .split-prose :global(p) { margin-bottom: 14px; }
+  .split-prose :global(ul) { margin: 0 0 14px 20px; }
+  .split-prose :global(li) { margin-bottom: 7px; }
+  .split-prose :global(strong) { color: var(--text-heading); }
+  .split-prose :global(a) { color: var(--rc-purple); font-weight: 500; }
+</style>

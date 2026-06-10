@@ -1,0 +1,35 @@
+---
+import { getEntry } from 'astro:content';
+import PlanGridRC from '~/components/widgets/PlanGridRC.astro';
+import StructuredData from '~/components/common/StructuredData.astro';
+import { product } from '~/utils/structuredData';
+import site from '~/data/site.json';
+
+interface Props {
+  id?: string;
+  plan: string;
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  showToggle?: boolean;
+  note?: string;
+}
+const { id = 'pricing', plan: planId, eyebrow = 'Pricing', title, subtitle, showToggle = true, note } = Astro.props;
+
+const entry = await getEntry('plans', planId);
+if (!entry) throw new Error(`PricingSection: unknown plan "${planId}"`);
+const plan = entry.data;
+
+const pageUrl = new URL(Astro.url.pathname, site.url).href;
+---
+
+<PlanGridRC
+  id={id}
+  eyebrow={eyebrow}
+  title={title ?? plan.title}
+  subtitle={subtitle ?? plan.subtitle}
+  tiers={plan.tiers}
+  note={note ?? plan.billingNote}
+  showToggle={showToggle}
+/>
+<StructuredData schema={product(plan, pageUrl)} />
