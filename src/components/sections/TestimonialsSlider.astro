@@ -50,7 +50,7 @@ const initials = (name: string) =>
     <div class="testi-grid slider">
       {
         list.map((t, i) => (
-          <div class={`card testi reveal reveal-d${(i % 3) + 1}`}>
+          <div class={`card testi reveal rv-scale reveal-d${(i % 3) + 1}`}>
             <div class="stars" aria-label={`${t.rating ?? 5} out of 5 stars`}>
               {Array.from({ length: t.rating ?? 5 }).map(() => (
                 <Icon name="tabler:star-filled" />

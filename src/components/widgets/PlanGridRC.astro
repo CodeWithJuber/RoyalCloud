@@ -84,7 +84,7 @@ const shownPrice = (t: Tier) =>
       {
         tiers.map((t, i) => (
           <div
-            class={`plan reveal reveal-d${(i % 4) + 1}${t.popular ? " popular" : ""}`}
+            class={`plan reveal rv-scale reveal-d${(i % 4) + 1}${t.popular ? " popular" : ""}`}
           >
             {t.popular && <span class="plan-band">Best Value</span>}
             <h3>{t.name}</h3>

@@ -19,10 +19,25 @@
   --rc-orange: #ff7a18;
   --rc-orange-dark: #ed6a00;
   --rc-orange-deep: #d65f00;
+  --rc-plum: #7d4a56; /* original royalclouds.net section-heading plum */
+  --rc-coral: #fb3e58; /* original search-button coral */
   --rc-purple: #7652f2; /* legacy alias */
   --rc-indigo: #22105f; /* legacy alias */
   --rc-indigo-deep: #160a40; /* legacy alias */
   --rc-gradient: linear-gradient(120deg, #5b34d6 0%, #7652f2 45%, #00a7f5 100%);
+  /* original royalclouds.net vivid hero/panel gradient */
+  --rc-grad-vivid:
+    radial-gradient(
+      720px 420px at 8% 108%,
+      rgba(226, 58, 142, 0.5) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      640px 380px at 96% -8%,
+      rgba(0, 167, 245, 0.35) 0%,
+      transparent 55%
+    ),
+    linear-gradient(118deg, #3d28cc 0%, #6c2bd9 52%, #a032d8 100%);
 
   /* surfaces */
   --bg-page: #ffffff;
@@ -112,12 +127,12 @@ section {
   padding: var(--space-section) 0;
 }
 
-/* keyword highlight in headlines → calm violet */
+/* keyword highlight in headlines → original sky blue */
 .text-grad,
 h1 em,
 h2 em {
   font-style: normal;
-  color: var(--rc-violet);
+  color: var(--rc-blue);
 }
 
 /* ---------- Eyebrow / section headings ---------- */
@@ -144,6 +159,10 @@ h2 em {
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 12px 0 0;
+  color: var(--rc-plum);
+}
+.sec-head h2 em {
+  color: var(--rc-blue);
 }
 .sec-head p {
   font-size: 18px;
@@ -204,16 +223,27 @@ h2 em {
   height: 17px;
 }
 
-/* primary conversion = brand orange */
+/* primary conversion = original royalclouds.net yellow pill */
 .btn-primary {
-  background: var(--rc-orange-dark);
-  color: #fff;
-  box-shadow: 0 10px 22px -10px rgba(237, 106, 0, 0.6);
+  background: var(--rc-yellow);
+  color: var(--rc-ink);
+  box-shadow: 0 10px 22px -10px rgba(200, 170, 0, 0.55);
 }
 .btn-primary:hover {
-  background: var(--rc-orange-deep);
+  background: #ffe23d;
+  color: var(--rc-ink);
+  box-shadow: 0 16px 30px -10px rgba(200, 170, 0, 0.6);
+}
+
+/* coral action (original domain-search button) */
+.btn-coral {
+  background: var(--rc-coral);
   color: #fff;
-  box-shadow: 0 16px 30px -10px rgba(237, 106, 0, 0.65);
+  box-shadow: 0 10px 22px -10px rgba(251, 62, 88, 0.55);
+}
+.btn-coral:hover {
+  background: #e92846;
+  color: #fff;
 }
 
 /* solid ink pill (SiteGround's black button, in Royal Clouds indigo) */
@@ -256,8 +286,8 @@ h2 em {
 
 /* ---------- Promo bar (above the header) ---------- */
 .promo-bar {
-  background: var(--rc-yellow);
-  color: var(--rc-ink);
+  background: var(--rc-grad-vivid);
+  color: rgba(255, 255, 255, 0.9);
   text-align: center;
   font-family: var(--font-heading);
   font-size: 13.5px;
@@ -266,6 +296,7 @@ h2 em {
 }
 .promo-bar b {
   font-weight: 800;
+  color: var(--rc-yellow);
 }
 
 /* ---------- Header (clean white, always sticky) ---------- */
@@ -693,6 +724,44 @@ h2 em {
 .steps-sec {
   background: var(--bg-tint);
 }
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 64px;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.steps-figure {
+  position: relative;
+  text-align: center;
+}
+.steps-figure .m {
+  width: 190px;
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 24px 36px rgba(34, 16, 95, 0.22));
+}
+.steps-figure .c {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-90px);
+  width: 92px;
+  height: auto;
+}
+@media (max-width: 860px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+  .steps-figure {
+    order: -1;
+  }
+  .steps-figure .m {
+    width: 150px;
+  }
+}
 .step-list {
   display: flex;
   flex-direction: column;
@@ -819,7 +888,7 @@ h2 em {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
-  padding: 28px 26px;
+  padding: 28px 26px 0;
   text-align: left;
   box-shadow: var(--shadow-xs);
   transition:
@@ -837,6 +906,9 @@ h2 em {
   border-color: var(--rc-violet);
   box-shadow: var(--shadow-md);
   padding-top: 66px;
+}
+.plan h3 a:hover {
+  color: var(--rc-violet);
 }
 .plan.popular:hover {
   box-shadow: var(--shadow-lg);
@@ -857,6 +929,7 @@ h2 em {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 10px 12px;
+  z-index: 1;
 }
 .plan h3 {
   font-size: 19px;
@@ -887,8 +960,8 @@ h2 em {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--rc-ink);
-  background: var(--rc-yellow);
+  color: var(--rc-coral);
+  background: #ffe9ed;
   border-radius: 6px;
   padding: 3px 8px;
 }
@@ -923,15 +996,6 @@ h2 em {
   font-size: 12.5px;
   margin-top: 18px;
 }
-.plan .btn-plan {
-  background: var(--rc-ink);
-  color: #fff;
-}
-.plan .btn-plan:hover {
-  background: var(--rc-violet-dark);
-  color: #fff;
-  box-shadow: 0 14px 28px -12px rgba(91, 52, 214, 0.55);
-}
 /* renews fine print */
 .plan .price-note {
   font-size: 12px;
@@ -940,19 +1004,28 @@ h2 em {
   min-height: 18px;
   text-align: center;
 }
+.plan .btn-plan {
+  background: var(--rc-yellow);
+  color: var(--rc-ink);
+}
+.plan .btn-plan:hover {
+  background: #ffe23d;
+  color: var(--rc-ink);
+}
+/* original royalclouds.net split card: purple gradient feature panel */
 .plan .feat {
   list-style: none;
-  margin: 18px 0 0;
-  padding: 20px 0 0;
-  border-top: 1px solid var(--line);
+  margin: 20px -26px 0;
+  padding: 22px 26px 26px;
+  background: linear-gradient(160deg, #4630d8 0%, #6c2bd9 55%, #8b30dc 100%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
   flex: 1;
 }
 .plan .feat li {
   font-size: 13.5px;
-  color: var(--text-default);
+  color: rgba(255, 255, 255, 0.92);
   display: flex;
   gap: 9px;
   align-items: baseline;
@@ -963,8 +1036,8 @@ h2 em {
   width: 17px;
   height: 17px;
   border-radius: 50%;
-  background: var(--bg-tint);
-  color: var(--rc-violet);
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--rc-yellow);
   font-size: 10.5px;
   font-weight: 700;
   line-height: 17px;
@@ -978,9 +1051,11 @@ h2 em {
   color: var(--text-muted);
 }
 
-/* ---------- Stats band (flat brand indigo) ---------- */
+/* ---------- Stats band (original vivid gradient) ---------- */
 .stats {
-  background: var(--rc-ink);
+  position: relative;
+  overflow: hidden;
+  background: var(--rc-grad-vivid);
   padding: 76px 0;
 }
 .stat-grid {
@@ -1145,7 +1220,7 @@ h2 em {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-panel);
-  background: var(--rc-ink-deep);
+  background: var(--rc-grad-vivid);
   padding: 72px 56px;
 }
 .domain-panel::after {
@@ -1303,10 +1378,25 @@ h2 em {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-panel);
-  background: var(--rc-ink);
+  background: var(--rc-grad-vivid);
   padding: 80px 64px;
   text-align: center;
   color: #fff;
+}
+/* the mascot waves goodbye in the final CTA */
+.cta-band .cta-mascot {
+  position: absolute;
+  right: 48px;
+  bottom: 0;
+  width: 120px;
+  height: auto;
+  z-index: 1;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.35));
+}
+@media (max-width: 860px) {
+  .cta-band .cta-mascot {
+    display: none;
+  }
 }
 /* brand clouds drifting in the band corners */
 .cta-band::before,
@@ -1861,6 +1951,15 @@ h2 em {
     transition:
       opacity 0.65s cubic-bezier(0.2, 0.65, 0.25, 1),
       transform 0.65s cubic-bezier(0.2, 0.65, 0.25, 1);
+  }
+  body[data-motion="on"] .reveal.rv-left {
+    transform: translateX(-32px);
+  }
+  body[data-motion="on"] .reveal.rv-right {
+    transform: translateX(32px);
+  }
+  body[data-motion="on"] .reveal.rv-scale {
+    transform: translateY(18px) scale(0.96);
   }
   body[data-motion="on"] .reveal.in {
     opacity: 1;

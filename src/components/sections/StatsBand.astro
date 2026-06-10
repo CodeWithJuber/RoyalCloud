@@ -3,19 +3,88 @@ interface Props {
   items: { value: string; label: string }[];
 }
 const { items } = Astro.props;
+
+// Split "99.99%" → count target 99.99 + suffix "%"; "24/7" stays static.
+const parse = (v: string) => {
+  const m = v.match(/^(\d+(?:\.\d+)?)([^\d].*)?$/);
+  if (!m || v.includes("/")) return null;
+  return { target: m[1], suffix: m[2] ?? "" };
+};
 ---
 
 <section class="stats">
   <div class="wrap">
     <div class="stat-grid">
       {
-        items.map((s, i) => (
-          <div class={`stat reveal reveal-d${(i % 4) + 1}`}>
-            <div class="amount">{s.value}</div>
-            <div class="label">{s.label}</div>
-          </div>
-        ))
+        items.map((s, i) => {
+          const c = parse(s.value);
+          return (
+            <div class={`stat reveal reveal-d${(i % 4) + 1}`}>
+              <div
+                class="amount"
+                {...(c
+                  ? {
+                      "data-count": c.target,
+                      "data-suffix": c.suffix,
+                    }
+                  : {})}
+              >
+                {s.value}
+              </div>
+              <div class="label">{s.label}</div>
+            </div>
+          );
+        })
       }
     </div>
   </div>
 </section>
+
+<script>
+  /** SiteGround-style count-up when the stats band scrolls into view. */
+  function rcCountInit() {
+    const els = document.querySelectorAll<HTMLElement>(
+      ".stat .amount[data-count]",
+    );
+    if (!els.length) return;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const run = (el: HTMLElement) => {
+      const target = parseFloat(el.dataset.count || "0");
+      const suffix = el.dataset.suffix || "";
+      const decimals = (el.dataset.count || "").split(".")[1]?.length ?? 0;
+      if (reduced) {
+        el.textContent = el.dataset.count + suffix;
+        return;
+      }
+      const dur = 1400;
+      const t0 = performance.now();
+      const tick = (t: number) => {
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * eased).toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if (typeof IntersectionObserver === "undefined") {
+      els.forEach(run);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            run(e.target as HTMLElement);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+    els.forEach((el) => io.observe(el));
+  }
+  rcCountInit();
+  document.addEventListener("astro:after-swap", rcCountInit);
+</script>
