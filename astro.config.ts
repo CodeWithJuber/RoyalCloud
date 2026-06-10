@@ -3,8 +3,6 @@ import { fileURLToPath } from 'url';
 
 import { defineConfig } from 'astro/config';
 
-import { unified } from '@astrojs/markdown-remark';
-
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
@@ -15,8 +13,6 @@ import type { AstroIntegration } from 'astro';
 
 import astrowind from './vendor/integration';
 
-import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter';
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
@@ -25,6 +21,13 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
   output: 'static',
+
+  // Emit flat files (shared-hosting.html, not shared-hosting/index.html) so the
+  // cloned pages keep the live site's extensionless URLs and their relative
+  // `assets/...` references resolve to /assets/... exactly as on royalclouds.net.
+  build: {
+    format: 'file',
+  },
 
   integrations: [
     sitemap(),
@@ -56,15 +59,14 @@ export default defineConfig({
       })
     ),
 
+    // Clone fidelity: leave the captured theme HTML/CSS/JS untouched so the
+    // pages render byte-for-byte like the live site (assets are already minified
+    // upstream). Re-enable later if you want extra compression.
     compress({
-      CSS: true,
-      HTML: {
-        'html-minifier-terser': {
-          removeAttributeQuotes: false,
-        },
-      },
+      CSS: false,
+      HTML: false,
       Image: false,
-      JavaScript: true,
+      JavaScript: false,
       SVG: false,
       Logger: 1,
     }),
@@ -86,13 +88,6 @@ export default defineConfig({
     // native <Image /> (i.e. providers Unpic can't detect, like Pixabay).
     // Listed entries are authorized to be processed by Sharp.
     domains: ['cdn.pixabay.com'],
-  },
-
-  markdown: {
-    processor: unified({
-      remarkPlugins: [readingTimeRemarkPlugin],
-      rehypePlugins: [responsiveTablesRehypePlugin],
-    }),
   },
 
   vite: {
