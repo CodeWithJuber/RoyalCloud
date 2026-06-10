@@ -238,6 +238,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     margin: 4px 0 8px;
   }
   .f-help-card em {
+    display: inline-block;
     font-style: normal;
     font-family: var(--font-heading);
     font-size: 12px;
@@ -245,6 +246,10 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--rc-coral);
+    transition: transform 0.18s ease;
+  }
+  .f-help-card:hover em {
+    transform: translateX(3px);
   }
   .f-help-card:hover em {
     text-decoration: underline;
@@ -377,6 +382,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   }
   .fcol-toggle {
     all: unset;
+    outline: revert;
     cursor: default;
     display: flex;
     align-items: center;
@@ -527,6 +533,21 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   .to-top.show {
     opacity: 1;
     transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .to-top.show {
+      animation: toTopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+  }
+  @keyframes toTopIn {
+    0% {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   .to-top:hover {
     background: #0095db;
