@@ -87,6 +87,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 120px;
+  overflow-x: clip;
 }
 body {
   font-family: var(--font-body);
@@ -124,7 +125,7 @@ img {
   padding: 0 28px;
 }
 section {
-  padding: var(--space-section) 0;
+  padding-block: var(--space-section);
 }
 
 /* keyword highlight in headlines → original sky blue */
@@ -373,6 +374,7 @@ h2 em {
   font-size: 15px;
   font-weight: 600;
   color: var(--rc-ink);
+  white-space: nowrap;
   transition: color 0.15s ease;
 }
 .header-cta .login:hover {
@@ -410,7 +412,7 @@ h2 em {
 
 /* ---------- Trust bar ---------- */
 .trustbar {
-  padding: 0;
+  padding-block: 0;
   background: #fff;
   border-bottom: 1px solid var(--line);
 }
@@ -1523,7 +1525,7 @@ h2 em {
   /* original royalclouds.net footer navy */
   background: #0d1a30;
   color: rgba(255, 255, 255, 0.62);
-  padding: 0;
+  padding-block: 0;
 }
 .footer-grid {
   display: grid;
@@ -1908,7 +1910,7 @@ h2 em {
 
 /* ---------- Breadcrumbs ---------- */
 .breadcrumbs {
-  padding: 0;
+  padding-block: 0;
 }
 .breadcrumbs ol {
   list-style: none;
@@ -2003,10 +2005,10 @@ h2 em {
 @media (prefers-reduced-motion: no-preference) {
   body[data-motion="on"] .reveal {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(18px);
     transition:
-      opacity 0.65s cubic-bezier(0.2, 0.65, 0.25, 1),
-      transform 0.65s cubic-bezier(0.2, 0.65, 0.25, 1);
+      opacity 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
   body[data-motion="on"] .reveal.rv-left {
     transform: translateX(-32px);
@@ -2067,6 +2069,18 @@ h2 em {
 }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 1180px) {
+  .nav {
+    gap: 18px;
+  }
+  .nav a,
+  .header-cta .login {
+    font-size: 14px;
+  }
+  .header-inner {
+    gap: 22px;
+  }
+}
 @media (max-width: 1080px) {
   .plan-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -2094,7 +2108,7 @@ h2 em {
 }
 @media (max-width: 860px) {
   section {
-    padding: 64px 0;
+    padding-block: 64px;
   }
   .nav {
     display: none;
@@ -2146,6 +2160,30 @@ h2 em {
   .testi-grid,
   .plan-grid {
     grid-template-columns: 1fr;
+  }
+  .plan {
+    padding: 22px 20px 0;
+  }
+  .plan.popular {
+    padding-top: 58px;
+  }
+  .plan .summary {
+    min-height: 0;
+    margin-bottom: 14px;
+  }
+  .plan .price {
+    font-size: 36px;
+  }
+  .plan .btn {
+    margin-top: 14px;
+  }
+  .plan .price-note {
+    margin-top: 10px;
+  }
+  .plan .feat {
+    margin: 16px -20px 0;
+    padding: 18px 20px 22px;
+    gap: 9px;
   }
   .cta-band {
     padding: 60px 28px;
