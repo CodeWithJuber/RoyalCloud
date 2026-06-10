@@ -82,6 +82,7 @@ const {
     </div>
 
     <div class="rc-hero-art" aria-hidden="true">
+      <div class="rc-art-plx" data-plx="0.12">
       <div class="rc-disc"></div>
       <Image
         src={cloud}
@@ -172,6 +173,7 @@ const {
       </div>
         </>
       )}
+      </div>
     </div>
   </div>
 
@@ -191,6 +193,22 @@ const {
       <span>Trusted by thousands of website owners</span>
     </div>
   </div>
+
+  <svg
+    class="rc-wave"
+    viewBox="0 0 1440 74"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M0 74 L0 48 C 110 14 240 58 380 44 C 520 30 600 -4 740 18 C 880 40 980 8 1110 24 C 1240 40 1350 16 1440 40 L1440 74 Z"
+      fill="var(--bg-page)"></path>
+    <path
+      d="M0 60 C 110 26 240 70 380 56 C 520 42 600 8 740 30 C 880 52 980 20 1110 36 C 1240 52 1350 28 1440 52"
+      fill="none"
+      stroke="rgba(255, 255, 255, 0.25)"
+      stroke-width="2"></path>
+  </svg>
 </section>
 
 <style>
@@ -199,7 +217,15 @@ const {
     overflow: hidden;
     background: var(--rc-grad-vivid);
     color: #fff;
-    padding: clamp(48px, 6vw, 84px) 0 clamp(40px, 5vw, 56px);
+    padding: clamp(48px, 6vw, 84px) 0 clamp(78px, 10vw, 124px);
+  }
+  .rc-art-plx {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
   }
   /* white-on-gradient overrides (original royalclouds.net hero) */
   .rc-hero :global(.hero-eyebrow) {
