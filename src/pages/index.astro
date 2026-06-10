@@ -1,7 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import HeroRC from '~/components/widgets/HeroRC.astro';
+import HeroPremium from '~/components/widgets/HeroPremium.astro';
 import Features from '~/components/widgets/Features.astro';
 import Content from '~/components/widgets/Content.astro';
 import Steps from '~/components/widgets/Steps.astro';
@@ -13,8 +13,8 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import Brands from '~/components/widgets/Brands.astro';
 
 import { toPrices } from '~/utils/plans';
-import cloudServer from '~/assets/images/brand/cloud-server.png';
-import mascot from '~/assets/images/brand/mascot.png';
+import datacenterPhoto from '~/assets/images/photos/datacenter.jpg';
+import supportPhoto from '~/assets/images/photos/support.jpg';
 import shared from '~/data/plans/shared.json';
 import testimonialsData from '~/data/testimonials.json';
 import faqsData from '~/data/faqs.json';
@@ -28,11 +28,11 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero (bespoke vibrant) -->
-  <HeroRC
-    title="Experience the Premium &amp; Speed-Optimized Hosting"
-    subtitle="Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL, daily backups and genuinely friendly 24/7 support."
-    offer="Up to 30% off · from $1.99/mo · Free SSL Certificate"
+  <!-- Hero (clean, premium, photo-based) -->
+  <HeroPremium
+    eyebrow="Premium Web Hosting"
+    title="Fast, secure hosting your business can rely on"
+    subtitle="Pure SSD RAID-10 servers with LiteSpeed &amp; CloudLinux — free cPanel &amp; SSL, daily backups and friendly 24/7 support, from just $1.99/mo."
     primary={{ text: 'Get Started', href: `${PORTAL}/cart.php`, target: '_blank' }}
     secondary={{ text: 'View Plans', href: '#pricing' }}
   />
@@ -78,7 +78,7 @@ const metadata = {
       { title: 'Cloudflare CDN & HTTP/3', description: 'Your content is cached at edge locations worldwide for fast loads anywhere.', icon: 'tabler:world' },
       { title: 'CloudLinux isolation', description: 'Every account is isolated for consistent performance, even under heavy neighbour load.', icon: 'tabler:shield-lock' },
     ]}
-    image={{ src: cloudServer, alt: 'Cloud server performance' }}
+    image={{ src: datacenterPhoto, alt: 'Royal Clouds data centre infrastructure' }}
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">Speed that ranks and converts</h3>
@@ -97,7 +97,7 @@ const metadata = {
       { title: 'Set up in minutes', description: 'Install WordPress and 400+ apps in one click, point your domain and enable free SSL.', icon: 'tabler:settings' },
       { title: 'Go live & grow', description: 'Your site loads fast on LiteSpeed + SSD, backed by 99.99% uptime and 24/7 support.', icon: 'tabler:rocket' },
     ]}
-    image={{ src: mascot, alt: 'Royal Clouds mascot' }}
+    image={{ src: supportPhoto, alt: 'Royal Clouds support team' }}
   />
 
   <!-- Pricing -->
