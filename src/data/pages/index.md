@@ -3,9 +3,8 @@ title: Home
 metadata:
   title: Royal Clouds - Best SSD Web Hosting | KVM VPS/CLOUD India
   description: >-
-    Royal Clouds is affordable web hosting company in India which is providing
-    reliable web hosting services, cheap web hosting India & reseller web
-    hosting.
+    Royal Clouds is affordable web hosting company in India which is providing reliable web hosting services,
+    cheap web hosting India & reseller web hosting.
   ignoreTitleTemplate: true
 transparentHeader: true
 sections:
@@ -13,8 +12,8 @@ sections:
     variant: gradient
     title: Experience the <em>Premium</em> &amp; Speed-Optimized Hosting
     subtitle: >-
-      Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL,
-      daily backups and genuinely friendly 24/7 support.
+      Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL, daily backups and genuinely
+      friendly 24/7 support.
     offer: Up to 30% off domains &amp; hosting
     primaryCta:
       text: Get Started
@@ -89,9 +88,8 @@ sections:
     eyebrow: Top Speed Solutions
     title: Up to <em>15x faster</em> with SSD + LiteSpeed
     subtitle: >-
-      Every Royal Clouds server pairs pure SSD RAID-10 storage with the
-      LiteSpeed Web Server and CloudLinux isolation, so your pages render fast
-      and stay fast — even at peak traffic.
+      Every Royal Clouds server pairs pure SSD RAID-10 storage with the LiteSpeed Web Server and CloudLinux
+      isolation, so your pages render fast and stay fast — even at peak traffic.
     image: datacenter
     items:
       - icon: bolt
@@ -103,13 +101,27 @@ sections:
       - icon: globe
         title: Cloudflare CDN
         text: Content cached at the edge, close to your visitors worldwide.
+  - type: benchmark
+    eyebrow: Speed Test
+    title: Don't take our word — take the stopwatch's
+    note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
+    items:
+      - label: Royal Clouds (SSD + LiteSpeed)
+        value: 0.4
+        display: 0.4s
+        highlight: true
+      - label: Typical shared hosting
+        value: 1.9
+        display: 1.9s
+      - label: Budget HDD server
+        value: 3.2
+        display: 3.2s
   - type: content
     eyebrow: Amazing Uptime
     title: 99.99% uptime, monitored around the clock
     subtitle: >-
-      Redundant power and network, proactive monitoring, automated daily
-      backups and always-on DDoS protection keep your website online — backed
-      by a real SLA.
+      Redundant power and network, proactive monitoring, automated daily backups and always-on DDoS protection
+      keep your website online — backed by a real SLA.
     image: support
     reverse: true
     items:
@@ -128,7 +140,7 @@ sections:
         label: Uptime SLA
       - value: 15x
         label: Faster with SSD + LiteSpeed
-      - value: "24/7"
+      - value: 24/7
         label: Friendly Expert Support
       - value: 9.6/10
         label: Customer Rating
@@ -142,6 +154,10 @@ sections:
         text: Already hosted elsewhere? Our team moves your sites with zero downtime, free of charge.
       - title: Launch and grow
         text: Instant setup gets you live in minutes, and upgrades are one click away as you grow.
+  - type: showcase
+    eyebrow: Your Panel
+    title: Everything is a click — see for yourself
+    subtitle: Files, SSL, backups and live stats in one clean panel. No command line, no tickets for basics.
   - type: techlogos
     eyebrow: Powered By
     title: Built on technology you can trust
