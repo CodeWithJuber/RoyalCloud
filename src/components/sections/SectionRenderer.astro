@@ -12,6 +12,12 @@ import FaqAccordion from "./FaqAccordion.astro";
 import DomainSearch from "./DomainSearch.astro";
 import TechLogos from "./TechLogos.astro";
 import CtaBand from "./CtaBand.astro";
+import OsStrip from "./OsStrip.astro";
+import StoryCards from "./StoryCards.astro";
+import BenchmarkBars from "./BenchmarkBars.astro";
+import SecurityLayers from "./SecurityLayers.astro";
+import MapBand from "./MapBand.astro";
+import ShowcaseTabs from "./ShowcaseTabs.astro";
 
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
@@ -34,6 +40,12 @@ const registry: Record<string, AstroComponentFactory> = {
   domainsearch: DomainSearch,
   techlogos: TechLogos,
   cta: CtaBand,
+  osstrip: OsStrip,
+  storycards: StoryCards,
+  benchmark: BenchmarkBars,
+  security: SecurityLayers,
+  mapband: MapBand,
+  showcase: ShowcaseTabs,
 };
 ---
 

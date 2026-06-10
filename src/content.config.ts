@@ -98,6 +98,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
     variant: z.enum(["gradient", "product", "simple"]).optional(),
     offer: z.string().optional(),
     image: z.string().optional(),
+    art: z.string().optional(),
     primaryCta: ctaSchema.optional(),
     secondaryCta: ctaSchema.optional(),
     badges: z.array(z.string()).optional(),
@@ -182,6 +183,80 @@ export const sectionSchema = z.discriminatedUnion("type", [
     primaryCta: ctaSchema.optional(),
     secondaryCta: ctaSchema.optional(),
   }),
+  z.object({
+    type: z.literal("osstrip"),
+    ...base,
+    items: z.array(
+      z.object({
+        name: z.string(),
+        color: z.string().optional(),
+        active: z.boolean().optional(),
+      }),
+    ),
+  }),
+  z.object({
+    type: z.literal("storycards"),
+    ...base,
+    items: z.array(
+      z.object({
+        tag: z.string(),
+        metric: z.string(),
+        metricLabel: z.string(),
+        quote: z.string(),
+        name: z.string(),
+        site: z.string().optional(),
+      }),
+    ),
+  }),
+  z.object({
+    type: z.literal("benchmark"),
+    ...base,
+    note: z.string().optional(),
+    items: z.array(
+      z.object({
+        label: z.string(),
+        value: z.number(),
+        display: z.string(),
+        highlight: z.boolean().optional(),
+      }),
+    ),
+  }),
+  z.object({
+    type: z.literal("security"),
+    ...base,
+    layers: z.array(z.object({ title: z.string(), text: z.string() })),
+    stats: z
+      .array(z.object({ value: z.string(), label: z.string() }))
+      .optional(),
+  }),
+  z.object({
+    type: z.literal("mapband"),
+    ...base,
+    note: z.string().optional(),
+    pins: z
+      .array(
+        z.object({
+          label: z.string(),
+          x: z.number(),
+          y: z.number(),
+          live: z.boolean().optional(),
+        }),
+      )
+      .optional(),
+  }),
+  z.object({
+    type: z.literal("showcase"),
+    ...base,
+    tabs: z
+      .array(
+        z.object({
+          label: z.string(),
+          panel: z.enum(["files", "ssl", "backups", "stats"]),
+          text: z.string().optional(),
+        }),
+      )
+      .optional(),
+  }),
 ]);
 
 // Page metadata is looser than the blog one: canonical may be a relative
@@ -196,8 +271,22 @@ const pageMetadataSchema = z
   })
   .optional();
 
+// Per-page visual identity: switches accent/tint/art variables via
+// main[data-theme] while core tokens (ink, buttons, fonts) stay constant.
+export const themeSchema = z.enum([
+  "speed",
+  "security",
+  "server",
+  "panel",
+  "wordpress",
+  "linux",
+  "money",
+  "domains",
+]);
+
 const pageSchema = z.object({
   title: z.string(),
+  theme: themeSchema.optional(),
   metadata: pageMetadataSchema,
   breadcrumb: z
     .array(z.object({ text: z.string(), href: z.string() }))

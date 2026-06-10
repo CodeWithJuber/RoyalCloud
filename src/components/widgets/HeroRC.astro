@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+import SectionArt from "~/components/sections/SectionArt.astro";
 import mascot from "~/assets/images/brand/mascot.png";
 import cloud from "~/assets/images/brand/cloud.png";
 import cloudServer from "~/assets/images/brand/cloud-server.png";
@@ -25,6 +26,8 @@ interface Props {
   primary?: Action;
   secondary?: Action;
   badges?: string[];
+  /** Themed illustration scene — replaces mascot + proof chips (SectionArt kind). */
+  art?: string;
 }
 const {
   title = "Experience the <em>Premium</em> &amp; Speed-Optimized Hosting",
@@ -42,6 +45,7 @@ const {
     "30-Day Money-Back",
     "Instant Setup",
   ],
+  art,
 } = Astro.props;
 ---
 
@@ -93,22 +97,36 @@ const {
         height={70}
         class="rc-cloud rc-cloud-2 rc-float-slow"
       />
-      <Image
-        src={mascot}
-        alt=""
-        width={230}
-        height={478}
-        loading="eager"
-        class="rc-mascot rc-float"
-      />
-      <Image
-        src={cloudServer}
-        alt=""
-        width={120}
-        height={120}
-        class="rc-cloud rc-cloud-3 rc-float"
-      />
+      {
+        art ? (
+          <div class="rc-scene">
+            <SectionArt kind={art} bare />
+          </div>
+        ) : (
+          <Image
+            src={mascot}
+            alt=""
+            width={230}
+            height={478}
+            loading="eager"
+            class="rc-mascot rc-float"
+          />
+        )
+      }
+      {
+        !art && (
+          <Image
+            src={cloudServer}
+            alt=""
+            width={120}
+            height={120}
+            class="rc-cloud rc-cloud-3 rc-float"
+          />
+        )
+      }
 
+      {!art && (
+        <>
       <div class="rc-chip rc-chip-uptime rc-float-slow">
         <span class="ic ic-green">
           <svg
@@ -152,6 +170,8 @@ const {
         </span>
         <span><b>Free SSL</b><small>on every site</small></span>
       </div>
+        </>
+      )}
     </div>
   </div>
 
@@ -308,6 +328,13 @@ const {
     width: 190px;
     height: auto;
     filter: drop-shadow(0 30px 34px rgba(0, 0, 0, 0.4));
+  }
+  .rc-scene {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
   .rc-cloud {
     position: absolute;

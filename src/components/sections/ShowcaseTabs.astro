@@ -1,0 +1,457 @@
+---
+/**
+ * Panel showcase — a browser-framed control-panel mockup with a tab
+ * switcher (Files / SSL / Backups / Stats). Panels are hand-built CSS
+ * mocks; tabs swap them with a small re-initializable script.
+ */
+interface Tab {
+  label: string;
+  panel: "files" | "ssl" | "backups" | "stats";
+  text?: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  tabs?: Tab[];
+}
+const {
+  eyebrow,
+  title,
+  subtitle,
+  tabs = [
+    { label: "File Manager", panel: "files", text: "Upload, edit and organize your site files right in the browser." },
+    { label: "Free SSL", panel: "ssl", text: "One click installs and auto-renews your certificate forever." },
+    { label: "Backups", panel: "backups", text: "Daily snapshots — restore your whole site in one click." },
+    { label: "Live Stats", panel: "stats", text: "Visitors, bandwidth and resource usage at a glance." },
+  ],
+} = Astro.props;
+---
+
+<section class="showcase">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="sec-head center reveal">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="sc-stage reveal" data-showcase>
+      <div class="sc-tabs" role="tablist">
+        {
+          tabs.map((t, i) => (
+            <button
+              class={`sc-tab ${i === 0 ? "on" : ""}`}
+              role="tab"
+              aria-selected={i === 0 ? "true" : "false"}
+              data-panel={t.panel}
+            >
+              {t.label}
+            </button>
+          ))
+        }
+      </div>
+      <div class="sc-frame">
+        <div class="sc-bar">
+          <i></i><i></i><i></i>
+          <span class="sc-url">panel.royalclouds.net</span>
+        </div>
+
+        <div class="sc-panel sc-files on" data-sc="files" aria-hidden="false">
+          {
+            [
+              ["public_html", "folder", "—"],
+              ["index.php", "file", "12 KB"],
+              ["wp-content", "folder", "—"],
+              ["backup-2026.zip", "zip", "184 MB"],
+            ].map(([name, kind, size]) => (
+              <div class="f-row">
+                <span class={`f-ic ${kind}`} />
+                <b>{name}</b>
+                <small>{size}</small>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="sc-panel sc-ssl" data-sc="ssl" aria-hidden="true">
+          <div class="ssl-card">
+            <span class="ssl-lock">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+              </svg>
+            </span>
+            <div>
+              <b>yoursite.com</b>
+              <small>Let's Encrypt — valid, auto-renews</small>
+            </div>
+            <em class="ssl-state">ACTIVE</em>
+          </div>
+          <div class="ssl-meta">
+            <span>Wildcard included</span><span>Renewed 12 days ago</span>
+          </div>
+        </div>
+
+        <div class="sc-panel sc-backups" data-sc="backups" aria-hidden="true">
+          {
+            ["Today 04:00", "Yesterday 04:00", "Jun 8 04:00"].map((d, i) => (
+              <div class="bk-row">
+                <span class="bk-dot" />
+                <b>{d}</b>
+                <small>Full snapshot</small>
+                <em class={i === 0 ? "hot" : ""}>{i === 0 ? "Restore" : "✓"}</em>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="sc-panel sc-stats" data-sc="stats" aria-hidden="true">
+          <div class="st-cards">
+            <div class="st"><small>Visitors</small><b>12,408</b></div>
+            <div class="st"><small>Bandwidth</small><b>96 GB</b></div>
+            <div class="st"><small>Uptime</small><b>99.99%</b></div>
+          </div>
+          <div class="st-bars">
+            {
+              [42, 68, 55, 80, 62, 90, 74].map((h) => (
+                <i style={`--h: ${h}%`} />
+              ))
+            }
+          </div>
+        </div>
+      </div>
+      {
+        tabs.map((t, i) => (
+          <p
+            class={`sc-caption ${i === 0 ? "on" : ""}`}
+            data-sc-cap={t.panel}
+          >
+            {t.text}
+          </p>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  function rcShowcaseInit() {
+    document.querySelectorAll<HTMLElement>("[data-showcase]").forEach((root) => {
+      const tabs = root.querySelectorAll<HTMLButtonElement>(".sc-tab");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const id = tab.dataset.panel;
+          tabs.forEach((t) => {
+            t.classList.toggle("on", t === tab);
+            t.setAttribute("aria-selected", t === tab ? "true" : "false");
+          });
+          root.querySelectorAll<HTMLElement>(".sc-panel").forEach((p) => {
+            const on = p.dataset.sc === id;
+            p.classList.toggle("on", on);
+            p.setAttribute("aria-hidden", on ? "false" : "true");
+          });
+          root.querySelectorAll<HTMLElement>("[data-sc-cap]").forEach((c) => {
+            c.classList.toggle("on", c.dataset.scCap === id);
+          });
+        });
+      });
+    });
+  }
+  rcShowcaseInit();
+  document.addEventListener("astro:after-swap", rcShowcaseInit);
+</script>
+
+<style>
+  .sc-stage {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+  .sc-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+  .sc-tab {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition:
+      color 0.16s ease,
+      background 0.16s ease,
+      border-color 0.16s ease;
+  }
+  .sc-tab:hover {
+    border-color: var(--theme-accent);
+    color: var(--rc-ink);
+  }
+  .sc-tab.on {
+    background: var(--theme-accent);
+    border-color: var(--theme-accent);
+    color: #fff;
+  }
+  .sc-frame {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .sc-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #fbfaff;
+  }
+  .sc-bar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--line-strong);
+  }
+  .sc-bar i:first-child { background: var(--rc-coral); }
+  .sc-bar i:nth-child(2) { background: var(--rc-yellow); }
+  .sc-bar i:nth-child(3) { background: var(--ok); }
+  .sc-url {
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg-tint);
+    border-radius: 6px;
+    padding: 3px 14px;
+  }
+  .sc-panel {
+    display: none;
+    padding: 26px 28px;
+    min-height: 240px;
+  }
+  .sc-panel.on {
+    display: block;
+  }
+
+  /* files */
+  .f-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 6px;
+  }
+  .f-row + .f-row {
+    border-top: 1px solid var(--line);
+  }
+  .f-ic {
+    width: 30px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--theme-soft);
+    position: relative;
+  }
+  .f-ic.folder {
+    background: var(--pastel-butter);
+  }
+  .f-ic.zip {
+    background: var(--pastel-peach);
+  }
+  .f-row b {
+    flex: 1;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    color: var(--rc-ink);
+  }
+  .f-row small {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ssl */
+  .ssl-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow-xs);
+  }
+  .ssl-lock {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--ok-soft);
+    color: #0e9f6e;
+  }
+  .ssl-lock svg {
+    width: 22px;
+    height: 22px;
+  }
+  .ssl-card b {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 15.5px;
+    color: var(--rc-ink);
+  }
+  .ssl-card small {
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  .ssl-card > div {
+    flex: 1;
+  }
+  .ssl-state {
+    font-style: normal;
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #0e9f6e;
+    background: var(--ok-soft);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .ssl-meta {
+    display: flex;
+    gap: 18px;
+    margin-top: 16px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  /* backups */
+  .bk-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 6px;
+  }
+  .bk-row + .bk-row {
+    border-top: 1px solid var(--line);
+  }
+  .bk-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--ok);
+  }
+  .bk-row b {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    color: var(--rc-ink);
+    width: 150px;
+  }
+  .bk-row small {
+    flex: 1;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  .bk-row em {
+    font-style: normal;
+    font-size: 12.5px;
+    color: var(--ok);
+  }
+  .bk-row em.hot {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 11.5px;
+    color: var(--theme-accent);
+    background: var(--theme-soft);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+
+  /* stats */
+  .st-cards {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .st {
+    flex: 1;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: var(--shadow-xs);
+  }
+  .st small {
+    display: block;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .st b {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    color: var(--rc-ink);
+  }
+  .st-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    height: 110px;
+    padding: 0 6px;
+  }
+  .st-bars i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(180deg, var(--theme-art-b), var(--theme-art-a));
+    opacity: 0.85;
+  }
+  .sc-caption {
+    display: none;
+    text-align: center;
+    font-size: 14.5px;
+    color: var(--text-muted);
+    margin-top: 20px;
+  }
+  .sc-caption.on {
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sc-stats.on .st-bars i {
+      animation: scBar 0.7s cubic-bezier(0.25, 0.1, 0.2, 1) backwards;
+    }
+    .sc-stats.on .st-bars i:nth-child(2n) {
+      animation-delay: 0.12s;
+    }
+    .sc-stats.on .st-bars i:nth-child(3n) {
+      animation-delay: 0.2s;
+    }
+    @keyframes scBar {
+      from {
+        transform: scaleY(0);
+        transform-origin: bottom;
+      }
+    }
+  }
+  @media (max-width: 640px) {
+    .sc-panel {
+      padding: 18px 16px;
+    }
+    .bk-row b {
+      width: auto;
+    }
+    .st-cards {
+      flex-direction: column;
+    }
+    .st-bars {
+      height: 80px;
+    }
+  }
+</style>

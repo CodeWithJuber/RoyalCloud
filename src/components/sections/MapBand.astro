@@ -1,0 +1,197 @@
+---
+/**
+ * Map band — an original dotted-grid world map with pulsing datacenter
+ * pins. The map is generated from a coarse continent bitmap (abstract by
+ * design, not a traced map). Pins position via % coordinates.
+ */
+interface Pin {
+  label: string;
+  x: number;
+  y: number;
+  live?: boolean;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  note?: string;
+  pins?: Pin[];
+}
+const {
+  eyebrow,
+  title,
+  subtitle,
+  note,
+  pins = [
+    { label: "New York", x: 22, y: 30, live: true },
+    { label: "London", x: 47, y: 20, live: true },
+    { label: "Mumbai", x: 67, y: 48, live: true },
+    { label: "Singapore", x: 74, y: 58 },
+  ],
+} = Astro.props;
+
+// 40×18 coarse continent bitmap — '#' becomes a dot.
+const BITMAP = [
+  "........................................",
+  "...####.............###########........",
+  "..########.......##############........",
+  "..#########.....###################....",
+  "...########.....##################.....",
+  "....######......#######..########......",
+  ".....####........######...#####..##....",
+  "......###........######...####...##....",
+  ".......####......######....##..........",
+  ".......#####.....#####.....#...........",
+  "........####......####.........#####...",
+  "........###.......###.........######...",
+  "........###........#..........#####....",
+  ".........#.........#...........###.....",
+  ".........#..............................",
+  "........................................",
+];
+const CELL = 10;
+const dots: { cx: number; cy: number }[] = [];
+BITMAP.forEach((row, r) => {
+  [...row].forEach((ch, c) => {
+    if (ch === "#") dots.push({ cx: c * CELL + CELL / 2, cy: r * CELL + CELL / 2 });
+  });
+});
+const vw = BITMAP[0].length * CELL;
+const vh = BITMAP.length * CELL;
+---
+
+<section class="mapband">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="sec-head center reveal">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="map-stage reveal">
+      <svg viewBox={`0 0 ${vw} ${vh}`} aria-hidden="true">
+        {dots.map((d) => (
+          <circle cx={d.cx} cy={d.cy} r="2.6" />
+        ))}
+      </svg>
+      {
+        pins.map((p, i) => (
+          <div
+            class={`pin reveal reveal-d${(i % 4) + 1}`}
+            style={`left: ${p.x}%; top: ${p.y}%`}
+          >
+            <i class="pulse" />
+            <i class="core" />
+            <span class="pl">
+              {p.label}
+              {p.live && <em>● live</em>}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+    {note && <p class="map-note reveal">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .mapband {
+    background: var(--bg-sky);
+  }
+  .map-stage {
+    position: relative;
+    max-width: 940px;
+    margin-inline: auto;
+    aspect-ratio: 400 / 160;
+  }
+  .map-stage svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .map-stage svg circle {
+    fill: var(--theme-accent);
+    opacity: 0.22;
+  }
+  .pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+  }
+  .pin .core {
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background: var(--theme-accent);
+    border: 2.5px solid #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .pin .pulse {
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+    background: var(--theme-accent);
+    opacity: 0.25;
+  }
+  .pin .pl {
+    position: absolute;
+    left: 50%;
+    top: -34px;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-family: var(--font-heading);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--rc-ink);
+    box-shadow: var(--shadow-xs);
+  }
+  .pin .pl em {
+    font-style: normal;
+    font-size: 10px;
+    color: var(--ok);
+    margin-left: 5px;
+  }
+  .map-note {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 26px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .pin .pulse {
+      animation: pinPulse 2.4s ease-out infinite;
+    }
+    .pin:nth-child(odd) .pulse {
+      animation-delay: 1.1s;
+    }
+    @keyframes pinPulse {
+      0% {
+        transform: scale(0.5);
+        opacity: 0.35;
+      }
+      80%,
+      100% {
+        transform: scale(1.7);
+        opacity: 0;
+      }
+    }
+  }
+  @media (max-width: 640px) {
+    .pin .pl {
+      font-size: 10px;
+      top: -28px;
+      padding: 3px 9px;
+    }
+    .pin .pl em {
+      display: none;
+    }
+  }
+</style>

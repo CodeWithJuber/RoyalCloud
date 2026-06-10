@@ -10,16 +10,18 @@ export interface Props {
   metadata?: MetaData;
   /** Pages with their own dark hero can render the transparent header. */
   transparentHeader?: boolean;
+  /** Per-page visual identity — sets data-theme on <main> (see rc-premium.css). */
+  theme?: string;
 }
 
-const { metadata, transparentHeader = false } = Astro.props;
+const { metadata, transparentHeader = false, theme } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
   <slot name="header">
     <HeaderRC solid={!transparentHeader} />
   </slot>
-  <main>
+  <main data-theme={theme}>
     <slot />
   </main>
   <slot name="footer">

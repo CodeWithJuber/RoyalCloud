@@ -1,0 +1,107 @@
+---
+/**
+ * OS strip — distro lettermark chips for the Linux landing family.
+ * The active distro gets the filled theme-accent treatment.
+ */
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  items: { name: string; color?: string; active?: boolean }[];
+}
+const { eyebrow, title, subtitle, items } = Astro.props;
+---
+
+<section class="os-sec">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="sec-head center reveal">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="os-row">
+      {
+        items.map((os, i) => (
+          <div
+            class={`os reveal reveal-d${(i % 4) + 1} ${os.active ? "on" : ""}`}
+          >
+            <span class="mark" style={os.color ? `--os-c: ${os.color}` : undefined}>
+              {os.name.slice(0, 1)}
+            </span>
+            <b>{os.name}</b>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .os-sec {
+    padding-block: clamp(48px, 6vw, 72px);
+  }
+  .os-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+  .os {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 22px 10px 12px;
+    box-shadow: var(--shadow-xs);
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .os:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--theme-accent);
+  }
+  .os.on {
+    border-color: var(--theme-accent);
+    background: var(--theme-soft);
+  }
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--os-c, var(--theme-accent));
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .os b {
+    font-family: var(--font-heading);
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--rc-ink);
+  }
+  @media (max-width: 560px) {
+    .os {
+      padding: 8px 16px 8px 9px;
+    }
+    .mark {
+      width: 32px;
+      height: 32px;
+      font-size: 14px;
+    }
+    .os b {
+      font-size: 13px;
+    }
+  }
+</style>

@@ -7,11 +7,22 @@ import { resolveSectionImage } from "~/utils/sectionImages";
 import SectionArt from "./SectionArt.astro";
 
 // Bundled photo keywords now render hand-built brand illustrations
-// instead of the old stock photos.
-const ART_KINDS = ["datacenter", "support", "working", "hero"] as const;
-type ArtKind = (typeof ART_KINDS)[number];
-const artKind = (ref?: string): ArtKind | undefined =>
-  ART_KINDS.includes(ref as ArtKind) ? (ref as ArtKind) : undefined;
+// instead of the old stock photos. "terminal" accepts a distro flavor
+// suffix (terminal:ubuntu) handled inside SectionArt.
+const ART_KINDS = [
+  "datacenter",
+  "support",
+  "working",
+  "hero",
+  "terminal",
+  "rocket",
+  "panel",
+  "shield",
+] as const;
+const artKind = (ref?: string): string | undefined =>
+  ART_KINDS.includes(ref?.split(":")[0] as (typeof ART_KINDS)[number])
+    ? ref
+    : undefined;
 
 interface Props {
   eyebrow?: string;

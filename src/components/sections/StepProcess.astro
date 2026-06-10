@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import mascot from "~/assets/images/brand/mascot.png";
 import cloud from "~/assets/images/brand/cloud.png";
 
 interface Props {
@@ -39,8 +38,80 @@ const { eyebrow, title, subtitle, items } = Astro.props;
       </div>
       <div class="steps-figure reveal rv-right" aria-hidden="true">
         <Image src={cloud} alt="" width={92} height={70} class="c" />
-        <Image src={mascot} alt="" width={190} height={395} class="m" />
+        <svg class="journey" viewBox="0 0 300 320" fill="none">
+          <path
+            class="jpath"
+            d="M40 290 C 120 280 70 200 150 185 C 230 170 160 90 245 55"
+            stroke="var(--theme-accent, #7652f2)"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-dasharray="2 12"></path>
+          <g class="jn jn-1">
+            <circle cx="40" cy="290" r="20" fill="#fff" stroke="var(--theme-accent, #7652f2)" stroke-width="2.5"></circle>
+            <text x="40" y="296" text-anchor="middle">1</text>
+          </g>
+          <g class="jn jn-2">
+            <circle cx="150" cy="185" r="20" fill="#fff" stroke="var(--theme-accent, #7652f2)" stroke-width="2.5"></circle>
+            <text x="150" y="191" text-anchor="middle">2</text>
+          </g>
+          <g class="jn jn-3">
+            <circle cx="245" cy="55" r="24" fill="var(--theme-accent, #7652f2)"></circle>
+            <path d="M236 55l7 7 12-13" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </g>
+        </svg>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .journey {
+    width: min(300px, 88%);
+    height: auto;
+  }
+  .jn circle {
+    filter: drop-shadow(0 8px 14px rgba(34, 16, 95, 0.16));
+  }
+  .jn text {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    fill: var(--rc-ink);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .jn {
+      opacity: 0;
+      transform: translateY(10px);
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s cubic-bezier(0.2, 0.65, 0.25, 1);
+    }
+    .jn-1 {
+      transition-delay: 0.15s;
+    }
+    .jn-2 {
+      transition-delay: 0.4s;
+    }
+    .jn-3 {
+      transition-delay: 0.65s;
+    }
+    :global(.steps-figure.reveal.in) .jn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .jn-3 circle {
+      transform-origin: 245px 55px;
+    }
+    :global(.steps-figure.reveal.in) .jn-3 circle {
+      animation: jnPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.85s both;
+    }
+    @keyframes jnPop {
+      0% {
+        transform: scale(0.6);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
+</style>
