@@ -16,8 +16,8 @@ sections:
     eyebrow: Ubuntu VPS
     title: Ubuntu VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Order your Ubuntu VPS and choose the software version you prefer. Order now and experience our SSD Ubuntu VPS
-      Hosting speed. Deploy now!
+      Ubuntu pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup, DDoS
+      protection and friendly 24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

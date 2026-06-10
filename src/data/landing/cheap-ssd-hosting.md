@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap SSD Hosting
     title: Cheap SSD Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Best & Cheap SSD Hosting on affordable Prices With Fast, Secure & Free SSL. Try Our Fast Shared SSD Web
-      Services Starting From $1.99/M
+      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

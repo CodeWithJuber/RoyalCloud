@@ -19,9 +19,9 @@ This privacy policy has been compiled to better serve those who are concerned wi
 
 We collect information from you when you register on our site, place an order, Use Live Chat, Open a Support Ticket or enter information on our site. Provide us with feedback on our products or services
 
-## When do we collect information?
+## What information do we collect?
 
-In the course of your use of the Services, we obtain the following information about you as described below. We collect this data for the purposes described under �How We Use Your Information�.
+In the course of your use of the Services, we obtain the following information about you as described below. We collect this data for the purposes described under "How We Use Your Information".
 
 ## Signing Up for Services; User Information
 
@@ -37,7 +37,7 @@ In the course of your use of the Services, we obtain the following information a
 - pages you view
 - how you got to our Services and any links you click on to leave our Services
 - when you update your information, communicate with us, or order new Services
-- metadata about your use and your contacts� use of our Services and your emails you send (including clicks and opens)
+- metadata about your use and your contacts' use of our Services and your emails you send (including clicks and opens)
 - your interactions with any videos we offer
 - issues you encounter requiring our support or assistance
 - any device or other method of communication you use to interact with the Services
@@ -173,7 +173,7 @@ We retain your personal information to provide services to you and as otherwise 
 
 ## Your Rights
 
-Where the European Union�s General Data Protection Regulation 2016/679, or GDPR, applies, in certain circumstances and subject to data processing agreements, you have rights in relation to the personal information we hold about you. We set out below an outline of those rights and how to exercise those rights. Please note that we will require you to verify your identity before responding to any requests to exercise your rights by providing details only known to the account holder. To exercise any of your rights, please visit the Privacy Center. Please note that for each of the rights below we may have valid legal reasons to refuse your request, in such instances we will let you know if that is the case.
+Where the European Union's General Data Protection Regulation 2016/679, or GDPR, applies, in certain circumstances and subject to data processing agreements, you have rights in relation to the personal information we hold about you. We set out below an outline of those rights and how to exercise those rights. Please note that we will require you to verify your identity before responding to any requests to exercise your rights by providing details only known to the account holder. To exercise any of your rights, please visit the Privacy Center. Please note that for each of the rights below we may have valid legal reasons to refuse your request, in such instances we will let you know if that is the case.
 
 ## Access
 
@@ -231,9 +231,9 @@ Our Services are not directed to persons under 18. We do not knowingly collect p
 
 In order for us to provide the Services to you, your personal information will be transferred to, and stored at/processed in the United States. Your personal data is also processed by staff operating outside the European Economic Area (EEA), such as in India and the Philippines, who work for us or for one of our suppliers. We will take all steps reasonably necessary to ensure that your personal data is treated securely and in accordance with this policy.
 
-For transfers of personal information within the RoyalClouds family, such transfer will be under the Commission�s model contracts for the transfer of personal data to third countries (i.e., the standard contractual clauses), pursuant to Decision 2004/915/EC and 2010/87/EU.
+For transfers of personal information within the RoyalClouds family, such transfer will be under the Commission's model contracts for the transfer of personal data to third countries (i.e., the standard contractual clauses), pursuant to Decision 2004/915/EC and 2010/87/EU.
 
-For transfers of data to third parties, such transfers will either (i) be under the Commission�s model contracts for the transfer of personal data to third countries (i.e., the standard contractual clauses), pursuant to Decision 2004/915/EC and 2010/87/EU; or (ii) rely on the EU-US Privacy Shield Framework.
+For transfers of data to third parties, such transfers will either (i) be under the Commission's model contracts for the transfer of personal data to third countries (i.e., the standard contractual clauses), pursuant to Decision 2004/915/EC and 2010/87/EU; or (ii) rely on the EU-US Privacy Shield Framework.
 
 You can contact the Data Protection Officer listed below to obtain a copy of the data transfer agreement or more information regarding the relevant safeguard we put in place. For more information about the EU-US Privacy Shield Framework, please visit the U.S. Department of Commerce’s Privacy Shield website.
 

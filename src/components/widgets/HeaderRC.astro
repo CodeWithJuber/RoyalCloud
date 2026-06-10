@@ -227,13 +227,21 @@ const external = (href: string) => /^https?:\/\//.test(href);
     display: none;
   }
 
-  /* mega panel: two-column product grid with icon + one-liner */
+  /* mega panel: two-column product grid with icon + one-liner.
+     Anchored to the left of its nav item (not centered) so the 560px panel
+     can never clip off the viewport's left edge. */
   .dd-panel.mega {
     display: grid;
     grid-template-columns: repeat(2, minmax(250px, 1fr));
     gap: 4px;
     min-width: 560px;
     padding: 14px;
+    left: -80px;
+    transform: translateY(6px);
+  }
+  .nav-dd:hover .dd-panel.mega,
+  .nav-dd:focus-within .dd-panel.mega {
+    transform: translateY(0);
   }
   .mega-item {
     display: flex !important;

@@ -61,6 +61,7 @@ export default [
     },
   },
   {
-    ignores: ['dist', 'node_modules', '.github', 'types.generated.d.ts', '.astro'],
+    // .claude/skills contains vendored third-party agent skills — not project code
+    ignores: ['dist', 'node_modules', '.github', 'types.generated.d.ts', '.astro', '.claude'],
   },
 ];

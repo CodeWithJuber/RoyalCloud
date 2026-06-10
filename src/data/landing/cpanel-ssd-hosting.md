@@ -16,8 +16,8 @@ sections:
     eyebrow: cPanel SSD Hosting
     title: cPanel SSD Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Cpanel SSD Hosting on affordable Prices With Fast, Secure & Free SSL. Try Our Fast Shared SSD Web Hosting
-      Services Starting $1.99/M
+      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

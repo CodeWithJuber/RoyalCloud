@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap Managed Wordpress Hosting
     title: Cheap Managed Wordpress Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Cheap Managed WordPress Hosting For Wordpress Blog or Websites. Try Best & Cheap Wordpress Web Hosting Server
-      For Fast & Secure Wordpress Website.
+      WordPress tuned on LiteSpeed + SSD with LSCache, auto-updates, free SSL, daily backups and WordPress experts on
+      call 24/7.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

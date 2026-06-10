@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap Wordpress Hosting
     title: Cheap Wordpress Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Cheap WordPress Hosting: Royal Clouds Providing Fast, Secure & Cheapest Hosting For WordPress Website Starting
-      @15$/M. Try Cheapest WordPress Hosting
+      WordPress tuned on LiteSpeed + SSD with LSCache, auto-updates, free SSL, daily backups and WordPress experts on
+      call 24/7.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

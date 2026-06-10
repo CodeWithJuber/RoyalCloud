@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap Web Hosting
     title: Cheap Web Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Cheap Web Hosting India: Royal Clouds providing Fast & Cheapest SSD Web Hosting Services With Secure, Reliable
-      and Fast Hosting for your website
+      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

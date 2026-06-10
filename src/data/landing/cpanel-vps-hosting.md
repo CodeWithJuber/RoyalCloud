@@ -16,8 +16,8 @@ sections:
     eyebrow: cPanel VPS Hosting
     title: cPanel VPS Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Cpanel VPS Hosting: Royal Clouds provide Best vps hosting with cpanel, cheap vps server price and managed vps
-      hosting by professional
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap Dedicated Servers
     title: Cheap Dedicated Servers on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Cheap Dedicated Servers Hosting: Royal Clouds providing Fast, Secure & Affordable Cheap Dedicated Server Hosting
-      with SSD Storage For Your Website
+      Single-tenant bare-metal power with enterprise SSD storage, DDoS protection, custom configurations and 24/7
+      engineers.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
