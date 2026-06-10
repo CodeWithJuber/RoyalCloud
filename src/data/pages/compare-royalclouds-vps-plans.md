@@ -1,4 +1,5 @@
 ---
+theme: server
 title: Compare VPS Plans
 metadata:
   title: Compare Royal Clouds SSD KVM VPS Hosting India

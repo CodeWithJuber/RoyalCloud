@@ -1,10 +1,11 @@
 ---
+theme: money
 title: SSD Shared Hosting
 metadata:
   title: SSD Shared Web Hosting - Linux SSD Shared Hosting Plans
   description: >-
-    Buy SSD Shared Web Hosting For Fast Website Loading. Fast & Best Linux Shared Hosting Plans with SSD. Try Our Secure
-    & Fast Linux SSD Shared Hosting
+    Buy SSD Shared Web Hosting For Fast Website Loading. Fast & Best Linux Shared Hosting Plans with SSD. Try
+    Our Secure & Fast Linux SSD Shared Hosting
   ignoreTitleTemplate: true
 breadcrumb: []
 transparentHeader: true
@@ -14,8 +15,8 @@ sections:
     eyebrow: SSD Shared Hosting
     title: Lightning-Fast SSD Shared Hosting
     subtitle: >-
-      The fastest shared hosting powered by SSD drives, the LiteSpeed Web Server and CloudLinux — with free cPanel, free
-      SSL, DDoS protection and daily backups on every plan.
+      The fastest shared hosting powered by SSD drives, the LiteSpeed Web Server and CloudLinux — with free
+      cPanel, free SSL, DDoS protection and daily backups on every plan.
     offer: From $1.99/mo · Free Setup
     primaryCta:
       text: Get Started
@@ -64,6 +65,30 @@ sections:
       - icon: headset
         title: 24/7 Friendly Support
         text: Real hosting specialists on live chat, email and tickets, around the clock.
+  - type: storycards
+    eyebrow: Success Stories
+    title: Real savings. Real growth.
+    items:
+      - tag: Online Store
+        metric: 75%
+        metricLabel: lower monthly hosting bill
+        quote: >-
+          We moved three stores over and our bill dropped by three quarters — and pages actually open faster
+          now.
+        name: Arjun Mehta
+        site: Furniture retailer
+      - tag: Creative Agency
+        metric: 40+
+        metricLabel: client sites on one account
+        quote: Cheap doesn't mean compromised here. Every client site gets SSL, backups and real support.
+        name: Sara Pinto
+        site: Design studio
+      - tag: Personal Blog
+        metric: 2x
+        metricLabel: traffic after the switch
+        quote: My blog stopped timing out on traffic spikes. Search rankings followed within a couple of months.
+        name: Kabir Shah
+        site: Travel blogger
   - type: techlogos
     eyebrow: Powered By
     title: Built on technology you can trust

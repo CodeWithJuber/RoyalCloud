@@ -3,8 +3,8 @@ title: Cheap Linux VPS
 metadata:
   title: Cheap Linux VPS Hosting - Best Linux VPS Server Hosting India
   description: >-
-    Cheap Linux VPS Hosting - Royal Clouds Providing Best Linux VPS Server Hosting In India On Cheap Prices. Try Cheap
-    Linux VPS Server For Your Website.
+    Cheap Linux VPS Hosting - Royal Clouds Providing Best Linux VPS Server Hosting In India On Cheap Prices.
+    Try Cheap Linux VPS Server For Your Website.
   ignoreTitleTemplate: true
 breadcrumb:
   - text: KVM VPS Hosting
@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap Linux VPS
     title: Cheap Linux VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
-      support.
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and
+      friendly 24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -29,6 +29,23 @@ sections:
       - Full Root Access
       - Pure SSD Storage
       - 99.99% Uptime SLA
+    art: terminal:linux
+  - type: osstrip
+    eyebrow: Operating Systems
+    title: Your distro, ready in one click
+    items:
+      - name: Ubuntu
+        color: "#e95420"
+      - name: Debian
+        color: "#a81d33"
+      - name: CentOS
+        color: "#932279"
+      - name: Fedora
+        color: "#3c6eb4"
+      - name: openSUSE
+        color: "#73ba25"
+      - name: Scientific
+        color: "#7a99ac"
   - type: pricing
     id: pricing
     plan: vps
@@ -36,6 +53,21 @@ sections:
     title: Choose your cheap linux vps plan
     showToggle: true
     note: 30-day money-back guarantee · Instant setup · Free migration.
+  - type: content
+    eyebrow: Why This Distro
+    title: Any distro. <em>Your</em> rules.
+    items:
+      - icon: terminal
+        title: Six distros ready
+        text: Ubuntu, Debian, CentOS, Fedora, openSUSE and Scientific Linux out of the box.
+      - icon: refresh
+        title: Swap any time
+        text: Reinstall a different distribution from the control panel in one click.
+      - icon: key
+        title: Full root access
+        text: Your kernel, your packages, your firewall — complete control via SSH.
+    image: datacenter
+    reverse: true
   - type: features
     eyebrow: Why Royal Clouds
     title: Everything your cheap linux vps needs
@@ -59,14 +91,6 @@ sections:
       - icon: headset
         title: 24/7 Expert Support
         text: Real engineers on live chat and tickets around the clock, every day of the year.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Technology partners we build on
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
   - type: faq
     eyebrow: FAQ
     title: Cheap Linux VPS — common questions
@@ -74,20 +98,20 @@ sections:
     items:
       - q: What do I get with Cheap Linux VPS?
         a: >-
-          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization with
-          guaranteed resources, DDoS protection and 24/7 support.
+          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization
+          with guaranteed resources, DDoS protection and 24/7 support.
       - q: Which operating systems can I install?
         a: >-
-          Ubuntu, Debian, CentOS, Fedora, openSUSE and Scientific Linux are available out of the box, and you can
-          reinstall any of them in one click.
+          Ubuntu, Debian, CentOS, Fedora, openSUSE and Scientific Linux are available out of the box, and you
+          can reinstall any of them in one click.
       - q: How fast is my VPS deployed?
         a: >-
-          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login details are
-          emailed to you.
+          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login
+          details are emailed to you.
       - q: Can I upgrade later?
         a: >-
-          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the resources
-          change.
+          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
+          resources change.
   - type: cta
     title: Launch your cheap linux vps today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
@@ -95,4 +119,5 @@ sections:
       text: Get Started Now
       href: https://my.royalclouds.net/cart.php
       external: true
+theme: linux
 ---

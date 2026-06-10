@@ -1,4 +1,5 @@
 ---
+theme: money
 title: Reseller Hosting
 metadata:
   title: Reseller Hosting - White-Label cPanel/WHM Reseller | Royal Clouds

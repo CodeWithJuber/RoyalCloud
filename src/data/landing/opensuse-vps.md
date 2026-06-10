@@ -3,8 +3,8 @@ title: Opensuse VPS
 metadata:
   title: Fast Opensuse VPS Hosting - Best Opensuse SSD VPS Hosting India
   description: >-
-    Order your Opensuse VPS and choose the software version you prefer. Order now and experience our SSD Opensuse VPS
-    Hosting speed. Deploy now!
+    Order your Opensuse VPS and choose the software version you prefer. Order now and experience our SSD
+    Opensuse VPS Hosting speed. Deploy now!
   ignoreTitleTemplate: true
 breadcrumb:
   - text: KVM VPS Hosting
@@ -16,8 +16,8 @@ sections:
     eyebrow: Opensuse VPS
     title: Opensuse VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      openSUSE pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup, DDoS
-      protection and friendly 24/7 support.
+      openSUSE pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup,
+      DDoS protection and friendly 24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -29,6 +29,24 @@ sections:
       - Full Root Access
       - Pure SSD Storage
       - 99.99% Uptime SLA
+    art: terminal:opensuse
+  - type: osstrip
+    eyebrow: Operating Systems
+    title: Your distro, ready in one click
+    items:
+      - name: Ubuntu
+        color: "#e95420"
+      - name: Debian
+        color: "#a81d33"
+      - name: CentOS
+        color: "#932279"
+      - name: Fedora
+        color: "#3c6eb4"
+      - name: openSUSE
+        color: "#73ba25"
+        active: true
+      - name: Scientific
+        color: "#7a99ac"
   - type: pricing
     id: pricing
     plan: vps
@@ -36,6 +54,21 @@ sections:
     title: Choose your opensuse vps plan
     showToggle: true
     note: 30-day money-back guarantee · Instant setup · Free migration.
+  - type: content
+    eyebrow: Why This Distro
+    title: Admin superpowers with <em>openSUSE</em>
+    items:
+      - icon: settings
+        title: YaST does everything
+        text: One tool configures services, storage and networking — no hunting for files.
+      - icon: history
+        title: Btrfs snapshots
+        text: Roll the whole system back to before that bad change in one command.
+      - icon: refresh
+        title: One-click reinstall
+        text: Leap and Tumbleweed images reimage from the panel in a minute.
+    image: datacenter
+    reverse: true
   - type: features
     eyebrow: Why Royal Clouds
     title: Everything your opensuse vps needs
@@ -59,14 +92,6 @@ sections:
       - icon: headset
         title: 24/7 Expert Support
         text: Real engineers on live chat and tickets around the clock, every day of the year.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Technology partners we build on
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
   - type: faq
     eyebrow: FAQ
     title: Opensuse VPS — common questions
@@ -74,20 +99,20 @@ sections:
     items:
       - q: What do I get with Opensuse VPS?
         a: >-
-          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization with
-          guaranteed resources, DDoS protection and 24/7 support.
+          Every plan includes full root access, a dedicated IP, pure SSD RAID-10 storage, KVM virtualization
+          with guaranteed resources, DDoS protection and 24/7 support.
       - q: Which openSUSE versions are available?
         a: >-
-          We keep current openSUSE releases ready to deploy, and you can reload your VPS with any supported version from
-          the control panel at any time.
+          We keep current openSUSE releases ready to deploy, and you can reload your VPS with any supported
+          version from the control panel at any time.
       - q: How fast is my VPS deployed?
         a: >-
-          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login details are
-          emailed to you.
+          Instantly. As soon as your order is confirmed, your VPS is provisioned automatically and login
+          details are emailed to you.
       - q: Can I upgrade later?
         a: >-
-          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the resources
-          change.
+          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
+          resources change.
   - type: cta
     title: Launch your opensuse vps today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
@@ -95,4 +120,5 @@ sections:
       text: Get Started Now
       href: https://my.royalclouds.net/cart.php
       external: true
+theme: linux
 ---

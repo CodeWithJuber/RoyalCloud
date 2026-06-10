@@ -3,8 +3,8 @@ title: cPanel SSD Hosting
 metadata:
   title: Cpanel SSD Hosting India - Best SSD Hosting with Cpanel
   description: >-
-    Buy Cpanel SSD Hosting on affordable Prices With Fast, Secure & Free SSL. Try Our Fast Shared SSD Web Hosting
-    Services Starting $1.99/M
+    Buy Cpanel SSD Hosting on affordable Prices With Fast, Secure & Free SSL. Try Our Fast Shared SSD Web
+    Hosting Services Starting $1.99/M
   ignoreTitleTemplate: true
 breadcrumb:
   - text: SSD Shared Hosting
@@ -16,8 +16,8 @@ sections:
     eyebrow: cPanel SSD Hosting
     title: cPanel SSD Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly 24/7
-      support.
+      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly
+      24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -29,6 +29,11 @@ sections:
       - Free cPanel & SSL
       - LiteSpeed Servers
       - 30-Day Money-Back
+    art: panel
+  - type: showcase
+    eyebrow: Control Panel
+    title: Manage everything with friendly clicks
+    subtitle: Files, SSL, backups and stats — all in one clean panel, no command line needed.
   - type: pricing
     id: pricing
     plan: shared
@@ -36,54 +41,40 @@ sections:
     title: Choose your cpanel ssd hosting plan
     showToggle: true
     note: 30-day money-back guarantee · Instant setup · Free migration.
-  - type: features
-    eyebrow: Why Royal Clouds
-    title: Everything your cpanel ssd hosting needs
-    columns: 3
+  - type: steps
+    eyebrow: Fully Managed
+    title: We do the server work. You do your thing.
     items:
-      - icon: bolt
-        title: LiteSpeed + LSCache
-        text: Our cpanel ssd hosting runs on LiteSpeed web servers with pure SSD storage — pages load up to 15x faster.
-      - icon: apps
-        title: Free cPanel & Softaculous
-        text: Manage everything from the familiar cPanel and install WordPress, Joomla & 400+ apps in one click.
-      - icon: lock
-        title: Free SSL Certificates
-        text: Every domain gets a free Let's Encrypt SSL — automatically installed and renewed.
-      - icon: backup
-        title: Daily Backups
-        text: Automatic daily backups with easy one-click restore keep your data safe.
-      - icon: refresh
-        title: Free Migration
-        text: Our team moves your existing websites over for free, with zero downtime.
-      - icon: headset
-        title: 24/7 Friendly Support
-        text: Hosting specialists on live chat, email and tickets — around the clock.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Technology partners we build on
+      - title: Pick your plan
+        text: Choose the resources you need — your panel-ready server is provisioned instantly.
+      - title: We migrate & harden
+        text: Our engineers move your sites for free, then tune caching, firewall and backups.
+      - title: You stay in control
+        text: Point-and-click management for everything, with 24/7 experts one chat away.
+  - type: security
+    eyebrow: Managed Security
+    title: Four layers between attacks and your site
+    layers:
+      - title: Smart network firewall
+        text: Always-on filtering absorbs DDoS floods before they reach your server.
+      - title: Malware scanning
+        text: Daily scans catch infected files early — with free cleanup if needed.
+      - title: Automatic backups
+        text: Daily snapshots mean one click brings everything back.
+      - title: 24/7 human monitoring
+        text: Engineers watch the platform around the clock and fix issues proactively.
+    stats:
+      - value: 1M+
+        label: attacks blocked daily
+      - value: "30"
+        label: days of backups
+      - value: 24/7
+        label: expert monitoring
   - type: testimonials
     eyebrow: Reviews
     title: Loved by website owners
     source: global
     limit: 3
-  - type: faq
-    eyebrow: FAQ
-    title: cPanel SSD Hosting — common questions
-    source: inline
-    items:
-      - q: What is included with cpanel ssd hosting?
-        a: >-
-          Free cPanel, free SSL certificates, free website migration, daily backups, LiteSpeed caching and 24/7 support
-          are included on every plan.
-      - q: Is there a money-back guarantee?
-        a: Yes — all shared hosting plans come with a 30-day money-back guarantee, no questions asked.
-      - q: Can you move my website for free?
-        a: Absolutely. Our migration team transfers your sites, emails and databases for free, usually within 24 hours.
-      - q: How fast will my website be?
-        a: >-
-          With pure SSD RAID-10 storage, LiteSpeed web servers and LSCache, sites typically load several times faster
-          than on traditional HDD hosting.
   - type: cta
     title: Launch your cpanel ssd hosting today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
@@ -91,4 +82,5 @@ sections:
       text: Get Started Now
       href: https://my.royalclouds.net/cart.php
       external: true
+theme: panel
 ---

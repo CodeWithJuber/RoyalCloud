@@ -1,10 +1,11 @@
 ---
+theme: wordpress
 title: Managed WordPress
 metadata:
   title: Managed WordPress Hosting - Best WordPress Servers
   description: >-
-    Buy Managed WordPress Hosting For Wordpress Blog or Websites. Try Best Wordpress Web Hosting Server For Fast &
-    Secure Wordpress Website.
+    Buy Managed WordPress Hosting For Wordpress Blog or Websites. Try Best Wordpress Web Hosting Server For
+    Fast & Secure Wordpress Website.
   ignoreTitleTemplate: true
 breadcrumb: []
 transparentHeader: true
@@ -14,8 +15,8 @@ sections:
     eyebrow: Managed WordPress
     title: Managed WordPress Hosting — Up to 10x Faster
     subtitle: >-
-      Deploy a WordPress site in minutes on SSD RAID-10 with LiteSpeed, LSCache and the Cloudflare CDN — plus cPanel,
-      free SSL, Brotli, automated updates and backups.
+      Deploy a WordPress site in minutes on SSD RAID-10 with LiteSpeed, LSCache and the Cloudflare CDN — plus
+      cPanel, free SSL, Brotli, automated updates and backups.
     offer: From $15/mo · Free Setup
     primaryCta:
       text: Get Started
@@ -47,6 +48,10 @@ sections:
     eyebrow: WordPress
     title: Managed WordPress Hosting plans
     subtitle: Transparent pricing with everything you need included.
+  - type: showcase
+    eyebrow: Control Panel
+    title: Manage everything with friendly clicks
+    subtitle: Files, SSL, backups and stats — all in one clean panel, no command line needed.
   - type: features
     eyebrow: Why Royal Clouds
     title: Everything your managed wordpress needs

@@ -1,4 +1,5 @@
 ---
+theme: panel
 title: cPanel Hosting
 metadata:
   title: Cpanel Hosting - SSD Cpanel Hosting | SSD Hosting With Cpanel

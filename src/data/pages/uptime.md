@@ -1,8 +1,11 @@
 ---
+theme: security
 title: Amazing Uptime
 metadata:
   title: Uptime Technology | Royal Clouds - Web Hosting
-  description: Royal Clouds guarantees 99.99% uptime with redundant power and network, proactive monitoring, automated daily backups and always-on DDoS protection.
+  description: >-
+    Royal Clouds guarantees 99.99% uptime with redundant power and network, proactive monitoring, automated
+    daily backups and always-on DDoS protection.
   ignoreTitleTemplate: true
 breadcrumb: []
 transparentHeader: true
@@ -12,9 +15,8 @@ sections:
     eyebrow: Amazing Uptime
     title: <em>99.99% uptime</em>, monitored around the clock
     subtitle: >-
-      Your website should always be online. Redundant infrastructure, proactive
-      monitoring and automated backups keep it that way — and we back it with a
-      published SLA.
+      Your website should always be online. Redundant infrastructure, proactive monitoring and automated
+      backups keep it that way — and we back it with a published SLA.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
@@ -30,9 +32,8 @@ sections:
     eyebrow: Reliability
     title: Built so your site never sleeps
     subtitle: >-
-      From N+1 redundant power and network to automated daily backups with
-      one-click restore, every part of the platform is designed to keep you
-      online — and to recover instantly if anything ever goes wrong.
+      From N+1 redundant power and network to automated daily backups with one-click restore, every part of
+      the platform is designed to keep you online — and to recover instantly if anything ever goes wrong.
     image: support
     items:
       - icon: uptime
@@ -47,6 +48,25 @@ sections:
       - icon: gauge
         title: Proactive Monitoring
         text: We watch the platform 24/7 and act before small issues become outages.
+  - type: security
+    eyebrow: Defense in Depth
+    title: Uptime is a security outcome
+    layers:
+      - title: DDoS absorption
+        text: Volumetric attacks are filtered at the network edge before they cause downtime.
+      - title: Account isolation
+        text: CloudLinux containers stop one noisy or hacked site from taking down others.
+      - title: Proactive monitoring
+        text: Engineers and automated checks watch every node around the clock.
+      - title: Geo-redundant backups
+        text: Daily snapshots stored off-server make recovery a one-click event.
+    stats:
+      - value: 99.99%
+        label: uptime SLA
+      - value: 1M+
+        label: attacks blocked daily
+      - value: "30"
+        label: days of backups
   - type: stats
     items:
       - value: 99.99%
@@ -55,7 +75,7 @@ sections:
         label: Redundant Power & Network
       - value: Daily
         label: Automated Backups
-      - value: "24/7"
+      - value: 24/7
         label: Proactive Monitoring
   - type: cta
     title: Host where uptime is a promise, not a hope

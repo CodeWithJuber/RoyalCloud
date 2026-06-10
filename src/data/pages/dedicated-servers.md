@@ -1,4 +1,5 @@
 ---
+theme: server
 title: Dedicated Servers
 metadata:
   title: Dedicated Servers - Best Dedicated Web Hosting Server India
