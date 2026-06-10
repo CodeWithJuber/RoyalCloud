@@ -173,7 +173,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   .f-help-sec {
     background: var(--bg-tint);
     border-top: 1px solid var(--line);
-    padding: 56px 0;
+    padding: clamp(40px, 4.5vw, 56px) 0;
   }
   .f-help-lead {
     text-align: center;
@@ -264,7 +264,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   .f-news {
     position: relative;
     background: var(--rc-grad-vivid);
-    padding: 52px 0 48px;
+    padding: clamp(40px, 4.5vw, 52px) 0 clamp(38px, 4.2vw, 48px);
     text-align: center;
   }
   .f-news-mascot {
@@ -409,10 +409,15 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   @media (max-width: 700px) {
     .footer-grid .fcol {
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 16px;
+      padding-bottom: 12px;
     }
     .fcol h5 {
       margin: 0;
+    }
+    /* the gradient dash reads as a stray element inside the accordion */
+    .fcol :global(h5)::after,
+    .fcol h5::after {
+      display: none;
     }
     .fcol-toggle {
       cursor: pointer;
@@ -429,10 +434,10 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
       transition: max-height 0.32s ease;
     }
     .footer-grid .fcol ul li {
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
     .footer-grid .fcol ul li:first-child {
-      margin-top: 14px;
+      margin-top: 10px;
     }
     .footer-grid .fcol.open ul {
       max-height: 420px;
