@@ -104,6 +104,10 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
       <div class="footer-brand">
         <Image src={logoWhite} alt={site.name} width={160} height={55} />
         <p>{site.description}</p>
+        <span class="f-status">
+          <i></i>
+          All systems operational
+        </span>
         <div class="footer-social">
           {
             socialLinks.map((s) => (
@@ -442,6 +446,39 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     }
     .footer-grid:not(.acc-ready) .fcol-toggle :global(.fcol-caret) {
       display: none;
+    }
+  }
+
+  /* ---- live status pill ---- */
+  .f-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 18px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.05);
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .f-status i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .f-status i {
+      animation: fPulse 2.2s ease-in-out infinite;
+    }
+  }
+  @keyframes fPulse {
+    50% {
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.12);
     }
   }
 

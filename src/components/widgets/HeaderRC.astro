@@ -27,6 +27,18 @@ const actions = headerData.actions as {
 }[];
 const isGroup = (i: Item): i is { text: string; links: Link[] } => "links" in i;
 const external = (href: string) => /^https?:\/\//.test(href);
+
+// icon chips for the mobile sheet's top-level items
+const NAV_ICONS: Record<string, string> = {
+  hosting: "tabler:server-2",
+  technology: "tabler:cpu",
+  domains: "tabler:world",
+  blog: "tabler:news",
+  about: "tabler:info-circle",
+  contact: "tabler:message-circle",
+};
+const navIcon = (text: string) =>
+  NAV_ICONS[text.toLowerCase()] ?? "tabler:point";
 ---
 
 {
@@ -124,32 +136,52 @@ const external = (href: string) => /^https?:\/\//.test(href);
       items.map((item) =>
         isGroup(item) ? (
           <details class="m-group">
-            <summary>
+            <summary class="m-item">
+              <span class="m-ic">
+                <Icon name={navIcon(item.text)} />
+              </span>
               {item.text}
               <Icon name="tabler:chevron-down" class="dd-caret" />
             </summary>
-            {item.links.map((l) => (
-              <a href={l.href}>{l.text}</a>
-            ))}
+            <div class="m-sub">
+              {item.links.map((l) => (
+                <a href={l.href}>
+                  <span class="m-sub-ic">
+                    <Icon name={tablerIcon(l.icon ?? "point")} />
+                  </span>
+                  {l.text}
+                </a>
+              ))}
+            </div>
           </details>
         ) : (
-          <a href={item.href}>{item.text}</a>
+          <a class="m-item" href={item.href}>
+            <span class="m-ic">
+              <Icon name={navIcon(item.text)} />
+            </span>
+            {item.text}
+            <Icon name="tabler:chevron-right" class="dd-caret m-go" />
+          </a>
         ),
       )
     }
-    {
-      actions
-        .filter((a) => a.variant !== "secondary")
-        .map((a) => (
+    <div class="m-actions">
+      {
+        actions.map((a) => (
           <a
-            class="btn btn-primary"
+            class={`btn ${a.variant === "secondary" ? "btn-ghost-dark" : "btn-primary"}`}
             href={a.href}
             {...(external(a.href) ? { target: "_blank", rel: "noopener" } : {})}
           >
             {a.text}
           </a>
         ))
-    }
+      }
+    </div>
+    <p class="m-trust">
+      <Icon name="tabler:shield-check" /> 99.99% uptime · Free SSL · 24/7 human
+      support
+    </p>
   </nav>
 </header>
 
@@ -312,61 +344,176 @@ const external = (href: string) => /^https?:\/\//.test(href);
     height: 20px;
     margin: auto;
   }
+  /* modern mobile sheet: icon chips, rounded rows, action bar */
   .mobile-nav {
     display: none;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
     background: #fff;
-    padding: 14px 22px 26px;
+    padding: 14px 16px 22px;
     border-top: 1px solid var(--line);
-    box-shadow: 0 24px 40px -20px rgba(34, 16, 95, 0.2);
+    border-radius: 0 0 22px 22px;
+    box-shadow: 0 30px 50px -22px rgba(34, 16, 95, 0.28);
     max-height: calc(100dvh - 70px);
     overflow-y: auto;
-  }
-  .mobile-nav a {
-    color: var(--rc-ink);
-    font-size: 16px;
-    font-weight: 500;
-    padding: 11px 4px;
-  }
-  .mobile-nav a:hover {
-    color: var(--rc-violet);
-  }
-  .mobile-nav .btn {
-    margin-top: 12px;
-    justify-content: center;
-    color: #fff;
   }
   .mobile-nav.open {
     display: flex;
   }
-  .m-group summary {
-    list-style: none;
-    cursor: pointer;
+  @media (prefers-reduced-motion: no-preference) {
+    .mobile-nav.open {
+      animation: mSheet 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-nav.open > * {
+      animation: mItem 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    }
+    .mobile-nav.open > :nth-child(2) {
+      animation-delay: 0.04s;
+    }
+    .mobile-nav.open > :nth-child(3) {
+      animation-delay: 0.08s;
+    }
+    .mobile-nav.open > :nth-child(4) {
+      animation-delay: 0.12s;
+    }
+    .mobile-nav.open > :nth-child(5) {
+      animation-delay: 0.16s;
+    }
+    .mobile-nav.open > :nth-child(6) {
+      animation-delay: 0.2s;
+    }
+    .mobile-nav.open > :nth-child(7) {
+      animation-delay: 0.24s;
+    }
+    .mobile-nav.open > :nth-child(8) {
+      animation-delay: 0.28s;
+    }
+  }
+  @keyframes mSheet {
+    from {
+      opacity: 0;
+      translate: 0 -10px;
+    }
+  }
+  @keyframes mItem {
+    from {
+      opacity: 0;
+      translate: 0 8px;
+    }
+  }
+  .m-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 13px;
     color: var(--rc-ink);
-    font-size: 16px;
-    font-weight: 500;
-    padding: 11px 4px;
+    font-family: var(--font-heading);
+    font-size: 15.5px;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 14px;
+    transition: background 0.15s ease;
+  }
+  .m-item:hover,
+  .m-item:active {
+    background: var(--bg-tint);
+  }
+  .m-ic {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: var(--theme-soft, var(--pastel-lavender));
+    color: var(--theme-accent, var(--rc-violet));
+    display: grid;
+    place-items: center;
+  }
+  .m-ic :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+  .mobile-nav :global(.m-go) {
+    margin-left: auto;
+    opacity: 0.45;
+  }
+  .m-group summary.m-item {
+    list-style: none;
+    cursor: pointer;
   }
   .m-group summary::-webkit-details-marker {
     display: none;
   }
-  .m-group :global(.dd-caret) {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.18s ease;
+  .m-group summary :global(.dd-caret) {
+    margin-left: auto;
+    width: 17px;
+    height: 17px;
+    opacity: 0.45;
+    transition: transform 0.2s ease;
   }
   .m-group[open] summary :global(.dd-caret) {
     transform: rotate(180deg);
   }
-  .m-group a {
-    padding-left: 18px;
-    font-size: 15px;
+  .m-group[open] summary.m-item {
+    background: var(--bg-tint);
+  }
+  .m-sub {
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0 6px 30px;
+    padding-left: 16px;
+    border-left: 2px solid var(--line);
+  }
+  .m-sub a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--text-default);
+    padding: 9px 10px;
+    border-radius: 10px;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .m-sub a:hover,
+  .m-sub a:active {
+    background: var(--bg-tint);
+    color: var(--rc-violet);
+  }
+  .m-sub-ic {
+    display: inline-flex;
+    color: var(--theme-accent, var(--rc-violet));
+    opacity: 0.8;
+  }
+  .m-sub-ic :global(svg) {
+    width: 17px;
+    height: 17px;
+  }
+  .m-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .m-actions .btn {
+    justify-content: center;
+    padding: 14px 18px;
+  }
+  .m-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin: 14px 0 0;
+    font-size: 12px;
     color: var(--text-muted);
-    display: block;
+  }
+  .m-trust :global(svg) {
+    width: 15px;
+    height: 15px;
+    color: var(--ok);
   }
 
   @media (max-width: 860px) {
