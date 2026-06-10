@@ -7,6 +7,7 @@
  * original <head>/<body> through CloneLayout without transformation.
  */
 import CloneLayout from '~/layouts/CloneLayout.astro';
+import { migratedSlugs } from '~/utils/migratedSlugs';
 
 export async function getStaticPaths() {
   const files = import.meta.glob('../data/clone/*.html', {
@@ -15,7 +16,15 @@ export async function getStaticPaths() {
     eager: true,
   });
 
-  return Object.entries(files).map(([file, raw]) => {
+  // Pages rebuilt natively (src/data/pages|landing) take over their slug.
+  const migrated = await migratedSlugs();
+
+  return Object.entries(files)
+    .filter(([file]) => {
+      const name = (file.split('/').pop() || '').replace(/\.html$/i, '');
+      return !migrated.has(name);
+    })
+    .map(([file, raw]) => {
     const name = (file.split('/').pop() || '').replace(/\.html$/i, '');
     const slug = name === 'index' ? undefined : name;
     const html = raw as string;
