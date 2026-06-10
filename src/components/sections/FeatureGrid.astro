@@ -1,0 +1,56 @@
+---
+import { Icon } from "astro-icon/components";
+import { tablerIcon } from "~/utils/plans";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  columns?: number;
+  items: { icon?: string; title?: string; text?: string }[];
+}
+const { eyebrow, title, subtitle, columns = 3, items } = Astro.props;
+---
+
+<section class="features cv-auto">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="sec-head center reveal">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div
+      class="feature-grid"
+      style={`grid-template-columns: repeat(${Math.min(columns, 4)}, 1fr);`}
+    >
+      {
+        items.map((item, i) => (
+          <div class={`card feature-card reveal reveal-d${(i % 3) + 1}`}>
+            <div class="f-icon f-icon-grad">
+              <Icon name={tablerIcon(item.icon ?? "bolt")} />
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (max-width: 1080px) {
+    .feature-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  @media (max-width: 560px) {
+    .feature-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

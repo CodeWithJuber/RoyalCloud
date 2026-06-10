@@ -1,0 +1,57 @@
+---
+import { marked } from "marked";
+import StructuredData from "~/components/common/StructuredData.astro";
+import { faqPage } from "~/utils/structuredData";
+import faqsData from "~/data/faqs.json";
+
+interface Faq {
+  q: string;
+  a: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  source?: "global" | "inline";
+  items?: Faq[];
+  jsonld?: boolean;
+}
+const {
+  eyebrow = "FAQ",
+  title = "Frequently asked questions",
+  subtitle,
+  source = "global",
+  items,
+  jsonld = true,
+} = Astro.props;
+
+const list: Faq[] =
+  source === "inline" && items?.length ? items : (faqsData.general as Faq[]);
+const rendered = await Promise.all(
+  list.map(async (f) => ({ ...f, html: await marked.parseInline(f.a) })),
+);
+---
+
+<section class="cv-auto">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {title && <h2 set:html={title} />}
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+    <div class="faq-list">
+      {
+        rendered.map((f, i) => (
+          <details class={`faq reveal reveal-d${(i % 4) + 1}`}>
+            <summary>
+              {f.q}
+              <span class="pm">+</span>
+            </summary>
+            <p class="ans" set:html={f.html} />
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+{jsonld && <StructuredData schema={faqPage(list)} />}

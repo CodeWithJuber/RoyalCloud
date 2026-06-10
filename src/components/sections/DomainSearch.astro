@@ -1,0 +1,56 @@
+---
+import site from "~/data/site.json";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+}
+const {
+  eyebrow = "Domains",
+  title = "Find your perfect domain name",
+  subtitle,
+} = Astro.props;
+
+// WHMCS domain checker: GET cart.php with the search term in `query`.
+const action = new URL(site.portal.domainChecker);
+const hidden = [...action.searchParams.entries()];
+const formAction = `${action.origin}${action.pathname}`;
+---
+
+<section class="domain-sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {title && <h2 set:html={title} />}
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+    <form
+      class="domain-search reveal reveal-d1"
+      method="get"
+      action={formAction}
+      target="_blank"
+    >
+      {
+        hidden.map(([name, value]) => (
+          <input type="hidden" name={name} value={value} />
+        ))
+      }
+      <span class="at">@</span>
+      <input
+        type="text"
+        name="query"
+        placeholder="Type the domain you want…"
+        aria-label="Domain name"
+        required
+      />
+      <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+    <div class="domain-tlds reveal reveal-d2">
+      <span><b>.com</b> <em>$9.99</em></span>
+      <span><b>.net</b> <em>$11.49</em></span>
+      <span><b>.org</b> <em>$10.99</em></span>
+      <span><b>.in</b> <em>$7.99</em></span>
+    </div>
+  </div>
+</section>

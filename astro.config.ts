@@ -59,15 +59,12 @@ export default defineConfig({
       })
     ),
 
-    // Clone fidelity: leave the captured theme HTML/CSS/JS untouched so the
-    // pages render byte-for-byte like the live site (assets are already minified
-    // upstream). Re-enable later if you want extra compression.
     compress({
-      CSS: false,
-      HTML: false,
-      Image: false,
-      JavaScript: false,
-      SVG: false,
+      CSS: true,
+      HTML: true,
+      Image: false, // images already optimized by Astro's Sharp pipeline
+      JavaScript: true,
+      SVG: true,
       Logger: 1,
     }),
 

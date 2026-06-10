@@ -1,0 +1,87 @@
+---
+/**
+ * Page-builder route — renders every page from src/data/pages and
+ * src/data/landing. Slug = filename (index → /, <name> → /<name>). Section
+ * blocks in frontmatter are rendered by SectionRenderer; an optional markdown
+ * body renders as a prose section (used by the legal pages).
+ */
+import { getCollection, render } from "astro:content";
+import PageLayout from "~/layouts/PageLayout.astro";
+import SectionRenderer from "~/components/sections/SectionRenderer.astro";
+import StructuredData from "~/components/common/StructuredData.astro";
+import { breadcrumbList } from "~/utils/structuredData";
+import site from "~/data/site.json";
+
+export async function getStaticPaths() {
+  const [pages, landing] = await Promise.all([
+    getCollection("pages"),
+    getCollection("landing"),
+  ]);
+  return [...pages, ...landing].map((entry) => ({
+    params: { page: entry.id === "index" ? undefined : entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const {
+  title,
+  metadata = {},
+  breadcrumb,
+  transparentHeader,
+  redirect,
+  sections,
+} = entry.data;
+const { Content } = await render(entry);
+const hasBody = Boolean(entry.body?.trim());
+
+const first = sections[0];
+const overlayHeader =
+  transparentHeader ??
+  (first?.type === "hero" &&
+    (first.variant === "gradient" || first.variant === "product"));
+
+// Public URLs are extensionless (build.format: 'file' serves /slug and /).
+// Derive the canonical from the entry id, not Astro.url.pathname (which
+// includes the trailing ".html" during a static build).
+const cleanPath = entry.id === "index" ? "/" : `/${entry.id}`;
+const pageUrl = new URL(cleanPath, site.url).href;
+
+const meta = {
+  title: metadata.title || title,
+  description: metadata.description,
+  ignoreTitleTemplate: metadata.ignoreTitleTemplate,
+  canonical: metadata.canonical ? new URL(metadata.canonical, site.url).href : pageUrl,
+  ...(metadata.noindex ? { robots: { index: false, follow: true } } : {}),
+};
+---
+
+<PageLayout metadata={meta} transparentHeader={overlayHeader}>
+  {
+    redirect && (
+      <>
+        <meta http-equiv="refresh" content={`0; url=${redirect}`} />
+        <script is:inline define:vars={{ redirect }}>
+          window.location.replace(redirect);
+        </script>
+      </>
+    )
+  }
+  <SectionRenderer sections={sections} />
+  {
+    hasBody && (
+      <section class="prose-sec">
+        <div class="wrap">
+          <div class="prose-body">
+            <Content />
+          </div>
+        </div>
+      </section>
+    )
+  }
+  {
+    breadcrumb && breadcrumb.length > 0 && (
+      <StructuredData schema={breadcrumbList(breadcrumb, title, pageUrl)} />
+    )
+  }
+</PageLayout>

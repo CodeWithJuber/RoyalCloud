@@ -1,0 +1,22 @@
+---
+import { Icon } from "astro-icon/components";
+import { tablerIcon } from "~/utils/plans";
+
+interface Props {
+  items: { icon?: string; text: string }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="trustbar">
+  <div class="wrap trustbar-row">
+    {
+      items.map((item) => (
+        <span class="t">
+          <Icon name={tablerIcon(item.icon ?? "shield")} />
+          {item.text}
+        </span>
+      ))
+    }
+  </div>
+</div>

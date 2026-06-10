@@ -1,0 +1,45 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  logos?: string[];
+}
+const DEFAULT_LOGOS = [
+  "cloudflare",
+  "cpanel",
+  "cloudlinux",
+  "letsencrypt",
+  "intel",
+  "ubuntu",
+  "mysql",
+  "php",
+];
+const {
+  eyebrow,
+  title = "Powered by industry-leading technology",
+  subtitle,
+  logos = DEFAULT_LOGOS,
+} = Astro.props;
+---
+
+<section class="techlogos cv-auto">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {title && <h2 set:html={title} />}
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+    <div class="partner-row reveal reveal-d1">
+      {
+        logos.map((l) => (
+          <span class="mark" title={l}>
+            <Icon name={`logos:${l}`} />
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</section>

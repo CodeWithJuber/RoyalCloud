@@ -1,0 +1,117 @@
+---
+import HeroRC from "~/components/widgets/HeroRC.astro";
+
+interface Cta {
+  text: string;
+  href: string;
+  external?: boolean;
+}
+interface Props {
+  variant?: "gradient" | "product" | "simple";
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  offer?: string;
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+  badges?: string[];
+}
+const {
+  variant = "product",
+  eyebrow,
+  title,
+  subtitle,
+  offer,
+  primaryCta,
+  secondaryCta,
+  badges,
+} = Astro.props;
+const target = (cta?: Cta) =>
+  cta?.external || /^https?:\/\//.test(cta?.href ?? "") ? "_blank" : undefined;
+---
+
+{
+  variant === "gradient" && (
+    <HeroRC
+      title={title}
+      subtitle={subtitle}
+      offer={offer ?? eyebrow}
+      primary={
+        primaryCta && {
+          text: primaryCta.text,
+          href: primaryCta.href,
+          target: target(primaryCta),
+        }
+      }
+      secondary={
+        secondaryCta && {
+          text: secondaryCta.text,
+          href: secondaryCta.href,
+          target: target(secondaryCta),
+        }
+      }
+      badges={badges}
+    />
+  )
+}
+
+{
+  variant === "product" && (
+    <section class="p-hero">
+      <div class="wrap inner">
+        {eyebrow && (
+          <span class="hero-eyebrow">
+            <span class="dot" />
+            {eyebrow}
+          </span>
+        )}
+        <h1 set:html={title} />
+        {offer && <span class="offer">{offer}</span>}
+        {subtitle && <p class="sub" set:html={subtitle} />}
+        {(primaryCta || secondaryCta) && (
+          <div class="hero-ctas">
+            {primaryCta && (
+              <a
+                class="btn btn-primary"
+                href={primaryCta.href}
+                target={target(primaryCta)}
+                rel={target(primaryCta) && "noopener"}
+              >
+                {primaryCta.text}
+              </a>
+            )}
+            {secondaryCta && (
+              <a
+                class="btn btn-ghost-light"
+                href={secondaryCta.href}
+                target={target(secondaryCta)}
+                rel={target(secondaryCta) && "noopener"}
+              >
+                {secondaryCta.text}
+              </a>
+            )}
+          </div>
+        )}
+        {badges && badges.length > 0 && (
+          <div class="hero-badges">
+            {badges.map((b) => (
+              <span class="b glass">{b}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+{
+  variant === "simple" && (
+    <section class="s-hero">
+      <div class="wrap">
+        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        <h1 set:html={title} />
+        {subtitle && <p class="sub" set:html={subtitle} />}
+      </div>
+    </section>
+  )
+}
