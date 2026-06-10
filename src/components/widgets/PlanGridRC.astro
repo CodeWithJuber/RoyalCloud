@@ -34,7 +34,7 @@ const {
 const cols = Math.min(tiers.length, 5);
 ---
 
-<section class="pricing" id={id} style="background: var(--bg-tint);">
+<section class="pricing" id={id}>
   <div class="wrap">
     <div class="sec-head center reveal">
       {eyebrow && <span class="eyebrow">{eyebrow}</span>}
@@ -61,8 +61,10 @@ const cols = Math.min(tiers.length, 5);
       data-plan-grid
     >
       {
-        tiers.map((t) => (
-          <div class={`card plan${t.popular ? " popular" : ""}`}>
+        tiers.map((t, i) => (
+          <div
+            class={`plan reveal reveal-d${(i % 4) + 1}${t.popular ? " popular" : ""}`}
+          >
             {t.popular && <span class="pop-tag">Most Popular</span>}
             <h3>{t.name}</h3>
             <p class="summary">{t.summary}</p>
@@ -77,11 +79,14 @@ const cols = Math.min(tiers.length, 5);
               </span>
               <span class="period">/mo</span>
             </div>
-            <ul class="feat">
-              {t.features.map((f) => (
-                <li>{f}</li>
-              ))}
-            </ul>
+            <p
+              class="price-note"
+              data-bill-note
+              data-monthly="billed monthly"
+              data-annual="billed annually"
+            >
+              billed monthly
+            </p>
             <a
               class={`btn ${t.popular ? "btn-primary" : "btn-plan"}`}
               href={t.ctaUrl}
@@ -90,6 +95,11 @@ const cols = Math.min(tiers.length, 5);
             >
               {t.cta ?? "Get Started"}
             </a>
+            <ul class="feat">
+              {t.features.map((f) => (
+                <li>{f}</li>
+              ))}
+            </ul>
           </div>
         ))
       }
@@ -121,7 +131,9 @@ const cols = Math.min(tiers.length, 5);
   function rcPlansInit() {
     document.querySelectorAll(".pricing").forEach((sec) => {
       const buttons = sec.querySelectorAll(".bill-toggle button");
-      const prices = sec.querySelectorAll(".price[data-monthly]");
+      const prices = sec.querySelectorAll(
+        ".price[data-monthly], [data-bill-note]",
+      );
       buttons.forEach((btn) => {
         btn.addEventListener("click", () => {
           const bill = btn.getAttribute("data-bill") || "monthly";
