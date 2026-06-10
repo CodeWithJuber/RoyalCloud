@@ -70,39 +70,50 @@ const { links: columns, secondaryLinks, socialLinks } = footerData;
   .footer-social {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 22px;
   }
   .footer-social a {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.16);
     display: grid;
     place-items: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.65);
     transition:
-      color 0.15s ease,
-      border-color 0.15s ease,
-      background 0.15s ease;
+      color 0.16s ease,
+      border-color 0.16s ease,
+      background 0.16s ease,
+      transform 0.16s ease;
   }
   .footer-social a:hover {
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--rc-violet);
+    background: var(--rc-violet);
+    transform: translateY(-2px);
   }
   .footer-social :global(svg) {
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
   }
   .footer-legal {
     display: flex;
-    gap: 16px;
+    gap: 8px 18px;
+    flex-wrap: wrap;
   }
   .footer-legal a {
     color: rgba(255, 255, 255, 0.55);
     transition: color 0.15s ease;
   }
   .footer-legal a:hover {
-    color: #fff;
+    color: var(--rc-yellow);
+  }
+  @media (max-width: 560px) {
+    .footer-social {
+      justify-content: center;
+    }
+    .footer-legal {
+      justify-content: center;
+    }
   }
 </style>
