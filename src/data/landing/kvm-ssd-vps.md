@@ -16,8 +16,8 @@ sections:
     eyebrow: KVM SSD VPS
     title: KVM SSD VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy KVM SSD VPS Hosting On Affordable Prices in India. Try Our Secure & Fast Linux KVM SSD VPS Hosting For Fast
-      Website. Try Our KMV SSD VPS Now
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

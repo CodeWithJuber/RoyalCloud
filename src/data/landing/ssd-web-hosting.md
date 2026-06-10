@@ -16,8 +16,8 @@ sections:
     eyebrow: SSD Web Hosting
     title: SSD Web Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      SSD Web Hosting - Buy Best Shared SSD Hosting in India. RoyalClouds Providing Fast & Affordable SSD Web Hosting in
-      cheapest prices.
+      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

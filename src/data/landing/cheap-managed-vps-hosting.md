@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap Managed VPS Hosting
     title: Cheap Managed VPS Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Get Cheap Managed VPS Hosting on Affordable Price with SSD Storage, DDoS Protected & Free CPanel Setup. Try Our
-      Managed VPS Hosting Service.
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

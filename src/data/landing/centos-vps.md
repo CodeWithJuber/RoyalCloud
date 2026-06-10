@@ -16,8 +16,8 @@ sections:
     eyebrow: Centos VPS
     title: Centos VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Order your Centos VPS and choose the software version you prefer. Order now and experience our SSD Centos VPS
-      Hosting speed. Deploy now!
+      CentOS pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup, DDoS
+      protection and friendly 24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

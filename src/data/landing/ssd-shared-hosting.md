@@ -16,8 +16,8 @@ sections:
     eyebrow: SSD Shared Hosting
     title: SSD Shared Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy SSD Shared Web Hosting For Fast Website Loading. Fast & Best Linux Shared Hosting Plans with SSD. Try Our
-      Secure & Fast Linux SSD Shared Hosting
+      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

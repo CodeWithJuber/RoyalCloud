@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap KVM VPS
     title: Cheap KVM VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Cheap KVM VPS : Royal clouds providing Cheap kvm vps Hosting with Fast SSD DDos Protection KVM VPS in India,
-      Try Our KVM VPS Hosting.
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

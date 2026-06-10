@@ -16,8 +16,8 @@ sections:
     eyebrow: Unlimited SSD Hosting
     title: Unlimited SSD Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Unlimited SSD Web Hosting Plans on affordable Prices With Security & Speed. Try Our Fast Unlimited SSD Shared
-      Web Services Starting From $1.99/M
+      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

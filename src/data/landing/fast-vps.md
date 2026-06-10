@@ -16,8 +16,8 @@ sections:
     eyebrow: Fast VPS
     title: Fast VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Order your Fast VPS and choose the software version you prefer. Order now and experience our fast SSD VPS Hosting
-      speed. Deploy now!
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

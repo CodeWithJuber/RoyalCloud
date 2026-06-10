@@ -16,8 +16,8 @@ sections:
     eyebrow: Managed VPS With cPanel
     title: Managed VPS With cPanel on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Best Managed VPS With Cpanel on affordable prices. RoyalClouds providing Fast & Secure Fully Managed VPS
-      Hosting With Cpanel in India. Starting @4$/M
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

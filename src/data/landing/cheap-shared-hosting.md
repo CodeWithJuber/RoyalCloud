@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap Shared Hosting
     title: Cheap Shared Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Cheap Shared Hosting From RoyalClouds Web Hosting Company. Try Our Fast & Cheap SSD Shared Web Hosting Plans
-      in India - Cheap Shared Web Hosting
+      Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

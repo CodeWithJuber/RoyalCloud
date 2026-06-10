@@ -34,7 +34,10 @@
   --maxw: 1200px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* Box-sizing only — margins/paddings are reset by Tailwind preflight.
+   A universal margin/padding reset here would sit OUTSIDE Tailwind's @layer
+   system and silently override every margin/padding utility on the site. */
+* { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
@@ -631,7 +634,7 @@ h1 em, h2 em {
   background-clip: text;
   color: transparent;
 }
-.hero h1 em, .rc-hero h1 em { background: linear-gradient(100deg, #ffe978 0%, #6fd0ff 100%); -webkit-background-clip: text; background-clip: text; }
+.hero h1 em, .rc-hero h1 em, .p-hero h1 em { background: linear-gradient(100deg, #ffe978 0%, #6fd0ff 100%); -webkit-background-clip: text; background-clip: text; }
 
 /* glass chips on gradient backgrounds */
 .glass {
@@ -730,7 +733,23 @@ h1 em, h2 em {
 .s-hero .sub { font-size: 17px; color: var(--text-muted); margin-top: 12px; max-width: 640px; }
 
 /* ---------- Comparison table ---------- */
-.compare-wrap { overflow-x: auto; border: 1px solid #e9e3fc; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); }
+.compare-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #e9e3fc;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  /* right-edge fade hints that the table scrolls horizontally on small screens */
+  background:
+    linear-gradient(to right, #fff 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(to left, #fff 30%, rgba(255, 255, 255, 0)) 100% 0,
+    radial-gradient(farthest-side at 0 50%, rgba(34, 16, 95, 0.14), transparent),
+    radial-gradient(farthest-side at 100% 50%, rgba(34, 16, 95, 0.14), transparent) 100% 0;
+  background-repeat: no-repeat;
+  background-size: 48px 100%, 48px 100%, 16px 100%, 16px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+.compare { background: transparent; }
 .compare { width: 100%; border-collapse: collapse; min-width: 720px; background: #fff; }
 .compare th, .compare td { padding: 16px 20px; text-align: left; font-size: 14.5px; border-bottom: 1px solid #f1eefb; }
 .compare thead th {

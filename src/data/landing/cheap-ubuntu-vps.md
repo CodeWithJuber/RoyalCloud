@@ -16,8 +16,8 @@ sections:
     eyebrow: Cheap Ubuntu VPS
     title: Cheap Ubuntu VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Buy Cheap Ubuntu SSD VPS Server Hosting Plans on affordable Prices With Security & Speed. Try Our Fast SSD Ubuntu
-      VPS Hosting Services Starting @$4/m
+      Ubuntu pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup, DDoS
+      protection and friendly 24/7 support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

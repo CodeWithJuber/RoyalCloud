@@ -16,8 +16,8 @@ sections:
     eyebrow: SSD Wordpress Hosting
     title: SSD Wordpress Hosting on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      SSD WordPress Hosting: Royal Clouds Providing Fast, Secure & Best SSD Hosting For WordPress Website Starting
-      @15$/M. Try SSD WordPress Hosting India
+      WordPress tuned on LiteSpeed + SSD with LSCache, auto-updates, free SSL, daily backups and WordPress experts on
+      call 24/7.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php

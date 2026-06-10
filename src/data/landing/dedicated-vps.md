@@ -16,8 +16,8 @@ sections:
     eyebrow: Dedicated VPS
     title: Dedicated VPS on <em>Pure SSD</em> — Built for Speed
     subtitle: >-
-      Cheap Dedicated VPS: Buy Dedicated VPS For Fast Website Loading on Affordable Price. Try Our Secure & Fast Linux
-      VPS Hosting on Affordable Prices
+      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and friendly 24/7
+      support.
     primaryCta:
       text: Get Started
       href: https://my.royalclouds.net/cart.php
