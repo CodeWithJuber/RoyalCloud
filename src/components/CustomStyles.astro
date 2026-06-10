@@ -1,0 +1,48 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/sora';
+---
+
+<style is:inline>
+  :root {
+    --aw-font-sans: 'Inter Variable';
+    --aw-font-serif: 'Inter Variable';
+    --aw-font-heading: 'Sora Variable';
+
+    /* Royal Clouds — GREEN brand */
+    --aw-color-primary: rgb(18 161 80);      /* #12A150 */
+    --aw-color-secondary: rgb(14 138 69);    /* #0E8A45 */
+    --aw-color-accent: rgb(14 165 233);      /* #0EA5E9 cyan */
+
+    --aw-color-text-heading: rgb(12 28 43);  /* navy ink */
+    --aw-color-text-default: rgb(65 80 92);
+    --aw-color-text-muted: rgb(65 80 92 / 66%);
+    --aw-color-bg-page: rgb(255 255 255);
+
+    --aw-color-bg-page-dark: rgb(7 20 14);   /* deep green-navy */
+
+    ::selection {
+      background-color: rgb(18 161 80 / 18%);
+    }
+  }
+
+  .dark {
+    --aw-font-sans: 'Inter Variable';
+    --aw-font-serif: 'Inter Variable';
+    --aw-font-heading: 'Sora Variable';
+
+    --aw-color-primary: rgb(39 196 107);     /* brighter green on dark */
+    --aw-color-secondary: rgb(25 192 138);
+    --aw-color-accent: rgb(56 199 245);
+
+    --aw-color-text-heading: rgb(238 246 241);
+    --aw-color-text-default: rgb(179 196 186);
+    --aw-color-text-muted: rgb(179 196 186 / 66%);
+    --aw-color-bg-page: rgb(7 20 14);
+
+    ::selection {
+      background-color: rgb(39 196 107 / 28%);
+      color: snow;
+    }
+  }
+</style>

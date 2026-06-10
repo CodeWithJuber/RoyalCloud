@@ -1,8 +1,0 @@
-{
-  "items": [
-    { "icon": "cart", "title": "Choose your plan", "text": "Pick the hosting that fits — from SSD shared to a dedicated server. Upgrade any time as you grow." },
-    { "icon": "refresh", "title": "We migrate you free", "text": "Already hosted elsewhere? Our team moves your site, databases and emails with zero downtime, free of charge." },
-    { "icon": "settings", "title": "Set up in minutes", "text": "Install WordPress and 150+ apps in one click, point your domain, and enable free SSL — all from one dashboard." },
-    { "icon": "rocket", "title": "Go live & grow", "text": "Your site loads fast on LiteSpeed + NVMe, backed by 99.99% uptime and friendly 24/7 support whenever you need it." }
-  ]
-}

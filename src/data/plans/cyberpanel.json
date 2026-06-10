@@ -1,0 +1,55 @@
+{
+  "id": "cyberpanel",
+  "name": "CyberPanel VPS Hosting",
+  "slug": "cyberpanel-vps-hosting",
+  "icon": "rocket",
+  "eyebrow": "CyberPanel VPS",
+  "title": "CyberPanel VPS Hosting",
+  "subtitle": "Deploy blazing-fast WordPress sites in minutes with CyberPanel and OpenLiteSpeed pre-installed — on isolated KVM VPS with full root access, a dedicated IP and DDoS protection.",
+  "currency": "$",
+  "billingNote": "CyberPanel + OpenLiteSpeed · Full root access · Dedicated IP · DDoS protection.",
+  "tiers": [
+    {
+      "name": "VPS I", "price": "12", "priceAnnual": "10", "period": "/mo", "popular": false,
+      "summary": "A fast start for one WordPress site.",
+      "cta": "Deploy Now", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=61",
+      "features": ["1 vCPU Core", "1 GB RAM", "10 GB SSD Storage", "500 GB Bandwidth", "1 Dedicated IPv4", "CyberPanel Pre-Installed", "Full Root Access"]
+    },
+    {
+      "name": "VPS II", "price": "16", "priceAnnual": "13", "period": "/mo", "popular": false,
+      "summary": "Great for a growing WordPress site.",
+      "cta": "Deploy Now", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=62",
+      "features": ["2 vCPU Cores", "2 GB RAM", "20 GB SSD Storage", "1 TB Bandwidth", "1 Dedicated IPv4", "CyberPanel Pre-Installed", "Full Root Access"]
+    },
+    {
+      "name": "VPS III", "price": "24", "priceAnnual": "19", "period": "/mo", "popular": true,
+      "summary": "Best value for production WordPress.",
+      "cta": "Deploy Now", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=63",
+      "features": ["4 vCPU Cores", "4 GB RAM", "40 GB SSD Storage", "2 TB Bandwidth", "1 Dedicated IPv4", "CyberPanel Pre-Installed", "Full Root Access"]
+    },
+    {
+      "name": "VPS IV", "price": "38", "priceAnnual": "30", "period": "/mo", "popular": false,
+      "summary": "For busy WordPress sites.",
+      "cta": "Deploy Now", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=64",
+      "features": ["4 vCPU Cores", "8 GB RAM", "70 GB SSD Storage", "3 TB Bandwidth", "1 Dedicated IPv4", "CyberPanel Pre-Installed", "Full Root Access"]
+    },
+    {
+      "name": "VPS V", "price": "68", "priceAnnual": "54", "period": "/mo", "popular": false,
+      "summary": "High-traffic WordPress workloads.",
+      "cta": "Deploy Now", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=65",
+      "features": ["8 vCPU Cores", "16 GB RAM", "100 GB SSD Storage", "4 TB Bandwidth", "1 Dedicated IPv4", "CyberPanel Pre-Installed", "Full Root Access"]
+    },
+    {
+      "name": "VPS VI", "price": "108", "priceAnnual": "86", "period": "/mo", "popular": false,
+      "summary": "Maximum power for WordPress fleets.",
+      "cta": "Deploy Now", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=66",
+      "features": ["8 vCPU Cores", "32 GB RAM", "150 GB SSD Storage", "5 TB Bandwidth", "1 Dedicated IPv4", "CyberPanel Pre-Installed", "Full Root Access"]
+    }
+  ],
+  "highlights": [
+    { "icon": "rocket", "title": "WordPress in Minutes", "text": "CyberPanel + OpenLiteSpeed and LSCache deploy a tuned WordPress stack instantly." },
+    { "icon": "cpu", "title": "Isolated KVM Resources", "text": "Dedicated CPU, RAM and SSD that are always yours — never shared." },
+    { "icon": "terminal", "title": "Full Root Access", "text": "Manage everything from CyberPanel or the command line, your way." },
+    { "icon": "shield", "title": "DDoS Protection", "text": "Built-in network filtering keeps your sites online under attack." }
+  ]
+}

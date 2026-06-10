@@ -1,185 +1,83 @@
 # Royal Clouds — Website
 
 A fast, SEO-friendly, fully responsive website for **Royal Clouds** hosting,
-built with [Astro](https://astro.build) and editable through a visual
-[Decap CMS](https://decapcms.org) dashboard. Deploys free to **GitHub Pages**
-via GitHub Actions.
+built on the **[AstroWind](https://github.com/arthelokyo/astrowind)** theme
+(Astro v6 + Tailwind CSS v4), branded to the Royal Clouds **green** identity,
+editable through a **Decap CMS** dashboard, and deployed on **Cloudflare** with
+an optional Basic-Auth preview lock.
 
 > Ordering, login, tickets and the knowledge base are handled by the existing
-> WHMCS client portal at `https://my.royalclouds.net` — this site links to it
-> and does not replace it.
-
----
+> WHMCS client portal at `https://my.royalclouds.net` — this site links to it.
 
 ## Tech stack
 
 | Concern | Tool |
 | --- | --- |
-| Framework / SSG | Astro 5 (zero-JS by default) |
+| Framework / UI | Astro v6 + Tailwind CSS v4 (AstroWind theme — designer-made widgets) |
+| Theme | Green brand, light + dark, set in `src/components/CustomStyles.astro` |
+| Icons / logos | astro-icon (Tabler) + Iconify `logos` for real partner marks |
 | Content editing | Decap CMS (Git-backed, at `/admin`) |
-| Blog content | Markdown/MDX content collections |
-| SEO | Per-page `<Seo>` component, JSON-LD, `@astrojs/sitemap`, RSS |
-| UI | Light + dark themes (header toggle, no-FOUC), premium design system in `src/styles/global.css` |
-| Hosting | Cloudflare Worker (`src/worker.ts`) serving static `dist/` assets, custom domain `royalclouds.net` |
-| Privacy | Optional Basic Auth preview lock via Worker secrets (see Deployment) |
-| CI/CD | Cloudflare Workers Builds (Git integration → `npx wrangler deploy`) |
+| Blog | Markdown/MDX posts in `src/data/post/` (AstroWind blog, RSS, categories, tags) |
+| SEO | Built-in metadata/OG, `@astrojs/sitemap`, blog RSS |
+| Hosting | Cloudflare Worker (`src/worker.ts`) serving static `dist/` assets |
+| Privacy | Optional Basic Auth preview lock via Worker secrets |
+| CI/CD | Cloudflare Workers Builds (Git → `npx wrangler deploy`) |
 
 ## Local development
 
 ```bash
-npm install      # install dependencies
-npm run dev      # start dev server at http://localhost:4321
+npm install
+npm run dev      # http://localhost:4321
 npm run build    # production build to ./dist
-npm run preview  # preview the production build
+npm run check    # type/lint checks
 ```
 
-## Project structure
+## Where things live
 
-```
-src/
-├─ data/            # ← EDIT HERE: site settings, nav, footer, plans, testimonials, faqs
-│  ├─ site.json     #    name, contact, portal URLs, socials, live chat
-│  └─ plans/*.json  #    hosting tiers & prices (one file per product)
-├─ content/blog/    # ← blog posts (Markdown, Yoast-style frontmatter)
-├─ components/       # Header, Footer, PricingCards, Seo, BlogCard, …
-├─ layouts/          # BaseLayout, BlogLayout
-├─ pages/            # routes (index, product pages, /blog, rss.xml, 404)
-├─ lib/              # blog + JSON-LD helpers
-└─ styles/global.css # ← all brand colours live here (CSS custom properties)
-public/
-├─ admin/            # Decap CMS (index.html + config.yml)
-├─ assets/img/       # logo, OG image, uploads
-├─ CNAME             # custom domain
-└─ robots.txt
-```
-
-## Editing content
-
-### Option A — visual editor (recommended, no code)
-
-1. Go to **`https://royalclouds.net/admin`**.
-2. Log in with GitHub (see *CMS auth* below).
-3. Edit **Blog Posts**, **Hosting Plans & Pricing**, **Site Settings**,
-   **Testimonials** or **FAQs** in the dashboard.
-4. Hit **Publish**. Decap commits the change to the repo, GitHub Actions
-   rebuilds the site, and it goes live in a couple of minutes.
-
-### Option B — edit files directly
-
-Everything the CMS edits is plain text in the repo:
-
-- **Prices / plan features** → `src/data/plans/*.json`
-- **Text, contact info, portal links, socials** → `src/data/site.json`
-- **Menus** → `src/data/nav.json`, `src/data/footer.json`
+- **Brand colours / fonts** → `src/components/CustomStyles.astro`
+- **Site name & SEO** → `src/config.yaml`
+- **Navigation (header + footer)** → `src/navigation.ts`
+- **Logo** → `src/components/Logo.astro`
+- **Plans & prices** → `src/data/plans/*.json` (also exposed in the CMS)
+- **Technology pages content** → `src/data/technology.json`
 - **Testimonials / FAQs** → `src/data/testimonials.json`, `src/data/faqs.json`
-- **Blog posts** → add a `.md` file under `src/content/blog/`
-- **Brand colours** → the `:root` custom properties in `src/styles/global.css`
+- **Blog posts** → `src/data/post/*.md`
+- **Pages** → `src/pages/` (home, 6 product pages, 3 technology pages,
+  about/contact/testimonials, `[...blog]`)
+- **Product page template** → `src/components/ProductPage.astro`
+  (Hero + Pricing + Features + FAQs + CTA, fed by a plan JSON)
 
-## Blog & SEO
+## Deployment (Cloudflare — Worker + static assets)
 
-Each post's frontmatter mirrors the controls Yoast SEO offers in WordPress:
-
-```yaml
----
-title: "Post title"             # SEO <title> + H1
-description: "Meta description"  # 150–160 chars
-publishDate: 2026-05-20
-updatedDate: 2026-05-25          # optional
-author: "Royal Clouds Team"
-category: "Performance"
-tags: ["SSD", "Speed"]
-image: ./cover.jpg               # optional, used for social cards
-imageAlt: "Alt text"
-canonical: https://...           # optional
-featured: false                  # feature on blog homepage
-noindex: false                   # hide from search engines
-draft: false                     # hide until ready
----
-```
-
-Built in automatically: canonical URLs, Open Graph + Twitter cards, JSON-LD
-(`Organization`, `WebSite`, `Product`/`AggregateOffer`, `BlogPosting`,
-`FAQPage`, `BreadcrumbList`), `sitemap-index.xml`, `robots.txt` and an RSS feed
-at `/rss.xml`.
-
-## Deployment (Cloudflare — Workers Static Assets)
-
-The repo is connected to Cloudflare via the **Workers Builds** Git integration,
-which works with a **private** repo and keeps your Cloudflare DNS. On every push
-to `main`, Cloudflare runs:
-
-- **Build command:** `npm run build` → outputs static files to `dist/`
-- **Deploy command:** `npx wrangler deploy` → publishes the site (a small Worker
-  serving the `dist/` assets), per `wrangler.toml`.
-
-`wrangler.toml` is the single source of truth:
-
-```toml
-name = "royalfront"
-main = "src/worker.ts"          # preview-lock + security headers
-compatibility_date = "2025-01-01"
-
-[assets]
-directory = "./dist"
-binding = "ASSETS"
-run_worker_first = true
-not_found_handling = "404-page" # serves dist/404.html for unmatched routes
-```
-
-Validate the config locally any time with:
+The repo is connected to Cloudflare via **Workers Builds**. On push to `main`:
+`npm run build` → `dist/`, then `npx wrangler deploy` publishes it via
+`src/worker.ts` (per `wrangler.toml`). Validate locally:
 
 ```bash
 npm run build
-npx wrangler deploy --dry-run   # checks worker + assets, publishes nothing
+npx wrangler deploy --dry-run
 ```
 
 ### Preview lock (hide the site until launch)
 
-`src/worker.ts` runs in front of the assets. While the **`BASIC_AUTH_USER`** and
-**`BASIC_AUTH_PASS`** secrets are set on the Worker, the whole site is gated
-behind an HTTP Basic Auth prompt — the public can't see it.
-
-**To lock it** (Cloudflare dashboard → Workers & Pages → `royalfront` →
-Settings → Variables & Secrets → *Add secret*), or via CLI:
-
-```bash
-npx wrangler secret put BASIC_AUTH_USER   # e.g. royal
-npx wrangler secret put BASIC_AUTH_PASS   # a strong password
-```
-
-**To go public at launch:** delete those two secrets. No code change, no
-redeploy needed — when the credentials are absent the Worker serves everyone.
-The Worker also adds security headers (nosniff, frame, referrer, HSTS,
-permissions-policy) on every response.
+`src/worker.ts` gates the whole site behind HTTP Basic Auth while the
+`BASIC_AUTH_USER` / `BASIC_AUTH_PASS` secrets are set on the Worker. Set them in
+Cloudflare → Workers & Pages → `royalfront` → Settings → Variables & Secrets
+(or `npx wrangler secret put …`). **Remove both at launch** to go public — no
+code change. The Worker also adds security headers on every response.
 
 ### Custom domain
 
-In the Cloudflare project (**Workers & Pages → royalfront → Domains**), add
-`royalclouds.net`. Since DNS is already on Cloudflare, the record is created for
-you and TLS is issued automatically — no `CNAME` file needed.
-
-> The previous GitHub Actions workflow was removed, since Cloudflare now builds
-> and deploys directly from Git. To re-add CI-based deploys instead, use
-> `cloudflare/wrangler-action` with a `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
-> secret and the command `deploy`.
+Add `royalclouds.net` in **Workers & Pages → royalfront → Domains**. DNS is on
+Cloudflare, so the record + TLS are issued automatically.
 
 ## CMS auth
 
-Decap's GitHub backend needs an OAuth handshake. The simplest options:
+Decap's GitHub backend needs an OAuth handshake (GitHub OAuth app + a small
+OAuth proxy, e.g. a Cloudflare Worker), or switch `public/admin/config.yml` to
+`git-gateway`. For local editing, run `npx decap-server` with `local_backend`.
 
-- **GitHub OAuth app + a small OAuth proxy** (e.g. a Cloudflare Worker running
-  the community `decap-cms-oauth` provider) with the client ID/secret set there, **or**
-- Switch `public/admin/config.yml` to `backend: git-gateway` if you host auth
-  via a gateway service.
+## Visual QA
 
-For quick **local** editing without any of that, uncomment `local_backend: true`
-in `config.yml` and run `npx decap-server` alongside `npm run dev`.
-
-## Notes
-
-- Colours are defined once in `src/styles/global.css` — change `--rc-primary`
-  and friends to retune the whole site.
-- Live chat: set `liveChat.tawkPropertyId` in `src/data/site.json` to enable the
-  Tawk.to widget site-wide.
-- All prices/specs are easily editable and were seeded to mirror the current
-  Royal Clouds catalogue; adjust in `src/data/plans/` as needed.
+`scripts/screenshots.mjs` renders every page at desktop + mobile in light + dark
+using Playwright (`PAGES="home:/,…" node scripts/screenshots.mjs`).
