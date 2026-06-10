@@ -23,7 +23,7 @@ sections:
       external: true
     secondaryCta:
       text: View Pricing
-      href: '#pricing'
+      href: "#pricing"
     badges:
       - 99.99% Uptime SLA
       - Free SSL

@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
-import { Icon } from 'astro-icon/components';
-import logoWhite from '~/assets/images/brand/logo-white.png';
-import { footerData } from '~/navigation';
-import site from '~/data/site.json';
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import logoWhite from "~/assets/images/brand/logo-white.png";
+import { footerData } from "~/navigation";
+import site from "~/data/site.json";
 
 const year = new Date().getFullYear();
 const external = (href: string) => /^https?:\/\//.test(href);
@@ -22,7 +22,9 @@ const { links: columns, secondaryLinks, socialLinks } = footerData;
               <a
                 href={s.href}
                 aria-label={s.ariaLabel}
-                {...external(s.href) ? { target: '_blank', rel: 'noopener' } : {}}
+                {...(external(s.href)
+                  ? { target: "_blank", rel: "noopener" }
+                  : {})}
               >
                 <Icon name={s.icon} />
               </a>
@@ -37,7 +39,12 @@ const { links: columns, secondaryLinks, socialLinks } = footerData;
             <ul>
               {col.links.map((l) => (
                 <li>
-                  <a href={l.href} {...external(l.href) ? { target: '_blank', rel: 'noopener' } : {}}>
+                  <a
+                    href={l.href}
+                    {...(external(l.href)
+                      ? { target: "_blank", rel: "noopener" }
+                      : {})}
+                  >
                     {l.text}
                   </a>
                 </li>
@@ -60,17 +67,42 @@ const { links: columns, secondaryLinks, socialLinks } = footerData;
 </footer>
 
 <style>
-  .footer-social { display: flex; gap: 10px; margin-top: 20px; }
-  .footer-social a {
-    width: 36px; height: 36px; border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    display: grid; place-items: center;
-    color: rgba(255, 255, 255, 0.6);
-    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  .footer-social {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
   }
-  .footer-social a:hover { color: #fff; border-color: rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.06); }
-  .footer-social :global(svg) { width: 17px; height: 17px; }
-  .footer-legal { display: flex; gap: 16px; }
-  .footer-legal a { color: rgba(255, 255, 255, 0.55); transition: color 0.15s ease; }
-  .footer-legal a:hover { color: #fff; }
+  .footer-social a {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    display: grid;
+    place-items: center;
+    color: rgba(255, 255, 255, 0.6);
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease,
+      background 0.15s ease;
+  }
+  .footer-social a:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .footer-social :global(svg) {
+    width: 17px;
+    height: 17px;
+  }
+  .footer-legal {
+    display: flex;
+    gap: 16px;
+  }
+  .footer-legal a {
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.15s ease;
+  }
+  .footer-legal a:hover {
+    color: #fff;
+  }
 </style>

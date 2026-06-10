@@ -24,7 +24,7 @@ sections:
       external: true
     secondaryCta:
       text: View Plans
-      href: '#pricing'
+      href: "#pricing"
     badges:
       - WordPress Pre-Installed
       - LiteSpeed Cache

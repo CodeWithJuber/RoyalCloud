@@ -25,9 +25,11 @@ function safeEqual(a: string, b: string): boolean {
   const bb = enc.encode(b);
   if (ab.length !== bb.length) {
     // Still run a comparison to keep timing roughly constant.
-    let dummy = 0;
-    for (let i = 0; i < ab.length; i++) dummy |= ab[i];
-    return false;
+    let acc = 0;
+    for (let i = 0; i < ab.length; i++) acc |= ab[i];
+    // `acc` can never be negative, so this always returns false while keeping
+    // the loop (and its timing) from being optimized away.
+    return acc < 0;
   }
   let diff = 0;
   for (let i = 0; i < ab.length; i++) diff |= ab[i] ^ bb[i];
@@ -35,7 +37,9 @@ function safeEqual(a: string, b: string): boolean {
 }
 
 /** Parse a `Basic` Authorization header into { user, pass }, or null. */
-export function parseBasicAuth(header: string | null): { user: string; pass: string } | null {
+export function parseBasicAuth(
+  header: string | null,
+): { user: string; pass: string } | null {
   if (!header) return null;
   const [scheme, encoded] = header.split(" ");
   if (!encoded || scheme.toLowerCase() !== "basic") return null;

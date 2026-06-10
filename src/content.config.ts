@@ -1,6 +1,6 @@
-import { defineCollection } from 'astro:content';
-import { z } from 'astro/zod';
-import { glob } from 'astro/loaders';
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
+import { glob } from "astro/loaders";
 
 const metadataDefinition = () =>
   z
@@ -29,7 +29,7 @@ const metadataDefinition = () =>
                 url: z.string(),
                 width: z.number().optional(),
                 height: z.number().optional(),
-              })
+              }),
             )
             .optional(),
           locale: z.string().optional(),
@@ -48,7 +48,7 @@ const metadataDefinition = () =>
     .optional();
 
 const postCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
+  loader: glob({ pattern: ["*.md", "*.mdx"], base: "src/data/post" }),
   schema: z.object({
     publishDate: z.date().optional(),
     updateDate: z.date().optional(),
@@ -90,11 +90,11 @@ const iconItemSchema = z.object({
   text: z.string().optional(),
 });
 
-export const sectionSchema = z.discriminatedUnion('type', [
+export const sectionSchema = z.discriminatedUnion("type", [
   z.object({
-    type: z.literal('hero'),
+    type: z.literal("hero"),
     ...base,
-    variant: z.enum(['gradient', 'product', 'simple']).optional(),
+    variant: z.enum(["gradient", "product", "simple"]).optional(),
     offer: z.string().optional(),
     image: z.string().optional(),
     primaryCta: ctaSchema.optional(),
@@ -102,24 +102,24 @@ export const sectionSchema = z.discriminatedUnion('type', [
     badges: z.array(z.string()).optional(),
   }),
   z.object({
-    type: z.literal('trustbar'),
+    type: z.literal("trustbar"),
     items: z.array(z.object({ icon: z.string().optional(), text: z.string() })),
   }),
   z.object({
-    type: z.literal('pricing'),
+    type: z.literal("pricing"),
     ...base,
     plan: z.string(),
     showToggle: z.boolean().optional(),
     note: z.string().optional(),
   }),
   z.object({
-    type: z.literal('features'),
+    type: z.literal("features"),
     ...base,
     columns: z.number().optional(),
     items: z.array(iconItemSchema),
   }),
   z.object({
-    type: z.literal('content'),
+    type: z.literal("content"),
     ...base,
     image: z.string().optional(),
     reverse: z.boolean().optional(),
@@ -127,25 +127,25 @@ export const sectionSchema = z.discriminatedUnion('type', [
     items: z.array(iconItemSchema).optional(),
   }),
   z.object({
-    type: z.literal('steps'),
+    type: z.literal("steps"),
     ...base,
     items: z.array(iconItemSchema),
   }),
   z.object({
-    type: z.literal('stats'),
+    type: z.literal("stats"),
     ...base,
     items: z.array(z.object({ value: z.string(), label: z.string() })),
   }),
   z.object({
-    type: z.literal('comparison'),
+    type: z.literal("comparison"),
     ...base,
     plan: z.string().optional(),
     note: z.string().optional(),
   }),
   z.object({
-    type: z.literal('testimonials'),
+    type: z.literal("testimonials"),
     ...base,
-    source: z.enum(['global', 'inline']).optional(),
+    source: z.enum(["global", "inline"]).optional(),
     limit: z.number().optional(),
     items: z
       .array(
@@ -154,28 +154,28 @@ export const sectionSchema = z.discriminatedUnion('type', [
           site: z.string().optional(),
           rating: z.number().optional(),
           quote: z.string(),
-        })
+        }),
       )
       .optional(),
   }),
   z.object({
-    type: z.literal('faq'),
+    type: z.literal("faq"),
     ...base,
-    source: z.enum(['global', 'inline']).optional(),
+    source: z.enum(["global", "inline"]).optional(),
     jsonld: z.boolean().optional(),
     items: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
   }),
   z.object({
-    type: z.literal('domainsearch'),
+    type: z.literal("domainsearch"),
     ...base,
   }),
   z.object({
-    type: z.literal('techlogos'),
+    type: z.literal("techlogos"),
     ...base,
     logos: z.array(z.string()).optional(),
   }),
   z.object({
-    type: z.literal('cta'),
+    type: z.literal("cta"),
     ...base,
     primaryCta: ctaSchema.optional(),
     secondaryCta: ctaSchema.optional(),
@@ -197,19 +197,21 @@ const pageMetadataSchema = z
 const pageSchema = z.object({
   title: z.string(),
   metadata: pageMetadataSchema,
-  breadcrumb: z.array(z.object({ text: z.string(), href: z.string() })).optional(),
+  breadcrumb: z
+    .array(z.object({ text: z.string(), href: z.string() }))
+    .optional(),
   transparentHeader: z.boolean().optional(),
   redirect: z.string().optional(),
   sections: z.array(sectionSchema).default([]),
 });
 
 const pagesCollection = defineCollection({
-  loader: glob({ pattern: '*.md', base: 'src/data/pages' }),
+  loader: glob({ pattern: "*.md", base: "src/data/pages" }),
   schema: pageSchema,
 });
 
 const landingCollection = defineCollection({
-  loader: glob({ pattern: '*.md', base: 'src/data/landing' }),
+  loader: glob({ pattern: "*.md", base: "src/data/landing" }),
   schema: pageSchema,
 });
 
@@ -217,9 +219,9 @@ const plansCollection = defineCollection({
   // generateId: ignore the legacy `slug` field inside the JSON — plan ids are
   // the filenames (shared, vps, wordpress, ...) referenced by pricing sections.
   loader: glob({
-    pattern: '*.json',
-    base: 'src/data/plans',
-    generateId: ({ entry }) => entry.replace(/\.json$/, ''),
+    pattern: "*.json",
+    base: "src/data/plans",
+    generateId: ({ entry }) => entry.replace(/\.json$/, ""),
   }),
   schema: z.object({
     id: z.string(),
@@ -242,9 +244,11 @@ const plansCollection = defineCollection({
         cta: z.string(),
         ctaUrl: z.string(),
         features: z.array(z.string()),
-      })
+      }),
     ),
-    highlights: z.array(z.object({ icon: z.string(), title: z.string(), text: z.string() })),
+    highlights: z.array(
+      z.object({ icon: z.string(), title: z.string(), text: z.string() }),
+    ),
   }),
 });
 

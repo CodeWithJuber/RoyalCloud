@@ -1,9 +1,9 @@
 ---
-import { getEntry } from 'astro:content';
-import PlanGridRC from '~/components/widgets/PlanGridRC.astro';
-import StructuredData from '~/components/common/StructuredData.astro';
-import { product } from '~/utils/structuredData';
-import site from '~/data/site.json';
+import { getEntry } from "astro:content";
+import PlanGridRC from "~/components/widgets/PlanGridRC.astro";
+import StructuredData from "~/components/common/StructuredData.astro";
+import { product } from "~/utils/structuredData";
+import site from "~/data/site.json";
 
 interface Props {
   id?: string;
@@ -14,9 +14,17 @@ interface Props {
   showToggle?: boolean;
   note?: string;
 }
-const { id = 'pricing', plan: planId, eyebrow = 'Pricing', title, subtitle, showToggle = true, note } = Astro.props;
+const {
+  id = "pricing",
+  plan: planId,
+  eyebrow = "Pricing",
+  title,
+  subtitle,
+  showToggle = true,
+  note,
+} = Astro.props;
 
-const entry = await getEntry('plans', planId);
+const entry = await getEntry("plans", planId);
 if (!entry) throw new Error(`PricingSection: unknown plan "${planId}"`);
 const plan = entry.data;
 

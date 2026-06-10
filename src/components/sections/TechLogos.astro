@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
 
 interface Props {
   eyebrow?: string;
@@ -7,8 +7,22 @@ interface Props {
   subtitle?: string;
   logos?: string[];
 }
-const DEFAULT_LOGOS = ['cloudflare', 'cpanel', 'cloudlinux', 'letsencrypt', 'intel', 'ubuntu', 'mysql', 'php'];
-const { eyebrow, title = 'Powered by industry-leading technology', subtitle, logos = DEFAULT_LOGOS } = Astro.props;
+const DEFAULT_LOGOS = [
+  "cloudflare",
+  "cpanel",
+  "cloudlinux",
+  "letsencrypt",
+  "intel",
+  "ubuntu",
+  "mysql",
+  "php",
+];
+const {
+  eyebrow,
+  title = "Powered by industry-leading technology",
+  subtitle,
+  logos = DEFAULT_LOGOS,
+} = Astro.props;
 ---
 
 <section class="techlogos cv-auto">

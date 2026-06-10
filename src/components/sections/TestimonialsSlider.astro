@@ -1,6 +1,6 @@
 ---
-import { Icon } from 'astro-icon/components';
-import testimonialsData from '~/data/testimonials.json';
+import { Icon } from "astro-icon/components";
+import testimonialsData from "~/data/testimonials.json";
 
 interface Testimonial {
   name: string;
@@ -12,13 +12,23 @@ interface Props {
   eyebrow?: string;
   title?: string;
   subtitle?: string;
-  source?: 'global' | 'inline';
+  source?: "global" | "inline";
   limit?: number;
   items?: Testimonial[];
 }
-const { eyebrow = 'Reviews', title = 'Loved by website owners', subtitle, source = 'global', limit, items } = Astro.props;
+const {
+  eyebrow = "Reviews",
+  title = "Loved by website owners",
+  subtitle,
+  source = "global",
+  limit,
+  items,
+} = Astro.props;
 
-let list: Testimonial[] = source === 'inline' && items?.length ? items : (testimonialsData.items as Testimonial[]);
+let list: Testimonial[] =
+  source === "inline" && items?.length
+    ? items
+    : (testimonialsData.items as Testimonial[]);
 if (limit) list = list.slice(0, limit);
 
 const initials = (name: string) =>
@@ -26,7 +36,7 @@ const initials = (name: string) =>
     .split(/\s+/)
     .slice(0, 2)
     .map((w) => w[0])
-    .join('')
+    .join("")
     .toUpperCase();
 ---
 

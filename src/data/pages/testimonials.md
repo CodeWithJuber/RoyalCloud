@@ -2,7 +2,7 @@
 title: Testimonials
 metadata:
   title: Reviews | Royal Clouds - Testimonials
-  description: 'Reviews: Royal Clouds is an affordable web hosting company in India providing reliable, fast and friendly web hosting services.'
+  description: "Reviews: Royal Clouds is an affordable web hosting company in India providing reliable, fast and friendly web hosting services."
   ignoreTitleTemplate: true
 breadcrumb: []
 transparentHeader: true
@@ -34,7 +34,7 @@ sections:
         label: Customer Rating
       - value: 99.99%
         label: Uptime SLA
-      - value: '24/7'
+      - value: "24/7"
         label: Friendly Support
       - value: 15x
         label: Faster with SSD

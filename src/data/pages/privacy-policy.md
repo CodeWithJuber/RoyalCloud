@@ -41,7 +41,7 @@ In the course of your use of the Services, we obtain the following information a
 - your interactions with any videos we offer
 - issues you encounter requiring our support or assistance
 - any device or other method of communication you use to interact with the Services
-We store this data we collect in a variety of places within our infrastructure, including system log files, back end databases and analytics systems.
+  We store this data we collect in a variety of places within our infrastructure, including system log files, back end databases and analytics systems.
 
 - Your telephone conversations with us (which we may monitor or record).
 
@@ -76,7 +76,7 @@ We have a legitimate interest in running a successful and efficient business and
 - To target prospective customers with our products or services (such targeting is only performed with your permission where your consent is required by applicable law);
 - To assist us in offering you a personalized experience or otherwise tailor our Services to you; and
 - As otherwise described in this privacy policy.
-We also use the information we receive in aggregated and anonymized formats to produce reports on trends and statistics, such as mobile search trends, email open rates by industry, campaign best practices or the number of users that have been exposed to, or clicked on, our websites or evaluated or purchased our products and services.
+  We also use the information we receive in aggregated and anonymized formats to produce reports on trends and statistics, such as mobile search trends, email open rates by industry, campaign best practices or the number of users that have been exposed to, or clicked on, our websites or evaluated or purchased our products and services.
 
 Payment information that you provide to us, including credit card data, will only be used to facilitate payment for our products and services.
 
@@ -104,9 +104,9 @@ When we share personal information with certain third-party partners, including 
 - assist you in using our products and services,
 - contact you with offers, services or products that may be of interest to you, and
 - provide you with their products or services.
-If you are located in a jurisdiction where such sharing requires your permission, we will only do so with your consent. Please note that if you access our services through a tool that hides your location, such as through a virtual private network, you may not receive our request for permission because we were not able to identify you as being located in a jurisdiction where your permission is required.
-Further, our partners are prohibited from using your contact information for any purpose beyond those set forth above without your consent. We will not provide our partners with your credit card information. Further information about certain partners we share personal information with is available here.
-In the event we collect information from you in connection with an offer that is jointly presented by us and a partner, we will let you know who is collecting the information and whose privacy policy applies, as well as any options you may have regarding use of your information.
+  If you are located in a jurisdiction where such sharing requires your permission, we will only do so with your consent. Please note that if you access our services through a tool that hides your location, such as through a virtual private network, you may not receive our request for permission because we were not able to identify you as being located in a jurisdiction where your permission is required.
+  Further, our partners are prohibited from using your contact information for any purpose beyond those set forth above without your consent. We will not provide our partners with your credit card information. Further information about certain partners we share personal information with is available here.
+  In the event we collect information from you in connection with an offer that is jointly presented by us and a partner, we will let you know who is collecting the information and whose privacy policy applies, as well as any options you may have regarding use of your information.
 
 ## Sharing with Third Party Service Providers and Vendors
 
@@ -131,7 +131,7 @@ Lastly, if legally required to do so, or if we have a good faith belief that suc
 - violating our terms and conditions of use;
 - causing injury or other harm to, or otherwise violating the property or other legal rights, of us, other users, or third parties; or
 - violating federal, state, local, or other applicable law.
-This disclosure can include transferring your information to the U.S. and other countries outside the European Economic Area. To the extent we are legally permitted to do so, it is our policy to notify you in the event that we are required to provide your personal information to third parties in connection with a subpoena.
+  This disclosure can include transferring your information to the U.S. and other countries outside the European Economic Area. To the extent we are legally permitted to do so, it is our policy to notify you in the event that we are required to provide your personal information to third parties in connection with a subpoena.
 
 ## Security
 
@@ -196,7 +196,7 @@ You may request that we erase the personal information we hold about you in the 
 - we are processing your data on the basis of our legitimate interest and you object to such processing;
 - you no longer wish us to use your data to send you marketing; or
 - you believe we are unlawfully processing your data.
-Please provide as much detail as possible on your reasons for the request to assist us in determining whether you have a valid basis for erasure.
+  Please provide as much detail as possible on your reasons for the request to assist us in determining whether you have a valid basis for erasure.
 
 ## Restriction of Processing to Storage Only
 
@@ -253,7 +253,7 @@ We may use the information we collect from you when you register, make a purchas
 
 - We do not use vulnerability scanning and/or scanning to PCI standards.
 - We do collect credit card information, but did not know PCI compliant scans are now required.
-We do not use Malware Scanning.
+  We do not use Malware Scanning.
 - Your personal information is contained in secured networks and is only accessible by a limited number of persons who have individual access rights to such systems, and are required to keep the information confidential. Also, all sensitive/credit information you supply is encrypted via Secure Socket Layer (SSL) technology.
 - We implement a variety of security measures when a user places an order enters, submits, or accesses their information to maintain the safety of your personal information.
 - All transactions are processed through a gateway provider and are not stored or processed on our servers.
@@ -262,6 +262,7 @@ Do we use 'cookies'?
 Yes. Cookies are small files that a site or its service provider transfers to your computer's hard drive through your Web browser (if you allow) that enables the site's or service provider's systems to recognize your browser and capture and remember certain information. For instance, we use cookies to help us remember and process the items in your shopping cart. They are also used to help us understand your preferences based on previous or current site activity, which enables us to provide you with improved services. We also use cookies to help us compile aggregate data about site traffic and site interaction so that we can offer better site experiences and tools in the future.
 
 We use cookies to:
+
 - Help remember and process the items in the shopping cart.
 - Understand and save user's preferences for future visits.
 - Keep track of advertisements.
@@ -270,8 +271,8 @@ We use cookies to:
 - If users disable cookies in their browser:
 - If you turn cookies off, some features will be disabled. Some of the features that make your site experience more efficient and may not function properly.
 - However, you will still be able to place orders
-It Will Logout User From Our Client Area
-by contacting customer service from [email&#160;protected].
+  It Will Logout User From Our Client Area
+  by contacting customer service from [email&#160;protected].
 
 Third-party disclosure
 We do not sell, trade, or otherwise transfer to outside parties your Personally Identifiable Information.
@@ -287,6 +288,7 @@ We use Google analytics on our website.
 Google, as a third-party vendor, uses cookies to serve ads on our site. Google's use of the DART cookie enables it to serve ads to our users based on previous visits to our website and other sites on the Internet. Users may opt-out of the use of the DART cookie by visiting the Google Ad and Content Network privacy policy.
 
 We have implemented the following:
+
 - Google Display Network Impression Reporting
 - Demographics and Interests Reporting
 
@@ -305,8 +307,9 @@ Once this privacy policy is created, we will add a link to it on our homepage or
 Our Privacy Policy link includes the word 'Privacy' and can easily be found on the page specified above.
 
 You will be notified of any Privacy Policy changes:
+
 - On our Privacy Policy Page
-Can change your personal information:
+  Can change your personal information:
 - By logging in to your account
 
 How does our site handle Do Not Track signals?
@@ -327,6 +330,7 @@ The Fair Information Practices Principles form the backbone of privacy law in th
 
 To be in line with Fair Information Practices we will take the following responsive action, should a data breach occur:
 We will notify you via email
+
 - Within 7 business days
 
 We also agree to the Individual Redress Principle which requires that individuals have the right to legally pursue enforceable rights against data collectors and processors who fail to adhere to the law. This principle requires not only that individuals have enforceable rights against data users, but also that individuals have recourse to courts or government agencies to investigate and prosecute non-compliance by data processors.
@@ -336,12 +340,14 @@ CAN-SPAM Act
 The CAN-SPAM Act is a law that sets the rules for commercial email, establishes requirements for commercial messages, gives recipients the right to have emails stopped from being sent to them, and spells out tough penalties for violations.
 
 We collect your email address to:
+
 - Send information, respond to inquiries, and other requests or questions
 - Process orders and to send information and updates about orders.
 - Send you additional information related to your product and service
 - Market to our mailing list or continue to send emails to our clients after the original transaction has occurred.
 
 To be by CAN-SPAM, we agree to the following:
+
 - Not use false or misleading subjects or email addresses.
 - Identify the message as an advertisement in some reasonable way.
 - Monitor third-party email marketing services for compliance, if one is used.

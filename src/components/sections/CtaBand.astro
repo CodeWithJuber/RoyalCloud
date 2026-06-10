@@ -11,12 +11,17 @@ interface Props {
   secondaryCta?: Cta;
 }
 const {
-  title = 'Ready to get started?',
+  title = "Ready to get started?",
   subtitle,
-  primaryCta = { text: 'Get Started Now', href: 'https://my.royalclouds.net/cart.php', external: true },
+  primaryCta = {
+    text: "Get Started Now",
+    href: "https://my.royalclouds.net/cart.php",
+    external: true,
+  },
   secondaryCta,
 } = Astro.props;
-const target = (cta?: Cta) => (cta?.external || /^https?:\/\//.test(cta?.href ?? '') ? '_blank' : undefined);
+const target = (cta?: Cta) =>
+  cta?.external || /^https?:\/\//.test(cta?.href ?? "") ? "_blank" : undefined;
 ---
 
 <section class="final-cta cv-auto">
@@ -27,14 +32,24 @@ const target = (cta?: Cta) => (cta?.external || /^https?:\/\//.test(cta?.href ??
       <div class="hero-ctas">
         {
           primaryCta && (
-            <a class="btn btn-primary" href={primaryCta.href} target={target(primaryCta)} rel={target(primaryCta) && 'noopener'}>
+            <a
+              class="btn btn-primary"
+              href={primaryCta.href}
+              target={target(primaryCta)}
+              rel={target(primaryCta) && "noopener"}
+            >
               {primaryCta.text}
             </a>
           )
         }
         {
           secondaryCta && (
-            <a class="btn btn-ghost-light" href={secondaryCta.href} target={target(secondaryCta)} rel={target(secondaryCta) && 'noopener'}>
+            <a
+              class="btn btn-ghost-light"
+              href={secondaryCta.href}
+              target={target(secondaryCta)}
+              rel={target(secondaryCta) && "noopener"}
+            >
               {secondaryCta.text}
             </a>
           )

@@ -22,7 +22,7 @@ sections:
       external: true
     secondaryCta:
       text: View Plans
-      href: '#pricing'
+      href: "#pricing"
     badges:
       - 99.99% Uptime SLA
       - Free SSL Certificate
@@ -119,7 +119,7 @@ sections:
         label: Uptime SLA
       - value: 15x
         label: Faster with SSD + LiteSpeed
-      - value: '24/7'
+      - value: "24/7"
         label: Friendly Expert Support
       - value: 9.6/10
         label: Customer Rating

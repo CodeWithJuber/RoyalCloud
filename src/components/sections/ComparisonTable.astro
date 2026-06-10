@@ -1,5 +1,5 @@
 ---
-import { getEntry } from 'astro:content';
+import { getEntry } from "astro:content";
 
 interface Props {
   eyebrow?: string;
@@ -10,18 +10,20 @@ interface Props {
 }
 const { eyebrow, title, subtitle, plan: planId, note } = Astro.props;
 
-const entry = planId ? await getEntry('plans', planId) : undefined;
-if (planId && !entry) throw new Error(`ComparisonTable: unknown plan "${planId}"`);
+const entry = planId ? await getEntry("plans", planId) : undefined;
+if (planId && !entry)
+  throw new Error(`ComparisonTable: unknown plan "${planId}"`);
 const tiers = entry?.data.tiers ?? [];
 
 // Build rows from tier feature lists: position N in each list is one row.
 // Row label = first tier's feature with its quantity stripped ("10 GB SSD
 // Storage" → "SSD Storage").
 const rowCount = Math.max(0, ...tiers.map((t) => t.features.length));
-const label = (text: string) => text.replace(/^(unlimited|free|\d+[\w.]*)\s+(gb\s+|tb\s+)?/i, '') || text;
+const label = (text: string) =>
+  text.replace(/^(unlimited|free|\d+[\w.]*)\s+(gb\s+|tb\s+)?/i, "") || text;
 const rows = Array.from({ length: rowCount }, (_, i) => ({
   label: label(tiers[0]?.features[i] ?? `Feature ${i + 1}`),
-  cells: tiers.map((t) => t.features[i] ?? '—'),
+  cells: tiers.map((t) => t.features[i] ?? "—"),
 }));
 ---
 
@@ -41,7 +43,11 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
         <thead>
           <tr>
             <th>Plan</th>
-            {tiers.map((t) => <th class={t.popular ? 'popular' : ''}>{t.name}</th>)}
+            {
+              tiers.map((t) => (
+                <th class={t.popular ? "popular" : ""}>{t.name}</th>
+              ))
+            }
           </tr>
         </thead>
         <tbody>
@@ -49,7 +55,7 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
             <th>Price</th>
             {
               tiers.map((t) => (
-                <td class={t.popular ? 'popular' : ''}>
+                <td class={t.popular ? "popular" : ""}>
                   <span class="price">${t.price}/mo</span>
                 </td>
               ))
@@ -59,17 +65,24 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
             rows.map((row) => (
               <tr>
                 <th>{row.label}</th>
-                {row.cells.map((c, j) => <td class={tiers[j]?.popular ? 'popular' : ''}>{c}</td>)}
+                {row.cells.map((c, j) => (
+                  <td class={tiers[j]?.popular ? "popular" : ""}>{c}</td>
+                ))}
               </tr>
             ))
           }
           <tr>
-            <th />
+            <th></th>
             {
               tiers.map((t) => (
-                <td class={t.popular ? 'popular' : ''}>
-                  <a class={`btn ${t.popular ? 'btn-primary' : 'btn-ghost-dark'}`} href={t.ctaUrl} target="_blank" rel="noopener">
-                    {t.cta ?? 'Get Started'}
+                <td class={t.popular ? "popular" : ""}>
+                  <a
+                    class={`btn ${t.popular ? "btn-primary" : "btn-ghost-dark"}`}
+                    href={t.ctaUrl}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {t.cta ?? "Get Started"}
                   </a>
                 </td>
               ))

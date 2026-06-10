@@ -33,7 +33,7 @@ sections:
         label: Uptime SLA
       - value: 15x
         label: Faster with SSD + LiteSpeed
-      - value: '24/7'
+      - value: "24/7"
         label: Expert Support
   - type: content
     eyebrow: Our Story

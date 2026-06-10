@@ -16,7 +16,7 @@ sections:
       free — all from one dashboard alongside your hosting.
     primaryCta:
       text: Search Domains
-      href: '#domain-search'
+      href: "#domain-search"
     secondaryCta:
       text: View Hosting
       href: /shared-hosting

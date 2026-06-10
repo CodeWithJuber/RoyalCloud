@@ -1,6 +1,6 @@
 ---
-import { Icon } from 'astro-icon/components';
-import { tablerIcon } from '~/utils/plans';
+import { Icon } from "astro-icon/components";
+import { tablerIcon } from "~/utils/plans";
 
 interface Props {
   eyebrow?: string;
@@ -23,12 +23,15 @@ const { eyebrow, title, subtitle, columns = 3, items } = Astro.props;
         </div>
       )
     }
-    <div class="feature-grid" style={`grid-template-columns: repeat(${Math.min(columns, 4)}, 1fr);`}>
+    <div
+      class="feature-grid"
+      style={`grid-template-columns: repeat(${Math.min(columns, 4)}, 1fr);`}
+    >
       {
         items.map((item, i) => (
           <div class={`card feature-card reveal reveal-d${(i % 3) + 1}`}>
             <div class="f-icon f-icon-grad">
-              <Icon name={tablerIcon(item.icon ?? 'bolt')} />
+              <Icon name={tablerIcon(item.icon ?? "bolt")} />
             </div>
             <h3>{item.title}</h3>
             <p>{item.text}</p>
@@ -41,9 +44,13 @@ const { eyebrow, title, subtitle, columns = 3, items } = Astro.props;
 
 <style>
   @media (max-width: 1080px) {
-    .feature-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .feature-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
   }
   @media (max-width: 560px) {
-    .feature-grid { grid-template-columns: 1fr !important; }
+    .feature-grid {
+      grid-template-columns: 1fr !important;
+    }
   }
 </style>

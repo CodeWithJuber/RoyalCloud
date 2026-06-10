@@ -1,8 +1,8 @@
 ---
-import { marked } from 'marked';
-import StructuredData from '~/components/common/StructuredData.astro';
-import { faqPage } from '~/utils/structuredData';
-import faqsData from '~/data/faqs.json';
+import { marked } from "marked";
+import StructuredData from "~/components/common/StructuredData.astro";
+import { faqPage } from "~/utils/structuredData";
+import faqsData from "~/data/faqs.json";
 
 interface Faq {
   q: string;
@@ -12,14 +12,24 @@ interface Props {
   eyebrow?: string;
   title?: string;
   subtitle?: string;
-  source?: 'global' | 'inline';
+  source?: "global" | "inline";
   items?: Faq[];
   jsonld?: boolean;
 }
-const { eyebrow = 'FAQ', title = 'Frequently asked questions', subtitle, source = 'global', items, jsonld = true } = Astro.props;
+const {
+  eyebrow = "FAQ",
+  title = "Frequently asked questions",
+  subtitle,
+  source = "global",
+  items,
+  jsonld = true,
+} = Astro.props;
 
-const list: Faq[] = source === 'inline' && items?.length ? items : (faqsData.general as Faq[]);
-const rendered = await Promise.all(list.map(async (f) => ({ ...f, html: await marked.parseInline(f.a) })));
+const list: Faq[] =
+  source === "inline" && items?.length ? items : (faqsData.general as Faq[]);
+const rendered = await Promise.all(
+  list.map(async (f) => ({ ...f, html: await marked.parseInline(f.a) })),
+);
 ---
 
 <section class="cv-auto">

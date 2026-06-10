@@ -55,7 +55,7 @@ sections:
         label: Redundant Power & Network
       - value: Daily
         label: Automated Backups
-      - value: '24/7'
+      - value: "24/7"
         label: Proactive Monitoring
   - type: cta
     title: Host where uptime is a promise, not a hope

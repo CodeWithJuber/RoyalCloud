@@ -57,8 +57,8 @@ Company shall not be deemed to be in default of any provision of this Agreement 
 - (ii) action of any governmental or military authority,
 - (iii) failure caused by telecommunication or other Internet provider, or
 - (iv) other force or occurrence beyond its control.
-No fees paid by the Customer to the Company, (Royal Clouds) shall be refundable after 30 days or if the purchases included: control panel license fees, IP addresses or general products which are not services. The current term of this Agreement.
-COMPANY SHALL NOT BE LIABLE FOR
+  No fees paid by the Customer to the Company, (Royal Clouds) shall be refundable after 30 days or if the purchases included: control panel license fees, IP addresses or general products which are not services. The current term of this Agreement.
+  COMPANY SHALL NOT BE LIABLE FOR
 
 - (i) ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES, OR FOR ANY LOSS OF PROFITS OR LOSS OF REVENUE RESULTING FROM THE USE OF THE COMPANY’S SERVICES AND PRODUCTS BY CUSTOMER OR ANY THIRD PARTIES, OR
 - (ii) ANY LOSS OF DATA RESULTING FROM DELAYS, NONDELIVERIES, MISDELIVERIES OR SERVICE INTERRUPTIONS COMPANY PROVIDES THE SERVICES AND PRODUCTS AS IS, WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS OR IMPLIED COMPANY DISCLAIMS ALL IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE CUSTOMER SHALL BE SOLELY RESPONSIBLE FOR THE SELECTION, USE AND SUITABILITY OF THE SERVICES AND PRODUCTS AND COMPANY SHALL HAVE NO LIABILITY THEREFORE.
@@ -86,6 +86,7 @@ Royal Clouds will suspend any Hosting Services after 7 days of non-payment. Afte
 Banned Services
 All the following services are banned on RoyalClouds:
 Topsites
+
 - Anonymizers
 - Pirated Software/Warez
 - Phishing of any site
@@ -172,10 +173,10 @@ By activating your account with Royal Clouds, you agree to the above policies, T
 
 Royal Clouds guarantees 99% service (http, ftp, pop, imap, smtp) uptime on all hosting plans. Should we fail to deliver this for any given calendar month, your account will be refunded a pro-rated amount for the duration of excessive downtime.
 
-- Royal Clouds reserves the right to amend any or all of the above policies, guidelines and disclaimer without notification. We also retain the right to increase any pricing and make changes to our account plans without notification. 
+- Royal Clouds reserves the right to amend any or all of the above policies, guidelines and disclaimer without notification. We also retain the right to increase any pricing and make changes to our account plans without notification.
 
 Google Terms And Policy
-We are using Google's recaptch service to protect the spam/bots 
+We are using Google's recaptch service to protect the spam/bots
 Please refer to it's Terms and Policy.
 
 ## Need help? chat With our Friendly support team 24/7 Live Chat support, Email any time or Post A Ticket

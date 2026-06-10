@@ -24,7 +24,7 @@ sections:
       external: true
     secondaryCta:
       text: View Plans
-      href: '#pricing'
+      href: "#pricing"
     badges:
       - Bare-Metal Power
       - Custom Configs
