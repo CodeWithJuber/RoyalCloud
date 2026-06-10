@@ -1,10 +1,10 @@
 # Decap CMS configuration — the visual editor served at /admin.
 # Edits are committed straight to the GitHub repo, which triggers the
-# GitHub Actions workflow to rebuild and redeploy the site.
+# build & deploy to Cloudflare.
 #
-# Auth: uses GitHub backend. You must connect an OAuth provider so editors
-# can log in (see README → "Editing content with the CMS"). To preview the
-# CMS locally, run `npx decap-server` and uncomment `local_backend: true`.
+# Auth: GitHub backend (connect an OAuth provider so editors can log in —
+# see README → "Editing content with the CMS"). To preview the CMS locally,
+# run `npx decap-server` and uncomment `local_backend: true`.
 
 backend:
   name: github
@@ -24,7 +24,341 @@ public_folder: "/assets/uploads"
 
 publish_mode: editorial_workflow
 
+# ---------------------------------------------------------------------------
+# Reusable field definitions (YAML anchors)
+# ---------------------------------------------------------------------------
+definitions:
+  cta_object: &ctaObject
+    widget: object
+    required: false
+    fields:
+      - { name: text, label: "Button Text", widget: string }
+      - { name: href, label: "Link URL or /path", widget: string }
+      - { name: external, label: "Open in new tab", widget: boolean, default: false, required: false }
+
+  page_fields: &pageFields
+    - name: title
+      label: "Internal Title"
+      widget: string
+      hint: "Shown in the CMS and used as the H1 fallback / breadcrumb label."
+    - name: metadata
+      label: "SEO Metadata"
+      widget: object
+      fields:
+        - { name: title, label: "SEO Title (<title>)", widget: string, hint: "50–60 chars. The exact text shown in Google's result." }
+        - { name: description, label: "Meta Description", widget: text, hint: "150–160 chars." }
+        - { name: ignoreTitleTemplate, label: "Use exact title (don't append “— Royal Clouds”)", widget: boolean, default: true }
+        - { name: canonical, label: "Canonical URL override", widget: string, required: false, hint: "Leave blank to self-canonicalize. Use to point a near-duplicate page at its primary page." }
+        - { name: noindex, label: "Hide from search engines", widget: boolean, default: false, required: false }
+    - name: transparentHeader
+      label: "Transparent header over hero"
+      widget: boolean
+      default: true
+      required: false
+      hint: "On for pages whose first section is a dark/gradient hero."
+    - name: redirect
+      label: "Redirect URL"
+      widget: string
+      required: false
+      hint: "If set, this page immediately redirects here (e.g. the login page)."
+    - name: breadcrumb
+      label: "Breadcrumb trail (parents)"
+      widget: list
+      required: false
+      summary: "{{fields.text}}"
+      fields:
+        - { name: text, label: "Label", widget: string }
+        - { name: href, label: "Link", widget: string }
+    - name: sections
+      label: "Page Sections"
+      label_singular: "Section"
+      widget: list
+      types:
+        # ---- Hero ----
+        - name: hero
+          label: "Hero"
+          summary: "Hero — {{fields.title}}"
+          fields:
+            - { name: variant, label: "Style", widget: select, options: ["gradient", "product", "simple"], default: "product" }
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading (HTML/<em> allowed)", widget: string }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: offer, label: "Offer line", widget: string, required: false }
+            - { name: primaryCta, label: "Primary Button", <<: *ctaObject }
+            - { name: secondaryCta, label: "Secondary Button", <<: *ctaObject }
+            - { name: badges, label: "Trust Badges", widget: list, required: false }
+        # ---- Trust bar ----
+        - name: trustbar
+          label: "Trust Bar"
+          summary: "Trust bar ({{fields.items.length}} items)"
+          fields:
+            - name: items
+              label: "Items"
+              widget: list
+              summary: "{{fields.text}}"
+              fields:
+                - { name: icon, label: "Icon", widget: string, required: false }
+                - { name: text, label: "Text", widget: string }
+        # ---- Pricing ----
+        - name: pricing
+          label: "Pricing Table"
+          summary: "Pricing — {{fields.plan}}"
+          fields:
+            - { name: id, label: "Anchor id", widget: string, default: "pricing", required: false }
+            - { name: plan, label: "Plan", widget: select, options: ["shared", "cpanel", "vps", "cyberpanel", "wordpress", "cloud", "dedicated", "reseller"] }
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: showToggle, label: "Show monthly/annual toggle", widget: boolean, default: true }
+            - { name: note, label: "Note under prices", widget: string, required: false }
+        # ---- Features ----
+        - name: features
+          label: "Feature Grid"
+          summary: "Features — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: columns, label: "Columns", widget: number, default: 3, min: 2, max: 4 }
+            - name: items
+              label: "Features"
+              widget: list
+              summary: "{{fields.title}}"
+              fields:
+                - { name: icon, label: "Icon", widget: string, required: false }
+                - { name: title, label: "Title", widget: string }
+                - { name: text, label: "Text", widget: text }
+        # ---- Content split ----
+        - name: content
+          label: "Content + Media"
+          summary: "Content — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: image, label: "Image (keyword: hero/datacenter/support/working — or upload)", widget: string, required: false }
+            - { name: reverse, label: "Image on right", widget: boolean, default: false }
+            - { name: body, label: "Body (Markdown)", widget: markdown, required: false }
+            - name: items
+              label: "Bullet Points"
+              widget: list
+              required: false
+              summary: "{{fields.title}}"
+              fields:
+                - { name: icon, label: "Icon", widget: string, required: false }
+                - { name: title, label: "Title", widget: string }
+                - { name: text, label: "Text", widget: text }
+        # ---- Steps ----
+        - name: steps
+          label: "Steps / Process"
+          summary: "Steps — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - name: items
+              label: "Steps"
+              widget: list
+              summary: "{{fields.title}}"
+              fields:
+                - { name: title, label: "Title", widget: string }
+                - { name: text, label: "Text", widget: text }
+        # ---- Stats ----
+        - name: stats
+          label: "Stats Band"
+          summary: "Stats band"
+          fields:
+            - name: items
+              label: "Stats"
+              widget: list
+              summary: "{{fields.value}} {{fields.label}}"
+              fields:
+                - { name: value, label: "Value", widget: string }
+                - { name: label, label: "Label", widget: string }
+        # ---- Comparison ----
+        - name: comparison
+          label: "Comparison Table"
+          summary: "Comparison — {{fields.plan}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: plan, label: "Plan", widget: select, options: ["shared", "cpanel", "vps", "cyberpanel", "wordpress", "cloud", "dedicated", "reseller"] }
+            - { name: note, label: "Note", widget: string, required: false }
+        # ---- Testimonials ----
+        - name: testimonials
+          label: "Testimonials"
+          summary: "Testimonials — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: source, label: "Source", widget: select, options: ["global", "inline"], default: "global" }
+            - { name: limit, label: "Max to show", widget: number, required: false, min: 1 }
+            - name: items
+              label: "Inline Testimonials (only if source = inline)"
+              widget: list
+              required: false
+              summary: "{{fields.name}}"
+              fields:
+                - { name: name, label: "Name", widget: string }
+                - { name: site, label: "Website", widget: string, required: false }
+                - { name: rating, label: "Rating", widget: number, default: 5, min: 1, max: 5 }
+                - { name: quote, label: "Quote", widget: text }
+        # ---- FAQ ----
+        - name: faq
+          label: "FAQ Accordion"
+          summary: "FAQ — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: source, label: "Source", widget: select, options: ["global", "inline"], default: "global" }
+            - { name: jsonld, label: "Emit FAQ structured data", widget: boolean, default: true }
+            - name: items
+              label: "Inline Q&A (only if source = inline)"
+              widget: list
+              required: false
+              summary: "{{fields.q}}"
+              fields:
+                - { name: q, label: "Question", widget: string }
+                - { name: a, label: "Answer", widget: text }
+        # ---- Domain search ----
+        - name: domainsearch
+          label: "Domain Search"
+          summary: "Domain search"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+        # ---- Tech logos ----
+        - name: techlogos
+          label: "Technology Logos"
+          summary: "Tech logos"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: logos, label: "Logo slugs (iconify logos)", widget: list, required: false }
+        # ---- CTA band ----
+        - name: cta
+          label: "Call To Action"
+          summary: "CTA — {{fields.title}}"
+          fields:
+            - { name: title, label: "Heading", widget: string }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: primaryCta, label: "Primary Button", <<: *ctaObject }
+            - { name: secondaryCta, label: "Secondary Button", <<: *ctaObject }
+    - name: body
+      label: "Long-form Body (Markdown — for legal/policy pages)"
+      widget: markdown
+      required: false
+
 collections:
+  # ---------------- Site Pages (core + products) ----------------
+  - name: pages
+    label: "Site Pages"
+    label_singular: "Page"
+    folder: "src/data/pages"
+    create: true
+    delete: false
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter-with-body
+    preview_path: "{{slug}}"
+    summary: "{{title}}"
+    fields: *pageFields
+
+  # ---------------- Landing Pages (SEO long-tail) ----------------
+  - name: landing
+    label: "Landing Pages"
+    label_singular: "Landing Page"
+    folder: "src/data/landing"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter-with-body
+    preview_path: "{{slug}}"
+    summary: "{{title}}"
+    fields: *pageFields
+
+  # ---------------- Navigation ----------------
+  - name: navigation
+    label: "Navigation (Header & Footer)"
+    files:
+      - name: navigation
+        label: "Header & Footer Links"
+        file: "src/data/navigation.json"
+        fields:
+          - name: header
+            label: "Header"
+            widget: object
+            fields:
+              - name: groups
+                label: "Dropdown Menus"
+                widget: list
+                summary: "{{fields.text}}"
+                fields:
+                  - { name: text, label: "Menu Label", widget: string }
+                  - name: links
+                    label: "Links"
+                    widget: list
+                    summary: "{{fields.text}}"
+                    fields:
+                      - { name: text, label: "Text", widget: string }
+                      - { name: href, label: "Link", widget: string }
+                      - { name: icon, label: "Icon (mega-menu)", widget: string, required: false }
+                      - { name: description, label: "Description (mega-menu)", widget: string, required: false }
+              - name: links
+                label: "Top-level Links"
+                widget: list
+                summary: "{{fields.text}}"
+                fields:
+                  - { name: text, label: "Text", widget: string }
+                  - { name: href, label: "Link", widget: string }
+              - name: actions
+                label: "Header Buttons"
+                widget: list
+                summary: "{{fields.text}}"
+                fields:
+                  - { name: text, label: "Text", widget: string }
+                  - { name: href, label: "Link", widget: string }
+                  - { name: variant, label: "Variant", widget: select, options: ["primary", "secondary"], required: false }
+          - name: footer
+            label: "Footer"
+            widget: object
+            fields:
+              - name: columns
+                label: "Link Columns"
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - { name: title, label: "Column Title", widget: string }
+                  - name: links
+                    label: "Links"
+                    widget: list
+                    summary: "{{fields.text}}"
+                    fields:
+                      - { name: text, label: "Text", widget: string }
+                      - { name: href, label: "Link", widget: string }
+              - name: secondaryLinks
+                label: "Legal Links"
+                widget: list
+                summary: "{{fields.text}}"
+                fields:
+                  - { name: text, label: "Text", widget: string }
+                  - { name: href, label: "Link", widget: string }
+              - name: socialLinks
+                label: "Social Links"
+                widget: list
+                summary: "{{fields.ariaLabel}}"
+                fields:
+                  - { name: ariaLabel, label: "Label", widget: string }
+                  - { name: icon, label: "Icon (tabler:*)", widget: string }
+                  - { name: href, label: "Link", widget: string }
+              - { name: footNote, label: "Footer Note (HTML)", widget: string }
+
   # ---------------- Blog ----------------
   - name: blog
     label: "Blog Posts"
@@ -58,6 +392,9 @@ collections:
         label: "SSD Shared Hosting"
         file: "src/data/plans/shared.json"
         fields: &planFields
+          - { name: id, label: "ID (do not change)", widget: hidden }
+          - { name: slug, label: "Slug", widget: hidden, required: false }
+          - { name: icon, label: "Icon", widget: string, required: false }
           - { name: name, label: "Product Name", widget: string }
           - { name: eyebrow, label: "Eyebrow Label", widget: string }
           - { name: title, label: "Page Heading", widget: string }
@@ -67,6 +404,7 @@ collections:
           - name: tiers
             label: "Pricing Tiers"
             widget: list
+            summary: "{{fields.name}} — {{fields.price}}"
             fields:
               - { name: name, label: "Tier Name", widget: string }
               - { name: price, label: "Monthly Price", widget: string }
@@ -80,11 +418,14 @@ collections:
           - name: highlights
             label: "Highlight Cards"
             widget: list
+            summary: "{{fields.title}}"
             fields:
               - { name: icon, label: "Icon Name", widget: string }
               - { name: title, label: "Title", widget: string }
               - { name: text, label: "Text", widget: text }
+      - { name: cpanel, label: "cPanel Hosting", file: "src/data/plans/cpanel.json", fields: *planFields }
       - { name: vps, label: "KVM VPS Hosting", file: "src/data/plans/vps.json", fields: *planFields }
+      - { name: cyberpanel, label: "CyberPanel VPS", file: "src/data/plans/cyberpanel.json", fields: *planFields }
       - { name: wordpress, label: "Managed WordPress", file: "src/data/plans/wordpress.json", fields: *planFields }
       - { name: cloud, label: "Managed Cloud", file: "src/data/plans/cloud.json", fields: *planFields }
       - { name: dedicated, label: "Dedicated Servers", file: "src/data/plans/dedicated.json", fields: *planFields }
@@ -99,10 +440,17 @@ collections:
         file: "src/data/site.json"
         fields:
           - { name: name, label: "Site Name", widget: string }
+          - { name: legalName, label: "Legal Name", widget: string, required: false }
           - { name: tagline, label: "Tagline", widget: string }
           - { name: description, label: "Default Meta Description", widget: text }
           - { name: shortDescription, label: "Short Description", widget: text }
+          - { name: url, label: "Site URL", widget: string }
+          - { name: logo, label: "Logo path", widget: string, required: false }
+          - { name: logoWhite, label: "Logo (white) path", widget: string, required: false }
+          - { name: ogImage, label: "Default OG Image", widget: string, required: false }
           - { name: startingPrice, label: "Starting Price", widget: string }
+          - { name: rating, label: "Rating", widget: string, required: false }
+          - { name: ratingMax, label: "Rating Max", widget: string, required: false }
           - name: contact
             label: "Contact"
             widget: object
@@ -154,6 +502,7 @@ collections:
           - name: items
             label: "Testimonials"
             widget: list
+            summary: "{{fields.name}}"
             fields:
               - { name: name, label: "Customer Name", widget: string }
               - { name: site, label: "Website / Company", widget: string }
@@ -171,6 +520,7 @@ collections:
           - name: general
             label: "General FAQs"
             widget: list
+            summary: "{{fields.q}}"
             fields:
               - { name: q, label: "Question", widget: string }
               - { name: a, label: "Answer", widget: text }
