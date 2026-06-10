@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
+import ProductHero from '~/components/widgets/ProductHero.astro';
 import Features from '~/components/widgets/Features.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { tablerIcon } from '~/utils/plans';
@@ -17,7 +17,7 @@ const metadata = { title: tech.title, description: tech.subtitle };
 ---
 
 <Layout metadata={metadata}>
-  <HeroText tagline={tech.eyebrow} title={tech.title} subtitle={tech.subtitle} />
+  <ProductHero eyebrow={tech.eyebrow} title={tech.title} subtitle={tech.subtitle} />
 
   <Features
     columns={3}

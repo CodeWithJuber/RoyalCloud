@@ -1,7 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import Hero from '~/components/widgets/Hero.astro';
+import HeroRC from '~/components/widgets/HeroRC.astro';
 import Features from '~/components/widgets/Features.astro';
 import Content from '~/components/widgets/Content.astro';
 import Steps from '~/components/widgets/Steps.astro';
@@ -12,8 +12,9 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import Brands from '~/components/widgets/Brands.astro';
 
-import heroImage from '~/assets/images/hero.png';
 import { toPrices } from '~/utils/plans';
+import cloudServer from '~/assets/images/brand/cloud-server.png';
+import mascot from '~/assets/images/brand/mascot.png';
 import shared from '~/data/plans/shared.json';
 import testimonialsData from '~/data/testimonials.json';
 import faqsData from '~/data/faqs.json';
@@ -27,25 +28,14 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero -->
-  <Hero
-    actions={[
-      { variant: 'primary', text: 'Get Started at $1.99/mo', href: `${PORTAL}/cart.php`, target: '_blank', icon: 'tabler:rocket' },
-      { text: 'Compare plans', href: '#pricing' },
-    ]}
-    image={{ src: heroImage, alt: 'Royal Clouds hosting control panel showing 99.99% uptime' }}
-  >
-    <Fragment slot="title">
-      Premium hosting, <span class="text-accent dark:text-white">built for enhanced speed</span>
-    </Fragment>
-    <Fragment slot="subtitle">
-      Launch on SSD RAID-10 servers with <span class="font-semibold">LiteSpeed</span>, CloudLinux, free cPanel &amp; SSL,
-      daily backups and genuinely friendly 24/7 support — from just <span class="font-semibold">$1.99/month</span>.
-    </Fragment>
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-gradient-to-b from-green-50/70 to-transparent dark:from-transparent"></div>
-    </Fragment>
-  </Hero>
+  <!-- Hero (bespoke vibrant) -->
+  <HeroRC
+    title="Experience the Premium &amp; Speed-Optimized Hosting"
+    subtitle="Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL, daily backups and genuinely friendly 24/7 support."
+    offer="Up to 30% off · from $1.99/mo · Free SSL Certificate"
+    primary={{ text: 'Get Started', href: `${PORTAL}/cart.php`, target: '_blank' }}
+    secondary={{ text: 'View Plans', href: '#pricing' }}
+  />
 
   <!-- Trusted tech / partners -->
   <Brands
@@ -88,13 +78,13 @@ const metadata = {
       { title: 'Cloudflare CDN & HTTP/3', description: 'Your content is cached at edge locations worldwide for fast loads anywhere.', icon: 'tabler:world' },
       { title: 'CloudLinux isolation', description: 'Every account is isolated for consistent performance, even under heavy neighbour load.', icon: 'tabler:shield-lock' },
     ]}
-    image={{ src: heroImage, alt: 'Performance dashboard' }}
+    image={{ src: cloudServer, alt: 'Cloud server performance' }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Speed that ranks and converts</h3>
+      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">Speed that ranks and converts</h3>
       Faster pages mean happier visitors, better SEO and more sales.
     </Fragment>
-    <Fragment slot="bg"><div class="absolute inset-0 bg-green-50 dark:bg-transparent"></div></Fragment>
+    <Fragment slot="bg"><div class="absolute inset-0" style="background:#f5f2ff"></div></Fragment>
   </Content>
 
   <!-- Migration steps -->
@@ -107,7 +97,7 @@ const metadata = {
       { title: 'Set up in minutes', description: 'Install WordPress and 400+ apps in one click, point your domain and enable free SSL.', icon: 'tabler:settings' },
       { title: 'Go live & grow', description: 'Your site loads fast on LiteSpeed + SSD, backed by 99.99% uptime and 24/7 support.', icon: 'tabler:rocket' },
     ]}
-    image={{ src: heroImage, alt: 'Migration steps' }}
+    image={{ src: mascot, alt: 'Royal Clouds mascot' }}
   />
 
   <!-- Pricing -->

@@ -1,11 +1,10 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
+import ProductHero from '~/components/widgets/ProductHero.astro';
 import Pricing from '~/components/widgets/Pricing.astro';
 import Features from '~/components/widgets/Features.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import heroImage from '~/assets/images/hero.png';
 import { toPrices, toFeatureItems, type Plan } from '~/utils/plans';
 import faqsData from '~/data/faqs.json';
 
@@ -22,19 +21,12 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    actions={[
-      { variant: 'primary', text: `From ${plan.currency}${plan.tiers[0].price}/mo`, href: '#pricing', icon: 'tabler:rocket' },
-      { text: 'Talk to sales', href: 'mailto:sales@royalclouds.net' },
-    ]}
-    image={{ src: heroImage, alt: `${plan.name} illustration` }}
-  >
-    <Fragment slot="title">{plan.title}</Fragment>
-    <Fragment slot="subtitle">{plan.subtitle}</Fragment>
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-gradient-to-b from-green-50/70 to-transparent dark:from-transparent"></div>
-    </Fragment>
-  </Hero>
+  <ProductHero
+    eyebrow={plan.eyebrow}
+    title={plan.title}
+    subtitle={plan.subtitle}
+    price={`${plan.currency}${plan.tiers[0].price}`}
+  />
 
   <Pricing
     id="pricing"

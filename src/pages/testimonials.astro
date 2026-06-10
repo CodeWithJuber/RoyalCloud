@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
+import ProductHero from '~/components/widgets/ProductHero.astro';
 import Testimonials from '~/components/widgets/Testimonials.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import testimonialsData from '~/data/testimonials.json';
@@ -13,8 +13,8 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <HeroText
-    tagline="Testimonials"
+  <ProductHero
+    eyebrow="Testimonials"
     title="Loved by thousands of website owners"
     subtitle="Don't just take our word for it — here's what real Royal Clouds customers say about our speed, reliability and support."
   />

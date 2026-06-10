@@ -1,0 +1,40 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle: string;
+  price?: string;
+}
+const { eyebrow, title, subtitle, price } = Astro.props;
+const PORTAL = 'https://my.royalclouds.net';
+const badges = ['99.99% Uptime', 'Free SSL', '30-Day Money-Back', 'Free Migration'];
+---
+
+<section class="relative overflow-hidden text-white">
+  <div class="absolute inset-0 -z-10" style="background:linear-gradient(125deg,#5b34d6 0%,#7652f2 45%,#00a7f5 100%)"></div>
+  <div class="absolute inset-0 -z-10 opacity-[0.12]" style="background-image:radial-gradient(#fff 1px,transparent 1px);background-size:26px 26px"></div>
+  <div class="absolute -z-10 top-[-30%] right-[-5%] w-[34rem] h-[34rem] rounded-full opacity-25 blur-3xl" style="background:radial-gradient(circle,#fdd700,transparent 60%)"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-16 md:pt-16 md:pb-20 text-center">
+    {eyebrow && (
+      <span class="inline-block rounded-full bg-white/15 ring-1 ring-white/25 px-4 py-1.5 text-sm font-semibold backdrop-blur uppercase tracking-wide">{eyebrow}</span>
+    )}
+    <h1 class="mt-5 font-extrabold tracking-tight text-3xl md:text-5xl leading-tight" style="font-family:var(--aw-font-heading)">{title}</h1>
+    <p class="mt-4 text-lg md:text-xl text-white/85 max-w-2xl mx-auto">{subtitle}</p>
+    <div class="mt-7 flex flex-wrap gap-3 justify-center">
+      <a href={`${PORTAL}/cart.php`} target="_blank" class="btn-primary">{price ? `From ${price}/mo` : 'Get Started'}</a>
+      <a href="#pricing" class="btn text-white border-white/70 hover:bg-white/15">View Pricing</a>
+    </div>
+    <ul class="mt-7 flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm font-medium text-white/90">
+      {badges.map((b) => (
+        <li class="inline-flex items-center gap-1.5">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fdd700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          {b}
+        </li>
+      ))}
+    </ul>
+  </div>
+  <svg class="block w-full h-[36px] sm:h-[56px]" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 80 L0 44 C 240 80 480 80 720 52 C 960 24 1200 24 1440 52 L1440 80 Z" fill="#ffffff" />
+  </svg>
+</section>
