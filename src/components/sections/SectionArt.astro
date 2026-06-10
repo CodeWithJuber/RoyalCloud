@@ -227,13 +227,16 @@ const variant = kind === "hero" ? "working" : kind;
 
   /* ---- support: mascot + chat ---- */
   .art-mascot {
-    width: 180px;
+    position: relative;
+    z-index: 1;
+    width: 170px;
     height: auto;
     filter: drop-shadow(0 22px 28px rgba(34, 16, 95, 0.2));
-    margin-top: 24px;
+    margin-top: 44px;
   }
   .bubble {
     position: absolute;
+    z-index: 2;
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 16px 16px 16px 4px;
@@ -241,7 +244,7 @@ const variant = kind === "hero" ? "working" : kind;
     font-size: 13.5px;
     color: var(--rc-ink);
     box-shadow: var(--shadow-md);
-    max-width: 220px;
+    max-width: 210px;
     line-height: 1.5;
   }
   .bubble .who {
@@ -254,12 +257,12 @@ const variant = kind === "hero" ? "working" : kind;
     color: var(--rc-blue);
   }
   .b1 {
-    top: 44px;
-    left: 28px;
+    top: 28px;
+    left: 24px;
   }
   .b2 {
-    top: 130px;
-    right: 40px;
+    top: 150px;
+    right: 26px;
     border-radius: 16px 16px 4px 16px;
   }
   .typing {
@@ -277,6 +280,7 @@ const variant = kind === "hero" ? "working" : kind;
   }
   .online {
     position: absolute;
+    z-index: 2;
     bottom: 28px;
     left: 34px;
     display: inline-flex;
@@ -443,15 +447,25 @@ const variant = kind === "hero" ? "working" : kind;
 
   @media (max-width: 560px) {
     .art {
-      min-height: 320px;
-      padding: 36px 22px;
+      min-height: 340px;
+      padding: 36px 20px;
+    }
+    .art-mascot {
+      width: 138px;
+      margin-top: 84px;
     }
     .b1 {
-      left: 14px;
-      max-width: 180px;
+      top: 18px;
+      left: 16px;
+      max-width: 200px;
     }
     .b2 {
-      right: 16px;
+      top: 120px;
+      right: 14px;
+    }
+    .online {
+      left: 20px;
+      bottom: 20px;
     }
     .speedcard {
       right: 14px;
