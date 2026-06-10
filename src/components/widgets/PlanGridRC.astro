@@ -61,6 +61,7 @@ const shownPrice = (t: Tier) =>
             <button
               type="button"
               class={defaultBill === "monthly" ? "active" : ""}
+              aria-pressed={defaultBill === "monthly" ? "true" : "false"}
               data-bill="monthly"
             >
               Monthly
@@ -68,6 +69,7 @@ const shownPrice = (t: Tier) =>
             <button
               type="button"
               class={defaultBill === "annual" ? "active" : ""}
+              aria-pressed={defaultBill === "annual" ? "true" : "false"}
               data-bill="annual"
             >
               Annual <span class="save">SAVE 20%</span>
@@ -165,7 +167,10 @@ const shownPrice = (t: Tier) =>
         btn.addEventListener("click", () => {
           const bill = btn.getAttribute("data-bill") || "monthly";
           (sec as HTMLElement).dataset.bill = bill;
-          buttons.forEach((b) => b.classList.toggle("active", b === btn));
+          buttons.forEach((b) => {
+            b.classList.toggle("active", b === btn);
+            b.setAttribute("aria-pressed", String(b === btn));
+          });
           swaps.forEach((p) => {
             p.textContent = p.getAttribute(
               bill === "annual" ? "data-annual" : "data-monthly",

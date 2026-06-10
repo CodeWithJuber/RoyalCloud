@@ -177,7 +177,7 @@ const variant = kind === "hero" ? "working" : kind;
     display: inline-block;
   }
   .d-on {
-    background: #22c55e;
+    background: var(--ok);
   }
   .vents {
     display: flex;
@@ -300,8 +300,8 @@ const variant = kind === "hero" ? "working" : kind;
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    background: var(--ok);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25); /* --ok glow */
   }
 
   /* ---- working: browser + uptime ---- */
@@ -334,7 +334,7 @@ const variant = kind === "hero" ? "working" : kind;
     background: var(--rc-yellow);
   }
   .bbar i:nth-child(3) {
-    background: #22c55e;
+    background: var(--ok);
   }
   .bbar .url {
     margin-left: 10px;
