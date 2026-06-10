@@ -1,25 +1,32 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/PageHero.astro";
-import Testimonials from "../components/Testimonials.astro";
-import CTASection from "../components/CTASection.astro";
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import testimonialsData from '~/data/testimonials.json';
+
+const PORTAL = 'https://my.royalclouds.net';
+const metadata = {
+  title: 'Customer Testimonials',
+  description: 'See what customers say about Royal Clouds hosting — superfast SSD servers, reliable uptime and friendly 24/7 support.',
+};
 ---
-<BaseLayout
-  title="Customer Testimonials"
-  description="See what customers say about Royal Clouds hosting — superfast SSD servers, reliable uptime and friendly 24/7 support."
->
-  <PageHero
-    eyebrow="Testimonials"
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="Testimonials"
     title="Loved by thousands of website owners"
-    subtitle="Don't just take our word for it — here's what real Royal Clouds customers have to say about our speed, reliability and support."
-    crumbs={[{ label: "Testimonials" }]}
+    subtitle="Don't just take our word for it — here's what real Royal Clouds customers say about our speed, reliability and support."
   />
 
-  <section class="section">
-    <div class="container">
-      <Testimonials />
-    </div>
-  </section>
+  <Testimonials
+    testimonials={testimonialsData.items.map((t) => ({ testimonial: t.quote, name: t.name, job: t.site }))}
+  />
 
-  <CTASection />
-</BaseLayout>
+  <CallToAction
+    actions={[{ variant: 'primary', text: 'Get Started', href: `${PORTAL}/cart.php`, target: '_blank', icon: 'tabler:rocket' }]}
+  >
+    <Fragment slot="title">Join thousands of happy customers</Fragment>
+    <Fragment slot="subtitle">Premium SSD hosting from $1.99/mo — free SSL, free migration, 24/7 support.</Fragment>
+  </CallToAction>
+</Layout>

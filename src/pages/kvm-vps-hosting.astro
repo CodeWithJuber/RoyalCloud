@@ -1,16 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import ProductPage from "../components/ProductPage.astro";
-import plan from "../data/plans/vps.json";
-import site from "../data/site.json";
-import { productJsonLd } from "../lib/jsonld";
-
-const jsonLd = productJsonLd(plan, site);
+import ProductPage from '~/components/ProductPage.astro';
+import plan from '~/data/plans/vps.json';
 ---
-<BaseLayout
-  title={`${plan.name} — From ${plan.currency}${plan.tiers[0].price}/mo`}
-  description={plan.subtitle}
-  jsonLd={jsonLd}
->
-  <ProductPage plan={plan} />
-</BaseLayout>
+<ProductPage plan={plan} />

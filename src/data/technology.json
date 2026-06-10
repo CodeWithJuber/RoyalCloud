@@ -1,0 +1,44 @@
+{
+  "speed": {
+    "slug": "speed",
+    "eyebrow": "Top Speed Solutions",
+    "title": "Superfast speed technology",
+    "subtitle": "Pure SSD drives on RAID-10 paired with the LiteSpeed Web Server make your sites dramatically faster — better for visitors, conversions and SEO.",
+    "features": [
+      { "icon": "bolt", "title": "Pure SSD RAID-10", "text": "Enterprise SSD arrays in RAID-10 deliver up to 15x faster disk performance than HDD hosting." },
+      { "icon": "rocket", "title": "LiteSpeed Web Server", "text": "Event-driven LiteSpeed with LSCache serves pages in milliseconds, even under heavy load." },
+      { "icon": "globe", "title": "Cloudflare CDN", "text": "Your content is cached at edge locations worldwide for fast loads anywhere." },
+      { "icon": "gauge", "title": "HTTP/3 & Brotli", "text": "Modern protocols and Brotli compression shrink payloads and speed up every request." },
+      { "icon": "cpu", "title": "Latest PHP & MySQL", "text": "Tuned PHP and MariaDB/MySQL stacks keep dynamic apps responsive." },
+      { "icon": "layers", "title": "Built-in Caching", "text": "Server-level and object caching cut response times for WordPress and more." }
+    ]
+  },
+  "uptime": {
+    "slug": "uptime",
+    "eyebrow": "Amazing Uptime",
+    "title": "Rock-solid uptime technology",
+    "subtitle": "Layered protection and automation keep your sites online with a 99.99% uptime SLA — patched, monitored and backed up around the clock.",
+    "features": [
+      { "icon": "refresh", "title": "Automated Kernel Updates", "text": "KernelCare-style live patching applies security fixes with no reboots or downtime." },
+      { "icon": "firewall", "title": "Advanced Firewall", "text": "A hardened, tuned firewall blocks malicious traffic before it reaches your server." },
+      { "icon": "audit", "title": "Malware Detection", "text": "Continuous scanning detects and quarantines malicious files automatically." },
+      { "icon": "shield", "title": "DDoS-Protected Network", "text": "Network-level filtering absorbs attacks and keeps your services reachable." },
+      { "icon": "backup", "title": "Automated Backups", "text": "Regular off-site backups let you restore your site in a single click." },
+      { "icon": "uptime", "title": "99.99% Uptime SLA", "text": "Redundant power, network and cooling underpin our uptime guarantee." }
+    ]
+  },
+  "datacenter": {
+    "slug": "datacenter",
+    "eyebrow": "Datacenter",
+    "title": "Best-of-breed datacenters",
+    "subtitle": "Enterprise-grade facilities built to global standards — with redundant infrastructure, scalability and disaster-recovery options for true peace of mind.",
+    "features": [
+      { "icon": "database", "title": "Global Standards", "text": "Tier-grade datacenters engineered for performance, security and compliance." },
+      { "icon": "scale", "title": "Scalable Architecture", "text": "Add resources on demand as your traffic and storage needs grow." },
+      { "icon": "failover", "title": "Disaster Recovery", "text": "Active-active and active-passive DR options keep you running through failures." },
+      { "icon": "globe", "title": "Premium Network", "text": "Multiple uplinks and low-latency routing deliver fast, reliable connectivity." },
+      { "icon": "lock", "title": "Physical Security", "text": "24/7 on-site security, access control and surveillance protect the hardware." },
+      { "icon": "settings", "title": "Full Control", "text": "Manage your services with complete control and world-class support behind you." }
+    ]
+  }
+}

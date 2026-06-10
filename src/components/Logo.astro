@@ -1,33 +1,18 @@
 ---
-/**
- * Royal Clouds wordmark — green tile with a white cloud + crown glyph
- * (the real brand identity). Wordmark adapts to the current theme.
- */
-interface Props { class?: string; compact?: boolean; }
-const { class: className = "", compact = false } = Astro.props;
-const gid = "rcLogo" + Math.random().toString(36).slice(2, 7);
 ---
-<span class={`logo ${className}`} aria-label="Royal Clouds">
-  <svg class="logo__mark" width="38" height="38" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+<span class="inline-flex items-center gap-2 self-center whitespace-nowrap">
+  <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="flex-none">
     <defs>
-      <linearGradient id={gid} x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#19c08a"/><stop offset="0.5" stop-color="#12a150"/><stop offset="1" stop-color="#0e8a45"/>
+      <linearGradient id="rcLogoG" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#19c08a" /><stop offset="0.5" stop-color="#12a150" /><stop offset="1" stop-color="#0e8a45" />
       </linearGradient>
     </defs>
-    <rect x="2" y="2" width="36" height="36" rx="11" fill={`url(#${gid})`}/>
-    <!-- crown -->
-    <path d="M11.5 16.5l3.4 3.1 2.9-4.4 2.2 5 2.9-4.4 3.4 3.1-1 4H12.5z" fill="#fff" fill-opacity="0.92"/>
-    <!-- cloud -->
-    <path d="M15 29.5a4.4 4.4 0 0 1-.5-8.78A5.8 5.8 0 0 1 25.8 22.2 4.7 4.7 0 0 1 25 29.5z" fill="#fff"/>
+    <rect x="2" y="2" width="36" height="36" rx="11" fill="url(#rcLogoG)" />
+    <path d="M11.5 16.5l3.4 3.1 2.9-4.4 2.2 5 2.9-4.4 3.4 3.1-1 4H12.5z" fill="#fff" fill-opacity="0.92" />
+    <path d="M15 29.5a4.4 4.4 0 0 1-.5-9.16A5.8 5.8 0 0 1 25.8 22.2 4.7 4.7 0 0 1 25 29.5z" fill="#fff" />
   </svg>
-  {!compact && (
-    <span class="logo__text">Royal<span class="logo__accent">Clouds</span></span>
-  )}
+  <span class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white" style="font-family:var(--aw-font-heading)">
+    Royal<span class="text-primary">Clouds</span>
+  </span>
 </span>
-
-<style>
-  .logo { display: inline-flex; align-items: center; gap: 0.6rem; }
-  .logo__mark { flex: none; filter: drop-shadow(0 4px 10px rgba(18,161,80,0.3)); }
-  .logo__text { font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
-  .logo__accent { color: var(--brand-ink); }
-</style>

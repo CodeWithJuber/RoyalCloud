@@ -1,237 +1,163 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Icon from "../components/Icon.astro";
-import Hero from "../components/Hero.astro";
-import Marquee from "../components/Marquee.astro";
-import FeatureGrid from "../components/FeatureGrid.astro";
-import WorldMap from "../components/WorldMap.astro";
-import TerminalWindow from "../components/TerminalWindow.astro";
-import PricingCards from "../components/PricingCards.astro";
-import CompareTable from "../components/CompareTable.astro";
-import Stats from "../components/Stats.astro";
-import Steps from "../components/Steps.astro";
-import Testimonials from "../components/Testimonials.astro";
-import DomainSearch from "../components/DomainSearch.astro";
-import Faq from "../components/Faq.astro";
-import CTASection from "../components/CTASection.astro";
-import site from "../data/site.json";
-import features from "../data/features.json";
-import faqs from "../data/faqs.json";
-import shared from "../data/plans/shared.json";
-import vps from "../data/plans/vps.json";
-import dedicated from "../data/plans/dedicated.json";
+import Layout from '~/layouts/PageLayout.astro';
 
-const products = [
-  { icon: "server", name: "SSD Shared Hosting", price: shared.tiers[0].price, href: "/shared-hosting", desc: "Fast, secure hosting for sites of every size.", points: ["NVMe SSD storage", "Free SSL & domain", "1-click app installer"] },
-  { icon: "cpu", name: "KVM VPS Hosting", price: vps.tiers[0].price, href: "/kvm-vps-hosting", desc: "Guaranteed resources with full root access.", points: ["Full root access", "Dedicated IPv4", "Instant deployment"] },
-  { icon: "database", name: "Dedicated Servers", price: dedicated.tiers[0].price, href: "/dedicated-servers", desc: "Single-tenant power for demanding workloads.", points: ["Up to 128 GB RAM", "10 TB+ bandwidth", "Managed options"] },
-];
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Brands from '~/components/widgets/Brands.astro';
 
-const stats = [
-  { value: "99.99%", label: "Uptime SLA" },
-  { value: "15", label: "× Faster with NVMe" },
-  { value: "30", label: "+ Global locations" },
-  { value: "24/7", label: "Expert support" },
-];
+import heroImage from '~/assets/images/hero.png';
+import { toPrices } from '~/utils/plans';
+import shared from '~/data/plans/shared.json';
+import testimonialsData from '~/data/testimonials.json';
+import faqsData from '~/data/faqs.json';
 
-const faqLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.general.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+const PORTAL = 'https://my.royalclouds.net';
+
+const metadata = {
+  title: 'Royal Clouds — Premium SSD Web Hosting, KVM VPS & Dedicated Servers',
+  ignoreTitleTemplate: true,
 };
 ---
-<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description} jsonLd={[faqLd]}>
-  <Hero />
 
-  {/* Trusted by */}
-  <section class="section-sm logos">
-    <div class="container">
-      <p class="logos__label">Trusted by thousands of websites worldwide</p>
-      <Marquee />
-    </div>
-  </section>
+<Layout metadata={metadata}>
+  <!-- Hero -->
+  <Hero
+    actions={[
+      { variant: 'primary', text: 'Get Started at $1.99/mo', href: `${PORTAL}/cart.php`, target: '_blank', icon: 'tabler:rocket' },
+      { text: 'Compare plans', href: '#pricing' },
+    ]}
+    image={{ src: heroImage, alt: 'Royal Clouds hosting control panel showing 99.99% uptime' }}
+  >
+    <Fragment slot="title">
+      Premium hosting, <span class="text-accent dark:text-white">built for enhanced speed</span>
+    </Fragment>
+    <Fragment slot="subtitle">
+      Launch on SSD RAID-10 servers with <span class="font-semibold">LiteSpeed</span>, CloudLinux, free cPanel &amp; SSL,
+      daily backups and genuinely friendly 24/7 support — from just <span class="font-semibold">$1.99/month</span>.
+    </Fragment>
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-b from-green-50/70 to-transparent dark:from-transparent"></div>
+    </Fragment>
+  </Hero>
 
-  {/* Benefits */}
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Why Royal Clouds</span>
-        <h2>Everything you need to launch &amp; grow</h2>
-        <p class="lead">Powerful features, friendly support, and prices that make sense — for first-timers and seasoned developers alike.</p>
-      </div>
-      <FeatureGrid items={features.benefits} columns={3} />
-    </div>
-  </section>
+  <!-- Trusted tech / partners -->
+  <Brands
+    title="Powered by industry-leading technology"
+    icons={[
+      'logos:cloudflare',
+      'logos:cpanel',
+      'logos:cloudlinux',
+      'logos:intel',
+      'logos:letsencrypt',
+      'logos:ubuntu',
+      'logos:mysql',
+      'logos:php',
+    ]}
+  />
 
-  {/* Performance split — world map */}
-  <section class="section section--tint">
-    <div class="container split">
-      <div class="split__copy reveal">
-        <span class="eyebrow">Global &amp; fast</span>
-        <h2>A network built for speed, everywhere</h2>
-        <p class="lead">Pure NVMe SSDs, LiteSpeed servers and the Cloudflare CDN deliver sub-second load times to visitors anywhere — backed by a 99.99% uptime SLA.</p>
-        <ul class="ticks">
-          <li><Icon name="check" size={18} /> 30+ global edge & datacenter locations</li>
-          <li><Icon name="check" size={18} /> LiteSpeed + LSCache + HTTP/3</li>
-          <li><Icon name="check" size={18} /> Free Cloudflare CDN & DDoS protection</li>
-        </ul>
-        <a href="/shared-hosting" class="btn btn--outline mt-3">Explore hosting <Icon name="arrow" size={18} /></a>
-      </div>
-      <div class="split__media reveal d1"><WorldMap /></div>
-    </div>
-  </section>
+  <!-- Benefits -->
+  <Features
+    id="features"
+    tagline="Why Royal Clouds"
+    title="Everything you need to launch & grow"
+    subtitle="Powerful features, friendly support and prices that make sense — for first-timers and seasoned developers alike."
+    items={[
+      { title: 'Softaculous 1-Click Installer', description: 'Install WordPress, Joomla, Drupal and 400+ apps in seconds, with automatic updates.', icon: 'tabler:apps' },
+      { title: 'Super-Fast Performance', description: 'Pure SSD RAID-10 storage, LiteSpeed, CloudLinux and the Cloudflare CDN make sites up to 15× faster.', icon: 'tabler:bolt' },
+      { title: 'Free SSL & Daily Backups', description: 'Every site is encrypted with a free auto-renewing SSL and backed up daily — restore in one click.', icon: 'tabler:shield-check' },
+      { title: 'DDoS Protection', description: 'A DDoS-protected network and hardened firewall keep your sites online under attack.', icon: 'tabler:wall' },
+      { title: '99.99% Uptime SLA', description: 'KernelCare live patching, redundant power and network underpin our uptime guarantee.', icon: 'tabler:activity-heartbeat' },
+      { title: 'Friendly 24/7 Support', description: 'Real hosting specialists on live chat, email and tickets, around the clock, 365 days a year.', icon: 'tabler:headset' },
+    ]}
+  />
 
-  {/* Developer split — terminal */}
-  <section class="section">
-    <div class="container split split--rev">
-      <div class="split__media reveal"><TerminalWindow /></div>
-      <div class="split__copy reveal d1">
-        <span class="eyebrow">For developers</span>
-        <h2>Full control, zero hassle</h2>
-        <p class="lead">Spin up a KVM VPS in minutes with full root access, your choice of OS, and one-click stacks. Or let us fully manage it — your call.</p>
-        <ul class="ticks">
-          <li><Icon name="check" size={18} /> Root access & custom OS / ISO</li>
-          <li><Icon name="check" size={18} /> SSH, SFTP & one-click app stacks</li>
-          <li><Icon name="check" size={18} /> Scale up in a single click</li>
-        </ul>
-        <a href="/kvm-vps-hosting" class="btn btn--outline mt-3">Deploy a VPS <Icon name="arrow" size={18} /></a>
-      </div>
-    </div>
-  </section>
+  <!-- Speed content -->
+  <Content
+    isReversed
+    tagline="Global & fast"
+    title="A network built for speed, everywhere"
+    items={[
+      { title: 'Pure SSD RAID-10 + LiteSpeed', description: 'Up to 15× faster than standard HDD hosting, with LSCache serving pages in milliseconds.', icon: 'tabler:bolt' },
+      { title: 'Cloudflare CDN & HTTP/3', description: 'Your content is cached at edge locations worldwide for fast loads anywhere.', icon: 'tabler:world' },
+      { title: 'CloudLinux isolation', description: 'Every account is isolated for consistent performance, even under heavy neighbour load.', icon: 'tabler:shield-lock' },
+    ]}
+    image={{ src: heroImage, alt: 'Performance dashboard' }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Speed that ranks and converts</h3>
+      Faster pages mean happier visitors, better SEO and more sales.
+    </Fragment>
+    <Fragment slot="bg"><div class="absolute inset-0 bg-green-50 dark:bg-transparent"></div></Fragment>
+  </Content>
 
-  {/* Product cards */}
-  <section class="section section--tint">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Hosting plans</span>
-        <h2>Find the right fit for your project</h2>
-        <p class="lead">From your first blog to high-traffic stores and dedicated hardware — we scale with you.</p>
-      </div>
-      <div class="prods">
-        {products.map((p, i) => (
-          <a href={p.href} class={`prod reveal ${i === 1 ? "d1" : i === 2 ? "d2" : ""}`}>
-            <span class="icon-tile"><Icon name={p.icon} /></span>
-            <h3>{p.name}</h3>
-            <p class="prod__desc">{p.desc}</p>
-            <ul>{p.points.map((pt) => (<li><Icon name="check" size={16} /> {pt}</li>))}</ul>
-            <div class="prod__foot">
-              <span class="prod__price">from <strong>${p.price}</strong>/mo</span>
-              <span class="prod__go"><Icon name="arrow" size={18} /></span>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- Migration steps -->
+  <Steps
+    title="Switching is simple — we do the heavy lifting"
+    tagline="Get started in minutes"
+    items={[
+      { title: 'Choose your plan', description: 'Pick the hosting that fits — from SSD shared to a dedicated server. Upgrade any time.', icon: 'tabler:shopping-cart' },
+      { title: 'We migrate you free', description: 'Already hosted elsewhere? Our team moves your site, databases and emails with zero downtime.', icon: 'tabler:transfer' },
+      { title: 'Set up in minutes', description: 'Install WordPress and 400+ apps in one click, point your domain and enable free SSL.', icon: 'tabler:settings' },
+      { title: 'Go live & grow', description: 'Your site loads fast on LiteSpeed + SSD, backed by 99.99% uptime and 24/7 support.', icon: 'tabler:rocket' },
+    ]}
+    image={{ src: heroImage, alt: 'Migration steps' }}
+  />
 
-  {/* Stats */}
-  <section class="section-sm">
-    <div class="container"><Stats items={stats} /></div>
-  </section>
+  <!-- Pricing -->
+  <Pricing
+    id="pricing"
+    title="Plans that grow with you"
+    subtitle="Transparent pricing with free cPanel, free SSL, free migration and a 30-day money-back guarantee."
+    tagline="SSD Shared Hosting"
+    prices={toPrices(shared)}
+  />
 
-  {/* Pricing */}
-  <section class="section section--tint" id="plans">
-    <div class="container container-wide">
-      <div class="section-head">
-        <span class="eyebrow">Simple pricing</span>
-        <h2>Plans that grow with you</h2>
-        <p class="lead">Transparent pricing with free SSL, free migration and a 30-day money-back guarantee on every shared plan.</p>
-      </div>
-      <PricingCards tiers={shared.tiers} currency={shared.currency} />
-    </div>
-  </section>
+  <!-- Stats -->
+  <Stats
+    stats={[
+      { title: 'Uptime SLA', amount: '99.99%' },
+      { title: 'Faster with SSD', amount: '15×' },
+      { title: 'Apps in 1-click', amount: '400+' },
+      { title: 'Expert support', amount: '24/7' },
+    ]}
+  />
 
-  {/* Comparison */}
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">How we compare</span>
-        <h2>More speed &amp; value, less compromise</h2>
-        <p class="lead">See how Royal Clouds stacks up against typical budget and big-brand hosts.</p>
-      </div>
-      <CompareTable />
-    </div>
-  </section>
+  <!-- Testimonials -->
+  <Testimonials
+    title="Loved by thousands of website owners"
+    tagline="Customer love"
+    testimonials={testimonialsData.items.slice(0, 6).map((t) => ({
+      testimonial: t.quote,
+      name: t.name,
+      job: t.site,
+    }))}
+  />
 
-  {/* Security */}
-  <section class="section section--tint">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Security first</span>
-        <h2>Your site, protected around the clock</h2>
-        <p class="lead">Multiple layers of protection keep your sites, data and visitors safe — 24/7.</p>
-      </div>
-      <FeatureGrid items={features.security} columns={3} />
-    </div>
-  </section>
+  <!-- FAQs -->
+  <FAQs
+    title="Frequently asked questions"
+    tagline="FAQ"
+    classes={{ container: 'max-w-6xl' }}
+    items={faqsData.general.map((f) => ({ title: f.q, description: f.a }))}
+  />
 
-  {/* Testimonials */}
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Customer love</span>
-        <h2>Loved by thousands of website owners</h2>
-      </div>
-      <Testimonials limit={3} />
-      <div class="text-center mt-4"><a href="/testimonials" class="btn btn--outline">See all testimonials</a></div>
-    </div>
-  </section>
-
-  {/* Migration steps */}
-  <section class="section section--tint">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Get started in minutes</span>
-        <h2>Switching is simple — we do the heavy lifting</h2>
-      </div>
-      <Steps />
-    </div>
-  </section>
-
-  {/* Domain */}
-  <section class="section">
-    <div class="container"><DomainSearch /></div>
-  </section>
-
-  {/* FAQ */}
-  <section class="section section--tint">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">FAQ</span>
-        <h2>Frequently asked questions</h2>
-      </div>
-      <Faq items={faqs.general} />
-    </div>
-  </section>
-
-  <CTASection />
-</BaseLayout>
-
-<style>
-  .logos__label { text-align: center; color: var(--muted); font-size: 0.92rem; margin-bottom: 1.75rem; font-weight: 500; }
-
-  .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-  .split__copy .eyebrow { margin-bottom: 1rem; }
-  .ticks { display: grid; gap: 0.7rem; margin-top: 1.5rem; }
-  .ticks li { display: flex; align-items: center; gap: 0.6rem; color: var(--text); font-weight: 500; }
-  .ticks :global(svg) { color: var(--success); flex: none; }
-  .split__media { display: flex; justify-content: center; }
-  @media (max-width: 860px) {
-    .split { grid-template-columns: 1fr; }
-    .split--rev .split__media { order: 2; }
-  }
-
-  .prods { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-  .prod { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 1.9rem 1.75rem; box-shadow: var(--shadow-xs); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, border-color .22s ease; }
-  .prod:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
-  .prod:hover .prod__go { transform: translateX(3px); color: var(--brand-ink); }
-  .prod h3 { font-size: 1.3rem; margin: 1rem 0 0.4rem; }
-  .prod__desc { color: var(--muted); font-size: 0.95rem; }
-  .prod ul { display: grid; gap: 0.55rem; margin: 1.25rem 0 1.5rem; }
-  .prod li { display: flex; align-items: center; gap: 0.55rem; font-size: 0.92rem; color: var(--text); }
-  .prod li :global(svg) { color: var(--success); flex: none; }
-  .prod__foot { margin-top: auto; padding-top: 1.1rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .prod__price { color: var(--muted); font-size: 0.95rem; }
-  .prod__price strong { font-family: var(--font-display); font-size: 1.45rem; color: var(--ink); letter-spacing: -0.02em; }
-  .prod__go { color: var(--muted); transition: transform .2s ease, color .2s ease; }
-</style>
+  <!-- CTA -->
+  <CallToAction
+    actions={[
+      { variant: 'primary', text: 'Get Started', href: `${PORTAL}/cart.php`, target: '_blank', icon: 'tabler:rocket' },
+      { text: 'Talk to sales', href: 'mailto:sales@royalclouds.net' },
+    ]}
+  >
+    <Fragment slot="title">Ready to launch faster?</Fragment>
+    <Fragment slot="subtitle">
+      Join thousands of sites running on premium SSD hosting — free SSL, free migration and a 30-day money-back guarantee.
+    </Fragment>
+  </CallToAction>
+</Layout>

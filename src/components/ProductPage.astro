@@ -1,73 +1,70 @@
 ---
-import PricingCards from "./PricingCards.astro";
-import FeatureGrid from "./FeatureGrid.astro";
-import Faq from "./Faq.astro";
-import CTASection from "./CTASection.astro";
-import Breadcrumbs from "./Breadcrumbs.astro";
-import Icon from "./Icon.astro";
-import site from "../data/site.json";
-import faqs from "../data/faqs.json";
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import Features from '~/components/widgets/Features.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import heroImage from '~/assets/images/hero.png';
+import { toPrices, toFeatureItems, type Plan } from '~/utils/plans';
+import faqsData from '~/data/faqs.json';
 
-interface Plan {
-  name: string; eyebrow: string; title: string; subtitle: string;
-  currency: string; billingNote?: string; tiers: any[];
-  highlights: { icon: string; title: string; text: string }[];
+interface Props {
+  plan: Plan;
 }
-interface Props { plan: Plan; }
-const { plan } = Astro.props;
+const { plan } = Astro.props as Props;
+const PORTAL = 'https://my.royalclouds.net';
+
+const metadata = {
+  title: `${plan.name} — From ${plan.currency}${plan.tiers[0].price}/mo`,
+  description: plan.subtitle,
+};
 ---
-<section class="phero">
-  <div class="phero__grid bg-grid" aria-hidden="true"></div>
-  <div class="phero__mesh bg-mesh" aria-hidden="true"></div>
-  <div class="container phero__inner">
-    <div class="phero__crumbs"><Breadcrumbs items={[{ label: plan.name }]} /></div>
-    <span class="eyebrow">{plan.eyebrow}</span>
-    <h1>{plan.title}</h1>
-    <p class="phero__sub">{plan.subtitle}</p>
-    <ul class="phero__badges">
-      {site.trustBadges.map((b) => (<li><Icon name="check" size={15} /> {b}</li>))}
-    </ul>
-  </div>
-</section>
 
-<section class="section">
-  <div class="container container-wide">
-    <PricingCards tiers={plan.tiers} currency={plan.currency} />
-    {plan.billingNote && <p class="pbilling">{plan.billingNote}</p>}
-  </div>
-</section>
+<Layout metadata={metadata}>
+  <Hero
+    actions={[
+      { variant: 'primary', text: `From ${plan.currency}${plan.tiers[0].price}/mo`, href: '#pricing', icon: 'tabler:rocket' },
+      { text: 'Talk to sales', href: 'mailto:sales@royalclouds.net' },
+    ]}
+    image={{ src: heroImage, alt: `${plan.name} illustration` }}
+  >
+    <Fragment slot="title">{plan.title}</Fragment>
+    <Fragment slot="subtitle">{plan.subtitle}</Fragment>
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-b from-green-50/70 to-transparent dark:from-transparent"></div>
+    </Fragment>
+  </Hero>
 
-<section class="section section--tint">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Why {plan.name}</span>
-      <h2>Built for performance, security &amp; peace of mind</h2>
-    </div>
-    <FeatureGrid items={plan.highlights} columns={4} />
-  </div>
-</section>
+  <Pricing
+    id="pricing"
+    title={`${plan.name} plans`}
+    subtitle={plan.billingNote}
+    tagline="Pricing"
+    prices={toPrices(plan)}
+  />
 
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">FAQ</span>
-      <h2>Frequently asked questions</h2>
-    </div>
-    <Faq items={faqs.general} />
-  </div>
-</section>
+  <Features
+    tagline={`Why ${plan.name}`}
+    title="Built for performance, security & peace of mind"
+    columns={2}
+    items={toFeatureItems(plan)}
+  />
 
-<CTASection />
+  <FAQs
+    title="Frequently asked questions"
+    tagline="FAQ"
+    classes={{ container: 'max-w-6xl' }}
+    items={faqsData.general.map((f) => ({ title: f.q, description: f.a }))}
+  />
 
-<style>
-  .phero { position: relative; overflow: hidden; padding-block: clamp(2.75rem, 6vw, 4.25rem); border-bottom: 1px solid var(--border); }
-  .phero__grid { position: absolute; inset: 0; opacity: .5; }
-  .phero__mesh { position: absolute; inset: -20% -10% auto; height: 140%; }
-  .phero__inner { position: relative; max-width: 880px; }
-  .phero__crumbs { margin-bottom: 1.25rem; }
-  .phero__sub { color: var(--muted); font-size: 1.18rem; margin-top: 1rem; max-width: 700px; }
-  .phero__badges { display: flex; flex-wrap: wrap; gap: 0.7rem 1.5rem; margin-top: 1.75rem; }
-  .phero__badges li { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--font-display); font-weight: 550; font-size: 0.9rem; color: var(--text); }
-  .phero__badges :global(svg) { color: var(--success); }
-  .pbilling { text-align: center; color: var(--muted); margin-top: 1.5rem; font-size: 0.95rem; }
-</style>
+  <CallToAction
+    actions={[
+      { variant: 'primary', text: 'Get Started', href: `${PORTAL}/cart.php`, target: '_blank', icon: 'tabler:rocket' },
+      { text: 'Live chat', href: `${PORTAL}/clientarea.php`, target: '_blank' },
+    ]}
+  >
+    <Fragment slot="title">Ready to get started?</Fragment>
+    <Fragment slot="subtitle">Free SSL, free migration and a 30-day money-back guarantee on every plan.</Fragment>
+  </CallToAction>
+</Layout>

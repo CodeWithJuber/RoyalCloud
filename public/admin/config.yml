@@ -29,7 +29,7 @@ collections:
   - name: blog
     label: "Blog Posts"
     label_singular: "Blog Post"
-    folder: "src/content/blog"
+    folder: "src/data/post"
     create: true
     slug: "{{slug}}"
     extension: md
@@ -39,17 +39,13 @@ collections:
     sortable_fields: ["publishDate", "title"]
     fields:
       - { name: title, label: "Title", widget: string, hint: "Used as the SEO <title> and H1." }
-      - { name: description, label: "Meta Description", widget: text, hint: "150–160 chars. Shown in Google results & social shares." }
+      - { name: excerpt, label: "Excerpt / Meta Description", widget: text, hint: "150–160 chars. Shown in Google results & social shares." }
       - { name: publishDate, label: "Publish Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
-      - { name: updatedDate, label: "Updated Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false }
+      - { name: updateDate, label: "Updated Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false }
       - { name: author, label: "Author", widget: string, default: "Royal Clouds Team" }
       - { name: category, label: "Category", widget: string, default: "Hosting" }
       - { name: tags, label: "Tags", widget: list, default: [], required: false }
       - { name: image, label: "Featured Image", widget: image, required: false, hint: "Used for social cards and the article header." }
-      - { name: imageAlt, label: "Image Alt Text", widget: string, required: false }
-      - { name: canonical, label: "Canonical URL", widget: string, required: false, hint: "Only set if this content is published elsewhere." }
-      - { name: featured, label: "Feature on blog homepage", widget: boolean, default: false }
-      - { name: noindex, label: "Hide from search engines (noindex)", widget: boolean, default: false }
       - { name: draft, label: "Draft (don't publish)", widget: boolean, default: false }
       - { name: body, label: "Content", widget: markdown }
 
