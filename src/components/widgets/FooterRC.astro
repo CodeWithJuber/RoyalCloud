@@ -283,7 +283,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     outline: none;
     background: transparent;
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 16px;
     color: var(--rc-ink);
     min-width: 0;
   }
@@ -291,8 +291,24 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     color: var(--text-muted);
   }
   .f-news-form .btn {
-    padding: 12px 26px;
+    padding: 14px 26px;
     font-size: 12.5px;
+  }
+  @media (max-width: 480px) {
+    .f-news-form {
+      flex-wrap: wrap;
+      border-radius: 20px;
+      padding: 14px 16px 12px;
+      gap: 8px;
+    }
+    .f-news-form input {
+      flex: 1 1 100%;
+      padding: 4px 4px 10px;
+      border-bottom: 1.5px solid var(--line);
+    }
+    .f-news-form .btn {
+      flex: 1 1 100%;
+    }
   }
 
   /* ---- columns / bottom (layout in rc-premium.css) ---- */
@@ -331,6 +347,8 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     flex-wrap: wrap;
   }
   .footer-legal a {
+    display: inline-block;
+    padding-block: 6px;
     color: rgba(255, 255, 255, 0.55);
     transition: color 0.15s ease;
   }

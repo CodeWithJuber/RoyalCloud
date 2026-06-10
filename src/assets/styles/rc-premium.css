@@ -299,6 +299,13 @@ h2 em {
   font-weight: 800;
   color: var(--rc-yellow);
 }
+@media (max-width: 560px) {
+  .promo-bar {
+    font-size: 12px;
+    padding: 7px 12px;
+    line-height: 1.45;
+  }
+}
 
 /* ---------- Header (clean white, always sticky) ---------- */
 .site-header {
@@ -757,9 +764,6 @@ h2 em {
     grid-template-columns: 1fr;
     gap: 44px;
   }
-  .steps-figure {
-    order: -1;
-  }
   .steps-figure .m {
     width: 150px;
   }
@@ -855,7 +859,7 @@ h2 em {
   border: none;
   background: transparent;
   color: var(--text-muted);
-  padding: 10px 26px;
+  padding: 12px 26px;
   border-radius: 999px;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -1309,7 +1313,7 @@ h2 em {
   color: var(--text-muted);
 }
 .domain-search .btn {
-  padding: 14px 30px;
+  padding: 15px 30px;
   font-size: 13px;
 }
 .domain-tlds {
@@ -1565,6 +1569,8 @@ h2 em {
   display: inline-block;
   font-size: 14.5px;
   line-height: 1.5;
+  padding-block: 4px;
+  margin-block: -4px;
   color: rgba(255, 255, 255, 0.62);
   transition:
     color 0.15s ease,
@@ -2139,11 +2145,8 @@ h2 em {
     padding: 48px 0;
   }
   .domain-panel {
-    padding: 56px 28px;
+    padding: 56px 24px;
     border-radius: 22px;
-  }
-  .domain-search {
-    flex-wrap: nowrap;
   }
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2157,9 +2160,58 @@ h2 em {
 }
 @media (max-width: 560px) {
   .feature-grid,
-  .testi-grid,
-  .plan-grid {
+  .testi-grid {
     grid-template-columns: 1fr;
+  }
+  .trustbar-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+    padding: 18px 0;
+  }
+  .sec-head {
+    margin-bottom: 40px;
+  }
+  .sec-head h2 {
+    font-size: 27px;
+  }
+  .sec-head p {
+    font-size: 16.5px;
+    margin-top: 16px;
+  }
+  .faq summary {
+    padding: 18px 18px;
+    font-size: 15.5px;
+  }
+  .faq .ans {
+    padding: 0 18px 20px;
+    font-size: 14.5px;
+  }
+  /* domain search stacks: full-width input row, full-width button */
+  .domain-search {
+    flex-wrap: wrap;
+    border-radius: 20px;
+    padding: 14px 16px 10px;
+    gap: 8px;
+  }
+  .domain-search .at {
+    display: none;
+  }
+  .domain-search input {
+    flex: 1 1 100%;
+    padding: 6px 4px 10px;
+    border-bottom: 1.5px solid var(--line);
+  }
+  .domain-search .btn {
+    flex: 1 1 100%;
+    padding: 14px 18px;
+  }
+  .domain-tlds {
+    gap: 8px;
+  }
+  .domain-tlds span {
+    padding: 6px 12px;
+    font-size: 12.5px;
   }
   .plan {
     padding: 22px 20px 0;
@@ -2222,6 +2274,59 @@ h2 em {
   }
   .footer-badges {
     justify-content: center;
+  }
+}
+
+/* ---------- Mobile swipe carousels: plans + service tiles ---------- */
+@media (max-width: 700px) {
+  .plan-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    margin: 0 -28px;
+    padding: 16px 28px 24px;
+    scrollbar-width: none;
+  }
+  .plan-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .plan-grid .plan {
+    flex: 0 0 86%;
+    scroll-snap-align: center;
+  }
+  /* lead with the recommended plan */
+  .plan-grid .plan.popular {
+    order: -1;
+  }
+  .feature-grid.tiles {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 14px;
+    margin: 0 -28px;
+    padding: 4px 28px 20px;
+    scrollbar-width: none;
+  }
+  .feature-grid.tiles::-webkit-scrollbar {
+    display: none;
+  }
+  .feature-grid.tiles .feature-card {
+    flex: 0 0 76%;
+    scroll-snap-align: center;
+  }
+  /* swipe hint under carousels */
+  .plan-grid::after,
+  .feature-grid.tiles::after {
+    content: "";
+    flex: 0 0 12px;
+  }
+  /* cards in a swipe row must not hide behind scroll reveals */
+  body[data-motion="on"] .plan-grid .plan.reveal,
+  body[data-motion="on"] .feature-grid.tiles .feature-card.reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
