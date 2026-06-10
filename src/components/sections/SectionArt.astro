@@ -1,0 +1,465 @@
+---
+import { Image } from "astro:assets";
+import mascot from "~/assets/images/brand/mascot.png";
+import cloud from "~/assets/images/brand/cloud.png";
+
+/**
+ * Hand-built brand illustrations that replace the old stock photos in
+ * content splits. Keyed by the section's `image` keyword:
+ *  - datacenter → server stack with live status lights + speed bars
+ *  - support    → the mascot chatting (typing bubble, online dot)
+ *  - working/hero → browser window with an uptime pulse line
+ */
+interface Props {
+  kind: "datacenter" | "support" | "working" | "hero";
+}
+const { kind } = Astro.props;
+const variant = kind === "hero" ? "working" : kind;
+---
+
+{
+  variant === "datacenter" && (
+    <div class="art art-lav" aria-hidden="true">
+      <Image src={cloud} alt="" width={120} height={90} class="art-cloud" />
+      <div class="rack">
+        {[0, 1, 2].map(() => (
+          <div class="srv">
+            <span class="dots">
+              <i class="d d-on" />
+              <i class="d d-on d2" />
+              <i class="d" />
+            </span>
+            <span class="vents">
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+          </div>
+        ))}
+      </div>
+      <div class="speedcard">
+        <strong>15x</strong>
+        <span class="bars">
+          <i style="height: 30%" />
+          <i style="height: 52%" />
+          <i style="height: 72%" />
+          <i style="height: 100%" />
+        </span>
+        <small>SSD + LiteSpeed</small>
+      </div>
+    </div>
+  )
+}
+
+{
+  variant === "support" && (
+    <div class="art art-sky" aria-hidden="true">
+      <div class="bubble b1">
+        Hi! Need a hand with your site?
+        <span class="who">Royal Clouds Support</span>
+      </div>
+      <div class="bubble b2">
+        <span class="typing">
+          <i />
+          <i />
+          <i />
+        </span>
+      </div>
+      <Image src={mascot} alt="" width={210} height={437} class="art-mascot" />
+      <div class="online">
+        <i />
+        Online 24/7
+      </div>
+    </div>
+  )
+}
+
+{
+  variant === "working" && (
+    <div class="art art-lav" aria-hidden="true">
+      <div class="browser">
+        <div class="bbar">
+          <i />
+          <i />
+          <i />
+          <span class="url">yoursite.com</span>
+        </div>
+        <svg class="pulse" viewBox="0 0 320 110" fill="none">
+          <path
+            class="pulse-line"
+            d="M0 84 C 36 84 44 58 78 58 C 110 58 118 74 150 74 C 186 74 192 36 226 36 C 258 36 266 52 320 46"
+            stroke="#7652f2"
+            stroke-width="3.5"
+            stroke-linecap="round"
+          />
+          <path
+            d="M0 84 C 36 84 44 58 78 58 C 110 58 118 74 150 74 C 186 74 192 36 226 36 C 258 36 266 52 320 46 L 320 110 L 0 110 Z"
+            fill="url(#artgrad)"
+            opacity="0.16"
+          />
+          <defs>
+            <linearGradient id="artgrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7652f2" />
+              <stop offset="1" stop-color="#7652f2" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="upbadge">
+        <strong>99.99%</strong>
+        <small>Uptime SLA</small>
+      </div>
+      <Image src={cloud} alt="" width={90} height={70} class="art-cloud c2" />
+    </div>
+  )
+}
+
+<style>
+  .art {
+    position: relative;
+    border-radius: var(--radius-panel);
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 44px 36px;
+    overflow: visible;
+  }
+  .art-lav {
+    background: var(--pastel-lavender);
+  }
+  .art-sky {
+    background: var(--pastel-sky);
+  }
+
+  /* shared floaters */
+  .art-cloud {
+    position: absolute;
+    width: 86px;
+    height: auto;
+    top: 26px;
+    left: 32px;
+  }
+  .art-cloud.c2 {
+    width: 64px;
+    left: auto;
+    right: 30px;
+    top: 22px;
+  }
+
+  /* ---- datacenter: rack + speed card ---- */
+  .rack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: min(320px, 80%);
+  }
+  .srv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .dots {
+    display: flex;
+    gap: 7px;
+  }
+  .d {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--line-strong);
+    display: inline-block;
+  }
+  .d-on {
+    background: #22c55e;
+  }
+  .vents {
+    display: flex;
+    gap: 5px;
+  }
+  .vents i {
+    width: 4px;
+    height: 22px;
+    border-radius: 2px;
+    background: var(--bg-tint-strong);
+  }
+  .speedcard {
+    position: absolute;
+    right: 26px;
+    bottom: 30px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 18px 14px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .speedcard strong {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--rc-ink);
+  }
+  .speedcard small {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    height: 40px;
+  }
+  .bars i {
+    width: 9px;
+    border-radius: 3px 3px 0 0;
+    background: linear-gradient(180deg, #00a7f5, #7652f2);
+  }
+
+  /* ---- support: mascot + chat ---- */
+  .art-mascot {
+    width: 180px;
+    height: auto;
+    filter: drop-shadow(0 22px 28px rgba(34, 16, 95, 0.2));
+    margin-top: 24px;
+  }
+  .bubble {
+    position: absolute;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px 16px 16px 4px;
+    padding: 13px 17px;
+    font-size: 13.5px;
+    color: var(--rc-ink);
+    box-shadow: var(--shadow-md);
+    max-width: 220px;
+    line-height: 1.5;
+  }
+  .bubble .who {
+    display: block;
+    margin-top: 5px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--rc-blue);
+  }
+  .b1 {
+    top: 44px;
+    left: 28px;
+  }
+  .b2 {
+    top: 130px;
+    right: 40px;
+    border-radius: 16px 16px 4px 16px;
+  }
+  .typing {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    height: 12px;
+  }
+  .typing i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--rc-violet);
+    opacity: 0.4;
+  }
+  .online {
+    position: absolute;
+    bottom: 28px;
+    left: 34px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-family: var(--font-heading);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--rc-ink);
+    box-shadow: var(--shadow-sm);
+  }
+  .online i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+  }
+
+  /* ---- working: browser + uptime ---- */
+  .browser {
+    width: min(380px, 88%);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+  .bbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+    background: #fbfaff;
+  }
+  .bbar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--line-strong);
+  }
+  .bbar i:first-child {
+    background: var(--rc-coral);
+  }
+  .bbar i:nth-child(2) {
+    background: var(--rc-yellow);
+  }
+  .bbar i:nth-child(3) {
+    background: #22c55e;
+  }
+  .bbar .url {
+    margin-left: 10px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    background: var(--bg-tint);
+    border-radius: 6px;
+    padding: 3px 12px;
+  }
+  .pulse {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 10px 0 0;
+  }
+  .upbadge {
+    position: absolute;
+    right: 30px;
+    bottom: 34px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 18px;
+    box-shadow: var(--shadow-md);
+    text-align: left;
+  }
+  .upbadge strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--rc-ink);
+  }
+  .upbadge small {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ---- motion ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    .art-cloud {
+      animation: artFloat 7s ease-in-out infinite;
+    }
+    .art-cloud.c2 {
+      animation-duration: 8.5s;
+      animation-delay: 1s;
+    }
+    .art-mascot {
+      animation: artFloat 6s ease-in-out infinite;
+    }
+    .speedcard,
+    .upbadge {
+      animation: artFloat 7.5s ease-in-out infinite 0.6s;
+    }
+    .d-on {
+      animation: artBlink 2.2s ease-in-out infinite;
+    }
+    .d-on.d2 {
+      animation-delay: 0.7s;
+    }
+    .typing i {
+      animation: artType 1.2s ease-in-out infinite;
+    }
+    .typing i:nth-child(2) {
+      animation-delay: 0.18s;
+    }
+    .typing i:nth-child(3) {
+      animation-delay: 0.36s;
+    }
+    .pulse-line {
+      stroke-dasharray: 520;
+      stroke-dashoffset: 520;
+      animation: artDraw 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+  }
+  @keyframes artFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-9px);
+    }
+  }
+  @keyframes artBlink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  @keyframes artType {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+  @keyframes artDraw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .art {
+      min-height: 320px;
+      padding: 36px 22px;
+    }
+    .b1 {
+      left: 14px;
+      max-width: 180px;
+    }
+    .b2 {
+      right: 16px;
+    }
+    .speedcard {
+      right: 14px;
+      bottom: 18px;
+    }
+    .upbadge {
+      right: 16px;
+      bottom: 20px;
+    }
+  }
+</style>

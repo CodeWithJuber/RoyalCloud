@@ -4,6 +4,14 @@ import { Icon } from "astro-icon/components";
 import { marked } from "marked";
 import { tablerIcon } from "~/utils/plans";
 import { resolveSectionImage } from "~/utils/sectionImages";
+import SectionArt from "./SectionArt.astro";
+
+// Bundled photo keywords now render hand-built brand illustrations
+// instead of the old stock photos.
+const ART_KINDS = ["datacenter", "support", "working", "hero"] as const;
+type ArtKind = (typeof ART_KINDS)[number];
+const artKind = (ref?: string): ArtKind | undefined =>
+  ART_KINDS.includes(ref as ArtKind) ? (ref as ArtKind) : undefined;
 
 interface Props {
   eyebrow?: string;
@@ -23,12 +31,22 @@ const {
   body,
   items,
 } = Astro.props;
-const img = resolveSectionImage(image);
+const art = artKind(image);
+const img = art ? undefined : resolveSectionImage(image);
 const html = body ? await marked.parse(body) : undefined;
 ---
 
 <section class="cv-auto">
   <div class={`wrap split ${reverse ? "rev" : ""}`}>
+    {
+      art && (
+        <div
+          class={`split-media illus reveal ${reverse ? "rv-right" : "rv-left"}`}
+        >
+          <SectionArt kind={art} />
+        </div>
+      )
+    }
     {
       img && (
         <div class={`split-media reveal ${reverse ? "rv-right" : "rv-left"}`}>

@@ -1097,8 +1097,22 @@ h2 em {
   gap: 24px;
 }
 .testi {
+  position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+.testi::after {
+  content: "\201C";
+  position: absolute;
+  top: -26px;
+  right: 10px;
+  font-family: var(--font-heading);
+  font-size: 130px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--bg-tint-strong);
+  pointer-events: none;
 }
 .testi .stars {
   display: inline-flex;
@@ -1126,8 +1140,8 @@ h2 em {
   height: 44px;
   border-radius: 50%;
   flex: none;
-  background: var(--bg-tint-strong);
-  color: var(--rc-violet);
+  background: linear-gradient(150deg, #6c2bd9, #00a7f5);
+  color: #fff;
   display: grid;
   place-items: center;
   font-family: var(--font-heading);
@@ -1334,12 +1348,53 @@ h2 em {
   font-weight: 600;
 }
 
-/* ---------- Tech logos ---------- */
+/* ---------- Tech logos (marquee strip) ---------- */
 .techlogos {
   background: var(--bg-page);
 }
 .techlogos .sec-head {
   margin-bottom: 44px;
+}
+.marquee {
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 64px;
+  padding-right: 64px;
+  align-items: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  body[data-motion="on"] .marquee-track {
+    animation: rc-marquee 28s linear infinite;
+  }
+  body[data-motion="on"] .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+@keyframes rc-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 .partner-row {
   display: flex;
@@ -1465,7 +1520,8 @@ h2 em {
 
 /* ---------- Footer (SiteGround-clean, fully responsive) ---------- */
 .site-footer {
-  background: var(--rc-ink-deep);
+  /* original royalclouds.net footer navy */
+  background: #0d1a30;
   color: rgba(255, 255, 255, 0.62);
   padding: 0;
 }

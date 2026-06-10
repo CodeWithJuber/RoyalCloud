@@ -32,14 +32,24 @@ const {
       {title && <h2 set:html={title} />}
       {subtitle && <p set:html={subtitle} />}
     </div>
-    <div class="partner-row reveal reveal-d1">
-      {
-        logos.map((l) => (
-          <span class="mark" title={l}>
-            <Icon name={`logos:${l}`} />
-          </span>
-        ))
-      }
+    <div class="marquee reveal reveal-d1">
+      <div class="marquee-track">
+        {
+          [0, 1].map((dup) => (
+            <div
+              class="partner-row"
+              style="flex-wrap: nowrap;"
+              aria-hidden={dup === 1 ? "true" : undefined}
+            >
+              {logos.map((l) => (
+                <span class="mark" title={l}>
+                  <Icon name={`logos:${l}`} />
+                </span>
+              ))}
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>

@@ -5,12 +5,96 @@ import logoWhite from "~/assets/images/brand/logo-white.png";
 import { footerData } from "~/navigation";
 import site from "~/data/site.json";
 
+/**
+ * Royal Clouds footer, modeled on the original royalclouds.net:
+ * help cards (live chat / email / ticket), a newsletter strip with the
+ * coral Subscribe pill, navy column grid, and payment marks in the
+ * bottom bar.
+ */
 const year = new Date().getFullYear();
 const external = (href: string) => /^https?:\/\//.test(href);
 const { links: columns, secondaryLinks, socialLinks } = footerData;
+
+const helpCards = [
+  {
+    icon: "tabler:message-circle",
+    title: "Live Chat",
+    text: "We're always available to chat — instant replies, real humans.",
+    cta: "Start chatting",
+    href: "/contact",
+  },
+  {
+    icon: "tabler:mail",
+    title: "Send Email",
+    text: "Write to us 24/7 and we'll get back to you right away.",
+    cta: "Email support",
+    href: `mailto:${site.contact.email}`,
+  },
+  {
+    icon: "tabler:ticket",
+    title: "Submit Ticket",
+    text: "Open a ticket any time and track it through to resolution.",
+    cta: "Open a ticket",
+    href: site.portal.submitTicket,
+  },
+];
+
+const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
 ---
 
 <footer class="site-footer">
+  <!-- "Need help?" strip (original royalclouds.net section) -->
+  <div class="f-help-sec">
+    <div class="wrap">
+      <p class="f-help-lead">
+        Need help? Chat with our <em>friendly support team</em> — 24/7 live chat,
+        email or a ticket.
+      </p>
+      <div class="f-help-grid">
+        {
+          helpCards.map((c) => (
+            <a
+              class="f-help-card"
+              href={c.href}
+              {...(external(c.href)
+                ? { target: "_blank", rel: "noopener" }
+                : {})}
+            >
+              <span class="f-help-ic">
+                <Icon name={c.icon} />
+              </span>
+              <span>
+                <strong>{c.title}</strong>
+                <small>{c.text}</small>
+                <em>{c.cta} →</em>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter (original royalclouds.net strip) -->
+  <div class="f-news">
+    <div class="wrap f-news-row">
+      <div class="f-news-copy">
+        <h4>Join our newsletter</h4>
+        <p>Better offers, product news and updates from Royal Clouds.</p>
+      </div>
+      <form class="f-news-form" data-newsletter>
+        <input
+          type="email"
+          name="email"
+          placeholder="Your email address"
+          aria-label="Email address"
+          required
+        />
+        <button class="btn btn-coral" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -59,14 +143,159 @@ const { links: columns, secondaryLinks, socialLinks } = footerData;
       <div class="footer-legal">
         {secondaryLinks.map((l) => <a href={l.href}>{l.text}</a>)}
       </div>
-      <div class="footer-badges">
-        {site.trustBadges.slice(0, 3).map((b) => <span>{b}</span>)}
+      <div class="f-pay" aria-label="Accepted payment methods">
+        {payments.map((p) => <span class="f-pay-chip">{p}</span>)}
       </div>
     </div>
   </div>
 </footer>
 
 <style>
+  /* ---- help strip ---- */
+  .f-help-sec {
+    background: var(--bg-tint);
+    border-top: 1px solid var(--line);
+    padding: 56px 0;
+  }
+  .f-help-lead {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: clamp(17px, 2.2vw, 21px);
+    font-weight: 700;
+    color: var(--rc-plum);
+    margin: 0 0 30px;
+  }
+  .f-help-lead em {
+    font-style: normal;
+    color: var(--rc-blue);
+  }
+  .f-help-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .f-help-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 22px 20px;
+    box-shadow: var(--shadow-xs);
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .f-help-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--line-strong);
+  }
+  .f-help-ic {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #ffe9ed;
+    color: var(--rc-coral);
+    display: grid;
+    place-items: center;
+  }
+  .f-help-ic :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+  .f-help-card strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--rc-ink);
+  }
+  .f-help-card small {
+    display: block;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin: 4px 0 8px;
+  }
+  .f-help-card em {
+    font-style: normal;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--rc-coral);
+  }
+  .f-help-card:hover em {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ---- newsletter strip ---- */
+  .f-news {
+    background: var(--rc-grad-vivid);
+    padding: 40px 0;
+  }
+  .f-news-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 40px;
+    flex-wrap: wrap;
+  }
+  .f-news-copy h4 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+  .f-news-copy p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14.5px;
+    margin: 0;
+  }
+  .f-news-form {
+    display: flex;
+    gap: 0;
+    background: #fff;
+    border-radius: 999px;
+    padding: 6px 6px 6px 22px;
+    flex: 1;
+    max-width: 460px;
+    min-width: 280px;
+    box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.2s ease;
+  }
+  .f-news-form:focus-within {
+    box-shadow:
+      0 0 0 4px rgba(253, 215, 0, 0.35),
+      0 18px 40px -16px rgba(0, 0, 0, 0.4);
+  }
+  .f-news-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--rc-ink);
+    min-width: 0;
+  }
+  .f-news-form input::placeholder {
+    color: var(--text-muted);
+  }
+  .f-news-form .btn {
+    padding: 12px 26px;
+    font-size: 12.5px;
+  }
+
+  /* ---- columns / bottom (layout in rc-premium.css) ---- */
   .footer-social {
     display: flex;
     gap: 10px;
@@ -87,9 +316,9 @@ const { links: columns, secondaryLinks, socialLinks } = footerData;
       transform 0.16s ease;
   }
   .footer-social a:hover {
-    color: #fff;
-    border-color: var(--rc-violet);
-    background: var(--rc-violet);
+    color: var(--rc-ink);
+    border-color: var(--rc-yellow);
+    background: var(--rc-yellow);
     transform: translateY(-2px);
   }
   .footer-social :global(svg) {
@@ -108,12 +337,66 @@ const { links: columns, secondaryLinks, socialLinks } = footerData;
   .footer-legal a:hover {
     color: var(--rc-yellow);
   }
+  .f-pay {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .f-pay-chip {
+    font-family: var(--font-heading);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 7px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+  @media (max-width: 860px) {
+    .f-help-grid {
+      grid-template-columns: 1fr;
+      max-width: 460px;
+    }
+    .f-news-row {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+    }
+    .f-news-form {
+      max-width: none;
+    }
+  }
   @media (max-width: 560px) {
     .footer-social {
       justify-content: center;
     }
-    .footer-legal {
+    .footer-legal,
+    .f-pay {
       justify-content: center;
     }
   }
 </style>
+
+<script>
+  /** Newsletter has no backend on the static site: hand the address to the
+      sales inbox via the visitor's mail client. */
+  function rcNewsInit() {
+    document
+      .querySelectorAll<HTMLFormElement>("[data-newsletter]")
+      .forEach((form) => {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const email =
+            (form.querySelector("input[name=email]") as HTMLInputElement)
+              ?.value ?? "";
+          window.location.href = `mailto:sales@royalclouds.net?subject=${encodeURIComponent(
+            "Newsletter signup",
+          )}&body=${encodeURIComponent(`Please add ${email} to the Royal Clouds newsletter.`)}`;
+        });
+      });
+  }
+  rcNewsInit();
+  document.addEventListener("astro:after-swap", rcNewsInit);
+</script>
