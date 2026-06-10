@@ -41,17 +41,19 @@ const overlayHeader =
   (first?.type === "hero" &&
     (first.variant === "gradient" || first.variant === "product"));
 
+// Public URLs are extensionless (build.format: 'file' serves /slug and /).
+// Derive the canonical from the entry id, not Astro.url.pathname (which
+// includes the trailing ".html" during a static build).
+const cleanPath = entry.id === "index" ? "/" : `/${entry.id}`;
+const pageUrl = new URL(cleanPath, site.url).href;
+
 const meta = {
   title: metadata.title || title,
   description: metadata.description,
   ignoreTitleTemplate: metadata.ignoreTitleTemplate,
-  ...(metadata.canonical
-    ? { canonical: new URL(metadata.canonical, site.url).href }
-    : {}),
+  canonical: metadata.canonical ? new URL(metadata.canonical, site.url).href : pageUrl,
   ...(metadata.noindex ? { robots: { index: false, follow: true } } : {}),
 };
-
-const pageUrl = new URL(Astro.url.pathname, site.url).href;
 ---
 
 <PageLayout metadata={meta} transparentHeader={overlayHeader}>
