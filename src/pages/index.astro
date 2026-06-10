@@ -11,8 +11,14 @@ import cloudServer from '~/assets/images/brand/cloud-server.png';
 import mascot from '~/assets/images/brand/mascot.png';
 import shapeFive from '~/assets/images/brand/shape-five.png';
 import shapeSeven from '~/assets/images/brand/shape-seven.png';
-import photoDatacenter from '~/assets/images/photos/datacenter.jpg';
-import photoSupport from '~/assets/images/photos/support.jpg';
+import shapeOne from '~/assets/images/brand/shape-one.png';
+import rocketBg from '~/assets/images/brand/rocket-bg.svg';
+import icWordpress from '~/assets/images/brand/ic-wordpress.svg';
+import icBandwidth from '~/assets/images/brand/ic-bandwidth.svg';
+import icDatabase from '~/assets/images/brand/ic-database.svg';
+import icDatacenter from '~/assets/images/brand/ic-data-center.svg';
+import icCloudSvg from '~/assets/images/brand/cloud.svg';
+import icDevelopment from '~/assets/images/brand/ic-development.svg';
 
 import shared from '~/data/plans/shared.json';
 import testimonialsData from '~/data/testimonials.json';
@@ -22,12 +28,12 @@ const PORTAL = 'https://my.royalclouds.net';
 const initialsOf = (name: string) => name.split(' ').map((w) => w[0]).slice(0, 2).join('');
 
 const features = [
-  { icon: 'tabler:apps', title: 'Softaculous 1-Click Installer', text: 'Install WordPress, Joomla, Drupal and 400+ apps in seconds, with automatic updates.' },
-  { icon: 'tabler:bolt', title: 'Super-Fast Performance', text: 'Pure SSD RAID-10 storage, LiteSpeed, CloudLinux and the Cloudflare CDN make sites up to 15× faster.' },
-  { icon: 'tabler:shield-lock', title: 'Free SSL & Daily Backups', text: 'Every site is encrypted with a free auto-renewing SSL and backed up daily — restore in one click.' },
-  { icon: 'tabler:wall', title: 'DDoS Protection', text: 'A DDoS-protected network and hardened firewall keep your sites online under attack.' },
-  { icon: 'tabler:activity-heartbeat', title: '99.99% Uptime SLA', text: 'KernelCare live patching, redundant power and network underpin our uptime guarantee.' },
-  { icon: 'tabler:headset', title: 'Friendly 24/7 Support', text: 'Real hosting specialists on live chat, email and tickets, around the clock, 365 days a year.' },
+  { icon: icWordpress, title: 'Softaculous 1-Click Installer', text: 'Install WordPress, Joomla, Drupal and 400+ apps in seconds, with automatic updates.' },
+  { icon: icBandwidth, title: 'Super-Fast Performance', text: 'Pure SSD RAID-10 storage, LiteSpeed, CloudLinux and the Cloudflare CDN make sites up to 15× faster.' },
+  { icon: icDatabase, title: 'Free SSL & Daily Backups', text: 'Every site is encrypted with a free auto-renewing SSL and backed up daily — restore in one click.' },
+  { icon: icDatacenter, title: 'DDoS Protection', text: 'A DDoS-protected network and hardened firewall keep your sites online under attack.' },
+  { icon: icCloudSvg, title: '99.99% Uptime SLA', text: 'KernelCare live patching, redundant power and network underpin our uptime guarantee.' },
+  { icon: icDevelopment, title: 'Friendly 24/7 Support', text: 'Real hosting specialists on live chat, email and tickets, around the clock, 365 days a year.' },
 ];
 
 const partners = [
@@ -120,7 +126,7 @@ const metadata = {
       <div class="feature-grid">
         {features.map((f) => (
           <div class="card feature-card reveal">
-            <div class="f-icon f-icon-grad"><Icon name={f.icon} /></div>
+            <div class="f-icon"><Image src={f.icon} alt="" width={40} height={40} /></div>
             <h3>{f.title}</h3>
             <p>{f.text}</p>
           </div>
@@ -132,8 +138,10 @@ const metadata = {
   <!-- ============ SPEED ============ -->
   <section class="speed" id="speed" style="background: var(--bg-tint);">
     <div class="wrap split rev">
-      <div class="split-media reveal">
-        <Image src={photoDatacenter} alt="Royal Clouds data centre infrastructure" widths={[480, 800]} sizes="(max-width: 860px) 90vw, 560px" />
+      <div class="split-media illus reveal">
+        <div class="illus-panel">
+          <Image src={rocketBg} alt="High-speed hosting illustration" width={460} height={345} />
+        </div>
         <div class="badge-float"><span class="big">15×</span><span class="small">faster than standard<br />HDD hosting</span></div>
       </div>
       <div class="split-body reveal">
@@ -142,15 +150,15 @@ const metadata = {
         <p>Faster pages mean happier visitors, better SEO and more sales.</p>
         <div class="point-list">
           <div class="point">
-            <div class="p-ic f-icon-grad"><Icon name="tabler:database-star" /></div>
+            <div class="p-ic"><Image src={icBandwidth} alt="" width={28} height={28} /></div>
             <div><h4>Pure SSD RAID-10 + LiteSpeed</h4><p>Up to 15× faster than standard HDD hosting, with LSCache serving pages in milliseconds.</p></div>
           </div>
           <div class="point">
-            <div class="p-ic f-icon-grad"><Icon name="tabler:world-bolt" /></div>
+            <div class="p-ic"><Image src={icCloudSvg} alt="" width={28} height={28} /></div>
             <div><h4>Cloudflare CDN &amp; HTTP/3</h4><p>Your content is cached at edge locations worldwide for fast loads anywhere.</p></div>
           </div>
           <div class="point">
-            <div class="p-ic f-icon-grad"><Icon name="tabler:shield-half-filled" /></div>
+            <div class="p-ic"><Image src={icDatacenter} alt="" width={28} height={28} /></div>
             <div><h4>CloudLinux isolation</h4><p>Every account is isolated for consistent performance, even under heavy neighbour load.</p></div>
           </div>
         </div>
@@ -183,8 +191,10 @@ const metadata = {
           </div>
         </div>
       </div>
-      <div class="split-media reveal">
-        <Image src={photoSupport} alt="Royal Clouds support team" widths={[480, 800]} sizes="(max-width: 860px) 90vw, 560px" />
+      <div class="split-media illus reveal">
+        <div class="illus-panel illus-grad">
+          <Image src={shapeOne} alt="Royal Clouds cloud platform illustration" width={470} height={277} />
+        </div>
         <div class="badge-float"><span class="big">24/7</span><span class="small">friendly support,<br />365 days a year</span></div>
       </div>
     </div>
