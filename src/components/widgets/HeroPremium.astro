@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets';
+import heroPhoto from '~/assets/images/photos/hero.jpg';
+
+interface Action { text: string; href: string; target?: string }
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  checklist?: string[];
+  primary?: Action;
+  secondary?: Action;
+}
+const {
+  eyebrow = 'Premium Web Hosting',
+  title = 'Fast, secure hosting your business can rely on',
+  subtitle = 'Pure SSD RAID-10 servers with LiteSpeed and CloudLinux — free cPanel & SSL, daily backups and genuinely friendly 24/7 support, from just $1.99/mo.',
+  checklist = ['Free website migration & SSL', '99.99% uptime, monitored 24/7', '30-day money-back guarantee'],
+  primary = { text: 'Get Started', href: 'https://my.royalclouds.net/cart.php', target: '_blank' },
+  secondary = { text: 'View Plans', href: '#pricing' },
+} = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-white">
+  <!-- subtle brand accents, kept very light -->
+  <div class="pointer-events-none absolute -z-10 top-[-12rem] right-[-10rem] h-[28rem] w-[28rem] rounded-full opacity-[0.10] blur-3xl" style="background:radial-gradient(circle,#7652f2,transparent 60%)"></div>
+  <div class="pointer-events-none absolute -z-10 bottom-[-12rem] left-[-8rem] h-[24rem] w-[24rem] rounded-full opacity-[0.08] blur-3xl" style="background:radial-gradient(circle,#00a7f5,transparent 60%)"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14 md:pt-20 md:pb-20">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+      <!-- Copy -->
+      <div>
+        <span class="inline-flex items-center gap-2 rounded-full bg-[#f1ecff] text-[#5b34d6] px-3.5 py-1.5 text-sm font-semibold">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#7652f2]"></span>{eyebrow}
+        </span>
+        <h1 class="mt-5 font-extrabold tracking-tight text-4xl md:text-5xl lg:text-[3.4rem] leading-[1.08] text-[#22105f]" style="font-family:var(--aw-font-heading)" set:html={title} />
+        <p class="mt-5 text-lg text-[#4a4a68] max-w-xl" set:html={subtitle} />
+
+        <ul class="mt-6 grid gap-2.5">
+          {checklist.map((c) => (
+            <li class="flex items-start gap-2.5 text-[#3a3a55] font-medium">
+              <span class="mt-0.5 flex-none inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#e9fbf0] text-[#16a34a]">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+              {c}
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a href={primary.href} target={primary.target} class="btn-cta">{primary.text}</a>
+          <a href={secondary.href} target={secondary.target} class="btn-outline">{secondary.text}</a>
+        </div>
+
+        <div class="mt-7 flex items-center gap-3 text-sm text-[#6b6b88]">
+          <span class="inline-flex text-[#fdb022]">
+            {[0,1,2,3,4].map(() => (<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01z"/></svg>))}
+          </span>
+          <span><strong class="text-[#22105f]">4.9/5</strong> rated · trusted by thousands of websites</span>
+        </div>
+      </div>
+
+      <!-- Visual: real photo + floating cards -->
+      <div class="relative">
+        <div class="absolute -inset-3 -z-10 rounded-[2rem] bg-gradient-to-br from-[#7652f2]/12 to-[#00a7f5]/12"></div>
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5">
+          <Image src={heroPhoto} alt="A business owner managing their website on a laptop" widths={[480, 900]} sizes="(max-width: 1024px) 90vw, 540px" class="w-full h-[300px] sm:h-[400px] object-cover" loading="eager" />
+        </div>
+
+        <!-- floating price card -->
+        <div class="absolute -left-3 sm:-left-6 bottom-6 w-56 rounded-2xl bg-white shadow-xl ring-1 ring-black/5 p-4">
+          <p class="text-xs font-semibold uppercase tracking-wide text-[#7652f2]">SSD Web Hosting</p>
+          <div class="mt-1 flex items-end gap-1">
+            <span class="text-3xl font-extrabold text-[#22105f]" style="font-family:var(--aw-font-heading)">$1.99</span>
+            <span class="mb-1 text-sm text-[#6b6b88]">/mo</span>
+          </div>
+          <div class="mt-2 h-1.5 rounded-full bg-[#efeafe] overflow-hidden"><div class="h-full w-[34%] rounded-full bg-gradient-to-r from-[#7652f2] to-[#00a7f5]"></div></div>
+          <p class="mt-2 text-xs text-[#6b6b88]">Free SSL · cPanel · daily backups</p>
+        </div>
+
+        <!-- floating uptime chip -->
+        <div class="absolute -right-2 sm:-right-4 top-6 rounded-2xl bg-white shadow-xl ring-1 ring-black/5 px-4 py-3">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex w-8 h-8 items-center justify-center rounded-full bg-[#e9fbf0] text-[#16a34a]">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+            </span>
+            <div>
+              <p class="text-base font-extrabold leading-none text-[#22105f]">99.99%</p>
+              <p class="text-[11px] text-[#6b6b88]">uptime</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
