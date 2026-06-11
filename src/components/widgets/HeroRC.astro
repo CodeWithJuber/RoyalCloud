@@ -296,6 +296,11 @@ const {
     list-style: none;
     margin: 24px 0 0;
     padding: 0;
+    /* 2×2 grid: no orphan badge wrapping alone to a second row */
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: start;
+    gap: 12px 32px;
   }
   .rc-from {
     font-family: var(--font-heading);
@@ -570,6 +575,13 @@ const {
     }
     .rc-hero-art {
       height: 330px;
+    }
+    .rc-badges {
+      gap: 10px 16px;
+    }
+    .rc-badges :global(.b) {
+      font-size: 13px;
+      white-space: nowrap;
     }
     .rc-disc {
       width: 280px;
