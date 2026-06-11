@@ -53,7 +53,7 @@ const {
             <p>{item.text}</p>
             {item.href && (
               <a class="f-more" href={item.href}>
-                Learn more
+                Learn more<span class="sr-only"> about {item.title}</span>
               </a>
             )}
           </div>

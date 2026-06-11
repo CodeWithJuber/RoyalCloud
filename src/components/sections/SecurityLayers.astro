@@ -29,7 +29,7 @@ const { eyebrow, title, subtitle, layers, stats } = Astro.props;
           {
             layers.map((l) => (
               <li>
-                <h4>{l.title}</h4>
+                <h3>{l.title}</h3>
                 <p>{l.text}</p>
               </li>
             ))
@@ -113,7 +113,7 @@ const { eyebrow, title, subtitle, layers, stats } = Astro.props;
     width: 1.5px;
     background: var(--line-strong);
   }
-  .sl-list h4 {
+  .sl-list h3 {
     font-size: 16.5px;
     font-weight: 700;
     margin: 0 0 4px;
