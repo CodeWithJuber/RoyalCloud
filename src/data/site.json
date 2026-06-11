@@ -37,11 +37,6 @@
     "github": "",
     "linkedin": ""
   },
-  "liveChat": {
-    "provider": "tawk",
-    "tawkPropertyId": "",
-    "tawkWidgetId": "default"
-  },
   "trustBadges": [
     "99.99% Uptime SLA",
     "Free SSL Certificate",

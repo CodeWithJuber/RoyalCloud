@@ -71,11 +71,47 @@ code change. The Worker also adds security headers on every response.
 Add `royalclouds.net` in **Workers & Pages → royalfront → Domains**. DNS is on
 Cloudflare, so the record + TLS are issued automatically.
 
-## CMS auth
+## CMS auth (logging in to `/admin`)
 
-Decap's GitHub backend needs an OAuth handshake (GitHub OAuth app + a small
-OAuth proxy, e.g. a Cloudflare Worker), or switch `public/admin/config.yml` to
-`git-gateway`. For local editing, run `npx decap-server` with `local_backend`.
+The CMS logs in through a **GitHub OAuth proxy built into the Worker**
+(`src/worker.ts` → `/oauth/auth` + `/oauth/callback` — no third-party service).
+One-time setup:
+
+1. **Create a GitHub OAuth App** — GitHub → Settings → Developer settings →
+   OAuth Apps → *New OAuth App*:
+   - **Homepage URL:** `https://royalfront.hostlelo.workers.dev` (or the custom domain)
+   - **Authorization callback URL:** `https://royalfront.hostlelo.workers.dev/oauth/callback`
+   - Copy the **Client ID** and generate a **Client Secret**.
+2. **Give the Worker the credentials:**
+   - Client ID (public, safe to commit) → `wrangler.toml` `[vars] GITHUB_OAUTH_CLIENT_ID`
+     (or the Cloudflare dashboard).
+   - Client Secret (**never commit**) → `npx wrangler secret put GITHUB_OAUTH_CLIENT_SECRET`
+     (or dashboard → Workers → `royalfront` → Settings → Variables & Secrets).
+3. **Editors need push access** to `codewithjuber/royalfront` — the editorial
+   workflow commits / opens PRs as the logged-in user.
+
+> `base_url` in `public/admin/config.yml`, the OAuth App's callback URL, and the
+> host that serves `/admin` must all be the **same origin**. When you attach the
+> custom domain, update `base_url` and the callback URL together to
+> `https://royalclouds.net`.
+
+For local editing without GitHub, uncomment `local_backend: true` in
+`public/admin/config.yml` and run `npx decap-server` alongside `npm run dev`.
+
+## Integrations & Tracking (analytics, pixels, chat, scripts)
+
+Analytics, tag managers, search-console verification, marketing pixels, the live
+chat widget, and any custom `<head>`/`<body>` scripts are all editable from
+**`/admin` → "Integrations & Tracking"** (stored in `src/data/integrations.json`,
+rendered by `src/components/integrations/*`). Every field is optional — blank
+means nothing is injected, so the site looks/behaves identically out of the box.
+Saving in the CMS commits the JSON and triggers a rebuild; **no code deploy
+needed**.
+
+Supported out of the box: Google Analytics 4, Google Tag Manager, Google/Bing
+site verification, Facebook/Meta Pixel, Tawk.to live chat (or a custom chat
+embed), plus free-form `<head>`/`<body>` code for anything else. Custom code
+runs verbatim, so only paste snippets you trust.
 
 ## Visual QA
 

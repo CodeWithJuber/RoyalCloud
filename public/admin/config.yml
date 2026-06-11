@@ -10,6 +10,14 @@ backend:
   name: github
   repo: codewithjuber/royalfront
   branch: main
+  # Login uses the GitHub OAuth proxy built into the Cloudflare Worker
+  # (src/worker.ts → /oauth/auth + /oauth/callback). base_url MUST be the same
+  # origin that serves /admin. When the custom domain is attached, update
+  # base_url here AND the GitHub OAuth App's callback URL together
+  # (to https://royalclouds.net).
+  base_url: https://royalfront.hostlelo.workers.dev
+  auth_endpoint: /oauth/auth
+  auth_scope: repo
   commit_messages:
     create: "content: create {{collection}} “{{slug}}”"
     update: "content: update {{collection}} “{{slug}}”"
@@ -136,7 +144,7 @@ definitions:
             - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
             - { name: title, label: "Heading", widget: string, required: false }
             - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: image, label: "Image (keyword: hero/datacenter/support/working — or upload)", widget: string, required: false }
+            - { name: image, label: "Image", widget: image, required: false, choose_url: true, hint: "Upload/pick an image — or type a bundled keyword (hero, datacenter, support, working, mascot) via 'Insert from URL'." }
             - { name: reverse, label: "Image on right", widget: boolean, default: false }
             - { name: body, label: "Body (Markdown)", widget: markdown, required: false }
             - name: items
@@ -445,9 +453,9 @@ collections:
           - { name: description, label: "Default Meta Description", widget: text }
           - { name: shortDescription, label: "Short Description", widget: text }
           - { name: url, label: "Site URL", widget: string }
-          - { name: logo, label: "Logo path", widget: string, required: false }
-          - { name: logoWhite, label: "Logo (white) path", widget: string, required: false }
-          - { name: ogImage, label: "Default OG Image", widget: string, required: false }
+          - { name: logo, label: "Logo", widget: image, required: false, choose_url: true, hint: "Upload/pick a logo, or paste a /path." }
+          - { name: logoWhite, label: "Logo (white)", widget: image, required: false, choose_url: true, hint: "White logo for dark backgrounds." }
+          - { name: ogImage, label: "Default OG Image", widget: image, required: false, choose_url: true, hint: "Default social-share image (1200×628)." }
           - { name: startingPrice, label: "Starting Price", widget: string }
           - { name: rating, label: "Rating", widget: string, required: false }
           - { name: ratingMax, label: "Rating Max", widget: string, required: false }
@@ -482,14 +490,46 @@ collections:
               - { name: instagram, label: "Instagram", widget: string, required: false }
               - { name: github, label: "GitHub", widget: string, required: false }
               - { name: linkedin, label: "LinkedIn", widget: string, required: false }
-          - name: liveChat
+          - { name: trustBadges, label: "Trust Badges", widget: list }
+
+  # ---------------- Integrations & Tracking ----------------
+  # Analytics, tag managers, verification, pixels, live chat, and arbitrary
+  # head/body scripts — all editable here, rendered by src/components/integrations/*.
+  # Every field is optional; blank = nothing injected (site stays unchanged).
+  - name: integrations
+    label: "Integrations & Tracking"
+    files:
+      - name: integrations
+        label: "Analytics, Pixels, Chat & Custom Code"
+        file: "src/data/integrations.json"
+        fields:
+          - name: analytics
+            label: "Analytics"
+            widget: object
+            fields:
+              - { name: ga4Id, label: "Google Analytics 4 ID", widget: string, required: false, hint: "Format G-XXXXXXX. Leave blank to disable." }
+              - { name: gtmId, label: "Google Tag Manager ID", widget: string, required: false, hint: "Format GTM-XXXXXXX. Leave blank to disable." }
+          - name: verification
+            label: "Search Console Verification"
+            widget: object
+            fields:
+              - { name: google, label: "Google site-verification token", widget: string, required: false, hint: "The content value of the google-site-verification meta tag (token only)." }
+              - { name: bing, label: "Bing (msvalidate.01) token", widget: string, required: false }
+          - name: pixels
+            label: "Marketing Pixels"
+            widget: object
+            fields:
+              - { name: facebookPixelId, label: "Facebook / Meta Pixel ID", widget: string, required: false }
+          - name: chat
             label: "Live Chat"
             widget: object
             fields:
-              - { name: provider, label: "Provider", widget: string, default: "tawk" }
-              - { name: tawkPropertyId, label: "Tawk.to Property ID", widget: string, required: false }
-              - { name: tawkWidgetId, label: "Tawk.to Widget ID", widget: string, default: "default" }
-          - { name: trustBadges, label: "Trust Badges", widget: list }
+              - { name: provider, label: "Provider", widget: select, options: ["none", "tawk", "custom"], default: "none" }
+              - { name: tawkPropertyId, label: "Tawk.to Property ID", widget: string, required: false, hint: "Used only when Provider = tawk." }
+              - { name: tawkWidgetId, label: "Tawk.to Widget ID", widget: string, default: "default", required: false }
+              - { name: customEmbed, label: "Custom chat embed (raw HTML/JS)", widget: code, required: false, default_language: html, allow_language_selection: false, hint: "Used only when Provider = custom. Paste the full snippet (Crisp, WhatsApp, Intercom, …)." }
+          - { name: customHeadHtml, label: "Custom <head> code (raw HTML/JS)", widget: code, required: false, default_language: html, allow_language_selection: false, hint: "Injected into <head> on every page. Runs verbatim — paste only trusted code." }
+          - { name: customBodyHtml, label: "Custom end-of-<body> code (raw HTML/JS)", widget: code, required: false, default_language: html, allow_language_selection: false, hint: "Injected just before </body> on every page. Runs verbatim — paste only trusted code." }
 
   # ---------------- Testimonials ----------------
   - name: testimonials
