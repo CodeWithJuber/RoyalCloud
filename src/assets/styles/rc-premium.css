@@ -899,6 +899,16 @@ h2 em {
     0 34px 90px -36px color-mix(in srgb, var(--theme-accent) 55%, transparent);
   padding-top: 66px;
 }
+/* the BEST VALUE band pokes above the row instead of pushing the
+   card's price/button/features 38px out of line with its neighbours */
+@media (min-width: 701px) {
+  .plan-grid {
+    margin-top: 38px;
+  }
+  .plan.popular {
+    margin-top: -38px;
+  }
+}
 .plan h3 a:hover {
   color: var(--rc-violet);
 }
@@ -919,6 +929,7 @@ h2 em {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
+  line-height: 1.5;
   text-transform: uppercase;
   padding: 10px 12px;
   z-index: 1;
