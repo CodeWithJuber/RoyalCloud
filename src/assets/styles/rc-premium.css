@@ -1448,6 +1448,11 @@ h2 em {
 .final-cta {
   padding-block: 0 clamp(44px, 5vw, 72px);
 }
+/* when the CTA panel follows the gradient stats band, the two colored
+   surfaces need breathing room between them */
+.stats ~ .final-cta {
+  padding-top: clamp(36px, 4.5vw, 56px);
+}
 .cta-band {
   position: relative;
   overflow: hidden;
