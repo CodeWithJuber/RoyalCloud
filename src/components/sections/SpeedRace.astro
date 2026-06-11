@@ -1,0 +1,332 @@
+---
+/**
+ * Speed race — interactive proof. Each host is a racer on a track;
+ * lane travel time is proportional to its real load time, so Royal
+ * Clouds' rocket visibly smokes the competition. Auto-runs on reveal,
+ * replayable via the "Race again" button.
+ */
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  note?: string;
+  items: { label: string; value: number; display: string; highlight?: boolean }[];
+}
+const { eyebrow, title, subtitle, note, items } = Astro.props;
+// 1 second of real load time = 1.1s of animation
+const SCALE = 1.1;
+const winDur = (
+  (items.find((i) => i.highlight)?.value ?? 1) * SCALE
+).toFixed(2);
+---
+
+<section class="race-sec">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="sec-head center reveal">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="race reveal" data-race style={`--windur: ${winDur}s`}>
+      <div class="race-track">
+        {
+          items.map((r) => (
+            <div
+              class={`lane ${r.highlight ? "hl" : ""}`}
+              style={`--dur: ${(r.value * SCALE).toFixed(2)}s`}
+            >
+              <span class="lane-label">{r.label}</span>
+              <div class="lane-road">
+                <span class="racer" aria-hidden="true">
+                  {r.highlight ? (
+                    <svg viewBox="0 0 64 84" fill="none">
+                      <path
+                        d="M32 4c10 8 14 20 14 32 0 8-2 15-5 21H23c-3-6-5-13-5-21C18 24 22 12 32 4Z"
+                        fill="url(#race-rkt)"
+                      />
+                      <circle
+                        cx="32"
+                        cy="30"
+                        r="7"
+                        fill="#fff"
+                        stroke="var(--rc-ink)"
+                        stroke-width="2.5"
+                      />
+                      <path d="M18 44 8 58l12-2" fill="var(--theme-art-b, #fb3e58)" />
+                      <path d="M46 44l10 14-12-2" fill="var(--theme-art-b, #fb3e58)" />
+                      <path
+                        d="M27 60c0 6 2 11 5 16 3-5 5-10 5-16h-10Z"
+                        fill="var(--rc-yellow)"
+                      />
+                      <defs>
+                        <linearGradient id="race-rkt" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0" stop-color="var(--theme-art-a, #7652f2)" />
+                          <stop offset="1" stop-color="var(--theme-art-b, #00a7f5)" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  ) : (
+                    <i class="slow-dot" />
+                  )}
+                </span>
+                <b class="lane-time">{r.display}</b>
+              </div>
+            </div>
+          ))
+        }
+        <span class="finish" aria-hidden="true"></span>
+      </div>
+      <div class="race-foot">
+        <span class="race-win" data-race-win>
+          🏆 {items.find((i) => i.highlight)?.display} — {
+            items.find((i) => i.highlight)?.label
+          }
+        </span>
+        <button type="button" class="btn btn-ghost-dark race-again" data-race-again>
+          Race again
+        </button>
+      </div>
+      {note && <p class="race-note">{note}</p>}
+    </div>
+  </div>
+</section>
+
+<script>
+  function rcRaceInit() {
+    document.querySelectorAll<HTMLElement>("[data-race]").forEach((race) => {
+      const run = () => {
+        race.classList.remove("go");
+        // restart CSS animations
+        void race.offsetWidth;
+        race.classList.add("go");
+      };
+      race
+        .querySelector("[data-race-again]")
+        ?.addEventListener("click", run);
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        race.classList.add("go", "instant");
+        return;
+      }
+      if (typeof IntersectionObserver === "undefined") {
+        run();
+        return;
+      }
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              run();
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.45 },
+      );
+      io.observe(race);
+    });
+  }
+  rcRaceInit();
+  document.addEventListener("astro:after-swap", rcRaceInit);
+</script>
+
+<style>
+  .race-sec {
+    background: var(--bg-tint);
+  }
+  .race {
+    max-width: 880px;
+    margin-inline: auto;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-sm);
+    padding: clamp(24px, 4vw, 40px);
+  }
+  .race-track {
+    position: relative;
+    padding-right: 76px;
+  }
+  .finish {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    right: 58px;
+    width: 10px;
+    background:
+      repeating-conic-gradient(var(--rc-ink) 0% 25%, #fff 0% 50%) 0 0 / 10px
+      10px;
+    border-radius: 3px;
+    opacity: 0.85;
+  }
+  .lane + .lane {
+    border-top: 1px dashed var(--line);
+  }
+  .lane {
+    padding: 14px 0 16px;
+  }
+  .lane-label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .lane.hl .lane-label {
+    color: var(--rc-ink);
+  }
+  .lane-road {
+    position: relative;
+    height: 40px;
+  }
+  .lane-road::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: var(--bg-tint-strong);
+    border-radius: 2px;
+  }
+  .racer {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    translate: 0 -50%;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+  }
+  .racer svg {
+    width: 30px;
+    height: auto;
+    rotate: 90deg;
+    filter: drop-shadow(0 6px 10px rgba(34, 16, 95, 0.25));
+  }
+  .slow-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--line-strong);
+    border: 3px solid #fff;
+    box-shadow: var(--shadow-xs);
+  }
+  .lane-time {
+    position: absolute;
+    right: -68px;
+    top: 50%;
+    translate: 0 -50%;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-muted);
+    opacity: 0;
+  }
+  .lane.hl .lane-time {
+    color: var(--theme-accent);
+    font-size: 17px;
+  }
+  .race-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .race-win {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--rc-ink);
+    opacity: 0;
+    scale: 0.8;
+  }
+  .race-again {
+    padding: 11px 22px;
+    font-size: 12px;
+  }
+  .race-note {
+    margin: 16px 4px 0;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  /* ---- the race itself ---- */
+  .race.go .racer {
+    animation: raceRun var(--dur) cubic-bezier(0.45, 0.05, 0.55, 0.95)
+      0.3s forwards;
+  }
+  .race.go .lane-time {
+    animation: raceTime 0.4s ease calc(var(--dur) + 0.3s) forwards;
+  }
+  .race.go .race-win {
+    animation: raceWin 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)
+      calc(var(--windur, 1s) + 0.45s) forwards;
+  }
+  .race.go .lane.hl .racer {
+    animation:
+      raceRun var(--dur) cubic-bezier(0.45, 0.05, 0.55, 0.95) 0.3s forwards,
+      raceShake 0.16s linear 0.3s 7;
+  }
+  .race.instant .racer {
+    animation-duration: 0.01s !important;
+    animation-delay: 0s !important;
+  }
+  .race.instant .lane-time,
+  .race.instant .race-win {
+    animation-duration: 0.01s !important;
+    animation-delay: 0.05s !important;
+  }
+  @keyframes raceRun {
+    to {
+      left: calc(100% - 34px);
+    }
+  }
+  @keyframes raceTime {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes raceWin {
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+  @keyframes raceShake {
+    25% {
+      translate: 0 calc(-50% - 1.5px);
+    }
+    75% {
+      translate: 0 calc(-50% + 1.5px);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .race-track {
+      padding-right: 56px;
+    }
+    .finish {
+      right: 40px;
+    }
+    .lane-time {
+      right: -52px;
+      font-size: 13px;
+    }
+    .lane.hl .lane-time {
+      font-size: 14.5px;
+    }
+    .lane-road {
+      height: 34px;
+    }
+  }
+</style>

@@ -79,7 +79,19 @@ const initials = (name: string) =>
             </div>
             <blockquote>“{t.quote}”</blockquote>
             <div class="who">
-              <span class="avatar">{initials(t.name)}</span>
+              <span class="avatar">
+                {initials(t.name)}
+                {t.site && (
+                  <img
+                    class="avatar-logo"
+                    src={`https://www.google.com/s2/favicons?domain=${t.site}&sz=64`}
+                    alt=""
+                    width="38"
+                    height="38"
+                    loading="lazy"
+                  />
+                )}
+              </span>
               <div>
                 <div class="name">{t.name}</div>
                 {t.site && <div class="site">{t.site}</div>}
@@ -165,6 +177,26 @@ const initials = (name: string) =>
     .testi.t-feat:hover {
       transform: translateY(-14px);
     }
+  }
+
+  /* real site favicon over the initials; initials show through if the
+     favicon fails or is a blank placeholder */
+  .who :global(.avatar) {
+    position: relative;
+  }
+  .avatar-logo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 7px;
+    background: #fff;
+    border: 1.5px solid var(--line);
+  }
+  .testi.t-feat .avatar-logo {
+    border-color: rgba(255, 255, 255, 0.4);
   }
 
   .t-check {

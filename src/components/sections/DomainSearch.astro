@@ -1,5 +1,13 @@
 ---
 import site from "~/data/site.json";
+import { toINR } from "~/utils/currency";
+
+const tlds = [
+  { tld: ".com", usd: "9.99" },
+  { tld: ".net", usd: "11.49" },
+  { tld: ".org", usd: "10.99" },
+  { tld: ".in", usd: "7.99" },
+];
 
 interface Props {
   eyebrow?: string;
@@ -48,10 +56,20 @@ const formAction = `${action.origin}${action.pathname}`;
         <button class="btn btn-coral" type="submit">Search</button>
       </form>
       <div class="domain-tlds">
-        <span><b>.com</b> <em>$9.99</em></span>
-        <span><b>.net</b> <em>$11.49</em></span>
-        <span><b>.org</b> <em>$10.99</em></span>
-        <span><b>.in</b> <em>$7.99</em></span>
+        {
+          tlds.map((t) => (
+            <span>
+              <b>{t.tld}</b>{" "}
+              <em
+                class="px"
+                data-usd={`$${t.usd}`}
+                data-inr={`₹${toINR(t.usd)}`}
+              >
+                ₹{toINR(t.usd)}
+              </em>
+            </span>
+          ))
+        }
       </div>
     </div>
   </div>

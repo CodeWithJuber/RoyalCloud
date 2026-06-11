@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import SectionArt from "~/components/sections/SectionArt.astro";
+import { pricify } from "~/utils/currency";
 import mascot from "~/assets/images/brand/mascot.png";
 import cloud from "~/assets/images/brand/cloud.png";
 import cloudServer from "~/assets/images/brand/cloud-server.png";
@@ -30,7 +31,7 @@ interface Props {
   art?: string;
 }
 const {
-  title = "Experience the <em>Premium</em> &amp; Speed-Optimized Hosting",
+  title = "India's <em>fastest</em> hosting — minus the big-brand price",
   subtitle = "Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL, daily backups and genuinely friendly 24/7 support.",
   offer = "Up to 30% off domains &amp; hosting",
   primary = {
@@ -53,16 +54,19 @@ const {
   <div class="wrap rc-hero-grid">
     <div class="rc-hero-copy">
       <span class="hero-eyebrow"
-        ><span class="dot"></span><span set:html={offer} /></span
+        ><span class="dot"></span><span set:html={pricify(offer)} /></span
       >
       <h1 set:html={title} />
       <p class="rc-sub" set:html={subtitle} />
       <ul class="hero-badges rc-badges">
         {badges.map((b) => <li class="b">{b}</li>)}
       </ul>
-      <p class="rc-from">
-        From <em>{site.startingPrice}/mo</em> · Free SSL &amp; migration
-      </p>
+      <p
+        class="rc-from"
+        set:html={pricify(
+          `From <em>${site.startingPrice}/mo</em> · Free SSL &amp; migration`,
+        )}
+      />
       <div class="hero-ctas">
         <a
           href={primary.href}
@@ -190,7 +194,10 @@ const {
         ><b>Excellent</b> — rated {site.rating}/{site.ratingMax} by our customers</span
       >
       <span class="rc-rating-sep" aria-hidden="true"></span>
-      <span>Trusted by thousands of website owners</span>
+      <span
+        ><b>Since {site.since}</b> — {new Date().getFullYear() - site.since}+ years
+        hosting India's websites</span
+      >
     </div>
   </div>
 

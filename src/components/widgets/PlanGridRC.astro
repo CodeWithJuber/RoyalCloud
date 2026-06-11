@@ -3,8 +3,11 @@
  * Pricing grid — SiteGround card anatomy on Royal Clouds branding.
  * Defaults to annual pricing: big discounted price, struck monthly
  * "regular" price with a SAVE chip, and a renews fine print. The
- * monthly/annual toggle swaps everything client-side.
+ * monthly/annual toggle swaps everything client-side; prices are
+ * dual-currency (₹ default, $ via the header toggle).
  */
+import { toINR } from "~/utils/currency";
+
 interface Tier {
   name: string;
   price: string;
@@ -44,7 +47,7 @@ const savePct = (t: Tier) => {
 const hasAnnual = tiers.some((t) => savePct(t) > 0);
 const defaultBill = hasAnnual && showToggle ? "annual" : "monthly";
 const shownPrice = (t: Tier) =>
-  defaultBill === "annual" ? (t.priceAnnual ?? t.price) : t.price;
+  toINR(defaultBill === "annual" ? (t.priceAnnual ?? t.price) : t.price);
 ---
 
 <section class="pricing" id={id} data-bill={defaultBill}>
@@ -94,17 +97,27 @@ const shownPrice = (t: Tier) =>
             <div class="was-row">
               {savePct(t) > 0 && (
                 <>
-                  <span class="was">${t.price}</span>
+                  <span
+                    class="was px"
+                    data-usd={`$${t.price}`}
+                    data-inr={`₹${toINR(t.price)}`}
+                  >
+                    ₹{toINR(t.price)}
+                  </span>
                   <span class="save-chip">SAVE {savePct(t)}%</span>
                 </>
               )}
             </div>
             <div class="price-row">
-              <span class="cur">$</span>
+              <span class="cur" data-cur-sym>
+                ₹
+              </span>
               <span
                 class="price"
-                data-monthly={t.price}
-                data-annual={t.priceAnnual ?? t.price}
+                data-usd-monthly={t.price}
+                data-usd-annual={t.priceAnnual ?? t.price}
+                data-inr-monthly={toINR(t.price)}
+                data-inr-annual={toINR(t.priceAnnual ?? t.price)}
               >
                 {shownPrice(t)}
               </span>
@@ -121,11 +134,13 @@ const shownPrice = (t: Tier) =>
             <p
               class="price-note"
               data-bill-note
-              data-monthly="Billed monthly. Cancel anytime."
-              data-annual={`Renews at $${t.price}/mo. Billed annually.`}
+              data-usd-monthly="Billed monthly. Cancel anytime."
+              data-usd-annual={`Renews at $${t.price}/mo. Billed annually.`}
+              data-inr-monthly="Billed monthly. Cancel anytime."
+              data-inr-annual={`Renews at ₹${toINR(t.price)}/mo. Billed annually.`}
             >
               {defaultBill === "annual"
-                ? `Renews at $${t.price}/mo. Billed annually.`
+                ? `Renews at ₹${toINR(t.price)}/mo. Billed annually.`
                 : "Billed monthly. Cancel anytime."}
             </p>
             <ul class="feat">
@@ -158,26 +173,28 @@ const shownPrice = (t: Tier) =>
 
 <script>
   function rcPlansInit() {
-    document.querySelectorAll(".pricing").forEach((sec) => {
+    const apply = (sec: HTMLElement) => {
+      const cur = document.documentElement.dataset.currency || "inr";
+      const bill = sec.dataset.bill || "monthly";
+      sec
+        .querySelectorAll(`[data-${cur}-${bill}]`)
+        .forEach((p) => (p.textContent = p.getAttribute(`data-${cur}-${bill}`)));
+    };
+    document.querySelectorAll<HTMLElement>(".pricing").forEach((sec) => {
       const buttons = sec.querySelectorAll(".bill-toggle button");
-      const swaps = sec.querySelectorAll(
-        ".price[data-monthly], [data-bill-note]",
-      );
       buttons.forEach((btn) => {
         btn.addEventListener("click", () => {
           const bill = btn.getAttribute("data-bill") || "monthly";
-          (sec as HTMLElement).dataset.bill = bill;
+          sec.dataset.bill = bill;
           buttons.forEach((b) => {
             b.classList.toggle("active", b === btn);
             b.setAttribute("aria-pressed", String(b === btn));
           });
-          swaps.forEach((p) => {
-            p.textContent = p.getAttribute(
-              bill === "annual" ? "data-annual" : "data-monthly",
-            );
-          });
+          apply(sec);
         });
       });
+      apply(sec);
+      document.addEventListener("rc-currency", () => apply(sec));
     });
   }
   rcPlansInit();

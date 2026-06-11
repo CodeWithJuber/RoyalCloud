@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import HeroRC from "~/components/widgets/HeroRC.astro";
 import SectionArt from "./SectionArt.astro";
+import { pricify } from "~/utils/currency";
 import cloud from "~/assets/images/brand/cloud.png";
 import cloudServer from "~/assets/images/brand/cloud-server.png";
 
@@ -83,7 +84,7 @@ const target = (cta?: Cta) =>
               ))}
             </div>
           )}
-          {offer && <span class="offer" set:html={offer} />}
+          {offer && <span class="offer" set:html={pricify(offer)} />}
           {(primaryCta || secondaryCta) && (
             <div class="hero-ctas">
               {primaryCta && (

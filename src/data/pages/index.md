@@ -10,7 +10,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    title: Experience the <em>Premium</em> &amp; Speed-Optimized Hosting
+    title: India's <em>fastest</em> hosting — minus the big-brand price
     subtitle: >-
       Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL, daily backups and genuinely
       friendly 24/7 support.
@@ -101,9 +101,9 @@ sections:
       - icon: globe
         title: Cloudflare CDN
         text: Content cached at the edge, close to your visitors worldwide.
-  - type: benchmark
-    eyebrow: Speed Test
-    title: Don't take our word — take the stopwatch's
+  - type: race
+    eyebrow: Speed Race
+    title: Don't take our word — watch the race
     note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
     items:
       - label: Royal Clouds (SSD + LiteSpeed)

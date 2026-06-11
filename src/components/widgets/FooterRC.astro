@@ -104,10 +104,13 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
       <div class="footer-brand">
         <Image src={logoWhite} alt={site.name} width={160} height={55} />
         <p>{site.description}</p>
-        <span class="f-status">
-          <i></i>
-          All systems operational
-        </span>
+        <div class="f-pills">
+          <span class="f-status">
+            <i></i>
+            All systems operational
+          </span>
+          <span class="f-status f-est">Est. {site.since} · {year - site.since}+ years</span>
+        </div>
         <div class="footer-social">
           {
             socialLinks.map((s) => (
@@ -469,6 +472,15 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     font-weight: 700;
     color: rgba(255, 255, 255, 0.8);
   }
+  .f-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  .f-est {
+    color: var(--rc-yellow);
+  }
   .f-status i {
     width: 8px;
     height: 8px;
@@ -477,7 +489,16 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
   }
   @media (prefers-reduced-motion: no-preference) {
-    .f-status i {
+    .f-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  .f-est {
+    color: var(--rc-yellow);
+  }
+  .f-status i {
       animation: fPulse 2.2s ease-in-out infinite;
     }
   }

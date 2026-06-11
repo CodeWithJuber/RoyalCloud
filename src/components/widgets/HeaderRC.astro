@@ -4,6 +4,7 @@ import { Icon } from "astro-icon/components";
 import logoDark from "~/assets/images/brand/logo-dark.png";
 import { headerData } from "~/navigation";
 import { tablerIcon } from "~/utils/plans";
+import { pricify } from "~/utils/currency";
 import site from "~/data/site.json";
 
 /**
@@ -44,7 +45,7 @@ const navIcon = (text: string) =>
 {
   "promo" in site && site.promo && (
     <div class="promo-bar">
-      <span set:html={site.promo} />
+      <span set:html={pricify(site.promo)} />
     </div>
   )
 }
@@ -95,6 +96,12 @@ const navIcon = (text: string) =>
       }
     </nav>
     <div class="header-cta">
+      <div class="cur-toggle" role="group" aria-label="Currency">
+        <button type="button" data-cur="inr" class="active" aria-pressed="true"
+          >₹</button
+        >
+        <button type="button" data-cur="usd" aria-pressed="false">$</button>
+      </div>
       {
         actions.map((a) =>
           a.variant === "secondary" ? (
@@ -165,6 +172,12 @@ const navIcon = (text: string) =>
         ),
       )
     }
+    <div class="cur-toggle m-cur" role="group" aria-label="Currency">
+      <button type="button" data-cur="inr" class="active" aria-pressed="true"
+        >₹ INR</button
+      >
+      <button type="button" data-cur="usd" aria-pressed="false">$ USD</button>
+    </div>
     <div class="m-actions">
       {
         actions.map((a) => (
@@ -326,6 +339,51 @@ const navIcon = (text: string) =>
     color: #6b6b88;
     line-height: 1.45;
     margin-top: 2px;
+  }
+
+  /* ₹/$ currency switch */
+  .cur-toggle {
+    display: inline-flex;
+    background: var(--bg-tint);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px;
+  }
+  .cur-toggle button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    width: 30px;
+    height: 28px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .cur-toggle button.active {
+    background: var(--rc-ink);
+    color: #fff;
+  }
+  .cur-toggle.m-cur {
+    margin-top: 12px;
+    align-self: center;
+  }
+  .cur-toggle.m-cur button {
+    width: auto;
+    padding: 0 18px;
+    height: 34px;
+    font-size: 12.5px;
+  }
+  @media (max-width: 860px) {
+    .header-cta > .cur-toggle {
+      display: none;
+    }
   }
 
   .menu-btn {
@@ -553,4 +611,46 @@ const navIcon = (text: string) =>
   }
   rcHeaderInit();
   document.addEventListener("astro:after-swap", rcHeaderInit);
+
+  /** Global ₹/$ switch — swaps every .px span and plan-grid symbol,
+      persists in localStorage, notifies pricing grids via rc-currency. */
+  function rcCurrencyInit() {
+    const KEY = "rc-currency";
+    const apply = (cur: string) => {
+      document.documentElement.dataset.currency = cur;
+      document.querySelectorAll(".px").forEach((el) => {
+        const v = el.getAttribute(cur === "usd" ? "data-usd" : "data-inr");
+        if (v) el.textContent = v;
+      });
+      document.querySelectorAll("[data-cur-sym]").forEach((el) => {
+        el.textContent = cur === "usd" ? "$" : "₹";
+      });
+      document.querySelectorAll(".cur-toggle button").forEach((b) => {
+        const on = b.getAttribute("data-cur") === cur;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", String(on));
+      });
+      document.dispatchEvent(new CustomEvent("rc-currency"));
+    };
+    document.querySelectorAll(".cur-toggle button").forEach((b) => {
+      b.addEventListener("click", () => {
+        const cur = b.getAttribute("data-cur") || "inr";
+        try {
+          localStorage.setItem(KEY, cur);
+        } catch {
+          /* private mode */
+        }
+        apply(cur);
+      });
+    });
+    let saved = "inr";
+    try {
+      saved = localStorage.getItem(KEY) || "inr";
+    } catch {
+      /* private mode */
+    }
+    if (saved !== "inr") apply(saved);
+  }
+  rcCurrencyInit();
+  document.addEventListener("astro:after-swap", rcCurrencyInit);
 </script>
