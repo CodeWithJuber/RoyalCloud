@@ -1,0 +1,24 @@
+---
+// CMS-driven end-of-<body> integrations: the Google Tag Manager <noscript>
+// fallback (its <script> half lives in HeadIntegrations) and any custom
+// end-of-body HTML pasted by an editor. Driven by src/data/integrations.json.
+// Built as one HTML string and emitted via a single <Fragment set:html>.
+import { integrations } from "~/utils/integrations";
+
+const { gtmId, customBodyHtml } = integrations;
+
+const parts: string[] = [];
+
+if (gtmId) {
+  parts.push(
+    `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${encodeURIComponent(gtmId)}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`,
+  );
+}
+if (customBodyHtml) {
+  parts.push(customBodyHtml);
+}
+
+const html = parts.join("\n");
+---
+
+{html && <Fragment set:html={html} />}
