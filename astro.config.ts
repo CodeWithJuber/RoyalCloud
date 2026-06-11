@@ -1,32 +1,41 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
 
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import sitemap from '@astrojs/sitemap';
-import tailwindcss from '@tailwindcss/vite';
-import mdx from '@astrojs/mdx';
-import partytown from '@astrojs/partytown';
-import icon from 'astro-icon';
-import compress from 'astro-compress';
-import type { AstroIntegration } from 'astro';
+import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
+import mdx from "@astrojs/mdx";
+import partytown from "@astrojs/partytown";
+import icon from "astro-icon";
+import compress from "astro-compress";
+import type { AstroIntegration } from "astro";
 
-import astrowind from './vendor/integration';
+import astrowind from "./vendor/integration";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
-const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
-  hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
+const whenExternalScripts = (
+  items: (() => AstroIntegration) | (() => AstroIntegration)[] = [],
+) =>
+  hasExternalScripts
+    ? Array.isArray(items)
+      ? items.map((item) => item())
+      : [items()]
+    : [];
 
 export default defineConfig({
-  output: 'static',
+  output: "static",
 
   // Emit flat files (shared-hosting.html, not shared-hosting/index.html) so the
   // cloned pages keep the live site's extensionless URLs and their relative
   // `assets/...` references resolve to /assets/... exactly as on royalclouds.net.
   build: {
-    format: 'file',
+    format: "file",
+    // Inline all CSS into the HTML — kills the render-blocking stylesheet
+    // round-trips PageSpeed flags (the whole system is ~12KB gzipped).
+    inlineStylesheets: "always",
   },
 
   integrations: [
@@ -34,29 +43,37 @@ export default defineConfig({
     mdx(),
     icon({
       include: {
-        tabler: ['*'],
+        tabler: ["*"],
         logos: [
-          'cloudflare', 'cpanel', 'cloudlinux', 'intel', 'letsencrypt',
-          'ubuntu', 'mysql', 'php', 'nginx', 'wordpress-icon',
+          "cloudflare",
+          "cpanel",
+          "cloudlinux",
+          "intel",
+          "letsencrypt",
+          "ubuntu",
+          "mysql",
+          "php",
+          "nginx",
+          "wordpress-icon",
         ],
-        'flat-color-icons': [
-          'template',
-          'gallery',
-          'approval',
-          'document',
-          'advertising',
-          'currency-exchange',
-          'voice-presentation',
-          'business-contact',
-          'database',
+        "flat-color-icons": [
+          "template",
+          "gallery",
+          "approval",
+          "document",
+          "advertising",
+          "currency-exchange",
+          "voice-presentation",
+          "business-contact",
+          "database",
         ],
       },
     }),
 
     ...whenExternalScripts(() =>
       partytown({
-        config: { forward: ['dataLayer.push'] },
-      })
+        config: { forward: ["dataLayer.push"] },
+      }),
     ),
 
     compress({
@@ -69,7 +86,7 @@ export default defineConfig({
     }),
 
     astrowind({
-      config: './src/config.yaml',
+      config: "./src/config.yaml",
     }),
   ],
 
@@ -84,14 +101,14 @@ export default defineConfig({
     // `domains` only matters for remote URLs that fall through to Astro's
     // native <Image /> (i.e. providers Unpic can't detect, like Pixabay).
     // Listed entries are authorized to be processed by Sharp.
-    domains: ['cdn.pixabay.com'],
+    domains: ["cdn.pixabay.com"],
   },
 
   vite: {
     plugins: [tailwindcss()],
     resolve: {
       alias: {
-        '~': path.resolve(__dirname, './src'),
+        "~": path.resolve(__dirname, "./src"),
       },
     },
   },

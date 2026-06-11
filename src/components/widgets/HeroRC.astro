@@ -113,7 +113,9 @@ const {
             alt=""
             width={230}
             height={478}
+            densities={[1, 2]}
             loading="eager"
+            fetchpriority="high"
             class="rc-mascot rc-float"
           />
         )
@@ -236,10 +238,10 @@ const {
   }
   /* white-on-gradient overrides (original royalclouds.net hero) */
   .rc-hero :global(.hero-eyebrow) {
-    background: rgba(255, 255, 255, 0.14);
+    /* solid-ish tint instead of backdrop blur: same look, far cheaper paint */
+    background: rgba(255, 255, 255, 0.16);
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(6px);
   }
   .rc-hero :global(.hero-eyebrow .dot) {
     background: var(--rc-yellow);

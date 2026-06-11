@@ -65,7 +65,7 @@
   /* text */
   --text-heading: var(--rc-ink);
   --text-default: #4e4b6e;
-  --text-muted: #74719a;
+  --text-muted: #6b6890;
 
   --font-heading: "Sora Variable", sans-serif;
   --font-body: "Inter Variable", sans-serif;
@@ -138,12 +138,12 @@ section {
   padding-block: var(--space-section);
 }
 
-/* keyword highlight in headlines → original sky blue */
+/* keyword highlight in headlines → deep sky (AA large-text on white/tints) */
 .text-grad,
 h1 em,
 h2 em {
   font-style: normal;
-  color: var(--rc-blue);
+  color: #0086c9;
 }
 
 /* ---------- Eyebrow / section headings ---------- */
@@ -173,7 +173,7 @@ h2 em {
   color: var(--rc-plum);
 }
 .sec-head h2 em {
-  color: var(--rc-blue);
+  color: #0086c9;
 }
 .sec-head p {
   font-size: 17.5px;
@@ -260,14 +260,14 @@ h2 em {
   box-shadow: 0 16px 30px -10px rgba(200, 170, 0, 0.6);
 }
 
-/* coral action (original domain-search button) */
+/* coral action (original domain-search button) — AA white-on-coral */
 .btn-coral {
-  background: var(--rc-coral);
+  background: #e02446;
   color: #fff;
-  box-shadow: 0 10px 22px -10px rgba(251, 62, 88, 0.55);
+  box-shadow: 0 10px 22px -10px rgba(224, 36, 70, 0.55);
 }
 .btn-coral:hover {
-  background: #e92846;
+  background: #d31a3d;
   color: #fff;
 }
 
@@ -698,7 +698,7 @@ h2 em {
   width: 24px;
   height: 24px;
 }
-.point h4 {
+.point h3 {
   font-size: 16.5px;
   font-weight: 600;
   margin-bottom: 4px;
@@ -809,7 +809,7 @@ h2 em {
   color: #fff;
   transform: scale(1.08);
 }
-.step h4 {
+.step h3 {
   font-size: 18px;
   font-weight: 600;
   margin: 12px 0 6px;
@@ -1545,7 +1545,7 @@ h2 em {
   color: rgba(255, 255, 255, 0.62);
   padding-block: 0;
 }
-.fcol h5::after {
+.fcol h3::after {
   content: "";
   display: block;
   width: 22px;
@@ -1571,7 +1571,7 @@ h2 em {
   max-width: 280px;
   color: rgba(255, 255, 255, 0.55);
 }
-.fcol h5 {
+.fcol h3 {
   font-family: var(--font-heading);
   color: #fff;
   font-size: 12.5px;
@@ -2402,4 +2402,14 @@ main[data-theme="domains"] {
   height: clamp(34px, 6vw, 74px);
   display: block;
   pointer-events: none;
+}
+
+/* AA contrast: muted copy is darker on pastel tile backgrounds */
+.feature-grid.tiles .feature-card p {
+  color: #5e5b7e;
+}
+
+/* AA contrast: chip + accent text colors on their tinted surfaces */
+.save-chip {
+  color: #b51432 !important;
 }

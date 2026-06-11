@@ -81,7 +81,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   <div class="f-news">
     <Image src={mascot} alt="" width={120} height={250} class="f-news-mascot" />
     <div class="wrap f-news-inner">
-      <h4>Join our newsletter</h4>
+      <h2>Join our newsletter</h2>
       <p>Better offers, product news and updates from Royal Clouds.</p>
       <form class="f-news-form" data-newsletter>
         <input
@@ -130,12 +130,12 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
       {
         columns.map((col) => (
           <div class="fcol">
-            <h5>
+            <h3>
               <button type="button" class="fcol-toggle" aria-expanded="true">
                 {col.title}
                 <Icon name="tabler:chevron-down" class="fcol-caret" />
               </button>
-            </h5>
+            </h3>
             <ul>
               {col.links.map((l) => (
                 <li>
@@ -181,14 +181,14 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   .f-help-lead {
     text-align: center;
     font-family: var(--font-heading);
-    font-size: clamp(17px, 2.2vw, 21px);
+    font-size: clamp(19px, 2.2vw, 21px);
     font-weight: 700;
     color: var(--rc-plum);
     margin: 0 0 30px;
   }
   .f-help-lead em {
     font-style: normal;
-    color: var(--rc-blue);
+    color: #0086c9;
   }
   .f-help-grid {
     display: grid;
@@ -252,7 +252,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--rc-coral);
+    color: #d6203f;
     transition: transform 0.18s ease;
   }
   .f-help-card:hover em {
@@ -284,7 +284,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     flex-direction: column;
     align-items: center;
   }
-  .f-news h4 {
+  .f-news h2 {
     color: #fff;
     font-size: clamp(21px, 3vw, 26px);
     font-weight: 700;
@@ -384,7 +384,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   }
 
   /* ---- footer columns: accordion on phones ---- */
-  .fcol h5 {
+  .fcol h3 {
     margin: 0 0 20px;
   }
   .fcol-toggle {
@@ -414,12 +414,12 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 12px;
     }
-    .fcol h5 {
+    .fcol h3 {
       margin: 0;
     }
     /* the gradient dash reads as a stray element inside the accordion */
-    .fcol :global(h5)::after,
-    .fcol h5::after {
+    .fcol :global(h3)::after,
+    .fcol h3::after {
       display: none;
     }
     .fcol-toggle {
