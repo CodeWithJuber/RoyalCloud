@@ -222,6 +222,19 @@ export const sectionSchema = z.discriminatedUnion("type", [
     ),
   }),
   z.object({
+    type: z.literal("race"),
+    ...base,
+    note: z.string().optional(),
+    items: z.array(
+      z.object({
+        label: z.string(),
+        value: z.number(),
+        display: z.string(),
+        highlight: z.boolean().optional(),
+      }),
+    ),
+  }),
+  z.object({
     type: z.literal("security"),
     ...base,
     layers: z.array(z.object({ title: z.string(), text: z.string() })),
