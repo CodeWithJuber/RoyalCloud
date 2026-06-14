@@ -1,6 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import mascot from "~/assets/images/brand/mascot.png";
+import AltitudeScene from "~/components/widgets/AltitudeScene.astro";
 
 interface Cta {
   text: string;
@@ -30,14 +29,7 @@ const target = (cta?: Cta) =>
 <section class="final-cta cv-auto">
   <div class="wrap">
     <div class="cta-band reveal rv-scale">
-      <Image
-        src={mascot}
-        alt=""
-        width={120}
-        height={250}
-        class="cta-mascot"
-        aria-hidden="true"
-      />
+      <AltitudeScene variant="dark" class="cta-altitude" />
       <h2 set:html={title} />
       {subtitle && <p set:html={subtitle} />}
       <div class="hero-ctas">
@@ -69,3 +61,23 @@ const target = (cta?: Cta) =>
     </div>
   </div>
 </section>
+
+<style>
+  .cta-band :global(.cta-altitude) {
+    position: absolute;
+    right: -46px;
+    bottom: -70px;
+    width: clamp(220px, 32vw, 360px);
+    height: auto;
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
+  }
+  @media (max-width: 860px) {
+    .cta-band :global(.cta-altitude) {
+      right: -90px;
+      bottom: -100px;
+      opacity: 0.28;
+    }
+  }
+</style>

@@ -1,0 +1,139 @@
+---
+/**
+ * STRATOSPHERE custom vector — "Altitude": concentric orbit rings, a drawn
+ * spectrum arc, orbiting satellites and a glowing core. Inline SVG, themable
+ * via `currentColor` (rings) so it reads on both light and dark surfaces;
+ * the spectrum arc + core use brand gradients regardless. Motion-safe.
+ *
+ *   variant: "light" (product heroes) | "dark" (contrast panels)
+ */
+interface Props {
+  variant?: "light" | "dark";
+  class?: string;
+}
+const { variant = "light", class: className = "" } = Astro.props;
+---
+
+<svg
+  class:list={["alt-scene", `alt-${variant}`, className]}
+  viewBox="0 0 360 360"
+  fill="none"
+  aria-hidden="true"
+>
+  <defs>
+    <linearGradient id="rcSpec" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5111e0"></stop>
+      <stop offset="52%" stop-color="#19b6ff"></stop>
+      <stop offset="100%" stop-color="#ffb627"></stop>
+    </linearGradient>
+    <radialGradient id="rcCore" cx="50%" cy="46%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"></stop>
+      <stop offset="38%" stop-color="#7c4dff" stop-opacity="0.9"></stop>
+      <stop offset="100%" stop-color="#19b6ff" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+
+  <!-- rings (themable) -->
+  <g class="alt-rings" stroke="currentColor">
+    <circle cx="180" cy="180" r="150" stroke-opacity="0.16"></circle>
+    <circle
+      cx="180"
+      cy="180"
+      r="112"
+      stroke-opacity="0.22"
+      stroke-dasharray="2 8"></circle>
+    <circle cx="180" cy="180" r="74" stroke-opacity="0.16"></circle>
+  </g>
+
+  <!-- drawn spectrum arc on the outer ring -->
+  <circle
+    class="alt-arc"
+    cx="180"
+    cy="180"
+    r="150"
+    stroke="url(#rcSpec)"
+    stroke-width="4"
+    stroke-linecap="round"></circle>
+
+  <!-- orbiting satellites -->
+  <g class="alt-orbit">
+    <circle cx="180" cy="30" r="6" fill="#ffb627"></circle>
+    <circle cx="330" cy="180" r="4.5" fill="#19b6ff"></circle>
+    <circle cx="180" cy="292" r="4" fill="#5111e0"></circle>
+  </g>
+
+  <!-- glowing core -->
+  <circle cx="180" cy="180" r="62" fill="url(#rcCore)"></circle>
+  <circle
+    cx="180"
+    cy="180"
+    r="26"
+    fill="#ffffff"
+    class="alt-core-disc"></circle>
+  <!-- upward "altitude" chevrons inside the core -->
+  <path
+    d="M168 186 L180 174 L192 186 M168 194 L180 182 L192 194"
+    stroke="#5111e0"
+    stroke-width="2.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+</svg>
+
+<style>
+  .alt-scene {
+    width: 100%;
+    height: auto;
+    max-width: 360px;
+    overflow: visible;
+  }
+  .alt-light {
+    color: #0a0e1f;
+  }
+  .alt-dark {
+    color: #ffffff;
+  }
+  .alt-rings circle,
+  .alt-arc {
+    fill: none;
+  }
+  /* the spectrum arc shows ~30% of the ring and slowly sweeps */
+  .alt-arc {
+    stroke-dasharray: 290 660;
+    transform-origin: 180px 180px;
+    filter: drop-shadow(0 0 10px rgba(81, 17, 224, 0.35));
+  }
+  .alt-core-disc {
+    filter: drop-shadow(0 8px 22px rgba(81, 17, 224, 0.45));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .alt-arc {
+      animation: alt-sweep 14s linear infinite;
+    }
+    .alt-orbit {
+      transform-origin: 180px 180px;
+      animation: alt-spin 26s linear infinite;
+    }
+    .alt-core-disc {
+      animation: alt-pulse 4s ease-in-out infinite;
+    }
+  }
+  @keyframes alt-sweep {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes alt-spin {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  @keyframes alt-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.06);
+    }
+  }
+</style>
