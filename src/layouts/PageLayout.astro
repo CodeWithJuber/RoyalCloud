@@ -3,6 +3,7 @@ import Layout from '~/layouts/Layout.astro';
 import HeaderRC from '~/components/widgets/HeaderRC.astro';
 import FooterRC from '~/components/widgets/FooterRC.astro';
 import RevealScript from '~/components/widgets/RevealScript.astro';
+import AuroraScript from '~/components/widgets/AuroraScript.astro';
 
 import type { MetaData } from '~/types';
 
@@ -29,4 +30,5 @@ const { metadata, transparentHeader = false, theme } = Astro.props;
     <FooterRC />
   </slot>
   <RevealScript />
+  <AuroraScript />
 </Layout>
