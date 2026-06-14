@@ -42,8 +42,8 @@ const {
               aria-hidden={dup === 1 ? "true" : undefined}
             >
               {logos.map((l) => (
-                <span class="mark" title={l}>
-                  <Icon name={`logos:${l}`} />
+                <span class="mark" role="img" aria-label={l} title={l}>
+                  <Icon name={`logos:${l}`} aria-hidden="true" />
                 </span>
               ))}
             </div>
