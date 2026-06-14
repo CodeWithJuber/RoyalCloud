@@ -170,10 +170,12 @@ h2 em {
   color: var(--rc-violet);
 }
 @supports (-webkit-background-clip: text) or (background-clip: text) {
+  /* darker stops so clipped heading text stays >= AA-large on white;
+     the lighter spectrum is reserved for decorative rules, never text */
   .text-grad,
   h1 em,
   h2 em {
-    background: linear-gradient(96deg, #5111e0 0%, #1f86ff 60%, #19b6ff 100%);
+    background: linear-gradient(96deg, #5111e0 0%, #3340d6 52%, #0b7ec0 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1498,21 +1500,6 @@ h2 em {
   text-align: center;
   color: #fff;
 }
-/* the mascot waves goodbye in the final CTA */
-.cta-band .cta-mascot {
-  position: absolute;
-  right: 48px;
-  bottom: 0;
-  width: 120px;
-  height: auto;
-  z-index: 1;
-  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.35));
-}
-@media (max-width: 860px) {
-  .cta-band .cta-mascot {
-    display: none;
-  }
-}
 /* brand clouds drifting in the band corners */
 .cta-band::before,
 .cta-band::after {
@@ -2569,18 +2556,6 @@ main[data-theme="domains"] {
 }
 .feature-card:hover {
   transform: translateY(-5px);
-}
-
-/* gradient hero: soft cloud-curve hand-off into the page */
-.rc-wave {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  width: 100%;
-  height: clamp(34px, 6vw, 74px);
-  display: block;
-  pointer-events: none;
 }
 
 /* AA contrast: muted copy is darker on pastel tile backgrounds */
