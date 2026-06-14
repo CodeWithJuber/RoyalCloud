@@ -485,6 +485,89 @@
 }
 
 /* ============================================================
+   PHASE E — site-wide best-practice interactions (from refs).
+   ============================================================ */
+
+/* Scroll progress bar (goal-gradient / Von Restorff progress cue) */
+.rc-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 1001;
+  background: transparent;
+  pointer-events: none;
+}
+.rc-progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--rc-violet), var(--rc-blue), var(--rc-yellow));
+  box-shadow: 0 0 12px rgba(118, 82, 242, 0.6);
+  transition: width 0.08s linear;
+}
+
+/* Living aurora — slow drift on the dark gradient panels (motion-safe).
+   Larger background-size lets background-position animate as gentle motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .rc-hero,
+  .stats,
+  .cta-band,
+  .domain-panel {
+    background-size: 175% 175%;
+    animation: aurora-drift 20s ease-in-out infinite;
+  }
+}
+@keyframes aurora-drift {
+  0%,
+  100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+/* keep the back-to-top button clear of the sticky mobile action bar */
+@media (max-width: 860px) {
+  #rcToTop {
+    bottom: 88px;
+  }
+}
+
+/* Domain search live suggestions (autocomplete affordance, uxpilot) */
+.domain-suggest {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+.domain-suggest.is-on {
+  display: flex;
+}
+.domain-suggest button {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+.domain-suggest button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ============================================================
    Safety: never let decorative depth cause horizontal scroll
    ============================================================ */
 html,

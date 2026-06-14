@@ -64,6 +64,33 @@
       });
     });
   }
+  // Scroll progress bar — a goal-gradient cue that the page is being consumed.
+  function rcProgressInit() {
+    const bar = document.querySelector<HTMLElement>(".rc-progress span");
+    if (!bar) return;
+    let ticking = false;
+    const update = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      bar.style.width = pct + "%";
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
+  }
+
   rcAuroraInit();
-  document.addEventListener("astro:after-swap", rcAuroraInit);
+  rcProgressInit();
+  document.addEventListener("astro:after-swap", () => {
+    rcAuroraInit();
+    rcProgressInit();
+  });
 </script>
