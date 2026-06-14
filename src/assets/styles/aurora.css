@@ -529,10 +529,14 @@
   }
 }
 
-/* keep the back-to-top button clear of the sticky mobile action bar */
+/* keep the back-to-top button clear of the sticky mobile action bar, and
+   reserve space so the bar never permanently covers the footer's last row */
 @media (max-width: 860px) {
   #rcToTop {
     bottom: 88px;
+  }
+  body {
+    padding-bottom: 78px;
   }
 }
 
@@ -567,10 +571,5 @@
   background: rgba(255, 255, 255, 0.28);
 }
 
-/* ============================================================
-   Safety: never let decorative depth cause horizontal scroll
-   ============================================================ */
-html,
-body {
-  overflow-x: clip;
-}
+/* Decorative orbs are contained by each section's own overflow:hidden, so no
+   page-level clip is needed (a root overflow-x clip re-anchors position:fixed). */
