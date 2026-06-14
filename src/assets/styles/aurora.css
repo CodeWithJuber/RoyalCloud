@@ -245,21 +245,8 @@
     left: 130%;
   }
 }
-/* gentle resting pulse on the main yellow CTA */
-@media (prefers-reduced-motion: no-preference) {
-  .btn-primary.btn-lg {
-    animation: cta-pulse 3.6s ease-in-out infinite;
-  }
-}
-@keyframes cta-pulse {
-  0%,
-  100% {
-    box-shadow: var(--glow-yellow);
-  }
-  50% {
-    box-shadow: 0 20px 54px -10px rgba(255, 182, 39, 0.78);
-  }
-}
+/* the gold CTA holds a confident resting glow (no looping pulse —
+   restraint reads as craft; one loud accent, calmly) */
 
 /* glass ghost button */
 .btn-glass {
@@ -359,22 +346,6 @@
 }
 .plan.popular {
   box-shadow: var(--elev-3), var(--glow-violet);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .plan.popular {
-    animation: plan-glow 4s ease-in-out infinite;
-  }
-}
-@keyframes plan-glow {
-  0%,
-  100% {
-    box-shadow: var(--elev-3), var(--glow-violet);
-  }
-  50% {
-    box-shadow:
-      var(--elev-3),
-      0 22px 60px -12px rgba(81, 17, 224, 0.78);
-  }
 }
 /* bigger, prouder price on phones */
 @media (max-width: 560px) {
