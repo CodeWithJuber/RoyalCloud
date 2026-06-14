@@ -41,19 +41,25 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
     }
     <div class="compare-wrap reveal">
       <table class="compare">
+        <caption class="sr-only">
+          {title ? title : "Plan feature comparison"} — compare price and
+          features across {tiers.length} plans.
+        </caption>
         <thead>
           <tr>
-            <th>Plan</th>
+            <th scope="col">Plan</th>
             {
               tiers.map((t) => (
-                <th class={t.popular ? "popular" : ""}>{t.name}</th>
+                <th scope="col" class={t.popular ? "popular" : ""}>
+                  {t.name}
+                </th>
               ))
             }
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th>Price</th>
+            <th scope="row">Price</th>
             {
               tiers.map((t) => (
                 <td class={t.popular ? "popular" : ""}>
@@ -65,7 +71,7 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
           {
             rows.map((row) => (
               <tr>
-                <th>{row.label}</th>
+                <th scope="row">{row.label}</th>
                 {row.cells.map((c, j) => (
                   <td class={tiers[j]?.popular ? "popular" : ""}>{c}</td>
                 ))}
@@ -73,7 +79,7 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
             ))
           }
           <tr>
-            <th></th>
+            <th scope="row"><span class="sr-only">Choose plan</span></th>
             {
               tiers.map((t) => (
                 <td class={t.popular ? "popular" : ""}>

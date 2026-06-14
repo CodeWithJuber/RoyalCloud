@@ -18,10 +18,11 @@ const { metadata, transparentHeader = false, theme } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
+  <a href="#main" class="skip-link">Skip to main content</a>
   <slot name="header">
     <HeaderRC solid={!transparentHeader} />
   </slot>
-  <main data-theme={theme}>
+  <main id="main" tabindex="-1" data-theme={theme}>
     <slot />
   </main>
   <slot name="footer">

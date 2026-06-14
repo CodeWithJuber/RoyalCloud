@@ -53,8 +53,8 @@ const {
             </h3>
             <p set:html={pricify(item.text ?? "")} />
             {item.href && (
-              <a class="f-more" href={item.href}>
-                Learn more<span class="sr-only"> about {item.title}</span>
+              <a class="f-more" href={item.href} aria-label={`Explore ${item.title}`}>
+                Explore {item.title}
               </a>
             )}
           </div>

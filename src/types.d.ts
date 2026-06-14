@@ -92,6 +92,8 @@ export interface Headline {
   title?: string;
   subtitle?: string;
   tagline?: string;
+  /** Heading level for the rendered title — keeps the document outline valid. */
+  as?: 'h1' | 'h2' | 'h3' | 'h4';
   classes?: Record<string, string>;
 }
 
@@ -150,6 +152,7 @@ export interface Input {
   label?: string;
   autocomplete?: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 export interface Textarea {
@@ -157,6 +160,7 @@ export interface Textarea {
   name?: string;
   placeholder?: string;
   rows?: number;
+  required?: boolean;
 }
 
 export interface Disclaimer {

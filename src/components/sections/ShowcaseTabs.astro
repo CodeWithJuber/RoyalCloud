@@ -40,13 +40,16 @@ const {
       )
     }
     <div class="sc-stage reveal" data-showcase>
-      <div class="sc-tabs" role="tablist">
+      <div class="sc-tabs" role="tablist" aria-label="Control panel features">
         {
           tabs.map((t, i) => (
             <button
               class={`sc-tab ${i === 0 ? "on" : ""}`}
               role="tab"
+              id={`sc-tab-${t.panel}`}
+              aria-controls={`sc-panel-${t.panel}`}
               aria-selected={i === 0 ? "true" : "false"}
+              tabindex={i === 0 ? "0" : "-1"}
               data-panel={t.panel}
             >
               {t.label}
@@ -60,7 +63,15 @@ const {
           <span class="sc-url">panel.royalclouds.net</span>
         </div>
 
-        <div class="sc-panel sc-files on" data-sc="files" aria-hidden="false">
+        <div
+          class="sc-panel sc-files on"
+          data-sc="files"
+          role="tabpanel"
+          id="sc-panel-files"
+          aria-labelledby="sc-tab-files"
+          tabindex="0"
+          aria-hidden="false"
+        >
           {
             [
               ["public_html", "folder", "—"],
@@ -77,7 +88,15 @@ const {
           }
         </div>
 
-        <div class="sc-panel sc-ssl" data-sc="ssl" aria-hidden="true">
+        <div
+          class="sc-panel sc-ssl"
+          data-sc="ssl"
+          role="tabpanel"
+          id="sc-panel-ssl"
+          aria-labelledby="sc-tab-ssl"
+          tabindex="0"
+          aria-hidden="true"
+        >
           <div class="ssl-card">
             <span class="ssl-lock">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -96,7 +115,15 @@ const {
           </div>
         </div>
 
-        <div class="sc-panel sc-backups" data-sc="backups" aria-hidden="true">
+        <div
+          class="sc-panel sc-backups"
+          data-sc="backups"
+          role="tabpanel"
+          id="sc-panel-backups"
+          aria-labelledby="sc-tab-backups"
+          tabindex="0"
+          aria-hidden="true"
+        >
           {
             ["Today 04:00", "Yesterday 04:00", "Jun 8 04:00"].map((d, i) => (
               <div class="bk-row">
@@ -109,7 +136,15 @@ const {
           }
         </div>
 
-        <div class="sc-panel sc-stats" data-sc="stats" aria-hidden="true">
+        <div
+          class="sc-panel sc-stats"
+          data-sc="stats"
+          role="tabpanel"
+          id="sc-panel-stats"
+          aria-labelledby="sc-tab-stats"
+          tabindex="0"
+          aria-hidden="true"
+        >
           <div class="st-cards">
             <div class="st"><small>Visitors</small><b>12,408</b></div>
             <div class="st"><small>Bandwidth</small><b>96 GB</b></div>
@@ -141,22 +176,40 @@ const {
 <script>
   function rcShowcaseInit() {
     document.querySelectorAll<HTMLElement>("[data-showcase]").forEach((root) => {
-      const tabs = root.querySelectorAll<HTMLButtonElement>(".sc-tab");
-      tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          const id = tab.dataset.panel;
-          tabs.forEach((t) => {
-            t.classList.toggle("on", t === tab);
-            t.setAttribute("aria-selected", t === tab ? "true" : "false");
-          });
-          root.querySelectorAll<HTMLElement>(".sc-panel").forEach((p) => {
-            const on = p.dataset.sc === id;
-            p.classList.toggle("on", on);
-            p.setAttribute("aria-hidden", on ? "false" : "true");
-          });
-          root.querySelectorAll<HTMLElement>("[data-sc-cap]").forEach((c) => {
-            c.classList.toggle("on", c.dataset.scCap === id);
-          });
+      const tabs = Array.from(
+        root.querySelectorAll<HTMLButtonElement>(".sc-tab"),
+      );
+      const select = (tab: HTMLButtonElement, focus = false) => {
+        const id = tab.dataset.panel;
+        // Roving tabindex: only the active tab is in the tab order (WAI-ARIA).
+        tabs.forEach((t) => {
+          const on = t === tab;
+          t.classList.toggle("on", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.tabIndex = on ? 0 : -1;
+        });
+        root.querySelectorAll<HTMLElement>(".sc-panel").forEach((p) => {
+          const on = p.dataset.sc === id;
+          p.classList.toggle("on", on);
+          p.setAttribute("aria-hidden", on ? "false" : "true");
+        });
+        root.querySelectorAll<HTMLElement>("[data-sc-cap]").forEach((c) => {
+          c.classList.toggle("on", c.dataset.scCap === id);
+        });
+        if (focus) tab.focus();
+      };
+      tabs.forEach((tab, i) => {
+        tab.addEventListener("click", () => select(tab));
+        tab.addEventListener("keydown", (e) => {
+          let next = -1;
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (i + 1) % tabs.length;
+          else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (i - 1 + tabs.length) % tabs.length;
+          else if (e.key === "Home") next = 0;
+          else if (e.key === "End") next = tabs.length - 1;
+          if (next >= 0) {
+            e.preventDefault();
+            select(tabs[next], true);
+          }
         });
       });
     });

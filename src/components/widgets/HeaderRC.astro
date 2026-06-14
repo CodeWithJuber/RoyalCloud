@@ -29,6 +29,16 @@ const actions = headerData.actions as {
 const isGroup = (i: Item): i is { text: string; links: Link[] } => "links" in i;
 const external = (href: string) => /^https?:\/\//.test(href);
 
+// Wayfinding: mark the visitor's current location (aria-current) so they always
+// know where they are in the nav (Jakob's Law / WCAG 2.4.8).
+const pathname = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
+const isCurrent = (href: string) => {
+  if (!href || external(href) || href.startsWith("#")) return false;
+  const h = (href.replace(/\/+$/, "") || "/").toLowerCase();
+  return h === pathname;
+};
+const groupActive = (links: Link[]) => links.some((l) => isCurrent(l.href));
+
 // icon chips for the mobile sheet's top-level items
 const NAV_ICONS: Record<string, string> = {
   hosting: "tabler:server-2",
@@ -62,19 +72,31 @@ const navIcon = (text: string) =>
     </a>
     <nav class="nav" aria-label="Primary">
       {
-        items.map((item) =>
+        items.map((item, gi) =>
           isGroup(item) ? (
-            <span class="nav-dd">
-              <a href={item.links[0]?.href ?? "#"} aria-haspopup="true">
+            <span class="nav-dd" data-dd>
+              <a
+                href={item.links[0]?.href ?? "#"}
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls={`dd-panel-${gi}`}
+                class={groupActive(item.links) ? "is-current" : ""}
+                {...(groupActive(item.links) ? { "aria-current": "true" } : {})}
+              >
                 {item.text}
                 <Icon name="tabler:chevron-down" class="dd-caret" />
               </a>
               <span
+                id={`dd-panel-${gi}`}
                 class={`dd-panel ${item.links.some((l) => l.description) ? "mega" : ""}`}
               >
                 {item.links.map((l) =>
                   l.description ? (
-                    <a href={l.href} class="mega-item">
+                    <a
+                      href={l.href}
+                      class="mega-item"
+                      {...(isCurrent(l.href) ? { "aria-current": "page" } : {})}
+                    >
                       <span class="mega-ic">
                         <Icon name={tablerIcon(l.icon ?? "")} />
                       </span>
@@ -84,13 +106,24 @@ const navIcon = (text: string) =>
                       </span>
                     </a>
                   ) : (
-                    <a href={l.href}>{l.text}</a>
+                    <a
+                      href={l.href}
+                      {...(isCurrent(l.href) ? { "aria-current": "page" } : {})}
+                    >
+                      {l.text}
+                    </a>
                   ),
                 )}
               </span>
             </span>
           ) : (
-            <a href={item.href}>{item.text}</a>
+            <a
+              href={item.href}
+              class={isCurrent(item.href) ? "is-current" : ""}
+              {...(isCurrent(item.href) ? { "aria-current": "page" } : {})}
+            >
+              {item.text}
+            </a>
           ),
         )
       }
@@ -152,7 +185,10 @@ const navIcon = (text: string) =>
             </summary>
             <div class="m-sub">
               {item.links.map((l) => (
-                <a href={l.href}>
+                <a
+                  href={l.href}
+                  {...(isCurrent(l.href) ? { "aria-current": "page" } : {})}
+                >
                   <span class="m-sub-ic">
                     <Icon name={tablerIcon(l.icon ?? "point")} />
                   </span>
@@ -162,7 +198,11 @@ const navIcon = (text: string) =>
             </div>
           </details>
         ) : (
-          <a class="m-item" href={item.href}>
+          <a
+            class="m-item"
+            href={item.href}
+            {...(isCurrent(item.href) ? { "aria-current": "page" } : {})}
+          >
             <span class="m-ic">
               <Icon name={navIcon(item.text)} />
             </span>
@@ -216,6 +256,33 @@ const navIcon = (text: string) =>
   }
   .nav-dd > a:hover {
     color: var(--rc-violet);
+  }
+  /* Wayfinding: highlight the current top-level location */
+  .nav > a.is-current,
+  .nav-dd > a.is-current {
+    color: var(--rc-violet);
+  }
+  .nav > a.is-current::after,
+  .nav-dd > a.is-current::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--rc-violet);
+  }
+  .nav > a {
+    position: relative;
+  }
+  .dd-panel a[aria-current="page"],
+  .m-sub a[aria-current="page"],
+  .m-item[aria-current="page"] {
+    color: var(--rc-violet) !important;
+    background: var(--bg-tint);
+    font-weight: 700;
   }
   .nav :global(.dd-caret) {
     width: 14px;
@@ -600,14 +667,55 @@ const navIcon = (text: string) =>
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 
+    // Desktop dropdowns: keep aria-expanded in sync with the CSS hover/focus
+    // state and let Escape dismiss an open menu (WAI-ARIA menu conventions).
+    header.querySelectorAll<HTMLElement>("[data-dd]").forEach((dd) => {
+      const trigger = dd.querySelector<HTMLElement>("a[aria-haspopup]");
+      const sync = (open: boolean) =>
+        trigger?.setAttribute("aria-expanded", String(open));
+      dd.addEventListener("mouseenter", () => sync(true));
+      dd.addEventListener("mouseleave", () => sync(false));
+      dd.addEventListener("focusin", () => sync(true));
+      dd.addEventListener("focusout", (e) => {
+        if (!dd.contains(e.relatedTarget as Node)) sync(false);
+      });
+      dd.addEventListener("keydown", (e) => {
+        if ((e as KeyboardEvent).key === "Escape") {
+          sync(false);
+          (document.activeElement as HTMLElement)?.blur();
+          trigger?.focus();
+        }
+      });
+    });
+
     const btn = document.getElementById("rcMenuBtn");
     const nav = document.getElementById("rcMobileNav");
-    btn?.addEventListener("click", () => {
-      const open = nav?.classList.toggle("open");
+    const setMenu = (open: boolean) => {
+      nav?.classList.toggle("open", open);
       if (nav) nav.hidden = !open;
-      btn.setAttribute("aria-expanded", String(!!open));
+      btn?.setAttribute("aria-expanded", String(open));
+      btn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       if (open) header.classList.add("scrolled");
+    };
+    btn?.addEventListener("click", () => {
+      const open = !nav?.classList.contains("open");
+      setMenu(open);
+      if (open) {
+        // Move focus into the sheet so keyboard users land where they expect.
+        nav?.querySelector<HTMLElement>("a, button, summary")?.focus();
+      }
     });
+    // Escape closes the mobile sheet and returns focus to its toggle.
+    nav?.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        setMenu(false);
+        btn?.focus();
+      }
+    });
+    // Clicking a destination link closes the sheet.
+    nav?.querySelectorAll("a[href]").forEach((a) =>
+      a.addEventListener("click", () => setMenu(false)),
+    );
   }
   rcHeaderInit();
   document.addEventListener("astro:after-swap", rcHeaderInit);
