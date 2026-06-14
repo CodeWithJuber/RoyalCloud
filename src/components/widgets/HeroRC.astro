@@ -224,9 +224,31 @@ const {
   .rc-hero {
     position: relative;
     overflow: hidden;
-    background: var(--rc-grad-vivid);
+    /* Aurora Depth: glow orbs layered over the brand vivid gradient */
+    background:
+      radial-gradient(48% 58% at 86% 6%, rgba(0, 167, 245, 0.5) 0%, transparent 60%),
+      radial-gradient(46% 56% at 6% 92%, rgba(251, 62, 130, 0.34) 0%, transparent 62%),
+      radial-gradient(40% 50% at 50% 50%, rgba(118, 82, 242, 0.28) 0%, transparent 70%),
+      var(--rc-grad-vivid);
     color: #fff;
     padding: clamp(48px, 6vw, 84px) 0 clamp(78px, 10vw, 124px);
+  }
+  /* fine grain for a premium, less-flat surface */
+  .rc-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: var(--grain);
+    background-size: 160px 160px;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+  .rc-hero-grid,
+  .rc-hero .rating-strip {
+    position: relative;
+    z-index: 1;
   }
   .rc-art-plx {
     position: absolute;
@@ -367,7 +389,8 @@ const {
     z-index: 2;
     width: 190px;
     height: auto;
-    filter: drop-shadow(0 30px 34px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 30px 34px rgba(0, 0, 0, 0.4))
+      drop-shadow(0 8px 26px rgba(118, 82, 242, 0.55));
   }
   .rc-scene {
     position: relative;
@@ -405,17 +428,20 @@ const {
     display: flex;
     align-items: center;
     gap: 11px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 14px;
+    /* frosted glass — opaque enough to keep dark text at AA contrast */
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    backdrop-filter: blur(12px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
     padding: 11px 16px;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--elev-2), inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
   }
   .rc-chip:hover {
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--elev-3), var(--glow-violet);
   }
   .rc-chip b {
     display: block;
@@ -561,7 +587,7 @@ const {
   }
   @media (max-width: 560px) {
     .rc-hero h1 {
-      font-size: 30px;
+      font-size: clamp(33px, 8.6vw, 40px);
     }
     .rc-sub {
       font-size: 16px;
