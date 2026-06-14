@@ -1,0 +1,272 @@
+/* ============================================================
+   ROYAL CLOUDS — "Aurora Depth" visual layer
+   Loaded AFTER rc-premium.css so it elevates the existing system
+   without forking it. Brand tokens stay; this adds depth, glass,
+   glow, aurora backgrounds and a livelier, mobile-first feel.
+   Everything motion-related sits behind prefers-reduced-motion.
+   ============================================================ */
+:root {
+  /* ---- Aurora backgrounds (layered radial orbs over brand ink) ---- */
+  --aurora-deep:
+    radial-gradient(60% 80% at 12% 8%, rgba(118, 82, 242, 0.55) 0%, transparent 60%),
+    radial-gradient(55% 70% at 92% 0%, rgba(0, 167, 245, 0.45) 0%, transparent 58%),
+    radial-gradient(70% 90% at 80% 100%, rgba(251, 62, 130, 0.32) 0%, transparent 60%),
+    linear-gradient(160deg, #2a1670 0%, #1a0c4a 55%, #160a40 100%);
+  --aurora-soft:
+    radial-gradient(50% 60% at 8% 0%, rgba(118, 82, 242, 0.14) 0%, transparent 60%),
+    radial-gradient(45% 55% at 100% 10%, rgba(0, 167, 245, 0.12) 0%, transparent 58%),
+    linear-gradient(180deg, #ffffff 0%, #f7f5fe 100%);
+
+  /* ---- Glass (frosted) surfaces ---- */
+  --glass-bg: rgba(255, 255, 255, 0.66);
+  --glass-bg-strong: rgba(255, 255, 255, 0.82);
+  --glass-bg-dark: rgba(33, 18, 92, 0.38);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-border-dark: rgba(255, 255, 255, 0.16);
+  --glass-blur: 14px;
+  --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --glass-inner-dark: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+
+  /* ---- Colored glow shadows ---- */
+  --glow-violet: 0 18px 50px -14px rgba(118, 82, 242, 0.55);
+  --glow-blue: 0 18px 50px -14px rgba(0, 167, 245, 0.5);
+  --glow-yellow: 0 16px 42px -12px rgba(253, 215, 0, 0.6);
+  --glow-coral: 0 16px 42px -12px rgba(251, 62, 88, 0.5);
+
+  /* ---- Layered elevation (ambient + depth) ---- */
+  --elev-1: 0 1px 2px rgba(34, 16, 95, 0.06), 0 6px 18px -8px rgba(34, 16, 95, 0.18);
+  --elev-2: 0 2px 6px rgba(34, 16, 95, 0.07), 0 16px 40px -14px rgba(34, 16, 95, 0.26);
+  --elev-3: 0 4px 12px rgba(34, 16, 95, 0.08), 0 30px 70px -20px rgba(34, 16, 95, 0.34);
+
+  /* fine grain texture (very low alpha) */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   MOBILE-FIRST TYPE SCALE — fixes "too small on the phone".
+   Targets the real selectors; aurora.css loads last so these win
+   over rc-premium's base AND its 560px override (.sec-head h2:27px).
+   Floors raised so the h2:body ratio stays healthy on phones.
+   ============================================================ */
+.sec-head h2 {
+  font-size: clamp(31px, 7.2vw, 48px);
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+}
+.sec-head p {
+  font-size: clamp(16px, 4.2vw, 18.5px);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   GLASS UTILITIES
+   ============================================================ */
+.glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.3);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.3);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--elev-1), var(--glass-inner);
+}
+.glass-dark {
+  background: var(--glass-bg-dark);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.2);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.2);
+  border: 1px solid var(--glass-border-dark);
+  box-shadow: var(--elev-2), var(--glass-inner-dark);
+  color: #fff;
+}
+
+/* Reusable premium card surface (applied to feature/plan/testi/etc. in Phase B/C) */
+.glass-card {
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.25);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.25);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--elev-2), var(--glass-inner);
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+@media (hover: hover) {
+  .glass-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--elev-3), var(--glow-violet), var(--glass-inner);
+    border-color: rgba(118, 82, 242, 0.4);
+  }
+}
+.glass-card:active {
+  transform: translateY(-2px) scale(0.995);
+}
+
+/* glow helpers */
+.glow-violet {
+  box-shadow: var(--glow-violet);
+}
+.glow-blue {
+  box-shadow: var(--glow-blue);
+}
+.glow-yellow {
+  box-shadow: var(--glow-yellow);
+}
+
+/* ============================================================
+   AURORA SECTION BACKGROUND — orbs + grain behind a section.
+   Use on dark panels (hero, cta, domain). overflow:hidden so orbs
+   never cause horizontal scroll.
+   ============================================================ */
+.aurora-bg {
+  position: relative;
+  isolation: isolate;
+  background: var(--aurora-deep);
+  background-color: #160a40;
+  overflow: hidden;
+}
+.aurora-bg::before {
+  /* drifting glow orb */
+  content: "";
+  position: absolute;
+  z-index: -2;
+  width: 70vw;
+  max-width: 640px;
+  aspect-ratio: 1;
+  top: -18%;
+  right: -12%;
+  background: radial-gradient(circle, rgba(118, 82, 242, 0.6) 0%, transparent 70%);
+  filter: blur(36px);
+  opacity: 0.8;
+}
+.aurora-bg::after {
+  /* grain overlay */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grain);
+  background-size: 160px 160px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.aurora-soft-bg {
+  background: var(--aurora-soft);
+}
+
+/* floating animation (atoms) */
+.float {
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .float {
+    animation: aurora-float 7s ease-in-out infinite;
+  }
+  .float-slow {
+    animation: aurora-float 9.5s ease-in-out 0.8s infinite;
+  }
+}
+@keyframes aurora-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* ============================================================
+   BUTTON ATOM — glow + tactile press + sheen + bigger on mobile
+   ============================================================ */
+.btn {
+  min-height: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary {
+  box-shadow: var(--glow-yellow);
+}
+.btn-primary:active,
+.btn-dark:active,
+.btn-coral:active,
+.btn-secondary:active {
+  transform: translateY(0) scale(0.97);
+}
+/* sheen sweep on hover (desktop only, motion-safe) */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-primary::after,
+  .btn-coral::after,
+  .btn-dark::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transform: skewX(-18deg);
+    transition: left 0.6s ease;
+  }
+  .btn-primary:hover::after,
+  .btn-coral:hover::after,
+  .btn-dark:hover::after {
+    left: 130%;
+  }
+}
+/* gentle resting pulse on the main yellow CTA */
+@media (prefers-reduced-motion: no-preference) {
+  .btn-primary.btn-lg {
+    animation: cta-pulse 3.6s ease-in-out infinite;
+  }
+}
+@keyframes cta-pulse {
+  0%,
+  100% {
+    box-shadow: var(--glow-yellow);
+  }
+  50% {
+    box-shadow: 0 20px 54px -10px rgba(253, 215, 0, 0.78);
+  }
+}
+
+/* glass ghost button */
+.btn-glass {
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   CHIP / BADGE ATOM
+   ============================================================ */
+.chip-glass {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+}
+
+/* ============================================================
+   FOCUS RINGS on glass / aurora — keep PR #38 a11y intact
+   ============================================================ */
+.aurora-bg :focus-visible,
+.glass-dark :focus-visible,
+.btn-glass:focus-visible {
+  outline: 2.5px solid var(--rc-yellow);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   Safety: never let decorative depth cause horizontal scroll
+   ============================================================ */
+html,
+body {
+  overflow-x: clip;
+}
