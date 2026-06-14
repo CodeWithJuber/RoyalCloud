@@ -264,6 +264,146 @@
 }
 
 /* ============================================================
+   PHASE B — MOLECULES: card depth, glow, tactile interaction,
+   bigger mobile type, and restored carousel motion.
+   ============================================================ */
+
+/* Shared premium depth for the card families. Colored glow on hover
+   (desktop) gives the "Aurora" lift; active gives touch feedback. */
+.feature-card,
+.plan,
+.testi,
+.card {
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+@media (hover: hover) {
+  .feature-card:hover,
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--elev-3), var(--glow-violet);
+  }
+  .testi:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--elev-3), var(--glow-blue);
+  }
+}
+.feature-card:active,
+.plan:active,
+.testi:active,
+.card:active {
+  transform: scale(0.985);
+}
+
+/* Feature tiles: add an icon glow + a translucent top-light so the
+   pastel tiles gain depth instead of reading flat. */
+.feature-card .f-icon,
+.feature-card .f-icon-grad {
+  box-shadow: var(--glow-violet);
+}
+.feature-grid.tiles .feature-card {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--elev-2);
+}
+.feature-grid.tiles .feature-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), transparent 42%);
+  pointer-events: none;
+}
+
+/* Plan cards: stronger depth; the popular plan GLOWS (Von Restorff). */
+.plan {
+  box-shadow: var(--elev-2);
+}
+.plan.popular {
+  box-shadow: var(--elev-3), var(--glow-violet);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .plan.popular {
+    animation: plan-glow 4s ease-in-out infinite;
+  }
+}
+@keyframes plan-glow {
+  0%,
+  100% {
+    box-shadow: var(--elev-3), var(--glow-violet);
+  }
+  50% {
+    box-shadow: var(--elev-3), 0 22px 60px -12px rgba(118, 82, 242, 0.78);
+  }
+}
+/* bigger, prouder price on phones */
+@media (max-width: 560px) {
+  .plan .price {
+    font-size: 42px;
+  }
+  .plan .was-row {
+    margin-bottom: 4px;
+  }
+}
+
+/* ---- Carousel revival: keep cards visible but ALIVE on mobile.
+   rc-premium sets transition:none on swipe cards; restore transform/
+   shadow transitions + a tap press so they no longer feel dead. ---- */
+@media (max-width: 700px) {
+  body[data-motion="on"] .plan-grid .plan.reveal,
+  body[data-motion="on"] .feature-grid.tiles .feature-card.reveal {
+    transition:
+      transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.28s ease;
+  }
+  .plan-grid .plan:active,
+  .feature-grid.tiles .feature-card:active {
+    transform: scale(0.97);
+  }
+  /* soft edge fade so it's obvious the row scrolls */
+  .pricing .wrap,
+  .features .wrap {
+    position: relative;
+  }
+}
+
+/* ---- Carousel progress dots (populated by aurora.js) ---- */
+.rc-dots {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+@media (max-width: 700px) {
+  .rc-dots.is-on {
+    display: flex;
+  }
+}
+@media (max-width: 860px) {
+  .rc-dots.is-on[data-wide] {
+    display: flex;
+  }
+}
+.rc-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--line-strong, #d9d2f1);
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+  cursor: pointer;
+}
+.rc-dots button[aria-current="true"] {
+  width: 22px;
+  background: var(--rc-violet);
+}
+
+/* ============================================================
    Safety: never let decorative depth cause horizontal scroll
    ============================================================ */
 html,
