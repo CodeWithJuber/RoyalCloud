@@ -14,45 +14,40 @@
   /* ---- brand (6 named colors + supporting tones) ---- */
   --rc-ink: #0a0e1f; /* space-ink: text, dark panels, footer */
   --rc-ink-deep: #05070f;
-  --rc-violet: #5111e0; /* electric royal violet — primary brand */
+  --rc-violet: #4b16d6; /* royal violet — primary brand (deepened) */
   --rc-violet-dark: #3a0ca3;
-  --rc-blue: #19b6ff; /* sky azure — altitude / cloud field */
-  --rc-yellow: #ffb627; /* royal gold — THE loud accent (CTA, highlights) */
-  --rc-orange: #f59e0b; /* warm amber (offer/save accents) */
-  --rc-orange-dark: #c2710a;
-  --rc-orange-deep: #a85f08;
-  --rc-plum: #0a0e1f; /* section headings now read as ink, not plum */
-  --rc-coral: #f43f5e; /* alert / search accent (rose) */
-  --rc-purple: #5111e0; /* legacy alias → royal */
+  --rc-blue: #1e96e8; /* azure — deepened so it holds as text/accent */
+  --rc-yellow: #f5a524; /* gold — THE loud accent, used sparingly */
+  --rc-orange: #e0890c; /* warm amber (offer/save accents) */
+  --rc-orange-dark: #b9700a;
+  --rc-orange-deep: #9c5e08;
+  --rc-plum: #0a0e1f; /* section headings read as ink */
+  --rc-coral: #ef4361; /* alert / search accent */
+  --rc-purple: #4b16d6; /* legacy alias → royal */
   --rc-indigo: #0a0e1f; /* legacy alias → ink */
   --rc-indigo-deep: #05070f; /* legacy alias */
 
-  /* brand spectrum — the signature device (use sparingly: rules, glow) */
-  --spectrum: linear-gradient(100deg, #5111e0 0%, #19b6ff 52%, #ffb627 100%);
-  --rc-gradient: linear-gradient(110deg, #5111e0 0%, #19b6ff 100%);
+  /* brand spectrum — the one signature device (hairlines / hero only) */
+  --spectrum: linear-gradient(100deg, #4b16d6 0%, #1e96e8 52%, #f5a524 100%);
+  --rc-gradient: linear-gradient(110deg, #4b16d6 0%, #1e96e8 100%);
   /* deep "royal night" gradient for the dark contrast panels
      (hero glow, stats, cta, domain) — a sky seen from altitude */
   --rc-grad-vivid:
     radial-gradient(
-      760px 440px at 6% 110%,
-      rgba(81, 17, 224, 0.55) 0%,
-      transparent 56%
+      720px 420px at 8% 112%,
+      rgba(75, 22, 214, 0.45) 0%,
+      transparent 58%
     ),
     radial-gradient(
-      680px 400px at 96% -8%,
-      rgba(25, 182, 255, 0.42) 0%,
-      transparent 56%
+      640px 380px at 96% -10%,
+      rgba(30, 150, 232, 0.34) 0%,
+      transparent 58%
     ),
-    radial-gradient(
-      520px 360px at 78% 96%,
-      rgba(255, 182, 39, 0.22) 0%,
-      transparent 60%
-    ),
-    linear-gradient(122deg, #120536 0%, #2a0b86 52%, #4311c8 100%);
+    linear-gradient(122deg, #100733 0%, #261067 55%, #371aa6 100%);
 
   /* ---- surfaces ---- */
-  --bg-page: #fbfbfd; /* luminous paper */
-  --bg-tint: #f3f4fb; /* cool mist panel */
+  --bg-page: #fcfcfe; /* luminous paper */
+  --bg-tint: #f1f2f8; /* cool mist panel */
   --bg-tint-strong: #e8eaf6;
   --bg-sky: #ecf6ff; /* soft azure panel */
   /* refined cool pastel tiles */
@@ -175,7 +170,7 @@ h2 em {
   .text-grad,
   h1 em,
   h2 em {
-    background: linear-gradient(96deg, #5111e0 0%, #3340d6 52%, #0b7ec0 100%);
+    background: linear-gradient(96deg, #4b16d6 0%, #2f3fc8 52%, #0b7ec0 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
