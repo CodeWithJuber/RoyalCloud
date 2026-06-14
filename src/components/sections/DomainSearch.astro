@@ -58,6 +58,13 @@ const formAction = `${action.origin}${action.pathname}`;
         />
         <button class="btn btn-coral" type="submit">Search</button>
       </form>
+      <div
+        class="domain-suggest"
+        id="domainSuggest"
+        role="listbox"
+        aria-label="Domain suggestions"
+      >
+      </div>
       <p id="domain-status" class="domain-status" role="status" aria-live="polite"></p>
       <div class="domain-tlds">
         {
@@ -104,7 +111,41 @@ const formAction = `${action.origin}${action.pathname}`;
       const input = form.querySelector<HTMLInputElement>('input[name=query]');
       const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
       const status = form.parentElement?.querySelector<HTMLElement>('#domain-status') ?? null;
+      const suggest = form.parentElement?.querySelector<HTMLElement>('#domainSuggest') ?? null;
       if (!input) return;
+
+      // Live suggestions (autocomplete affordance): as the visitor types a
+      // name, surface the popular TLDs as one-tap chips.
+      const TLDS = ['.com', '.in', '.net', '.org'];
+      const renderSuggest = () => {
+        if (!suggest) return;
+        const base = input.value
+          .trim()
+          .toLowerCase()
+          .replace(/^https?:\/\//, '')
+          .replace(/^www\./, '')
+          .replace(/[^a-z0-9-].*$/, '');
+        if (base.length < 2) {
+          suggest.classList.remove('is-on');
+          suggest.innerHTML = '';
+          return;
+        }
+        suggest.innerHTML = '';
+        TLDS.forEach((tld) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('role', 'option');
+          b.textContent = base + tld;
+          b.addEventListener('click', () => {
+            input.value = base + tld;
+            suggest.classList.remove('is-on');
+            form.requestSubmit();
+          });
+          suggest.appendChild(b);
+        });
+        suggest.classList.add('is-on');
+      };
+      input.addEventListener('input', renderSuggest);
 
       const setStatus = (msg: string, error = false) => {
         if (!status) return;
