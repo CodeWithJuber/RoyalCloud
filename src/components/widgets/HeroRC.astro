@@ -159,24 +159,25 @@ const {
       void main(){
         vec2 uv = gl_FragCoord.xy / u_res.xy;
         vec2 p = uv; p.x *= u_res.x / u_res.y;
-        float t = u_time * 0.018;
-        vec2 drift = vec2(u_mouse.x * 0.10 + t, -u_mouse.y * 0.06 - u_scroll * 0.30);
-        float n  = fbm(p * 1.7 + drift);
-        float n2 = fbm(p * 3.3 - drift * 0.7 + 4.0);
+        // calmer: slower drift, softer hues, restrained gold
+        float t = u_time * 0.010;
+        vec2 drift = vec2(u_mouse.x * 0.07 + t, -u_mouse.y * 0.04 - u_scroll * 0.22);
+        float n  = fbm(p * 1.6 + drift);
+        float n2 = fbm(p * 3.0 - drift * 0.7 + 4.0);
 
-        vec3 deep  = vec3(0.066, 0.018, 0.207);
-        vec3 royal = vec3(0.318, 0.067, 0.878);
-        vec3 azure = vec3(0.098, 0.714, 1.0);
-        vec3 gold  = vec3(1.0, 0.714, 0.153);
+        vec3 deep  = vec3(0.055, 0.020, 0.180);
+        vec3 royal = vec3(0.275, 0.085, 0.800);
+        vec3 azure = vec3(0.110, 0.620, 0.940);
+        vec3 gold  = vec3(0.96, 0.700, 0.180);
 
-        vec3 col = mix(deep, royal, smoothstep(0.15, 0.95, n));
-        col = mix(col, azure, smoothstep(0.45, 1.05, n2) * 0.55 * (1.0 - uv.y * 0.6));
-        float motes = pow(fbm(p * 6.5 + vec2(t * 2.2, -t)), 7.0);
-        col += gold * motes * 0.9 * smoothstep(0.0, 0.7, uv.y);
-        // soft top-darken + corner vignette so headline type stays legible
-        col *= 0.82 + 0.18 * smoothstep(0.0, 0.55, uv.y);
+        vec3 col = mix(deep, royal, smoothstep(0.18, 0.96, n));
+        col = mix(col, azure, smoothstep(0.50, 1.05, n2) * 0.42 * (1.0 - uv.y * 0.6));
+        float motes = pow(fbm(p * 6.0 + vec2(t * 1.6, -t)), 8.0);
+        col += gold * motes * 0.40 * smoothstep(0.1, 0.7, uv.y);
+        // stronger top-darken + vignette so the headline stays crisp
+        col *= 0.70 + 0.22 * smoothstep(0.0, 0.55, uv.y);
         float vig = smoothstep(1.25, 0.25, distance(uv, vec2(0.5)));
-        col *= 0.78 + 0.22 * vig;
+        col *= 0.80 + 0.20 * vig;
         gl_FragColor = vec4(col, 1.0);
       }
     `;

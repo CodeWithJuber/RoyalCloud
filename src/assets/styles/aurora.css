@@ -211,7 +211,7 @@
   overflow: hidden;
 }
 .btn-primary {
-  box-shadow: var(--glow-yellow);
+  box-shadow: 0 8px 20px -10px rgba(245, 165, 36, 0.45);
 }
 .btn-primary:active,
 .btn-dark:active,
@@ -219,34 +219,7 @@
 .btn-secondary:active {
   transform: translateY(0) scale(0.97);
 }
-/* sheen sweep on hover (desktop only, motion-safe) */
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .btn-primary::after,
-  .btn-coral::after,
-  .btn-dark::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
-      100deg,
-      transparent,
-      rgba(255, 255, 255, 0.45),
-      transparent
-    );
-    transform: skewX(-18deg);
-    transition: left 0.6s ease;
-  }
-  .btn-primary:hover::after,
-  .btn-coral:hover::after,
-  .btn-dark:hover::after {
-    left: 130%;
-  }
-}
-/* the gold CTA holds a confident resting glow (no looping pulse —
-   restraint reads as craft; one loud accent, calmly) */
+/* quiet-premium: no sheen sweep, no resting pulse — restraint is craft */
 
 /* glass ghost button */
 .btn-glass {
@@ -298,54 +271,33 @@
     box-shadow 0.3s ease,
     border-color 0.3s ease;
 }
+/* quiet-premium: calm lift, plain elevation — no coloured glows */
 @media (hover: hover) {
   .feature-card:hover,
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--elev-3), var(--glow-violet);
-  }
+  .card:hover,
   .testi:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--elev-3), var(--glow-blue);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
   }
 }
 .feature-card:active,
 .plan:active,
 .testi:active,
 .card:active {
-  transform: scale(0.985);
+  transform: scale(0.99);
 }
 
-/* Feature tiles: add an icon glow + a translucent top-light so the
-   pastel tiles gain depth instead of reading flat. */
-.feature-card .f-icon,
-.feature-card .f-icon-grad {
-  box-shadow: var(--glow-violet);
-}
 .feature-grid.tiles .feature-card {
   position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: var(--elev-2);
-}
-.feature-grid.tiles .feature-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.55),
-    transparent 42%
-  );
-  pointer-events: none;
+  box-shadow: var(--shadow-xs);
 }
 
-/* Plan cards: stronger depth; the popular plan GLOWS (Von Restorff). */
+/* Plan cards: clean depth; the popular plan reads via its band + border */
 .plan {
-  box-shadow: var(--elev-2);
+  box-shadow: var(--shadow-sm);
 }
 .plan.popular {
-  box-shadow: var(--elev-3), var(--glow-violet);
+  box-shadow: var(--shadow-md);
 }
 /* bigger, prouder price on phones */
 @media (max-width: 560px) {
@@ -417,57 +369,31 @@
    Layer glow orbs into existing gradients (no pseudo-element
    conflicts) and turn stat figures into frosted glass tiles.
    ============================================================ */
+/* dark panels use the single calm grad-vivid (no extra orb layers) */
 .stats,
 .cta-band,
 .domain-panel {
-  background-image:
-    radial-gradient(
-      45% 60% at 88% 4%,
-      rgba(25, 182, 255, 0.45) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      45% 60% at 6% 96%,
-      rgba(255, 182, 39, 0.3) 0%,
-      transparent 62%
-    ),
-    var(--rc-grad-vivid);
+  background-image: var(--rc-grad-vivid);
 }
 
-/* Stat figures become glass tiles with depth */
+/* Stat figures: quiet hairline tiles (no backdrop-blur stack) */
 .stats .stat {
-  background: rgba(255, 255, 255, 0.1);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: var(--radius-card, 18px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-card);
   padding: 22px 16px;
-  box-shadow: var(--glass-inner-dark);
-  transition:
-    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.28s ease;
-}
-@media (hover: hover) {
-  .stats .stat:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 18px 44px -16px rgba(0, 0, 0, 0.5);
-  }
 }
 
-/* CTA + domain panels get a soft outer glow so they lift off the page */
-.cta-band {
-  box-shadow: var(--elev-3), var(--glow-violet);
-}
+/* panels lift with plain elevation, not coloured glow */
+.cta-band,
 .domain-panel {
-  box-shadow: var(--elev-3), var(--glow-blue);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Domain TLD chips → glass */
+/* Domain TLD chips → quiet translucent (no blur) */
 .domain-tlds span {
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 /* ============================================================
@@ -475,42 +401,15 @@
    Soft aurora tints behind the light card sections so the card
    depth/glow reads, giving a premium alternating scroll.
    ============================================================ */
+/* quiet alternating rhythm: flat tints, no radial orbs */
 .features {
-  background: var(--aurora-soft);
+  background: var(--bg-page);
 }
 .testi-sec {
-  position: relative;
-  background:
-    radial-gradient(
-      50% 60% at 100% 0%,
-      rgba(25, 182, 255, 0.1) 0%,
-      transparent 58%
-    ),
-    radial-gradient(
-      45% 55% at 0% 100%,
-      rgba(81, 17, 224, 0.12) 0%,
-      transparent 60%
-    ),
-    var(--bg-tint);
+  background: var(--bg-tint);
 }
 .faq {
-  background:
-    radial-gradient(
-      40% 50% at 92% 8%,
-      rgba(81, 17, 224, 0.08) 0%,
-      transparent 60%
-    ),
-    var(--bg-page);
-}
-
-/* Performance: on very small phones, drop backdrop-blur on the lower-priority
-   glass so we never stack too many blur layers (keeps scrolling smooth). */
-@media (max-width: 480px) {
-  .domain-tlds span,
-  .stats .stat {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
+  background: var(--bg-page);
 }
 
 /* ============================================================
@@ -538,30 +437,10 @@
     var(--rc-blue),
     var(--rc-yellow)
   );
-  box-shadow: 0 0 12px rgba(81, 17, 224, 0.6);
   transition: width 0.08s linear;
 }
 
-/* Living aurora — slow drift on the dark gradient panels (motion-safe).
-   Larger background-size lets background-position animate as gentle motion. */
-@media (prefers-reduced-motion: no-preference) {
-  .rc-hero,
-  .stats,
-  .cta-band,
-  .domain-panel {
-    background-size: 175% 175%;
-    animation: aurora-drift 20s ease-in-out infinite;
-  }
-}
-@keyframes aurora-drift {
-  0%,
-  100% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-}
+/* (removed: looping aurora-drift on dark panels — quiet over busy) */
 
 /* On phones the sticky action bar already owns the bottom zone, so the
    floating back-to-top button is redundant and was overlapping cards/the
