@@ -732,8 +732,15 @@
   .p-hero .hero-ctas {
     justify-content: center;
   }
-  .p-hero .hero-badges {
-    align-items: center;
+  /* center the bullet group, but keep the checks left-aligned (a centred
+     multi-item list reads as amateur); same trick for the home hero */
+  .p-hero .hero-badges,
+  .rc-hero .rc-badges {
+    width: max-content;
+    max-width: 100%;
+    margin-inline: auto;
+    align-items: flex-start;
+    text-align: left;
   }
   .p-hero .sub {
     margin-inline: auto;
