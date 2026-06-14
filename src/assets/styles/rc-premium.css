@@ -885,7 +885,9 @@ h2 em {
   padding: 12px 26px;
   border-radius: 999px;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
 }
 .bill-toggle button:hover {
   color: var(--rc-ink);
