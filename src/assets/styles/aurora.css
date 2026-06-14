@@ -563,11 +563,12 @@
   }
 }
 
-/* keep the back-to-top button clear of the sticky mobile action bar, and
-   reserve space so the bar never permanently covers the footer's last row */
+/* On phones the sticky action bar already owns the bottom zone, so the
+   floating back-to-top button is redundant and was overlapping cards/the
+   chat bubble. Hide it on mobile; reserve space for the action bar. */
 @media (max-width: 860px) {
   #rcToTop {
-    bottom: 88px;
+    display: none !important;
   }
   body {
     padding-bottom: 78px;
@@ -708,4 +709,46 @@
   align-items: center;
   min-height: 44px;
   padding-block: 4px;
+}
+
+/* ============================================================
+   Mobile centering + hero visuals (real-device feedback pass)
+   ============================================================ */
+
+/* Product hero: the Altitude/themed scene was hidden < 1080px, leaving the
+   hero empty on tablet & phone. Show it (stacked under the copy), and
+   center the copy on phones so alignment reads intentional. */
+@media (max-width: 1080px) {
+  .p-hero-art {
+    display: flex !important;
+    margin-top: 4px;
+  }
+}
+@media (max-width: 860px) {
+  .p-hero .inner {
+    text-align: center;
+    justify-items: center;
+  }
+  .p-hero .hero-ctas {
+    justify-content: center;
+  }
+  .p-hero .hero-badges {
+    align-items: center;
+  }
+  .p-hero .sub {
+    margin-inline: auto;
+  }
+}
+
+/* Standalone section buttons read better centred on phones */
+@media (max-width: 640px) {
+  .race-foot {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .race-foot .race-again {
+    width: 100%;
+    justify-content: center;
+  }
 }
