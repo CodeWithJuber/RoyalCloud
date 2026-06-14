@@ -454,6 +454,37 @@
 }
 
 /* ============================================================
+   PHASE D — PAGE rhythm & polish.
+   Soft aurora tints behind the light card sections so the card
+   depth/glow reads, giving a premium alternating scroll.
+   ============================================================ */
+.features {
+  background: var(--aurora-soft);
+}
+.testi-sec {
+  position: relative;
+  background:
+    radial-gradient(50% 60% at 100% 0%, rgba(0, 167, 245, 0.1) 0%, transparent 58%),
+    radial-gradient(45% 55% at 0% 100%, rgba(118, 82, 242, 0.12) 0%, transparent 60%),
+    var(--bg-tint);
+}
+.faq {
+  background:
+    radial-gradient(40% 50% at 92% 8%, rgba(118, 82, 242, 0.08) 0%, transparent 60%),
+    var(--bg-page);
+}
+
+/* Performance: on very small phones, drop backdrop-blur on the lower-priority
+   glass so we never stack too many blur layers (keeps scrolling smooth). */
+@media (max-width: 480px) {
+  .domain-tlds span,
+  .stats .stat {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* ============================================================
    Safety: never let decorative depth cause horizontal scroll
    ============================================================ */
 html,
