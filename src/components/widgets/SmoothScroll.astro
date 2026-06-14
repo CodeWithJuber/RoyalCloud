@@ -1,0 +1,88 @@
+---
+/**
+ * STRATOSPHERE motion spine — Lenis smooth scroll + a GSAP ScrollTrigger
+ * hero→content handoff. Everything is gated behind prefers-reduced-motion
+ * (native scroll, no JS motion) and re-initialises across Astro view
+ * transitions. Only transform/opacity are animated → no layout shift.
+ */
+---
+
+<script>
+  import Lenis from "lenis";
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  type Teardown = () => void;
+  let teardowns: Teardown[] = [];
+
+  function setup() {
+    // clean any prior instance (view transitions)
+    teardowns.forEach((fn) => fn());
+    teardowns = [];
+
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reduce) return;
+
+    // ── Lenis smooth scroll
+    const lenis = new Lenis({
+      duration: 1.05,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    lenis.on("scroll", ScrollTrigger.update);
+    const raf = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(raf);
+    gsap.ticker.lagSmoothing(0);
+    teardowns.push(() => {
+      gsap.ticker.remove(raf);
+      lenis.destroy();
+    });
+
+    // anchor links should route through Lenis for a smooth glide
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement)?.closest?.(
+        'a[href^="#"]',
+      ) as HTMLAnchorElement | null;
+      if (!a) return;
+      const id = a.getAttribute("href");
+      if (!id || id === "#") return;
+      const el = document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el as HTMLElement, { offset: -96 });
+    };
+    document.addEventListener("click", onClick);
+    teardowns.push(() => document.removeEventListener("click", onClick));
+
+    // ── Hero handoff: copy + veil drift up and fade as you leave the hero
+    const hero = document.querySelector<HTMLElement>("[data-rc-hero]");
+    const copy = hero?.querySelector<HTMLElement>(".rc-hero-copy");
+    if (hero && copy) {
+      const tl = gsap.to(copy, {
+        y: -60,
+        opacity: 0.0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+      teardowns.push(() => {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+        gsap.set(copy, { clearProps: "all" });
+      });
+    }
+
+    ScrollTrigger.refresh();
+  }
+
+  setup();
+  document.addEventListener("astro:after-swap", setup);
+</script>
