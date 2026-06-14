@@ -5,16 +5,21 @@ import Button from '~/components/ui/Button.astro';
 const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props;
 ---
 
-<form>
+<form class="rc-form" novalidate>
   {
     inputs &&
       inputs.map(
-        ({ type = 'text', name, label = '', autocomplete = 'on', placeholder = '' }) =>
+        ({ type = 'text', name, label = '', autocomplete = 'on', placeholder = '', required = false }) =>
           name && (
             <div class="mb-6">
               {label && (
                 <label for={name} class="block text-sm font-medium">
                   {label}
+                  {required && (
+                    <span class="field-req" aria-hidden="true">
+                      *
+                    </span>
+                  )}
                 </label>
               )}
               <input
@@ -23,8 +28,12 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 id={name}
                 autocomplete={autocomplete}
                 placeholder={placeholder}
+                required={required}
+                aria-required={required ? 'true' : undefined}
+                aria-describedby={`${name}-error`}
                 class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
               />
+              <span id={`${name}-error`} class="field-error" role="alert" aria-live="polite" />
             </div>
           )
       )
@@ -32,17 +41,26 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
 
   {
     textarea && (
-      <div>
+      <div class="mb-6">
         <label for="textarea" class="block text-sm font-medium">
           {textarea.label}
+          {textarea.required && (
+            <span class="field-req" aria-hidden="true">
+              *
+            </span>
+          )}
         </label>
         <textarea
           id="textarea"
           name={textarea.name ? textarea.name : 'message'}
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
+          required={textarea.required}
+          aria-required={textarea.required ? 'true' : undefined}
+          aria-describedby="textarea-error"
           class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
         />
+        <span id="textarea-error" class="field-error" role="alert" aria-live="polite" />
       </div>
     )
   }
@@ -77,6 +95,8 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
     )
   }
 
+  <p class="form-status" role="status" aria-live="polite" hidden></p>
+
   {
     description && (
       <div class="mt-3 text-center">
@@ -85,3 +105,86 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
     )
   }
 </form>
+
+<script>
+  // Progressive enhancement: inline, instant validation (Doherty Threshold),
+  // a single accessible success/error summary (Peak-End Rule), forgiving input
+  // (Postel's Law) and a pending button state to prevent double-submits.
+  function initRcForms() {
+    document.querySelectorAll<HTMLFormElement>('form.rc-form').forEach((form) => {
+      if (form.dataset.rcReady) return;
+      form.dataset.rcReady = 'true';
+
+      const status = form.querySelector<HTMLElement>('.form-status');
+      const setError = (field: HTMLInputElement | HTMLTextAreaElement, msg: string) => {
+        field.setAttribute('aria-invalid', 'true');
+        const box = document.getElementById(`${field.id}-error`);
+        if (box) box.textContent = msg;
+      };
+      const clearError = (field: HTMLInputElement | HTMLTextAreaElement) => {
+        field.removeAttribute('aria-invalid');
+        const box = document.getElementById(`${field.id}-error`);
+        if (box) box.textContent = '';
+      };
+
+      const validateField = (field: HTMLInputElement | HTMLTextAreaElement): boolean => {
+        const value = field.value.trim();
+        if (field.required && !value) {
+          setError(field, 'This field is required.');
+          return false;
+        }
+        if (field.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          setError(field, 'Please enter a valid email address.');
+          return false;
+        }
+        clearError(field);
+        return true;
+      };
+
+      const fields = Array.from(
+        form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input:not([type=checkbox]), textarea')
+      );
+      fields.forEach((f) => {
+        f.addEventListener('blur', () => validateField(f));
+        f.addEventListener('input', () => {
+          if (f.getAttribute('aria-invalid') === 'true') validateField(f);
+        });
+      });
+
+      form.addEventListener('submit', (e) => {
+        let firstInvalid: HTMLInputElement | HTMLTextAreaElement | null = null;
+        fields.forEach((f) => {
+          // Postel's Law: trim stray whitespace before we judge / submit.
+          f.value = f.value.trim();
+          if (!validateField(f) && !firstInvalid) firstInvalid = f;
+        });
+
+        if (firstInvalid) {
+          e.preventDefault();
+          (firstInvalid as HTMLElement).focus();
+          if (status) {
+            status.hidden = false;
+            status.className = 'form-status err';
+            status.textContent = 'Please fix the highlighted fields and try again.';
+          }
+          return;
+        }
+
+        const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
+        if (btn) {
+          btn.disabled = true;
+          btn.classList.add('is-loading');
+        }
+        // Static site: no backend. Acknowledge instantly so the visitor gets
+        // closure (Peak-End) even though the action mailto/handler may follow.
+        if (status) {
+          status.hidden = false;
+          status.className = 'form-status ok';
+          status.textContent = 'Thanks — your message is on its way. We usually reply within a few hours.';
+        }
+      });
+    });
+  }
+  initRcForms();
+  document.addEventListener('astro:after-swap', initRcForms);
+</script>

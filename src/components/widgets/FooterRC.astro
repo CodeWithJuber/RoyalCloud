@@ -83,16 +83,19 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     <div class="wrap f-news-inner">
       <h2>Join our newsletter</h2>
       <p>Better offers, product news and updates from Royal Clouds.</p>
-      <form class="f-news-form" data-newsletter>
+      <form class="f-news-form" data-newsletter novalidate>
         <input
           type="email"
           name="email"
           placeholder="Your email address"
           aria-label="Email address"
+          aria-describedby="news-status"
+          autocomplete="email"
           required
         />
         <button class="btn btn-coral" type="submit">Subscribe</button>
       </form>
+      <p id="news-status" class="f-news-status" role="status" aria-live="polite"></p>
     </div>
   </div>
 
@@ -261,6 +264,20 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   .f-help-card:hover em {
     text-decoration: underline;
     text-underline-offset: 3px;
+  }
+
+  .f-news-status {
+    margin: 12px 0 0;
+    min-height: 1.2em;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .f-news-status.is-error {
+    color: var(--rc-yellow);
+  }
+  .f-news-form input[aria-invalid="true"] {
+    box-shadow: 0 0 0 3px rgba(253, 215, 0, 0.4);
   }
 
   /* ---- newsletter: centered, bulletproof at every width ---- */
@@ -644,11 +661,27 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     document
       .querySelectorAll<HTMLFormElement>("[data-newsletter]")
       .forEach((form) => {
+        const status = document.getElementById("news-status");
+        const setStatus = (msg: string, error = false) => {
+          if (!status) return;
+          status.textContent = msg;
+          status.classList.toggle("is-error", error);
+        };
         form.addEventListener("submit", (e) => {
           e.preventDefault();
-          const email =
-            (form.querySelector("input[name=email]") as HTMLInputElement)
-              ?.value ?? "";
+          const input = form.querySelector(
+            "input[name=email]",
+          ) as HTMLInputElement | null;
+          const email = (input?.value ?? "").trim();
+          // Validate before handing off (Doherty + Postel's Law).
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            input?.focus();
+            input?.setAttribute("aria-invalid", "true");
+            setStatus("Please enter a valid email address.", true);
+            return;
+          }
+          input?.removeAttribute("aria-invalid");
+          setStatus("Thanks! Opening your mail app to confirm…");
           window.location.href = `mailto:sales@royalclouds.net?subject=${encodeURIComponent(
             "Newsletter signup",
           )}&body=${encodeURIComponent(`Please add ${email} to the Royal Clouds newsletter.`)}`;
