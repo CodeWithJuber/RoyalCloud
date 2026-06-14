@@ -5,13 +5,12 @@ import { pricify } from "~/utils/currency";
 import site from "~/data/site.json";
 
 /**
- * Royal Clouds home hero — "Living Sky" (STRATOSPHERE signature).
- * A full-bleed WebGL flow-noise aurora/cloudfield (royal → azure with
- * gold motes) reacts to cursor parallax + scroll drift behind crisp
- * Bricolage display type. The animated canvas sits over the static
- * --rc-grad-vivid gradient, so if WebGL is unavailable, low-power, or
- * prefers-reduced-motion is set, the gradient simply shows through —
- * zero CLS, no broken state.
+ * Royal Clouds home hero — "Static Luxe" (STRATOSPHERE, quiet-premium).
+ * No WebGL / no canvas / no rAF loop: a deep royal-night gradient with one
+ * soft static bloom, crisp Bricolage display type, and the Altitude vector
+ * on the right (desktop). Fastest possible hero, zero CLS, fully calm.
+ * A gentle GSAP scroll parallax on the copy (motion-safe) lives in
+ * SmoothScroll.astro via [data-rc-hero].
  */
 interface Action {
   text: string;
@@ -25,7 +24,7 @@ interface Props {
   primary?: Action;
   secondary?: Action;
   badges?: string[];
-  /** kept for API compatibility; the Living Sky replaces the old art slot */
+  /** kept for API compatibility */
   art?: string;
 }
 const {
@@ -48,7 +47,6 @@ const {
 ---
 
 <section class="rc-hero" data-rc-hero>
-  <canvas class="rc-sky" data-rc-sky aria-hidden="true"></canvas>
   <div class="rc-sky-veil" aria-hidden="true"></div>
 
   <div class="wrap rc-hero-grid">
@@ -113,199 +111,6 @@ const {
   <div class="rc-hero-rule" aria-hidden="true"></div>
 </section>
 
-<script>
-  // ── Living Sky: a single-pass GLSL fbm cloudfield reacting to cursor + scroll.
-  // Self-contained, dependency-free, ~one draw call. Degrades to the CSS
-  // gradient on no-WebGL / low-power / reduced-motion.
-  type SkyHandle = { destroy: () => void };
-
-  function initSky(canvas: HTMLCanvasElement): SkyHandle | null {
-    const gl = (canvas.getContext("webgl", {
-      antialias: false,
-      alpha: true,
-      premultipliedAlpha: false,
-      powerPreference: "low-power",
-    }) ||
-      canvas.getContext("experimental-webgl")) as WebGLRenderingContext | null;
-    if (!gl) return null;
-
-    const vert = `
-      attribute vec2 a_pos;
-      void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
-    `;
-    const frag = `
-      precision mediump float;
-      uniform vec2 u_res;
-      uniform float u_time;
-      uniform vec2 u_mouse;
-      uniform float u_scroll;
-
-      float hash(vec2 p){
-        p = fract(p * vec2(123.34, 456.21));
-        p += dot(p, p + 45.32);
-        return fract(p.x * p.y);
-      }
-      float noise(vec2 p){
-        vec2 i = floor(p); vec2 f = fract(p);
-        vec2 u = f * f * (3.0 - 2.0 * f);
-        return mix(mix(hash(i + vec2(0.0,0.0)), hash(i + vec2(1.0,0.0)), u.x),
-                   mix(hash(i + vec2(0.0,1.0)), hash(i + vec2(1.0,1.0)), u.x), u.y);
-      }
-      float fbm(vec2 p){
-        float v = 0.0; float a = 0.5;
-        for(int i = 0; i < 5; i++){ v += a * noise(p); p *= 2.02; a *= 0.5; }
-        return v;
-      }
-      void main(){
-        vec2 uv = gl_FragCoord.xy / u_res.xy;
-        vec2 p = uv; p.x *= u_res.x / u_res.y;
-        // calmer: slower drift, softer hues, restrained gold
-        float t = u_time * 0.010;
-        vec2 drift = vec2(u_mouse.x * 0.07 + t, -u_mouse.y * 0.04 - u_scroll * 0.22);
-        float n  = fbm(p * 1.6 + drift);
-        float n2 = fbm(p * 3.0 - drift * 0.7 + 4.0);
-
-        vec3 deep  = vec3(0.055, 0.020, 0.180);
-        vec3 royal = vec3(0.275, 0.085, 0.800);
-        vec3 azure = vec3(0.110, 0.620, 0.940);
-        vec3 gold  = vec3(0.96, 0.700, 0.180);
-
-        vec3 col = mix(deep, royal, smoothstep(0.18, 0.96, n));
-        col = mix(col, azure, smoothstep(0.50, 1.05, n2) * 0.42 * (1.0 - uv.y * 0.6));
-        float motes = pow(fbm(p * 6.0 + vec2(t * 1.6, -t)), 8.0);
-        col += gold * motes * 0.40 * smoothstep(0.1, 0.7, uv.y);
-        // stronger top-darken + vignette so the headline stays crisp
-        col *= 0.70 + 0.22 * smoothstep(0.0, 0.55, uv.y);
-        float vig = smoothstep(1.25, 0.25, distance(uv, vec2(0.5)));
-        col *= 0.80 + 0.20 * vig;
-        gl_FragColor = vec4(col, 1.0);
-      }
-    `;
-
-    const compile = (type: number, src: string): WebGLShader | null => {
-      const s = gl.createShader(type);
-      if (!s) return null;
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-        gl.deleteShader(s);
-        return null;
-      }
-      return s;
-    };
-    const vs = compile(gl.VERTEX_SHADER, vert);
-    const fs = compile(gl.FRAGMENT_SHADER, frag);
-    if (!vs || !fs) return null;
-    const prog = gl.createProgram();
-    if (!prog) return null;
-    gl.attachShader(prog, vs);
-    gl.attachShader(prog, fs);
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
-    gl.useProgram(prog);
-
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 3, -1, -1, 3]),
-      gl.STATIC_DRAW,
-    );
-    const loc = gl.getAttribLocation(prog, "a_pos");
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-
-    const uRes = gl.getUniformLocation(prog, "u_res");
-    const uTime = gl.getUniformLocation(prog, "u_time");
-    const uMouse = gl.getUniformLocation(prog, "u_mouse");
-    const uScroll = gl.getUniformLocation(prog, "u_scroll");
-
-    let mx = 0.5;
-    let my = 0.4;
-    let tmx = 0.5;
-    let tmy = 0.4;
-    let scroll = 0;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-
-    const resize = () => {
-      const w = canvas.clientWidth;
-      const h = canvas.clientHeight;
-      canvas.width = Math.max(1, Math.round(w * dpr));
-      canvas.height = Math.max(1, Math.round(h * dpr));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-    resize();
-
-    const onMove = (e: PointerEvent) => {
-      const r = canvas.getBoundingClientRect();
-      tmx = (e.clientX - r.left) / r.width;
-      tmy = (e.clientY - r.top) / r.height;
-    };
-    const onScroll = () => {
-      const r = canvas.getBoundingClientRect();
-      scroll = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height)));
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", resize);
-
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let visible = true;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const en of entries) visible = en.isIntersecting;
-      },
-      { threshold: 0 },
-    );
-    io.observe(canvas);
-
-    let raf = 0;
-    const start = performance.now();
-    const draw = () => {
-      mx += (tmx - mx) * 0.05;
-      my += (tmy - my) * 0.05;
-      const time = reduce ? 0 : (performance.now() - start) / 1000;
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uTime, time);
-      gl.uniform2f(uMouse, mx, my);
-      gl.uniform1f(uScroll, scroll);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-    };
-    // first paint always happens; animate only when visible + motion allowed
-    draw();
-    if (!reduce) {
-      const tick = () => {
-        if (visible) draw();
-        raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-    }
-
-    return {
-      destroy() {
-        cancelAnimationFrame(raf);
-        io.disconnect();
-        window.removeEventListener("pointermove", onMove);
-        window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", resize);
-      },
-    };
-  }
-
-  let handle: SkyHandle | null = null;
-  const boot = () => {
-    handle?.destroy();
-    handle = null;
-    const c = document.querySelector<HTMLCanvasElement>("[data-rc-sky]");
-    if (c) handle = initSky(c);
-    if (c && !handle) c.style.display = "none"; // fall back to CSS gradient
-  };
-  boot();
-  // re-init across Astro view transitions
-  document.addEventListener("astro:after-swap", boot);
-  document.addEventListener("astro:before-swap", () => handle?.destroy());
-</script>
-
 <style>
   .rc-hero {
     position: relative;
@@ -315,16 +120,23 @@ const {
     color: #fff;
     padding: clamp(72px, 11vw, 150px) 0 clamp(56px, 7vw, 96px);
   }
-  /* the animated sky sits over the gradient fallback */
-  .rc-sky {
+  /* one soft static bloom for depth — no animation */
+  .rc-hero::before {
+    content: "";
     position: absolute;
-    inset: 0;
     z-index: -2;
-    width: 100%;
-    height: 100%;
-    display: block;
+    width: min(70vw, 760px);
+    aspect-ratio: 1;
+    top: -28%;
+    right: -10%;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(30, 150, 232, 0.32) 0%,
+      transparent 66%
+    );
+    pointer-events: none;
   }
-  /* legibility veil: darkens the upper-left where the copy lives */
   .rc-sky-veil {
     position: absolute;
     inset: 0;
@@ -332,9 +144,9 @@ const {
     pointer-events: none;
     background: radial-gradient(
       120% 100% at 20% 30%,
-      rgba(5, 7, 15, 0.55) 0%,
-      rgba(5, 7, 15, 0.18) 42%,
-      transparent 72%
+      rgba(5, 7, 15, 0.5) 0%,
+      rgba(5, 7, 15, 0.12) 46%,
+      transparent 74%
     );
   }
 
@@ -350,7 +162,6 @@ const {
     z-index: 1;
     max-width: 640px;
   }
-  /* desktop-only balancing scene over the sky */
   .rc-hero-aside {
     position: relative;
     z-index: 0;
@@ -469,7 +280,7 @@ const {
     background: rgba(255, 255, 255, 0.35);
   }
 
-  /* the spectrum "altitude rule" closes the hero and hands off to content */
+  /* the spectrum "altitude rule" closes the hero */
   .rc-hero-rule {
     position: absolute;
     left: 0;
@@ -484,30 +295,30 @@ const {
   @media (prefers-reduced-motion: no-preference) {
     .rc-hero-copy > * {
       opacity: 0;
-      transform: translateY(18px);
-      animation: rcRise 0.7s cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
+      transform: translateY(16px);
+      animation: rcRise 0.6s cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
     }
     .rc-hero-copy > :nth-child(2) {
-      animation-delay: 0.07s;
+      animation-delay: 0.06s;
     }
     .rc-hero-copy > :nth-child(3) {
-      animation-delay: 0.14s;
+      animation-delay: 0.12s;
     }
     .rc-hero-copy > :nth-child(4) {
-      animation-delay: 0.21s;
+      animation-delay: 0.18s;
     }
     .rc-hero-copy > :nth-child(5) {
-      animation-delay: 0.28s;
+      animation-delay: 0.24s;
     }
     .rc-hero-copy > :nth-child(6) {
-      animation-delay: 0.35s;
+      animation-delay: 0.3s;
     }
     .rc-hero-copy > :nth-child(7) {
-      animation-delay: 0.42s;
+      animation-delay: 0.36s;
     }
     .rc-rating {
       opacity: 0;
-      animation: rcRise 0.8s cubic-bezier(0.2, 0.65, 0.25, 1) 0.5s forwards;
+      animation: rcRise 0.7s cubic-bezier(0.2, 0.65, 0.25, 1) 0.42s forwards;
     }
     @keyframes rcRise {
       to {
@@ -531,6 +342,10 @@ const {
     .rc-badges {
       justify-content: center;
       gap: 12px 24px;
+      width: max-content;
+      max-width: 100%;
+      margin-inline: auto;
+      text-align: left;
     }
     .rc-hero .hero-ctas {
       justify-content: center;
