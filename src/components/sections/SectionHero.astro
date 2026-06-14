@@ -2,9 +2,9 @@
 import { Image } from "astro:assets";
 import HeroRC from "~/components/widgets/HeroRC.astro";
 import SectionArt from "./SectionArt.astro";
+import AltitudeScene from "~/components/widgets/AltitudeScene.astro";
 import { pricify } from "~/utils/currency";
 import cloud from "~/assets/images/brand/cloud.png";
-import cloudServer from "~/assets/images/brand/cloud-server.png";
 
 interface Cta {
   text: string;
@@ -112,13 +112,15 @@ const target = (cta?: Cta) =>
           <p class="cta-fine">30-day money-back guarantee · Instant setup</p>
         </div>
         <div class="p-hero-art" aria-hidden="true">
-          <div class="disc" />
-          <Image src={cloud} alt="" width={120} height={90} class="c1" />
-          <Image src={cloud} alt="" width={90} height={70} class="c2" />
           {art ? (
-            <SectionArt kind={art} bare />
+            <>
+              <div class="disc" />
+              <Image src={cloud} alt="" width={120} height={90} class="c1" />
+              <Image src={cloud} alt="" width={90} height={70} class="c2" />
+              <SectionArt kind={art} bare />
+            </>
           ) : (
-            <Image src={cloudServer} alt="" width={240} height={240} />
+            <AltitudeScene variant="light" class="p-hero-altitude" />
           )}
         </div>
       </div>
@@ -137,3 +139,25 @@ const target = (cta?: Cta) =>
     </section>
   )
 }
+
+<style>
+  /* default product-hero art: the Altitude scene on a soft spectrum halo */
+  .p-hero-art :global(.p-hero-altitude) {
+    width: clamp(260px, 30vw, 380px);
+    height: auto;
+  }
+  .p-hero-art:has(.p-hero-altitude)::before {
+    content: "";
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 50% 45%,
+      rgba(81, 17, 224, 0.12) 0%,
+      rgba(25, 182, 255, 0.08) 45%,
+      transparent 70%
+    );
+    z-index: 0;
+  }
+</style>
