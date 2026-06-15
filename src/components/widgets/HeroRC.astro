@@ -206,8 +206,10 @@ const {
   .rc-hero h1 :global(em) {
     font-style: normal;
     color: var(--rc-yellow);
-    background: none;
-    -webkit-text-fill-color: var(--rc-yellow);
+    background: linear-gradient(96deg, #ffd680 0%, #f5a524 45%, #ffd680 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .rc-sub {
     font-size: clamp(17px, 2vw, 20px);
