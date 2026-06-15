@@ -4,6 +4,7 @@ import HeaderRC from '~/components/widgets/HeaderRC.astro';
 import FooterRC from '~/components/widgets/FooterRC.astro';
 import RevealScript from '~/components/widgets/RevealScript.astro';
 import AuroraScript from '~/components/widgets/AuroraScript.astro';
+import CountUp from '~/components/widgets/CountUp.astro';
 import MobileCTA from '~/components/widgets/MobileCTA.astro';
 
 import type { MetaData } from '~/types';
@@ -35,5 +36,6 @@ const { metadata, transparentHeader = false, theme, page } = Astro.props;
   </slot>
   <MobileCTA />
   <RevealScript />
+  <CountUp />
   <AuroraScript />
 </Layout>

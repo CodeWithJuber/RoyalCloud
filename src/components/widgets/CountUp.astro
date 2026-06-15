@@ -1,0 +1,73 @@
+---
+/**
+ * Global count-up: any element with [data-count] animates from 0 → target
+ * when it scrolls into view. Reads data-count (number), data-suffix
+ * (e.g. "%", "x", "/10"), data-prefix (e.g. "₹"), and infers decimals from
+ * the target. Ease-out-cubic, ~1.4s, runs once. Respects reduced-motion
+ * (jumps to final) and re-inits across Astro view transitions.
+ * Generalises the original StatsBand counter so numbers feel alive site-wide.
+ */
+---
+
+<script>
+  function rcCountUpInit() {
+    const els = Array.prototype.slice.call(
+      document.querySelectorAll<HTMLElement>("[data-count]"),
+    ).filter((el) => !el.dataset.countDone);
+    if (!els.length) return;
+
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const fmt = (n: number, decimals: number) =>
+      n.toLocaleString(undefined, {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      });
+
+    const run = (el: HTMLElement) => {
+      el.dataset.countDone = "1";
+      const raw = el.dataset.count || "0";
+      const target = parseFloat(raw);
+      if (Number.isNaN(target)) return;
+      const prefix = el.dataset.prefix || "";
+      const suffix = el.dataset.suffix || "";
+      const decimals = raw.split(".")[1]?.length ?? 0;
+      const write = (v: number) => {
+        el.textContent = prefix + fmt(v, decimals) + suffix;
+      };
+      if (reduced) {
+        write(target);
+        return;
+      }
+      const dur = 1400;
+      const t0 = performance.now();
+      const tick = (t: number) => {
+        const p = Math.min((t - t0) / dur, 1);
+        write(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      els.forEach(run);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            run(e.target as HTMLElement);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+    els.forEach((el) => io.observe(el));
+  }
+  rcCountUpInit();
+  document.addEventListener("astro:after-swap", rcCountUpInit);
+</script>

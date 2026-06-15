@@ -2306,11 +2306,28 @@ main:focus-visible {
   .testi-grid {
     grid-template-columns: 1fr;
   }
+  /* trust band swipes horizontally on phones (compact, native) */
   .trustbar-row {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     align-items: center;
-    gap: 11px;
-    padding: 18px 0;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    margin: 0 calc(-1 * var(--wrap-pad));
+    padding: 16px var(--wrap-pad);
+  }
+  .trustbar-row::-webkit-scrollbar {
+    display: none;
+  }
+  .trustbar .t {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    white-space: nowrap;
   }
   .sec-head {
     margin-bottom: 28px;
