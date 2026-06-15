@@ -117,6 +117,9 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 120px;
   overflow-x: clip;
+  /* keep font size stable on orientation change (no iOS auto-zoom) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 body {
   font-family: var(--font-body);
@@ -126,6 +129,21 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+}
+/* native tap feel: kill the 300ms delay + the grey tap flash (we supply our
+   own press feedback). Applies to every interactive element. */
+a,
+button,
+.btn,
+summary,
+label,
+input,
+select,
+textarea,
+[role="button"],
+[role="tab"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 h1,
 h2,
@@ -151,7 +169,9 @@ img {
 .wrap {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 0 var(--wrap-pad);
+  /* clear the notch in landscape while keeping the normal gutter in portrait */
+  padding-left: max(var(--wrap-pad), env(safe-area-inset-left));
+  padding-right: max(var(--wrap-pad), env(safe-area-inset-right));
 }
 section {
   padding-block: var(--space-section);
@@ -352,7 +372,8 @@ h2 em {
   font-family: var(--font-heading);
   font-size: 13.5px;
   font-weight: 600;
-  padding: 9px 16px;
+  /* clear the notch when the page runs under the status bar (PWA/landscape) */
+  padding: calc(9px + env(safe-area-inset-top)) 16px 9px;
 }
 .promo-bar b {
   font-weight: 800;
@@ -1642,7 +1663,7 @@ h2 em {
 }
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 26px 0 32px;
+  padding: 26px 0 calc(32px + env(safe-area-inset-bottom));
   display: flex;
   justify-content: space-between;
   align-items: center;

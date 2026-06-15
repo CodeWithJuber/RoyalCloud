@@ -696,6 +696,9 @@ const navIcon = (text: string) =>
       btn?.setAttribute("aria-expanded", String(open));
       btn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       if (open) header.classList.add("scrolled");
+      // Lock the page behind the sheet so it feels like a native overlay
+      // (no scroll bleed-through); restore on close.
+      document.documentElement.style.overflow = open ? "hidden" : "";
     };
     btn?.addEventListener("click", () => {
       const open = !nav?.classList.contains("open");
