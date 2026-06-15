@@ -1980,6 +1980,16 @@ h2 em {
       opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
       translate 0.95s cubic-bezier(0.16, 1, 0.3, 1),
       scale 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+    /* zero-JS / broken-JS failsafe: content reveals itself after 3s even if
+       the reveal script never runs — guarantees no permanently white page */
+    animation: rcRevealSafe 0.01s linear 3s forwards;
+  }
+  @keyframes rcRevealSafe {
+    to {
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
   }
   body[data-motion="on"] .reveal.rv-left {
     translate: -48px 0;
