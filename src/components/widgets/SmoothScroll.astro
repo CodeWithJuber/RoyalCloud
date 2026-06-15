@@ -80,6 +80,22 @@
       });
     }
 
+    // ── Scroll-story: briefly hold on the speed race so it plays as a beat
+    //    (desktop only; pinning feels heavy / janky on phones). The section's
+    //    own IntersectionObserver still starts the race.
+    const raceSec = document.querySelector<HTMLElement>(".race-sec");
+    if (raceSec && window.innerWidth >= 768 && window.matchMedia("(hover: hover)").matches) {
+      const st = ScrollTrigger.create({
+        trigger: raceSec,
+        start: "center center",
+        end: "+=55%",
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+      });
+      teardowns.push(() => st.kill());
+    }
+
     ScrollTrigger.refresh();
   }
 

@@ -55,6 +55,10 @@ const {
         ><span class="dot"></span><span set:html={pricify(offer)} /></span
       >
       <h1 set:html={title} />
+      <span class="rc-live"
+        ><i class="rc-live-dot" aria-hidden="true"></i>All systems operational ·
+        <b data-count="99.99" data-suffix="%">99.99%</b> uptime</span
+      >
       <p class="rc-sub" set:html={subtitle} />
       <ul class="hero-badges rc-badges">
         {badges.map((b) => <li class="b">{b}</li>)}
@@ -98,7 +102,11 @@ const {
         <Icon name="tabler:star-filled" />
       </span>
       <span
-        ><b>Excellent</b> — rated {site.rating}/{site.ratingMax} by our customers</span
+        ><b>Excellent</b> — rated <b
+          class="rc-rating-num"
+          data-count={site.rating}
+          data-suffix={`/${site.ratingMax}`}>{site.rating}/{site.ratingMax}</b
+        > by our customers</span
       >
       <span class="rc-rating-sep" aria-hidden="true"></span>
       <span
@@ -217,6 +225,49 @@ const {
     color: rgba(255, 255, 255, 0.86);
     max-width: 600px;
     margin: 22px 0 0;
+  }
+  /* live status chip — a small "wow" proof element */
+  .rc-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.82);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    padding: 7px 14px;
+  }
+  .rc-live b {
+    color: #fff;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .rc-live-dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #16a34a;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .rc-live-dot {
+      animation: rcLiveDot 2s ease-out infinite;
+    }
+  }
+  @keyframes rcLiveDot {
+    0% {
+      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+    }
   }
   .rc-badges {
     list-style: none;
