@@ -590,6 +590,13 @@
   padding-block: 4px;
 }
 
+/* Footer column links get a comfortable tap row on phones (touch density). */
+@media (max-width: 860px) {
+  .fcol a {
+    padding-block: 8px;
+  }
+}
+
 /* ============================================================
    Mobile centering + hero visuals (real-device feedback pass)
    ============================================================ */
