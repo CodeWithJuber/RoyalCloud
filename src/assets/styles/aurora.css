@@ -645,3 +645,31 @@
     justify-content: center;
   }
 }
+
+/* ============================================================
+   Native-feel pass: scroll containment + press feedback
+   ============================================================ */
+
+/* Swipe carousels + scrollable table: momentum scroll, and keep the
+   horizontal swipe from bleeding into the page/back-gesture (native feel). */
+.plan-grid,
+.feature-grid.tiles,
+.testi-grid.slider,
+.compare-wrap {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* Mobile menu sheet shouldn't rubber-band the page behind it. */
+.mobile-nav {
+  overscroll-behavior: contain;
+}
+
+/* Tactile press on the remaining tappable surfaces (transform-only, no
+   reflow). Card families already have :active in the layer above. */
+.f-help-card:active,
+.m-item:active,
+.fcol a:active,
+.footer-social a:active {
+  transform: scale(0.98);
+}

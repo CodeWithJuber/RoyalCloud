@@ -59,7 +59,7 @@ const pages = [
   ["blog", "/blog"],
   ["privacy", "/privacy-policy"],
 ];
-const widths = [360, 390, 768, 1024, 1280, 1440];
+const widths = [320, 360, 375, 390, 393, 412, 430, 768, 1024, 1280, 1440];
 
 const browser = await chromium.launch();
 const report = [];
