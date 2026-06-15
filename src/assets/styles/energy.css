@@ -1,0 +1,155 @@
+/* ============================================================
+   ROYAL CLOUDS — "Energy + Delight" layer (HOMEPAGE ONLY for now)
+   Scoped to main[data-page="index"] so we can perfect the feel on the
+   home page, then roll out. All delight is interaction-driven (hover /
+   tap / scroll) — purposeful, 1–2 key moves per view — not constant
+   ambient motion (which reads as AI-busy). Fully reduced-motion safe.
+   ============================================================ */
+
+:root {
+  --grad-royal-azure: linear-gradient(135deg, #4b16d6 0%, #1e96e8 100%);
+  --grad-azure-gold: linear-gradient(135deg, #1e96e8 0%, #f5a524 100%);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+}
+
+/* ---------- Feature tiles: the main delight moment ---------- */
+main[data-page="index"] .feature-grid.tiles .feature-card {
+  position: relative;
+  transition:
+    transform 0.32s var(--ease-spring),
+    box-shadow 0.32s ease;
+  overflow: hidden;
+}
+/* a spectrum bar wipes across the top on hover */
+main[data-page="index"] .feature-grid.tiles .feature-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--spectrum);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out, ease);
+}
+@media (hover: hover) {
+  main[data-page="index"] .feature-grid.tiles .feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+  main[data-page="index"] .feature-grid.tiles .feature-card:hover::after {
+    transform: scaleX(1);
+  }
+  /* icon chip springs + flips to a vivid gradient */
+  main[data-page="index"] .feature-card:hover .f-icon,
+  main[data-page="index"] .feature-card:hover .f-icon-grad {
+    background: var(--grad-royal-azure) !important;
+    color: #fff;
+    transform: translateY(-3px) rotate(-6deg) scale(1.06);
+  }
+  main[data-page="index"] .feature-card:hover .f-icon svg,
+  main[data-page="index"] .feature-card:hover .f-icon-grad svg {
+    color: #fff !important;
+  }
+}
+main[data-page="index"] .feature-card .f-icon,
+main[data-page="index"] .feature-card .f-icon-grad {
+  transition:
+    transform 0.32s var(--ease-spring),
+    background 0.28s ease,
+    color 0.28s ease;
+}
+/* the "Learn more →" arrow slides on hover */
+main[data-page="index"] .feature-card:hover .f-more {
+  color: var(--rc-violet);
+}
+
+/* ---------- Cards (plans / testimonials): lift with life ---------- */
+@media (hover: hover) {
+  main[data-page="index"] .plan:hover,
+  main[data-page="index"] .testi:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+  main[data-page="index"] .plan.popular:hover {
+    transform: translateY(-8px);
+  }
+}
+main[data-page="index"] .plan,
+main[data-page="index"] .testi {
+  transition:
+    transform 0.32s var(--ease-spring),
+    box-shadow 0.32s ease,
+    border-color 0.2s ease;
+}
+
+/* ---------- Buttons: gold CTA glows + lifts on hover ---------- */
+@media (hover: hover) {
+  main[data-page="index"] .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px -10px rgba(245, 165, 36, 0.62);
+  }
+  main[data-page="index"] .btn-dark:hover,
+  main[data-page="index"] .btn-coral:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* ---------- Trust bar: icons pop in sequence on hover ---------- */
+@media (hover: hover) {
+  main[data-page="index"] .trustbar .t:hover svg {
+    transform: scale(1.18) rotate(-4deg);
+    color: var(--rc-violet);
+  }
+}
+
+/* ---------- Stat band: tiles lift, figure gets a gradient sheen ---------- */
+@media (hover: hover) {
+  main[data-page="index"] .stats .stat:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.09);
+  }
+}
+main[data-page="index"] .stats .stat {
+  transition:
+    transform 0.3s var(--ease-spring),
+    background 0.3s ease;
+}
+
+/* ---------- Section eyebrow: a live pulsing dot ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  main[data-page="index"] .sec-head .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    background: var(--rc-yellow);
+    box-shadow: 0 0 0 0 rgba(245, 165, 36, 0.5);
+    animation: rc-pulse 2.4s ease-out infinite;
+  }
+}
+@keyframes rc-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 165, 36, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(245, 165, 36, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 165, 36, 0);
+  }
+}
+
+/* ---------- Reveals: livelier spring entrance on the home page ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  body[data-motion="on"] main[data-page="index"] .reveal {
+    transition:
+      opacity 0.6s var(--ease-out, ease),
+      translate 0.7s var(--ease-spring),
+      scale 0.7s var(--ease-spring);
+  }
+}
