@@ -57,7 +57,12 @@ const meta = {
 };
 ---
 
-<PageLayout metadata={meta} transparentHeader={overlayHeader} theme={theme}>
+<PageLayout
+  metadata={meta}
+  transparentHeader={overlayHeader}
+  theme={theme}
+  page={entry.id}
+>
   {
     redirect && (
       <>

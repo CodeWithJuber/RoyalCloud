@@ -14,9 +14,11 @@ export interface Props {
   transparentHeader?: boolean;
   /** Per-page visual identity — sets data-theme on <main> (see rc-premium.css). */
   theme?: string;
+  /** Page id — sets data-page on <main> for page-scoped styling (e.g. home). */
+  page?: string;
 }
 
-const { metadata, transparentHeader = false, theme } = Astro.props;
+const { metadata, transparentHeader = false, theme, page } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
@@ -25,7 +27,7 @@ const { metadata, transparentHeader = false, theme } = Astro.props;
   <slot name="header">
     <HeaderRC solid={!transparentHeader} />
   </slot>
-  <main id="main" tabindex="-1" data-theme={theme}>
+  <main id="main" tabindex="-1" data-theme={theme} data-page={page}>
     <slot />
   </main>
   <slot name="footer">

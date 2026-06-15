@@ -291,6 +291,50 @@ const {
     z-index: 1;
   }
 
+  /* living hero: gentle, continuous, low-key motion for "alive" feel.
+     Slow + subtle so it reads premium, not busy. Motion-safe. */
+  @media (prefers-reduced-motion: no-preference) {
+    .rc-hero {
+      background-size: 150% 150%;
+      animation: rcHeroDrift 24s ease-in-out infinite;
+    }
+    .rc-hero::before {
+      animation: rcBloom 10s ease-in-out infinite;
+    }
+    .rc-hero-aside {
+      animation: rcFloatY 7.5s ease-in-out infinite;
+    }
+  }
+  @keyframes rcHeroDrift {
+    0%,
+    100% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+  }
+  @keyframes rcBloom {
+    0%,
+    100% {
+      opacity: 0.85;
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(-3%, 3%) scale(1.08);
+    }
+  }
+  @keyframes rcFloatY {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
   /* page-load entrance (motion-safe) */
   @media (prefers-reduced-motion: no-preference) {
     .rc-hero-copy > * {
