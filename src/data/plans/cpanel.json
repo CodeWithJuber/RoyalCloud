@@ -5,45 +5,126 @@
   "icon": "apps",
   "eyebrow": "cPanel Web Hosting",
   "title": "SSD cPanel Hosting",
-  "subtitle": "Industry-standard cPanel hosting on SSD drives with the LiteSpeed Web Server and CloudLinux — free cPanel & SSL, DDoS protection, daily backups and Softaculous on every plan.",
+  "subtitle": "Industry-standard cPanel hosting on SSD drives with the LiteSpeed Web Server and CloudLinux, free cPanel & SSL, DDoS protection, daily backups and Softaculous on every plan.",
   "currency": "$",
   "billingNote": "Free cPanel & SSL · LiteSpeed + CloudLinux · Daily backups · Softaculous · 24/7 support.",
   "tiers": [
     {
-      "name": "Starter", "price": "1.99", "priceAnnual": "1.59", "period": "/mo", "popular": false,
+      "name": "Starter",
+      "price": "1.99",
+      "priceAnnual": "1.59",
+      "period": "/mo",
+      "popular": false,
       "summary": "Perfect for a first website or blog.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=1",
-      "features": ["1 Domain", "10 GB SSD Storage", "100 GB Bandwidth", "3 Databases", "5 Email Accounts", "Free cPanel & SSL", "Softaculous Installer"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=1",
+      "features": [
+        "1 Domain",
+        "10 GB SSD Storage",
+        "100 GB Bandwidth",
+        "3 Databases",
+        "5 Email Accounts",
+        "Free cPanel & SSL",
+        "Softaculous Installer"
+      ]
     },
     {
-      "name": "Economy", "price": "3.99", "priceAnnual": "3.19", "period": "/mo", "popular": false,
+      "name": "Economy",
+      "price": "3.99",
+      "priceAnnual": "3.19",
+      "period": "/mo",
+      "popular": false,
       "summary": "Great for growing personal sites.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=2",
-      "features": ["3 Domains", "20 GB SSD Storage", "200 GB Bandwidth", "10 Databases", "10 Email Accounts", "Free cPanel & SSL", "Softaculous Installer"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=2",
+      "features": [
+        "3 Domains",
+        "20 GB SSD Storage",
+        "200 GB Bandwidth",
+        "10 Databases",
+        "10 Email Accounts",
+        "Free cPanel & SSL",
+        "Softaculous Installer"
+      ]
     },
     {
-      "name": "Deluxe", "price": "4.99", "priceAnnual": "3.99", "period": "/mo", "popular": true,
+      "name": "Deluxe",
+      "price": "4.99",
+      "priceAnnual": "3.99",
+      "period": "/mo",
+      "popular": true,
       "summary": "Our most popular plan for businesses.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=3",
-      "features": ["5 Domains", "30 GB SSD Storage", "300 GB Bandwidth", "15 Databases", "15 Email Accounts", "Free cPanel & SSL", "Softaculous Installer"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=3",
+      "features": [
+        "5 Domains",
+        "30 GB SSD Storage",
+        "300 GB Bandwidth",
+        "15 Databases",
+        "15 Email Accounts",
+        "Free cPanel & SSL",
+        "Softaculous Installer"
+      ]
     },
     {
-      "name": "Ultimate", "price": "9.99", "priceAnnual": "7.99", "period": "/mo", "popular": false,
+      "name": "Ultimate",
+      "price": "9.99",
+      "priceAnnual": "7.99",
+      "period": "/mo",
+      "popular": false,
       "summary": "For high-traffic and store sites.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=4",
-      "features": ["10 Domains", "50 GB SSD Storage", "500 GB Bandwidth", "20 Databases", "20 Email Accounts", "Free cPanel & SSL", "Softaculous Installer"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=4",
+      "features": [
+        "10 Domains",
+        "50 GB SSD Storage",
+        "500 GB Bandwidth",
+        "20 Databases",
+        "20 Email Accounts",
+        "Free cPanel & SSL",
+        "Softaculous Installer"
+      ]
     },
     {
-      "name": "Expert", "price": "19.99", "priceAnnual": "15.99", "period": "/mo", "popular": false,
+      "name": "Expert",
+      "price": "19.99",
+      "priceAnnual": "15.99",
+      "period": "/mo",
+      "popular": false,
       "summary": "Maximum power for agencies.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=5",
-      "features": ["20 Domains", "100 GB SSD Storage", "Unlimited Bandwidth", "Unlimited Databases", "Unlimited Email Accounts", "Free cPanel & SSL", "Softaculous Installer"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=5",
+      "features": [
+        "20 Domains",
+        "100 GB SSD Storage",
+        "Unlimited Bandwidth",
+        "Unlimited Databases",
+        "Unlimited Email Accounts",
+        "Free cPanel & SSL",
+        "Softaculous Installer"
+      ]
     }
   ],
   "highlights": [
-    { "icon": "apps", "title": "Full cPanel Control", "text": "Manage domains, email, databases and files from the world's favourite panel." },
-    { "icon": "bolt", "title": "LiteSpeed + CloudLinux", "text": "Cached, isolated accounts deliver speed and stability under load." },
-    { "icon": "shield", "title": "Free SSL & DDoS Protection", "text": "Every site is encrypted and shielded with Cloudflare and free SSL." },
-    { "icon": "headset", "title": "24/7 Friendly Support", "text": "Real specialists on live chat, email and tickets, around the clock." }
+    {
+      "icon": "apps",
+      "title": "Full cPanel Control",
+      "text": "Manage domains, email, databases and files from the world's favourite panel."
+    },
+    {
+      "icon": "bolt",
+      "title": "LiteSpeed + CloudLinux",
+      "text": "Cached, isolated accounts deliver speed and stability under load."
+    },
+    {
+      "icon": "shield",
+      "title": "Free SSL & DDoS Protection",
+      "text": "Every site is encrypted and shielded with Cloudflare and free SSL."
+    },
+    {
+      "icon": "headset",
+      "title": "24/7 Friendly Support",
+      "text": "Real specialists on live chat, email and tickets, around the clock."
+    }
   ]
 }

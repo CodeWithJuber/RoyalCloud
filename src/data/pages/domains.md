@@ -10,16 +10,15 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
-    eyebrow: Domain Names
     title: Find the <em>perfect domain</em> for your idea
     subtitle: >-
       Search hundreds of extensions, register in seconds and manage your DNS for
-      free — all from one dashboard alongside your hosting.
+      free, all from one dashboard alongside your hosting.
     primaryCta:
       text: Search Domains
       href: "#domain-search"
     secondaryCta:
-      text: View Hosting
+      text: See plans
       href: /shared-hosting
     badges:
       - Free DNS Management
@@ -36,7 +35,7 @@ sections:
     items:
       - icon: globe
         title: Hundreds of Extensions
-        text: From .com and .net to .in and dozens more — find the right fit.
+        text: From .com and .net to .in and dozens more, find the right fit.
       - icon: settings
         title: Free DNS Management
         text: Full control over your records with an easy-to-use DNS editor.
@@ -47,7 +46,7 @@ sections:
     title: Get your domain and hosting together
     subtitle: Register a domain and pair it with premium SSD hosting in one go.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 ---

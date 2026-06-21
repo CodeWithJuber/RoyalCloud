@@ -14,57 +14,29 @@ sections:
   - type: hero
     variant: gradient
     eyebrow: Cheap Dedicated Servers
-    title: Cheap Dedicated Servers on <em>Pure SSD</em> — Built for Speed
+    title: Single-Tenant Dedicated Servers, <em>Raw Bare-Metal Power</em>
     subtitle: >-
-      Single-tenant bare-metal power with enterprise SSD storage, DDoS protection, custom configurations and
-      24/7 engineers.
+      The whole machine is yours, every CPU core and gigabyte of RAM, on enterprise SSD storage with custom
+      configurations, DDoS protection and 24/7 engineers.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: "#pricing"
     badges:
       - Bare-Metal Power
       - Custom Configs
       - DDoS Protection
     art: rocket
-  - type: benchmark
-    eyebrow: Speed Test
-    title: Why sites feel instantly faster here
-    note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
-    items:
-      - label: Royal Clouds (SSD + LiteSpeed)
-        value: 0.4
-        display: 0.4s
-        highlight: true
-      - label: Typical shared hosting
-        value: 1.9
-        display: 1.9s
-      - label: Budget HDD server
-        value: 3.2
-        display: 3.2s
-  - type: pricing
-    id: pricing
-    plan: dedicated
-    eyebrow: Plans & Pricing
-    title: Choose your cheap dedicated servers plan
-    showToggle: true
-    note: 30-day money-back guarantee · Instant setup · Free migration.
-  - type: mapband
-    eyebrow: Global Reach
-    title: Low latency, wherever your visitors are
-    subtitle: Premium network blends and smart routing keep round-trips short.
-    note: Pick your server location at checkout — more regions coming online.
   - type: features
-    eyebrow: Why Royal Clouds
     title: Everything your cheap dedicated servers needs
     columns: 3
     items:
       - icon: database
         title: Dedicated Hardware
-        text: With cheap dedicated servers the entire machine is yours — every CPU core, every gigabyte of RAM.
+        text: With cheap dedicated servers the entire machine is yours, every CPU core, every gigabyte of RAM.
       - icon: bolt
         title: Enterprise SSD / NVMe
         text: High-performance storage options in RAID for speed and redundancy.
@@ -80,9 +52,34 @@ sections:
       - icon: headset
         title: 24/7 Server Engineers
         text: Hardware replaced fast, issues handled by real engineers around the clock.
+  - type: pricing
+    id: pricing
+    plan: dedicated
+    eyebrow: Plans & Pricing
+    title: Choose your cheap dedicated servers plan
+    showToggle: true
+    note: 30-day money-back guarantee · Instant setup · Free migration.
+  - type: benchmark
+    title: Why sites feel instantly faster here
+    note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
+    items:
+      - label: Royal Clouds (SSD + LiteSpeed)
+        value: 0.4
+        display: 0.4s
+        highlight: true
+      - label: Typical shared hosting
+        value: 1.9
+        display: 1.9s
+      - label: Budget HDD server
+        value: 3.2
+        display: 3.2s
+  - type: mapband
+    title: Low latency, wherever your visitors are
+    subtitle: Premium network blends and smart routing keep round-trips short.
+    note: Pick your server location at checkout, more regions coming online.
   - type: faq
     eyebrow: FAQ
-    title: Cheap Dedicated Servers — common questions
+    title: Cheap Dedicated Servers, common questions
     source: inline
     items:
       - q: Who is cheap dedicated servers for?
@@ -91,7 +88,7 @@ sections:
           guaranteed, single-tenant performance.
       - q: Can I customize the hardware?
         a: >-
-          Yes — CPU, RAM, storage and RAID layout can all be tailored. Contact us with your requirements for a
+          Yes, CPU, RAM, storage and RAID layout can all be tailored. Contact us with your requirements for a
           custom quote.
       - q: Is the server managed?
         a: >-
@@ -99,13 +96,13 @@ sections:
           security hardening by our team.
       - q: How long does provisioning take?
         a: >-
-          Standard configurations are typically online within a few hours; custom builds may take up to 1–2
+          Standard configurations are typically online within a few hours; custom builds may take up to 1-2
           business days.
   - type: cta
     title: Launch your cheap dedicated servers today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 theme: speed

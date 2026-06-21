@@ -39,7 +39,7 @@ const rendered = await Promise.all(
       {title && <h2 set:html={title} />}
       {subtitle && <p set:html={subtitle} />}
     </div>
-    <div class="faq-list">
+    <div class="faq-list faq-2col">
       {
         rendered.map((f, i) => (
           <details class={`faq reveal reveal-d${(i % 4) + 1}`}>
@@ -55,3 +55,18 @@ const rendered = await Promise.all(
   </div>
 </section>
 {jsonld && <StructuredData schema={faqPage(list)} />}
+
+<style>
+  /* two independent columns on desktop so the FAQ never reads as one tall
+     list; expanding an item only grows its own column (align-items: start) */
+  @media (min-width: 768px) {
+    .faq-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 28px;
+      align-items: start;
+      max-width: 940px;
+      margin-inline: auto;
+    }
+  }
+</style>

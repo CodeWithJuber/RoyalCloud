@@ -4,34 +4,89 @@
   "slug": "managed-wordpress-hosting",
   "icon": "wordpress",
   "eyebrow": "WordPress",
-  "title": "Managed WordPress Hosting — Up to 10x Faster",
-  "subtitle": "Deploy a WordPress site in minutes on SSD RAID-10 with LiteSpeed, LSCache and the Cloudflare CDN — plus cPanel, free SSL, Brotli, automated updates and backups.",
+  "title": "Managed WordPress Hosting, Up to 10x Faster",
+  "subtitle": "Deploy a WordPress site in minutes on SSD RAID-10 with LiteSpeed, LSCache and the Cloudflare CDN, plus cPanel, free SSL, Brotli, automated updates and backups.",
   "currency": "$",
   "billingNote": "cPanel · LiteSpeed + LSCache · Cloudflare CDN · Free SSL · Automated updates & backups.",
   "tiers": [
     {
-      "name": "Managed I", "price": "15", "priceAnnual": "12", "period": "/mo", "popular": false,
+      "name": "Managed I",
+      "price": "15",
+      "priceAnnual": "12",
+      "period": "/mo",
+      "popular": false,
       "summary": "Launch a single WordPress site.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=31",
-      "features": ["1 Website", "5 GB SSD RAID-10", "200 GB Bandwidth", "5 Email Accounts", "Free SSL & cPanel", "LiteSpeed Cache", "Weekly Backups"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=31",
+      "features": [
+        "1 Website",
+        "5 GB SSD RAID-10",
+        "200 GB Bandwidth",
+        "5 Email Accounts",
+        "Free SSL & cPanel",
+        "LiteSpeed Cache",
+        "Weekly Backups"
+      ]
     },
     {
-      "name": "Managed II", "price": "25", "priceAnnual": "20", "period": "/mo", "popular": true,
+      "name": "Managed II",
+      "price": "25",
+      "priceAnnual": "20",
+      "period": "/mo",
+      "popular": true,
       "summary": "Best for growing businesses.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=32",
-      "features": ["2 Websites", "15 GB SSD RAID-10", "500 GB Bandwidth", "20 Email Accounts", "Free SSL & cPanel", "LiteSpeed Cache", "Weekly Backups"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=32",
+      "features": [
+        "2 Websites",
+        "15 GB SSD RAID-10",
+        "500 GB Bandwidth",
+        "20 Email Accounts",
+        "Free SSL & cPanel",
+        "LiteSpeed Cache",
+        "Weekly Backups"
+      ]
     },
     {
-      "name": "Managed III", "price": "35", "priceAnnual": "28", "period": "/mo", "popular": false,
+      "name": "Managed III",
+      "price": "35",
+      "priceAnnual": "28",
+      "period": "/mo",
+      "popular": false,
       "summary": "For agencies and high traffic.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=33",
-      "features": ["5 Websites", "30 GB SSD RAID-10", "Unlimited Bandwidth", "50 Email Accounts", "Free SSL & cPanel", "LiteSpeed Cache", "Weekly Backups"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=33",
+      "features": [
+        "5 Websites",
+        "30 GB SSD RAID-10",
+        "Unlimited Bandwidth",
+        "50 Email Accounts",
+        "Free SSL & cPanel",
+        "LiteSpeed Cache",
+        "Weekly Backups"
+      ]
     }
   ],
   "highlights": [
-    { "icon": "bolt", "title": "Up to 10x Faster", "text": "LiteSpeed + LSCache + SSD RAID-10 deliver sub-second WordPress page loads." },
-    { "icon": "refresh", "title": "Automated Updates", "text": "Core, theme and plugin updates handled for you, safely and automatically." },
-    { "icon": "shield", "title": "Hardened Security", "text": "Malware scanning, firewall and free SSL keep your WordPress site safe." },
-    { "icon": "backup", "title": "Weekly Backups", "text": "Restore your whole site in one click from automatic remote backups." }
+    {
+      "icon": "bolt",
+      "title": "Up to 10x Faster",
+      "text": "LiteSpeed + LSCache + SSD RAID-10 deliver sub-second WordPress page loads."
+    },
+    {
+      "icon": "refresh",
+      "title": "Automated Updates",
+      "text": "Core, theme and plugin updates handled for you, safely and automatically."
+    },
+    {
+      "icon": "shield",
+      "title": "Hardened Security",
+      "text": "Malware scanning, firewall and free SSL keep your WordPress site safe."
+    },
+    {
+      "icon": "backup",
+      "title": "Weekly Backups",
+      "text": "Restore your whole site in one click from automatic remote backups."
+    }
   ]
 }

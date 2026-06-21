@@ -24,7 +24,7 @@ const label = (text: string) =>
   text.replace(/^(unlimited|free|\d+[\w.]*)\s+(gb\s+|tb\s+)?/i, "") || text;
 const rows = Array.from({ length: rowCount }, (_, i) => ({
   label: label(tiers[0]?.features[i] ?? `Feature ${i + 1}`),
-  cells: tiers.map((t) => t.features[i] ?? "—"),
+  cells: tiers.map((t) => t.features[i] ?? "-"),
 }));
 ---
 
@@ -42,7 +42,7 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
     <div class="compare-wrap reveal">
       <table class="compare">
         <caption class="sr-only">
-          {title ? title : "Plan feature comparison"} — compare price and
+          {title ? title : "Plan feature comparison"}, compare price and
           features across {tiers.length} plans.
         </caption>
         <thead>

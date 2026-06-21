@@ -1,0 +1,40 @@
+---
+/**
+ * RackUnit - one flat 2D server module: rounded body, left vent slots, three
+ * status LEDs on the right. Stack N vertically for a tower; use one as a VPS
+ * slice. Corners on the locked {8} radius. Light source top-left (faint top
+ * highlight, faint bottom shade = two-tone).
+ *
+ * Animatable: the LEDs carry `.rc-il__light` so the motion layer can pulse
+ * them. Origin (x,y) = top-left. Width `w`, height fixed at 36 per unit.
+ */
+interface Props {
+  x?: number;
+  y?: number;
+  w?: number;
+  tone?: string;
+  lit?: boolean;
+  class?: string;
+}
+const { x = 0, y = 0, w = 124, tone = '#ffffff', lit = true, class: className = '' } = Astro.props;
+const h = 36;
+const ledOn = lit ? '#3ddc97' : 'rgba(10,14,31,0.18)';
+---
+
+<g transform={`translate(${x} ${y})`} class:list={['rc-il__rack', className]}>
+  <rect x="0" y="0" width={w} height={h} rx="8" fill={tone} stroke="rgba(10,14,31,0.16)" stroke-width="2"></rect>
+  <!-- two-tone: faint bottom shade -->
+  <rect x="2" y={h - 10} width={w - 4} height="8" rx="6" fill="rgba(10,14,31,0.04)"></rect>
+  <!-- vent slots (left) -->
+  <g fill="rgba(10,14,31,0.14)">
+    <rect x="14" y="10" width="42" height="3.4" rx="1.7"></rect>
+    <rect x="14" y="16.6" width="42" height="3.4" rx="1.7"></rect>
+    <rect x="14" y="23.2" width="42" height="3.4" rx="1.7"></rect>
+  </g>
+  <!-- status LEDs (right) -->
+  <g class="rc-il__light">
+    <circle cx={w - 38} cy="18" r="3.4" fill={ledOn}></circle>
+    <circle cx={w - 26} cy="18" r="3.4" fill="#1e96e8"></circle>
+    <circle cx={w - 14} cy="18" r="3.4" fill="#f5a524"></circle>
+  </g>
+</g>

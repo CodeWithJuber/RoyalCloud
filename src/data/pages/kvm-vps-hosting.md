@@ -19,11 +19,11 @@ sections:
       free setup, a dedicated IP, DDoS protection and Cloud SSD storage.
     offer: From $4/mo · Free Setup
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Pricing
+      text: See plans
       href: "#pricing"
     badges:
       - 99.99% Uptime SLA
@@ -42,20 +42,30 @@ sections:
         text: DDoS Protection
       - icon: headset
         text: 24/7 Support
-  - type: pricing
-    id: pricing
-    plan: vps
-    eyebrow: Virtual Private Servers
-    title: KVM VPS Hosting plans
-    subtitle: Transparent pricing with everything you need included.
+  - type: osstrip
+    eyebrow: Operating Systems
+    title: Pick your distro, deploy in one click
+    items:
+      - name: Ubuntu
+        color: "#e95420"
+        active: true
+      - name: Debian
+        color: "#a81d33"
+      - name: AlmaLinux
+        color: "#0b7fab"
+      - name: Rocky Linux
+        color: "#10b981"
+      - name: CentOS Stream
+        color: "#932279"
+      - name: Fedora
+        color: "#3c6eb4"
   - type: features
-    eyebrow: Why Royal Clouds
-    title: Everything your kvm vps hosting needs
+    title: Everything your KVM VPS needs
     columns: 4
     items:
       - icon: cpu
         title: Guaranteed Resources
-        text: KVM virtualization gives you dedicated CPU, RAM and SSD — never shared.
+        text: KVM virtualization gives you dedicated CPU, RAM and SSD, never shared.
       - icon: bolt
         title: Instant Deployment
         text: Your server is provisioned and online within minutes of ordering.
@@ -72,7 +82,7 @@ sections:
       - title: Smart network firewall
         text: Always-on filtering absorbs DDoS floods before they reach your server.
       - title: Malware scanning
-        text: Daily scans catch infected files early — with free cleanup if needed.
+        text: Daily scans catch infected files early, with free cleanup if needed.
       - title: Automatic backups
         text: Daily snapshots mean one click brings everything back.
       - title: 24/7 human monitoring
@@ -84,26 +94,36 @@ sections:
         label: days of backups
       - value: 24/7
         label: expert monitoring
-  - type: techlogos
-    eyebrow: Powered By
-    title: Built on technology you can trust
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
+  - type: benchmark
+    title: Dedicated vCPU, never a noisy neighbor
+    note: Relative throughput under load. Shared plans contend for the same cores; KVM gives you guaranteed resources, never shared.
+    items:
+      - label: Royal Clouds KVM (dedicated vCPU)
+        value: 100
+        display: 100%
+        highlight: true
+      - label: Typical shared hosting (busy node)
+        value: 45
+        display: 45%
+      - label: Oversold budget VPS (peak hours)
+        value: 30
+        display: 30%
+  - type: pricing
+    id: pricing
+    plan: vps
+    title: KVM VPS Hosting plans
+    subtitle: Transparent pricing with everything you need included.
   - type: faq
-    eyebrow: FAQ
     title: Frequently asked questions
     source: global
   - type: cta
-    title: Ready to launch your kvm vps hosting?
+    title: Ready to launch your KVM VPS?
     subtitle: Instant setup · Free migration · 30-day money-back guarantee.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: Talk to Sales
+      text: Contact sales
       href: /contact
 ---

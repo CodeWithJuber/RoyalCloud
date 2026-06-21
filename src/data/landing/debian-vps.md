@@ -13,17 +13,16 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    eyebrow: Debian VPS
-    title: Debian VPS on <em>Pure SSD</em> — Built for Speed
+    title: Debian VPS with full root and <em>rock-solid stability</em>
     subtitle: >-
-      Debian pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup,
+      Debian pre-installed on premium KVM VPS with full root access, pure SSD RAID-10 storage, instant setup,
       DDoS protection and friendly 24/7 support.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: "#pricing"
     badges:
       - Full Root Access
@@ -31,7 +30,6 @@ sections:
       - 99.99% Uptime SLA
     art: terminal:debian
   - type: osstrip
-    eyebrow: Operating Systems
     title: Your distro, ready in one click
     items:
       - name: Ubuntu
@@ -47,13 +45,6 @@ sections:
         color: "#73ba25"
       - name: Scientific
         color: "#7a99ac"
-  - type: pricing
-    id: pricing
-    plan: vps
-    eyebrow: Plans & Pricing
-    title: Choose your debian vps plan
-    showToggle: true
-    note: 30-day money-back guarantee · Instant setup · Free migration.
   - type: content
     eyebrow: Why This Distro
     title: Why sysadmins trust <em>Debian</em>
@@ -69,32 +60,38 @@ sections:
         text: Swap between bookworm and older releases from the control panel.
     image: datacenter
     reverse: true
+  - type: pricing
+    id: pricing
+    plan: vps
+    eyebrow: Plans & Pricing
+    title: Choose your debian vps plan
+    showToggle: true
+    note: 30-day money-back guarantee · Instant setup · Free migration.
   - type: features
-    eyebrow: Why Royal Clouds
     title: Everything your debian vps needs
     columns: 3
     items:
       - icon: cpu
         title: KVM Virtualization
-        text: True hardware isolation — your debian vps gets dedicated resources that are never oversold.
+        text: True hardware isolation, your debian vps gets dedicated resources that are never oversold.
       - icon: bolt
         title: Pure SSD RAID-10
         text: Enterprise SSDs in RAID-10 deliver up to 15x faster disk I/O than HDD servers.
       - icon: terminal
         title: Debian Pre-Installed
-        text: Deploy Debian in one click — or reload to any other Linux distribution from the panel, any time.
+        text: Deploy Debian in one click, or reload to any other Linux distribution from the panel, any time.
       - icon: shield
         title: DDoS Protection
         text: Always-on network filtering keeps your server online through volumetric attacks.
       - icon: scale
         title: Instant Scaling
-        text: Upgrade CPU, RAM and storage in seconds from the client area — no migration needed.
+        text: Upgrade CPU, RAM and storage in seconds from the client area, no migration needed.
       - icon: headset
         title: 24/7 Expert Support
         text: Real engineers on live chat and tickets around the clock, every day of the year.
   - type: faq
     eyebrow: FAQ
-    title: Debian VPS — common questions
+    title: Debian VPS, common questions
     source: inline
     items:
       - q: What do I get with Debian VPS?
@@ -111,13 +108,13 @@ sections:
           details are emailed to you.
       - q: Can I upgrade later?
         a: >-
-          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
+          Yes, upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
           resources change.
   - type: cta
     title: Launch your debian vps today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 theme: linux

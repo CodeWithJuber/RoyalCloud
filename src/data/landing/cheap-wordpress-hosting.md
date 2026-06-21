@@ -13,33 +13,22 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    eyebrow: Cheap Wordpress Hosting
-    title: Cheap Wordpress Hosting on <em>Pure SSD</em> — Built for Speed
+    title: Affordable WordPress hosting with <em>LSCache</em> and free migration
     subtitle: >-
-      WordPress tuned on LiteSpeed + SSD with LSCache, auto-updates, free SSL, daily backups and WordPress
-      experts on call 24/7.
+      WordPress pre-installed with LSCache wired up, automatic core and plugin updates, free SSL, daily
+      backups and WordPress experts on call 24/7.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: "#pricing"
     badges:
       - WordPress Pre-Installed
       - LiteSpeed Cache
       - Free Migration
     art: panel
-  - type: steps
-    eyebrow: Free Migration
-    title: Move your WordPress in three easy steps
-    items:
-      - title: Request your migration
-        text: Open a ticket from the client area — first migration is completely free.
-      - title: We move and test it
-        text: Files, database, plugins and media transferred and verified by real engineers.
-      - title: Go live, zero downtime
-        text: Your site stays online the whole time; DNS flips only when everything's perfect.
   - type: pricing
     id: pricing
     plan: wordpress
@@ -47,8 +36,17 @@ sections:
     title: Choose your cheap wordpress hosting plan
     showToggle: true
     note: 30-day money-back guarantee · Instant setup · Free migration.
+  - type: steps
+    eyebrow: Free Migration
+    title: Move your WordPress in three easy steps
+    items:
+      - title: Request your migration
+        text: Open a ticket from the client area, first migration is completely free.
+      - title: We move and test it
+        text: Files, database, plugins and media transferred and verified by real engineers.
+      - title: Go live, zero downtime
+        text: Your site stays online the whole time; DNS flips only when everything's perfect.
   - type: benchmark
-    eyebrow: Speed Test
     title: WordPress simply loads faster on LiteSpeed
     note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
     items:
@@ -63,7 +61,6 @@ sections:
         value: 3.2
         display: 3.2s
   - type: storycards
-    eyebrow: WordPress Stories
     title: WordPress owners who made the move
     items:
       - tag: WooCommerce
@@ -81,12 +78,12 @@ sections:
       - tag: Agency
         metric: 30+
         metricLabel: WordPress sites managed
-        quote: Staging, daily backups and one-click restores — managing client WordPress finally feels safe.
+        quote: Staging, daily backups and one-click restores, managing client WordPress finally feels safe.
         name: Lena Fischer
         site: Web agency
   - type: faq
     eyebrow: FAQ
-    title: Cheap Wordpress Hosting — common questions
+    title: Cheap Wordpress Hosting, common questions
     source: inline
     items:
       - q: Why choose cheap wordpress hosting from Royal Clouds?
@@ -95,7 +92,7 @@ sections:
           backups and experts available 24/7.
       - q: Do you migrate my WordPress site for free?
         a: >-
-          Yes — we move your WordPress site for free, including the database, themes, plugins and media,
+          Yes, we move your WordPress site for free, including the database, themes, plugins and media,
           usually within 24 hours.
       - q: Are updates handled for me?
         a: On managed plans, WordPress core and plugin updates are applied automatically with safety checks.
@@ -107,7 +104,7 @@ sections:
     title: Launch your cheap wordpress hosting today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 theme: wordpress

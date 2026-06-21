@@ -8,7 +8,7 @@ import { pricify } from "~/utils/currency";
 import site from "~/data/site.json";
 
 /**
- * Royal Clouds header — clean white, always sticky.
+ * Royal Clouds header, clean white, always sticky.
  * `solid` pages start with the scrolled shadow; others gain it on scroll.
  * Navigation content comes from src/data/navigation.json (Decap-editable).
  */
@@ -113,6 +113,12 @@ const navIcon = (text: string) =>
                       {l.text}
                     </a>
                   ),
+                )}
+                {item.text === "Hosting" && (
+                  <a href="/compare-royalclouds-vps-plans" class="mega-foot">
+                    Compare all plans
+                    <Icon name="tabler:arrow-right" />
+                  </a>
                 )}
               </span>
             </span>
@@ -232,10 +238,10 @@ const navIcon = (text: string) =>
       }
     </div>
     <p class="m-trust">
-      <Icon name="tabler:shield-check" /> 99.99% uptime · Free SSL · 24/7 human
-      support
+      <Icon name="tabler:shield-check" /> 99.99% uptime, free SSL, 24/7 human support
     </p>
   </nav>
+  <div class="m-backdrop" id="rcMenuBackdrop" hidden aria-hidden="true"></div>
 </header>
 
 <style>
@@ -641,6 +647,53 @@ const navIcon = (text: string) =>
     color: var(--ok);
   }
 
+  /* mega panel footer: full-width "compare all plans" row */
+  .mega-foot {
+    grid-column: 1 / -1;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 4px;
+    padding: 12px !important;
+    border-top: 1px solid var(--line);
+    border-radius: 0 0 9px 9px !important;
+    font-family: var(--font-heading);
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    color: var(--rc-violet) !important;
+  }
+  .mega-foot :global(svg) {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.16s ease;
+  }
+  .mega-foot:hover {
+    background: var(--bg-tint);
+  }
+  .mega-foot:hover :global(svg) {
+    transform: translateX(3px);
+  }
+
+  /* mobile drawer backdrop (dims the page behind the sheet) */
+  .m-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(10, 14, 31, 0.42);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .m-backdrop.open {
+    opacity: 1;
+  }
+  @supports (backdrop-filter: blur(2px)) {
+    .m-backdrop.open {
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+  }
+
   @media (max-width: 860px) {
     .menu-btn {
       display: inline-flex;
@@ -690,9 +743,14 @@ const navIcon = (text: string) =>
 
     const btn = document.getElementById("rcMenuBtn");
     const nav = document.getElementById("rcMobileNav");
+    const backdrop = document.getElementById("rcMenuBackdrop");
     const setMenu = (open: boolean) => {
       nav?.classList.toggle("open", open);
       if (nav) nav.hidden = !open;
+      if (backdrop) {
+        backdrop.hidden = !open;
+        backdrop.classList.toggle("open", open);
+      }
       btn?.setAttribute("aria-expanded", String(open));
       btn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       if (open) header.classList.add("scrolled");
@@ -719,11 +777,16 @@ const navIcon = (text: string) =>
     nav?.querySelectorAll("a[href]").forEach((a) =>
       a.addEventListener("click", () => setMenu(false)),
     );
+    // Tapping the dimmed backdrop closes the sheet.
+    backdrop?.addEventListener("click", () => {
+      setMenu(false);
+      btn?.focus();
+    });
   }
   rcHeaderInit();
   document.addEventListener("astro:after-swap", rcHeaderInit);
 
-  /** Global ₹/$ switch — swaps every .px span and plan-grid symbol,
+  /** Global ₹/$ switch, swaps every .px span and plan-grid symbol,
       persists in localStorage, notifies pricing grids via rc-currency. */
   function rcCurrencyInit() {
     const KEY = "rc-currency";

@@ -12,17 +12,16 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
-    eyebrow: Amazing Uptime
     title: <em>99.99% uptime</em>, monitored around the clock
     subtitle: >-
       Your website should always be online. Redundant infrastructure, proactive monitoring and automated
-      backups keep it that way — and we back it with a published SLA.
+      backups keep it that way, and we back it with a published SLA.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: /shared-hosting
     badges:
       - 99.99% Uptime SLA
@@ -33,7 +32,7 @@ sections:
     title: Built so your site never sleeps
     subtitle: >-
       From N+1 redundant power and network to automated daily backups with one-click restore, every part of
-      the platform is designed to keep you online — and to recover instantly if anything ever goes wrong.
+      the platform is designed to keep you online, and to recover instantly if anything ever goes wrong.
     image: support
     items:
       - icon: uptime
@@ -81,7 +80,7 @@ sections:
     title: Host where uptime is a promise, not a hope
     subtitle: Start today with a 30-day money-back guarantee.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 ---

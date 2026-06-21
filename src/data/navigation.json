@@ -90,7 +90,7 @@
         "href": "https://my.royalclouds.net/clientarea.php",
         "variant": "secondary"
       },
-      { "text": "Get Started", "href": "https://my.royalclouds.net/cart.php" }
+      { "text": "Get started", "href": "https://my.royalclouds.net/cart.php" }
     ]
   },
   "footer": {

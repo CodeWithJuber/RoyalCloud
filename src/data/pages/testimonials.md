@@ -9,17 +9,16 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
-    eyebrow: Testimonials
     title: Don't take <em>our word</em> for it
     subtitle: >-
       Thousands of website owners trust Royal Clouds for speed, reliability and
       support that genuinely cares. Here's what a few of them have to say.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: /shared-hosting
     badges:
       - 9.6/10 Average Rating
@@ -42,7 +41,7 @@ sections:
     title: Become our next happy customer
     subtitle: Premium hosting with a 30-day money-back guarantee and free migration.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 ---

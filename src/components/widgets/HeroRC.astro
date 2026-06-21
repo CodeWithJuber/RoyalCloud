@@ -1,16 +1,14 @@
 ---
-import { Icon } from "astro-icon/components";
-import AltitudeScene from "~/components/widgets/AltitudeScene.astro";
+import HeroSkyline from "~/components/illustrations/scenes/HeroSkyline.astro";
 import { pricify } from "~/utils/currency";
-import site from "~/data/site.json";
 
 /**
- * Royal Clouds home hero — "Static Luxe" (STRATOSPHERE, quiet-premium).
- * No WebGL / no canvas / no rAF loop: a deep royal-night gradient with one
- * soft static bloom, crisp Bricolage display type, and the Altitude vector
- * on the right (desktop). Fastest possible hero, zero CLS, fully calm.
- * A gentle GSAP scroll parallax on the copy (motion-safe) lives in
- * SmoothScroll.astro via [data-rc-hero].
+ * Royal Clouds home hero. Disciplined 4-element stack (offer eyebrow, headline,
+ * subtext, CTAs) on the deep royal-night gradient, with the custom isometric
+ * "HeroSkyline" cloud-city on the right (desktop). The proof/trust signals that
+ * used to crowd the hero now live in the TrustBar + Stats sections directly
+ * below. A gentle GSAP copy parallax (motion-safe) lives in SmoothScroll.astro
+ * via [data-rc-hero].
  */
 interface Action {
   text: string;
@@ -23,26 +21,20 @@ interface Props {
   offer?: string;
   primary?: Action;
   secondary?: Action;
-  badges?: string[];
   /** kept for API compatibility */
   art?: string;
+  badges?: string[];
 }
 const {
-  title = "India's <em>fastest</em> hosting — minus the big-brand price",
-  subtitle = "Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL, daily backups and genuinely friendly 24/7 support.",
+  title = "India's <em>fastest</em> hosting, minus the big-brand price",
+  subtitle = "Pure SSD servers with LiteSpeed, free SSL and daily backups, plus genuinely friendly 24/7 support.",
   offer = "Up to 30% off domains &amp; hosting",
   primary = {
-    text: "Get Started",
+    text: "Get started",
     href: "https://my.royalclouds.net/cart.php",
     target: "_blank",
   },
-  secondary = { text: "View Plans", href: "#pricing" },
-  badges = [
-    "99.99% Uptime SLA",
-    "Free SSL Certificate",
-    "30-Day Money-Back",
-    "Instant Setup",
-  ],
+  secondary = { text: "See plans", href: "#pricing" },
 } = Astro.props;
 ---
 
@@ -55,20 +47,7 @@ const {
         ><span class="dot"></span><span set:html={pricify(offer)} /></span
       >
       <h1 set:html={title} />
-      <span class="rc-live"
-        ><i class="rc-live-dot" aria-hidden="true"></i>All systems operational ·
-        <b data-count="99.99" data-suffix="%">99.99%</b> uptime</span
-      >
       <p class="rc-sub" set:html={subtitle} />
-      <ul class="hero-badges rc-badges">
-        {badges.map((b) => <li class="b">{b}</li>)}
-      </ul>
-      <p
-        class="rc-from"
-        set:html={pricify(
-          `From <em>${site.startingPrice}/mo</em> · Free SSL &amp; migration`,
-        )}
-      />
       <div class="hero-ctas">
         <a
           href={primary.href}
@@ -82,37 +61,10 @@ const {
           class="btn btn-ghost-dark btn-lg">{secondary.text}</a
         >
       </div>
-      <p class="cta-fine">
-        Risk free: 30-day money-back guarantee · Instant setup
-      </p>
     </div>
 
     <div class="rc-hero-aside" aria-hidden="true">
-      <AltitudeScene variant="dark" class="rc-hero-altitude" />
-    </div>
-  </div>
-
-  <div class="wrap">
-    <div class="rating-strip rc-rating">
-      <span class="stars" aria-hidden="true">
-        <Icon name="tabler:star-filled" />
-        <Icon name="tabler:star-filled" />
-        <Icon name="tabler:star-filled" />
-        <Icon name="tabler:star-filled" />
-        <Icon name="tabler:star-filled" />
-      </span>
-      <span
-        ><b>Excellent</b> — rated <b
-          class="rc-rating-num"
-          data-count={site.rating}
-          data-suffix={`/${site.ratingMax}`}>{site.rating}/{site.ratingMax}</b
-        > by our customers</span
-      >
-      <span class="rc-rating-sep" aria-hidden="true"></span>
-      <span
-        ><b>Since {site.since}</b> — {new Date().getFullYear() - site.since}+ years
-        hosting India's websites</span
-      >
+      <HeroSkyline class="rc-hero-skyline" />
     </div>
   </div>
 
@@ -126,9 +78,9 @@ const {
     overflow: hidden;
     background: var(--rc-grad-vivid);
     color: #fff;
-    padding: clamp(56px, 9vw, 144px) 0 clamp(48px, 7vw, 88px);
+    padding: clamp(48px, 7vw, 96px) 0 clamp(44px, 6vw, 80px);
   }
-  /* one soft static bloom for depth — no animation */
+  /* one soft static bloom for depth */
   .rc-hero::before {
     content: "";
     position: absolute;
@@ -138,11 +90,7 @@ const {
     top: -28%;
     right: -10%;
     border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(30, 150, 232, 0.32) 0%,
-      transparent 66%
-    );
+    background: radial-gradient(circle, rgba(30, 150, 232, 0.32) 0%, transparent 66%);
     pointer-events: none;
   }
   .rc-sky-veil {
@@ -168,7 +116,7 @@ const {
   .rc-hero-copy {
     position: relative;
     z-index: 1;
-    max-width: 640px;
+    max-width: 620px;
   }
   .rc-hero-aside {
     position: relative;
@@ -177,15 +125,14 @@ const {
     justify-content: center;
     align-items: center;
   }
-  .rc-hero-aside :global(.rc-hero-altitude) {
-    width: clamp(320px, 34vw, 460px);
+  .rc-hero-aside :global(.rc-hero-skyline) {
+    width: clamp(340px, 40vw, 520px);
     height: auto;
-    filter: drop-shadow(0 30px 80px rgba(5, 7, 15, 0.45));
   }
   @media (max-width: 980px) {
     .rc-hero-grid {
       display: block;
-      max-width: 820px;
+      max-width: 760px;
     }
     .rc-hero-aside {
       display: none;
@@ -205,11 +152,11 @@ const {
   }
   .rc-hero h1 {
     color: #fff;
-    font-size: clamp(40px, 6.2vw, 76px);
+    font-size: clamp(34px, 4.8vw, 56px);
     font-weight: 700;
-    letter-spacing: -0.035em;
-    line-height: 1.02;
-    margin: 22px 0 0;
+    letter-spacing: -0.03em;
+    line-height: 1.06;
+    margin: 20px 0 0;
   }
   .rc-hero h1 :global(em) {
     font-style: normal;
@@ -223,82 +170,11 @@ const {
     font-size: clamp(17px, 2vw, 20px);
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.86);
-    max-width: 600px;
-    margin: 22px 0 0;
-  }
-  /* live status chip — a small "wow" proof element */
-  .rc-live {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 18px 0 0;
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    letter-spacing: 0.01em;
-    color: rgba(255, 255, 255, 0.82);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 999px;
-    padding: 7px 14px;
-  }
-  .rc-live b {
-    color: #fff;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-  }
-  .rc-live-dot {
-    flex: none;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #16a34a;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .rc-live-dot {
-      animation: rcLiveDot 2s ease-out infinite;
-    }
-  }
-  @keyframes rcLiveDot {
-    0% {
-      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5);
-    }
-    70% {
-      box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
-    }
-  }
-  .rc-badges {
-    list-style: none;
-    margin: 26px 0 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    justify-content: start;
-    gap: 12px 36px;
-  }
-  .rc-hero :global(.hero-badges .b) {
-    color: rgba(255, 255, 255, 0.92);
-  }
-  .rc-hero :global(.hero-badges .b)::before {
-    background: rgba(255, 255, 255, 0.16);
-    color: var(--rc-yellow);
-  }
-  .rc-from {
-    font-family: var(--font-mono);
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    color: #fff;
-    margin: 26px 0 0;
-  }
-  .rc-from :global(em) {
-    font-style: normal;
-    color: var(--rc-yellow);
+    max-width: 540px;
+    margin: 20px 0 0;
   }
   .rc-hero .hero-ctas {
-    margin-top: 22px;
+    margin-top: 28px;
   }
   .rc-hero :global(.btn-ghost-dark) {
     background: rgba(255, 255, 255, 0.06);
@@ -309,28 +185,6 @@ const {
     border-color: #fff;
     color: #fff;
     background: rgba(255, 255, 255, 0.12);
-  }
-  .rc-hero :global(.cta-fine) {
-    color: rgba(255, 255, 255, 0.66);
-  }
-
-  /* rating strip */
-  .rc-rating {
-    position: relative;
-    z-index: 1;
-    margin-top: clamp(40px, 5vw, 60px);
-    padding-top: 26px;
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
-    color: rgba(255, 255, 255, 0.8);
-  }
-  .rc-rating :global(b) {
-    color: #fff;
-  }
-  .rc-rating-sep {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.35);
   }
 
   /* the spectrum "altitude rule" closes the hero */
@@ -344,8 +198,7 @@ const {
     z-index: 1;
   }
 
-  /* living hero: gentle, continuous, low-key motion for "alive" feel.
-     Slow + subtle so it reads premium, not busy. Motion-safe. */
+  /* living hero: gentle, continuous, low-key motion (motion-safe) */
   @media (prefers-reduced-motion: no-preference) {
     .rc-hero {
       background-size: 150% 150%;
@@ -355,7 +208,7 @@ const {
       animation: rcBloom 10s ease-in-out infinite;
     }
     .rc-hero-aside {
-      animation: rcFloatY 7.5s ease-in-out infinite;
+      animation: rcFloatY 8s ease-in-out infinite;
     }
   }
   @keyframes rcHeroDrift {
@@ -396,26 +249,13 @@ const {
       animation: rcRise 0.6s cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
     }
     .rc-hero-copy > :nth-child(2) {
-      animation-delay: 0.06s;
+      animation-delay: 0.08s;
     }
     .rc-hero-copy > :nth-child(3) {
-      animation-delay: 0.12s;
+      animation-delay: 0.16s;
     }
     .rc-hero-copy > :nth-child(4) {
-      animation-delay: 0.18s;
-    }
-    .rc-hero-copy > :nth-child(5) {
       animation-delay: 0.24s;
-    }
-    .rc-hero-copy > :nth-child(6) {
-      animation-delay: 0.3s;
-    }
-    .rc-hero-copy > :nth-child(7) {
-      animation-delay: 0.36s;
-    }
-    .rc-rating {
-      opacity: 0;
-      animation: rcRise 0.7s cubic-bezier(0.2, 0.65, 0.25, 1) 0.42s forwards;
     }
     @keyframes rcRise {
       to {
@@ -431,18 +271,10 @@ const {
     }
     .rc-hero-copy {
       text-align: center;
-    }
-    .rc-sub,
-    .rc-from {
       margin-inline: auto;
     }
-    .rc-badges {
-      justify-content: center;
-      gap: 12px 24px;
-      width: max-content;
-      max-width: 100%;
+    .rc-sub {
       margin-inline: auto;
-      text-align: left;
     }
     .rc-hero .hero-ctas {
       justify-content: center;
@@ -450,17 +282,10 @@ const {
   }
   @media (max-width: 560px) {
     .rc-hero h1 {
-      font-size: clamp(34px, 9.5vw, 46px);
+      font-size: clamp(32px, 8.5vw, 44px);
     }
     .rc-sub {
       font-size: 16px;
-    }
-    .rc-rating {
-      font-size: 13px;
-      gap: 8px 12px;
-    }
-    .rc-badges :global(.b) {
-      font-size: 13px;
     }
     .hero-ctas .btn {
       width: 100%;

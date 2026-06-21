@@ -6,6 +6,7 @@ import RevealScript from '~/components/widgets/RevealScript.astro';
 import AuroraScript from '~/components/widgets/AuroraScript.astro';
 import CountUp from '~/components/widgets/CountUp.astro';
 import MobileCTA from '~/components/widgets/MobileCTA.astro';
+import SvgDefs from '~/components/illustrations/SvgDefs.astro';
 
 import type { MetaData } from '~/types';
 
@@ -13,9 +14,9 @@ export interface Props {
   metadata?: MetaData;
   /** Pages with their own dark hero can render the transparent header. */
   transparentHeader?: boolean;
-  /** Per-page visual identity — sets data-theme on <main> (see rc-premium.css). */
+  /** Per-page visual identity, sets data-theme on <main> (see rc-premium.css). */
   theme?: string;
-  /** Page id — sets data-page on <main> for page-scoped styling (e.g. home). */
+  /** Page id, sets data-page on <main> for page-scoped styling (e.g. home). */
   page?: string;
 }
 
@@ -24,6 +25,7 @@ const { metadata, transparentHeader = false, theme, page } = Astro.props;
 
 <Layout metadata={metadata}>
   <a href="#main" class="skip-link">Skip to main content</a>
+  <SvgDefs />
   <div class="rc-progress" aria-hidden="true"><span></span></div>
   <slot name="header">
     <HeaderRC solid={!transparentHeader} />

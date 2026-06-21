@@ -1,0 +1,37 @@
+---
+/**
+ * IlCloud - managed cloud: a mesh of cloud nodes wired together (scalable,
+ * multi-node, managed). Three Clouds + dashed connectors + nodes.
+ */
+import Cloud from '../primitives/Cloud.astro';
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg class:list={['rc-spot', className]} viewBox="0 0 240 240" fill="none" aria-hidden="true">
+  <!-- connectors (behind) -->
+  <g stroke="rgba(90,30,230,0.38)" stroke-width="2.5" stroke-dasharray="5 6" stroke-linecap="round">
+    <line x1="58" y1="58" x2="138" y2="126"></line>
+    <line x1="138" y1="126" x2="192" y2="170"></line>
+  </g>
+  <!-- clouds -->
+  <Cloud x={70} y={96} scale={1} tone="sky" />
+  <Cloud x={20} y={40} scale={0.55} tone="lavender" />
+  <Cloud x={150} y={150} scale={0.6} tone="mint" />
+  <!-- nodes -->
+  <g fill="#5a1ee6">
+    <circle cx="58" cy="58" r="4.5"></circle>
+    <circle cx="138" cy="126" r="5"></circle>
+    <circle cx="192" cy="170" r="4.5" fill="#1e96e8"></circle>
+  </g>
+</svg>
+
+<style>
+  .rc-spot {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

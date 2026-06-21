@@ -13,17 +13,17 @@ sections:
   - type: hero
     variant: product
     eyebrow: WordPress Hosting
-    title: Managed WordPress Hosting — Up to 10x Faster
+    title: Sub-second WordPress page loads, measured
     subtitle: >-
-      Deploy a WordPress site in minutes on SSD RAID-10 with LiteSpeed, LSCache and the Cloudflare CDN — plus
-      cPanel, free SSL, Brotli, automated updates and backups.
+      In our lab tests a standard WordPress site loads in about 0.4s on SSD RAID-10 with LiteSpeed and LSCache,
+      against 1.9s on typical shared hosting.
     offer: From $15/mo · Free Setup
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Pricing
+      text: See plans
       href: "#pricing"
     badges:
       - 99.99% Uptime SLA
@@ -42,12 +42,6 @@ sections:
         text: DDoS Protection
       - icon: headset
         text: 24/7 Support
-  - type: pricing
-    id: pricing
-    plan: wordpress
-    eyebrow: WordPress
-    title: Managed WordPress Hosting plans
-    subtitle: Transparent pricing with everything you need included.
   - type: benchmark
     eyebrow: Speed Test
     title: WordPress simply loads faster on LiteSpeed
@@ -64,7 +58,6 @@ sections:
         value: 3.2
         display: 3.2s
   - type: features
-    eyebrow: Why Royal Clouds
     title: Everything your wordpress hosting needs
     columns: 4
     items:
@@ -80,26 +73,27 @@ sections:
       - icon: backup
         title: Weekly Backups
         text: Restore your whole site in one click from automatic remote backups.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Built on technology you can trust
+  - type: pricing
+    id: pricing
+    plan: wordpress
+    eyebrow: WordPress
+    title: Managed WordPress Hosting plans
+    subtitle: Transparent pricing with everything you need included.
   - type: testimonials
-    eyebrow: Reviews
     title: Loved by website owners
     source: global
     limit: 3
   - type: faq
-    eyebrow: FAQ
     title: Frequently asked questions
     source: global
   - type: cta
     title: Ready to launch your wordpress hosting?
     subtitle: Instant setup · Free migration · 30-day money-back guarantee.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: Talk to Sales
+      text: Contact sales
       href: /contact
 ---

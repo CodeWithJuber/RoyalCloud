@@ -1,0 +1,33 @@
+---
+/**
+ * IlCyberpanel - CyberPanel VPS: a control-panel window with a terminal inside
+ * (LiteSpeed-powered, command-ready). Uses the Panel primitive + a slotted
+ * terminal block so the chrome matches every other panel scene.
+ */
+import Panel from '../primitives/Panel.astro';
+import Star from '../primitives/Star.astro';
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg class:list={['rc-spot', className]} viewBox="0 0 240 240" fill="none" aria-hidden="true">
+  <Panel x={30} y={62} w={180} h={120}>
+    <!-- terminal (coords relative to panel content origin) -->
+    <rect x="14" y="14" width="152" height="64" rx="8" fill="#120e2e"></rect>
+    <path d="M28 34 L36 42 L28 50" fill="none" stroke="#4dc3ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+    <rect x="44" y="39" width="78" height="5" rx="2.5" fill="rgba(255,255,255,0.55)"></rect>
+    <rect x="28" y="58" width="112" height="5" rx="2.5" fill="rgba(255,255,255,0.3)"></rect>
+    <rect x="146" y="58" width="9" height="9" rx="2" fill="#9e73ff"></rect>
+  </Panel>
+  <Star x={198} y={58} size={8} tone="gold" />
+</svg>
+
+<style>
+  .rc-spot {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

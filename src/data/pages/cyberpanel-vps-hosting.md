@@ -15,15 +15,15 @@ sections:
     eyebrow: CyberPanel VPS
     title: CyberPanel VPS Hosting
     subtitle: >-
-      Deploy blazing-fast WordPress sites in minutes with CyberPanel and OpenLiteSpeed pre-installed — on isolated KVM
+      Deploy blazing-fast WordPress sites in minutes with CyberPanel and OpenLiteSpeed pre-installed, on isolated KVM
       VPS with full root access, a dedicated IP and DDoS protection.
     offer: From $12/mo · Free Setup
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Pricing
+      text: See plans
       href: "#pricing"
     badges:
       - 99.99% Uptime SLA
@@ -32,59 +32,78 @@ sections:
       - Instant Setup
   - type: trustbar
     items:
-      - icon: bolt
-        text: LiteSpeed Powered
+      - icon: rocket
+        text: OpenLiteSpeed Powered
       - icon: lock
         text: Free SSL
-      - icon: backup
-        text: Daily Backups
-      - icon: shield
-        text: DDoS Protection
+      - icon: billing
+        text: No cPanel License
+      - icon: uptime
+        text: 99.99% Uptime SLA
       - icon: headset
         text: 24/7 Support
+  - type: showcase
+    eyebrow: Control Panel
+    title: Run your sites from a free, modern panel
+    subtitle: CyberPanel gives you websites, SSL, backups and LiteSpeed stats in one clean dashboard.
+    tabs:
+      - label: Websites
+        panel: files
+        text: Create WordPress sites, manage files and databases from one CyberPanel dashboard.
+      - label: Free SSL
+        panel: ssl
+        text: Issue and auto-renew Let's Encrypt certificates with one click, no extra cost.
+      - label: Backups
+        panel: backups
+        text: Schedule snapshots and restore a full site whenever you need it.
+      - label: LiteSpeed stats
+        panel: stats
+        text: Watch requests, cache hits and resource usage from the OpenLiteSpeed dashboard.
+  - type: osstrip
+    title: Pick your Linux base in one click
+    items:
+      - name: Ubuntu
+        color: "#e95420"
+        active: true
+      - name: AlmaLinux
+        color: "#0d597f"
+      - name: CentOS
+        color: "#932279"
+      - name: Rocky Linux
+        color: "#10b981"
+  - type: features
+    title: Built for modern WordPress developers
+    columns: 4
+    items:
+      - icon: rocket
+        title: OpenLiteSpeed Speed
+        text: OpenLiteSpeed and LSCache serve cached WordPress pages in well under a second.
+      - icon: billing
+        title: Free Panel, No License
+        text: CyberPanel is free and pre-installed, so you skip cPanel license fees entirely.
+      - icon: lock
+        title: One-Click SSL
+        text: Issue and auto-renew free Let's Encrypt certificates for every site you host.
+      - icon: terminal
+        title: Staging and Full Root
+        text: Spin up staging sites and manage everything from CyberPanel or the command line.
   - type: pricing
     id: pricing
     plan: cyberpanel
     eyebrow: CyberPanel VPS
     title: CyberPanel VPS Hosting plans
     subtitle: Transparent pricing with everything you need included.
-  - type: features
-    eyebrow: Why Royal Clouds
-    title: Everything your cyberpanel vps needs
-    columns: 4
-    items:
-      - icon: rocket
-        title: WordPress in Minutes
-        text: CyberPanel + OpenLiteSpeed and LSCache deploy a tuned WordPress stack instantly.
-      - icon: cpu
-        title: Isolated KVM Resources
-        text: Dedicated CPU, RAM and SSD that are always yours — never shared.
-      - icon: terminal
-        title: Full Root Access
-        text: Manage everything from CyberPanel or the command line, your way.
-      - icon: shield
-        title: DDoS Protection
-        text: Built-in network filtering keeps your sites online under attack.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Built on technology you can trust
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
   - type: faq
-    eyebrow: FAQ
     title: Frequently asked questions
     source: global
   - type: cta
     title: Ready to launch your cyberpanel vps?
     subtitle: Instant setup · Free migration · 30-day money-back guarantee.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: Talk to Sales
+      text: Contact sales
       href: /contact
 ---

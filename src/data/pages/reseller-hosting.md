@@ -4,7 +4,7 @@ title: Reseller Hosting
 metadata:
   title: Reseller Hosting - White-Label cPanel/WHM Reseller | Royal Clouds
   description: >-
-    Start your own hosting business with Royal Clouds white-label reseller hosting — WHM/cPanel, free SSL, free WHMCS
+    Start your own hosting business with Royal Clouds white-label reseller hosting, WHM/cPanel, free SSL, free WHMCS
     billing and 24/7 support.
   ignoreTitleTemplate: true
 breadcrumb: []
@@ -19,11 +19,11 @@ sections:
       and bill your clients under your own brand.
     offer: From $12.99/mo · Free Setup
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Pricing
+      text: See plans
       href: "#pricing"
     badges:
       - 99.99% Uptime SLA
@@ -42,6 +42,50 @@ sections:
         text: DDoS Protection
       - icon: headset
         text: 24/7 Support
+  - type: steps
+    eyebrow: How it works
+    title: From plan to paying clients in three steps
+    items:
+      - title: Pick a reseller plan and get WHM
+        text: >-
+          Choose R1, R2 or R3 and start with up to 25, 60 or unlimited cPanel accounts. WHM access is included.
+      - title: White-label with your brand and free WHMCS
+        text: >-
+          Set private nameservers and your branding, then add free WHMCS to automate signups, invoicing and provisioning.
+      - title: Create cPanel accounts and bill clients
+        text: >-
+          Spin up cPanel accounts with free SSL on each, set your own prices, and bill clients under your own brand.
+  - type: storycards
+    title: Resellers growing real businesses on Royal Clouds
+    items:
+      - tag: Web Studio
+        metric: 40+
+        metricLabel: client accounts hosted
+        quote: >-
+          We moved every client off third-party hosting onto our own R2 reseller plan. One panel, one bill, our brand.
+        name: Imran K.
+        site: pixelforge.studio
+      - tag: Freelancer
+        metric: $1.4k
+        metricLabel: recurring monthly revenue
+        quote: >-
+          Reselling hosting turned a one-off build into a monthly invoice. Free WHMCS handles the billing on autopilot.
+        name: Sara M.
+        site: sarabuilds.co
+      - tag: Agency
+        metric: Unlimited
+        metricLabel: cPanel accounts on R3
+        quote: >-
+          We outgrew shared limits fast. Unlimited cPanel accounts on R3 means we onboard new clients without thinking.
+        name: Daniel R.
+        site: northwind.agency
+      - tag: IT Reseller
+        metric: 99.99%
+        metricLabel: uptime our clients see
+        quote: >-
+          My clients only see my brand and my support. The platform stays up, so the trust stays with me.
+        name: Priya N.
+        site: cloudnest.in
   - type: pricing
     id: pricing
     plan: reseller
@@ -49,13 +93,12 @@ sections:
     title: Reseller Hosting plans
     subtitle: Transparent pricing with everything you need included.
   - type: features
-    eyebrow: Why Royal Clouds
     title: Everything your reseller hosting needs
     columns: 4
     items:
       - icon: users
         title: White-Label Everything
-        text: Private nameservers and branding — your clients only ever see your brand.
+        text: Private nameservers and branding, your clients only ever see your brand.
       - icon: apps
         title: Free WHM & cPanel
         text: Industry-standard control panels to manage every client account.
@@ -65,26 +108,17 @@ sections:
       - icon: headset
         title: 24/7 Support
         text: We support you, so you can support your customers with confidence.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Built on technology you can trust
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
   - type: faq
-    eyebrow: FAQ
     title: Frequently asked questions
     source: global
   - type: cta
     title: Ready to launch your reseller hosting?
     subtitle: Instant setup · Free migration · 30-day money-back guarantee.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: Talk to Sales
+      text: Contact sales
       href: /contact
 ---

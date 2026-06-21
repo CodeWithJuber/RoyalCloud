@@ -1,6 +1,6 @@
 ---
 /**
- * STRATOSPHERE motion spine — Lenis smooth scroll + a GSAP ScrollTrigger
+ * STRATOSPHERE motion spine, Lenis smooth scroll + a GSAP ScrollTrigger
  * hero→content handoff. Everything is gated behind prefers-reduced-motion
  * (native scroll, no JS motion) and re-initialises across Astro view
  * transitions. Only transform/opacity are animated → no layout shift.
@@ -87,13 +87,48 @@
     if (raceSec && window.innerWidth >= 768 && window.matchMedia("(hover: hover)").matches) {
       const st = ScrollTrigger.create({
         trigger: raceSec,
-        start: "center center",
-        end: "+=55%",
+        start: "top top",
+        end: "+=70%",
         pin: true,
         pinSpacing: true,
         anticipatePin: 1,
       });
       teardowns.push(() => st.kill());
+    }
+
+    // ── Hover physics: pricing cards + bento flagship tiles tilt toward the
+    //    cursor (desktop fine-pointer only). Motion values via gsap.quickTo so
+    //    nothing touches DOM/React state per frame; reset on pointer leave.
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      const tiltEls = gsap.utils.toArray<HTMLElement>(
+        ".plan, .feature-card.tile-wide",
+      );
+      tiltEls.forEach((el) => {
+        gsap.set(el, { transformPerspective: 820, transformOrigin: "center" });
+        const rx = gsap.quickTo(el, "rotationX", { duration: 0.5, ease: "power3" });
+        const ry = gsap.quickTo(el, "rotationY", { duration: 0.5, ease: "power3" });
+        const ty = gsap.quickTo(el, "y", { duration: 0.5, ease: "power3" });
+        const onMove = (e: PointerEvent) => {
+          const r = el.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          rx(-py * 5);
+          ry(px * 5);
+          ty(-6);
+        };
+        const onLeave = () => {
+          rx(0);
+          ry(0);
+          ty(0);
+        };
+        el.addEventListener("pointermove", onMove);
+        el.addEventListener("pointerleave", onLeave);
+        teardowns.push(() => {
+          el.removeEventListener("pointermove", onMove);
+          el.removeEventListener("pointerleave", onLeave);
+          gsap.set(el, { clearProps: "all" });
+        });
+      });
     }
 
     ScrollTrigger.refresh();

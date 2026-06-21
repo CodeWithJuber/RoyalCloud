@@ -1,7 +1,7 @@
 ---
 publishDate: 2026-06-02T00:00:00Z
 title: "10 Practical Ways to Secure Your Website"
-excerpt: "A no-nonsense website security checklist: SSL, backups, strong logins, firewalls and more — protect your site and your visitors from common threats."
+excerpt: "A no-nonsense website security checklist: SSL, backups, strong logins, firewalls and more, protect your site and your visitors from common threats."
 author: Royal Clouds Team
 category: Security
 tags:
@@ -15,7 +15,7 @@ Website security isn't only a concern for big companies. Automated bots probe mi
 
 ## 1. Install SSL everywhere
 
-An SSL certificate encrypts traffic between your visitors and your server, and it's a confirmed SEO ranking factor. Every Royal Clouds plan includes a **free, auto-renewing SSL certificate** — there's no reason to run plain HTTP anymore.
+An SSL certificate encrypts traffic between your visitors and your server, and it's a confirmed SEO ranking factor. Every Royal Clouds plan includes a **free, auto-renewing SSL certificate**, there's no reason to run plain HTTP anymore.
 
 ## 2. Keep everything updated
 
@@ -37,7 +37,7 @@ Brute-force attacks guess passwords thousands of times per minute. Rate-limiting
 
 A WAF filters malicious traffic before it ever reaches your site. Combined with Cloudflare's network-level protection, it blocks common exploits like SQL injection and cross-site scripting.
 
-## 7. Take regular backups — and test them
+## 7. Take regular backups, and test them
 
 A backup you've never restored is just a hope. Royal Clouds takes **automatic remote backups** so you can roll back your entire site in one click after any incident.
 
@@ -51,7 +51,7 @@ Misconfigured permissions let attackers write to files they shouldn't. Stick to 
 
 ## 10. Choose a secure host
 
-Your hosting provider is your first line of defence. Look for DDoS protection, hardened firewalls, regular security audits and 24/7 monitoring — all standard on Royal Clouds infrastructure.
+Your hosting provider is your first line of defence. Look for DDoS protection, hardened firewalls, regular security audits and 24/7 monitoring, all standard on Royal Clouds infrastructure.
 
 ## A quick monthly routine
 

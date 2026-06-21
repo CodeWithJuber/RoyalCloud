@@ -3,7 +3,6 @@ import { Image } from "astro:assets";
 import HeroRC from "~/components/widgets/HeroRC.astro";
 import SectionArt from "./SectionArt.astro";
 import AltitudeScene from "~/components/widgets/AltitudeScene.astro";
-import { pricify } from "~/utils/currency";
 import cloud from "~/assets/images/brand/cloud.png";
 
 interface Cta {
@@ -77,14 +76,6 @@ const target = (cta?: Cta) =>
           )}
           <h1 set:html={title} />
           {subtitle && <p class="sub" set:html={subtitle} />}
-          {badges && badges.length > 0 && (
-            <div class="hero-badges">
-              {badges.map((b) => (
-                <span class="b">{b}</span>
-              ))}
-            </div>
-          )}
-          {offer && <span class="offer" set:html={pricify(offer)} />}
           {(primaryCta || secondaryCta) && (
             <div class="hero-ctas">
               {primaryCta && (
@@ -109,7 +100,6 @@ const target = (cta?: Cta) =>
               )}
             </div>
           )}
-          <p class="cta-fine">30-day money-back guarantee · Instant setup</p>
         </div>
         <div class="p-hero-art" aria-hidden="true">
           {art ? (

@@ -1,0 +1,37 @@
+---
+/**
+ * IlDedicated - dedicated servers: a full single tower (three stacked racks)
+ * crowned in gold (the whole machine is yours). The crown is the one gold
+ * focal, kept small.
+ */
+import RackUnit from '../primitives/RackUnit.astro';
+import Star from '../primitives/Star.astro';
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg class:list={['rc-spot', className]} viewBox="0 0 240 240" fill="none" aria-hidden="true">
+  <!-- crown -->
+  <path
+    d="M84 86 L92 60 L106 74 L120 54 L134 74 L148 60 L156 86 Z"
+    fill="url(#rcgGold)"
+    stroke="rgba(10,14,31,0.12)"
+    stroke-width="1.5"
+    stroke-linejoin="round"></path>
+  <circle cx="120" cy="54" r="4" fill="#f5a524"></circle>
+  <!-- tower -->
+  <RackUnit x={64} y={94} w={112} />
+  <RackUnit x={64} y={136} w={112} />
+  <RackUnit x={64} y={178} w={112} lit={false} />
+  <Star x={196} y={150} size={7} tone="gold" />
+</svg>
+
+<style>
+  .rc-spot {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

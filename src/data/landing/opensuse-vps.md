@@ -13,17 +13,16 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    eyebrow: Opensuse VPS
-    title: Opensuse VPS on <em>Pure SSD</em> — Built for Speed
+    title: openSUSE VPS with full root and <em>YaST + Btrfs snapshots</em>
     subtitle: >-
-      openSUSE pre-installed on premium KVM VPS — pure SSD RAID-10 storage, full root access, instant setup,
-      DDoS protection and friendly 24/7 support.
+      openSUSE pre-installed on premium KVM VPS with full root access, pure SSD RAID-10 storage, instant
+      setup, DDoS protection and friendly 24/7 support.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: "#pricing"
     badges:
       - Full Root Access
@@ -31,7 +30,6 @@ sections:
       - 99.99% Uptime SLA
     art: terminal:opensuse
   - type: osstrip
-    eyebrow: Operating Systems
     title: Your distro, ready in one click
     items:
       - name: Ubuntu
@@ -47,20 +45,13 @@ sections:
         active: true
       - name: Scientific
         color: "#7a99ac"
-  - type: pricing
-    id: pricing
-    plan: vps
-    eyebrow: Plans & Pricing
-    title: Choose your opensuse vps plan
-    showToggle: true
-    note: 30-day money-back guarantee · Instant setup · Free migration.
   - type: content
     eyebrow: Why This Distro
     title: Admin superpowers with <em>openSUSE</em>
     items:
       - icon: settings
         title: YaST does everything
-        text: One tool configures services, storage and networking — no hunting for files.
+        text: One tool configures services, storage and networking, no hunting for files.
       - icon: history
         title: Btrfs snapshots
         text: Roll the whole system back to before that bad change in one command.
@@ -69,32 +60,38 @@ sections:
         text: Leap and Tumbleweed images reimage from the panel in a minute.
     image: datacenter
     reverse: true
+  - type: pricing
+    id: pricing
+    plan: vps
+    eyebrow: Plans & Pricing
+    title: Choose your opensuse vps plan
+    showToggle: true
+    note: 30-day money-back guarantee · Instant setup · Free migration.
   - type: features
-    eyebrow: Why Royal Clouds
     title: Everything your opensuse vps needs
     columns: 3
     items:
       - icon: cpu
         title: KVM Virtualization
-        text: True hardware isolation — your opensuse vps gets dedicated resources that are never oversold.
+        text: True hardware isolation, your opensuse vps gets dedicated resources that are never oversold.
       - icon: bolt
         title: Pure SSD RAID-10
         text: Enterprise SSDs in RAID-10 deliver up to 15x faster disk I/O than HDD servers.
       - icon: terminal
         title: openSUSE Pre-Installed
-        text: Deploy openSUSE in one click — or reload to any other Linux distribution from the panel, any time.
+        text: Deploy openSUSE in one click, or reload to any other Linux distribution from the panel, any time.
       - icon: shield
         title: DDoS Protection
         text: Always-on network filtering keeps your server online through volumetric attacks.
       - icon: scale
         title: Instant Scaling
-        text: Upgrade CPU, RAM and storage in seconds from the client area — no migration needed.
+        text: Upgrade CPU, RAM and storage in seconds from the client area, no migration needed.
       - icon: headset
         title: 24/7 Expert Support
         text: Real engineers on live chat and tickets around the clock, every day of the year.
   - type: faq
     eyebrow: FAQ
-    title: Opensuse VPS — common questions
+    title: Opensuse VPS, common questions
     source: inline
     items:
       - q: What do I get with Opensuse VPS?
@@ -111,13 +108,13 @@ sections:
           details are emailed to you.
       - q: Can I upgrade later?
         a: >-
-          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
+          Yes, upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
           resources change.
   - type: cta
     title: Launch your opensuse vps today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 theme: linux

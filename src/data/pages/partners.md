@@ -9,13 +9,12 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
-    eyebrow: Our Partners
     title: Powered by the <em>best in the business</em>
     subtitle: >-
       Royal Clouds builds on industry-leading technology partners so you get
       proven performance, security and reliability on every plan.
     primaryCta:
-      text: View Plans
+      text: See plans
       href: /shared-hosting
     secondaryCta:
       text: Become a Partner
@@ -46,7 +45,7 @@ sections:
     title: Want to partner with Royal Clouds?
     subtitle: Reach out to our team to explore reseller, technology and referral partnerships.
     primaryCta:
-      text: Contact Us
+      text: Contact sales
       href: /contact
     secondaryCta:
       text: Reseller Hosting
