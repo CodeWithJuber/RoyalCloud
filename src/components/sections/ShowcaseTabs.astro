@@ -1,6 +1,6 @@
 ---
 /**
- * Panel showcase — a browser-framed control-panel mockup with a tab
+ * Panel showcase, a browser-framed control-panel mockup with a tab
  * switcher (Files / SSL / Backups / Stats). Panels are hand-built CSS
  * mocks; tabs swap them with a small re-initializable script.
  */
@@ -22,7 +22,7 @@ const {
   tabs = [
     { label: "File Manager", panel: "files", text: "Upload, edit and organize your site files right in the browser." },
     { label: "Free SSL", panel: "ssl", text: "One click installs and auto-renews your certificate forever." },
-    { label: "Backups", panel: "backups", text: "Daily snapshots — restore your whole site in one click." },
+    { label: "Backups", panel: "backups", text: "Daily snapshots, restore your whole site in one click." },
     { label: "Live Stats", panel: "stats", text: "Visitors, bandwidth and resource usage at a glance." },
   ],
 } = Astro.props;
@@ -74,9 +74,9 @@ const {
         >
           {
             [
-              ["public_html", "folder", "—"],
+              ["public_html", "folder", "-"],
               ["index.php", "file", "12 KB"],
-              ["wp-content", "folder", "—"],
+              ["wp-content", "folder", "-"],
               ["backup-2026.zip", "zip", "184 MB"],
             ].map(([name, kind, size]) => (
               <div class="f-row">
@@ -106,7 +106,7 @@ const {
             </span>
             <div>
               <b>yoursite.com</b>
-              <small>Let's Encrypt — valid, auto-renews</small>
+              <small>Let's Encrypt, valid, auto-renews</small>
             </div>
             <em class="ssl-state">ACTIVE</em>
           </div>

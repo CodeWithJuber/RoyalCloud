@@ -1,0 +1,37 @@
+---
+/**
+ * SpectrumArc - the signature swoosh, stroked with the brand spectrum
+ * (violet -> azure -> gold). The connective tissue across hero, dividers and
+ * domains. Animatable wrapper `.rc-il__arc` (the motion layer can draw it via
+ * stroke-dashoffset or sweep it).
+ *
+ * Origin (x,y). `w` sets the span; `thickness` the stroke. `grad` swaps the
+ * gradient (spectrum default; neon for dark sections).
+ */
+interface Props {
+  x?: number;
+  y?: number;
+  w?: number;
+  thickness?: number;
+  grad?: 'spectrum' | 'energy' | 'neon';
+  class?: string;
+}
+const { x = 0, y = 0, w = 240, thickness = 5, grad = 'spectrum', class: className = '' } = Astro.props;
+const GRAD: Record<string, string> = {
+  spectrum: 'url(#rcgSpec)',
+  energy: 'url(#rcgEnergy)',
+  neon: 'url(#rcgNeon)',
+};
+const stroke = GRAD[grad] ?? GRAD.spectrum;
+// a gentle rising sweep across the span
+const d = `M0 ${w * 0.34} Q ${w * 0.5} ${-w * 0.12} ${w} ${w * 0.18}`;
+---
+
+<g transform={`translate(${x} ${y})`} class:list={['rc-il__arc', className]}>
+  <path
+    d={d}
+    fill="none"
+    stroke={stroke}
+    stroke-width={thickness}
+    stroke-linecap="round"></path>
+</g>

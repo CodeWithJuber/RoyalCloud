@@ -21,7 +21,7 @@ const helpCards = [
   {
     icon: "tabler:message-circle",
     title: "Live Chat",
-    text: "We're always available to chat — instant replies, real humans.",
+    text: "We're always available to chat, with instant replies from real humans.",
     cta: "Start chatting",
     href: "/contact",
   },
@@ -45,11 +45,12 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
 ---
 
 <footer class="site-footer">
+  <div class="f-spectrum" aria-hidden="true"></div>
   <!-- "Need help?" strip (original royalclouds.net section) -->
   <div class="f-help-sec">
     <div class="wrap">
       <p class="f-help-lead">
-        Need help? Chat with our <em>friendly support team</em> — 24/7 live chat,
+        Need help? Chat with our <em>friendly support team</em>. 24/7 live chat,
         email or a ticket.
       </p>
       <div class="f-help-grid">
@@ -93,7 +94,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
           autocomplete="email"
           required
         />
-        <button class="btn btn-coral" type="submit">Subscribe</button>
+        <button class="btn btn-primary" type="submit">Subscribe</button>
       </form>
       <p id="news-status" class="f-news-status" role="status" aria-live="polite"></p>
     </div>
@@ -191,7 +192,12 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
   }
   .f-help-lead em {
     font-style: normal;
-    color: #0086c9;
+    color: var(--rc-blue);
+  }
+  /* spectrum hairline crowning the footer */
+  .f-spectrum {
+    height: 3px;
+    background: var(--spectrum);
   }
   .f-help-grid {
     display: grid;
@@ -224,10 +230,17 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     width: 44px;
     height: 44px;
     border-radius: 12px;
-    background: #ffe9ed;
-    color: var(--rc-coral);
+    background: var(--pastel-lavender);
+    color: var(--rc-violet);
     display: grid;
     place-items: center;
+    transition:
+      background 0.18s ease,
+      color 0.18s ease;
+  }
+  .f-help-card:hover .f-help-ic {
+    background: var(--rc-gradient);
+    color: #fff;
   }
   .f-help-ic :global(svg) {
     width: 22px;
@@ -255,7 +268,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #d6203f;
+    color: var(--rc-violet);
     transition: transform 0.18s ease;
   }
   .f-help-card:hover em {
@@ -656,7 +669,7 @@ const payments = ["PayPal", "Visa", "Mastercard", "AmEx", "UPI ₹"];
 
 <script>
   function rcFooterInit() {
-    /* newsletter: no backend on the static site — hand the address to the
+    /* newsletter: no backend on the static site, hand the address to the
        sales inbox via the visitor's mail client */
     document
       .querySelectorAll<HTMLFormElement>("[data-newsletter]")

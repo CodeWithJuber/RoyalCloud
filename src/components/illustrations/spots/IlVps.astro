@@ -1,0 +1,39 @@
+---
+/**
+ * IlVps - KVM VPS: an isolated server slice with two resource dials (the
+ * "dedicated resources" idea). Dials use the energy gradient arc + a needle.
+ */
+import RackUnit from '../primitives/RackUnit.astro';
+import Star from '../primitives/Star.astro';
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg class:list={['rc-spot', className]} viewBox="0 0 240 240" fill="none" aria-hidden="true">
+  <!-- isolated rack slice -->
+  <RackUnit x={28} y={98} w={120} tone="#ffffff" />
+  <!-- isolation frame -->
+  <rect x="20" y="88" width="136" height="56" rx="12" fill="none" stroke="url(#rcgEnergy)" stroke-width="2.5" stroke-dasharray="6 7"></rect>
+  <!-- dials -->
+  <g>
+    <circle cx="190" cy="96" r="24" fill="#ffffff" stroke="rgba(10,14,31,0.12)" stroke-width="2"></circle>
+    <path d="M174 102 A24 24 0 0 1 204 80" fill="none" stroke="url(#rcgEnergy)" stroke-width="4" stroke-linecap="round"></path>
+    <line x1="190" y1="96" x2="200" y2="88" stroke="#5a1ee6" stroke-width="3" stroke-linecap="round"></line>
+  </g>
+  <g>
+    <circle cx="190" cy="150" r="24" fill="#ffffff" stroke="rgba(10,14,31,0.12)" stroke-width="2"></circle>
+    <path d="M174 156 A24 24 0 0 1 210 144" fill="none" stroke="url(#rcgSpec)" stroke-width="4" stroke-linecap="round"></path>
+    <line x1="190" y1="150" x2="182" y2="140" stroke="#5a1ee6" stroke-width="3" stroke-linecap="round"></line>
+  </g>
+  <Star x={56} y={56} size={8} tone="gold" />
+</svg>
+
+<style>
+  .rc-spot {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+/**
+ * Star - a four-point sparkle for the "premium" accent. Gold by default and
+ * rationed to <=10% of any illustration's area (punctuation, not a field).
+ * Animatable wrapper `.rc-il__star` (twinkle). Origin (x,y) = the star centre;
+ * `size` is the point radius.
+ */
+interface Props {
+  x?: number;
+  y?: number;
+  size?: number;
+  tone?: 'gold' | 'white' | 'violet' | 'azure';
+  class?: string;
+}
+const { x = 0, y = 0, size = 8, tone = 'gold', class: className = '' } = Astro.props;
+const TONE: Record<string, string> = {
+  gold: 'url(#rcgGold)',
+  white: '#ffffff',
+  violet: '#7a3bff',
+  azure: '#4dc3ff',
+};
+const fill = TONE[tone] ?? TONE.gold;
+const s = size;
+const c = s * 0.16; // concave control toward centre
+// concave 4-point star centred on origin
+const d = `M0 ${-s} C${c} ${-c} ${c} ${-c} ${s} 0 C${c} ${c} ${c} ${c} 0 ${s} C${-c} ${c} ${-c} ${c} ${-s} 0 C${-c} ${-c} ${-c} ${-c} 0 ${-s} Z`;
+---
+
+<g transform={`translate(${x} ${y})`} class:list={['rc-il__star', className]}>
+  <path d={d} fill={fill}></path>
+</g>

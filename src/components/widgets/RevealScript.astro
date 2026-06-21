@@ -22,7 +22,7 @@
       }
     }
 
-    // 1) reveal whatever is already on screen immediately — never a blank
+    // 1) reveal whatever is already on screen immediately, never a blank
     //    first paint while waiting for the observer.
     revealInView();
 
@@ -47,49 +47,10 @@
     window.addEventListener("scroll", revealInView, { passive: true });
     window.addEventListener("resize", revealInView, { passive: true });
 
-    // 4) Last resort: guarantee everything is visible — content must never
+    // 4) Last resort: guarantee everything is visible, content must never
     //    stay hidden (no white pages) even if the observer/scroll misbehave.
     setTimeout(() => els.forEach(reveal), 2500);
   }
   rcSetupReveal();
   document.addEventListener("astro:after-swap", rcSetupReveal);
-
-  /** Soft hero parallax — [data-plx] layers drift as you scroll away.
-      Desktop only, reduced-motion aware, rAF-throttled. */
-  let rcPlxBound = false;
-  function rcParallax() {
-    const els = document.querySelectorAll<HTMLElement>("[data-plx]");
-    els.forEach((el) => (el.style.transform = ""));
-    if (
-      !els.length ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      window.innerWidth < 860
-    )
-      return;
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const y = window.scrollY;
-      if (y > window.innerHeight * 1.4) return;
-      document.querySelectorAll<HTMLElement>("[data-plx]").forEach((el) => {
-        el.style.transform = `translateY(${(y * parseFloat(el.dataset.plx || "0")).toFixed(1)}px)`;
-      });
-    };
-    if (!rcPlxBound) {
-      rcPlxBound = true;
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(update);
-          }
-        },
-        { passive: true },
-      );
-    }
-    update();
-  }
-  rcParallax();
-  document.addEventListener("astro:after-swap", rcParallax);
 </script>

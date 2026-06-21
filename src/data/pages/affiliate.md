@@ -10,7 +10,6 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
-    eyebrow: Affiliate Program
     title: Earn <em>30% per sale</em> with Royal Clouds
     subtitle: >-
       Promote hosting people actually love and get rewarded for every customer
@@ -21,7 +20,7 @@ sections:
       href: https://my.royalclouds.net/affiliates.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: /shared-hosting
     badges:
       - 30% Per Sale
@@ -53,7 +52,7 @@ sections:
         text: A 9.6/10-rated host with fast servers and great support converts well.
   - type: cta
     title: Ready to start earning?
-    subtitle: Join the Royal Clouds affiliate program today — it's completely free.
+    subtitle: Join the Royal Clouds affiliate program today, it's completely free.
     primaryCta:
       text: Join Now
       href: https://my.royalclouds.net/affiliates.php

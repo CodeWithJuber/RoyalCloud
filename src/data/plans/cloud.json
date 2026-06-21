@@ -7,7 +7,7 @@
   "title": "Fully Managed DigitalOcean Cloud Hosting",
   "subtitle": "Get the speed and scalability of DigitalOcean droplets with none of the sysadmin work. We deploy, secure, monitor and manage your cloud server 24/7.",
   "currency": "$",
-  "billingNote": "We manage the server — you ship the project. Scale up in one click.",
+  "billingNote": "We manage the server, you ship the project. Scale up in one click.",
   "tiers": [
     {
       "name": "Cloud S",

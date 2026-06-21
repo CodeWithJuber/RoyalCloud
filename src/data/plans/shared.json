@@ -5,45 +5,126 @@
   "icon": "server",
   "eyebrow": "Web Hosting",
   "title": "Lightning-Fast SSD Shared Hosting",
-  "subtitle": "The fastest shared hosting powered by SSD drives, the LiteSpeed Web Server and CloudLinux — with free cPanel, free SSL, DDoS protection and daily backups on every plan.",
+  "subtitle": "The fastest shared hosting powered by SSD drives, the LiteSpeed Web Server and CloudLinux, with free cPanel, free SSL, DDoS protection and daily backups on every plan.",
   "currency": "$",
   "billingNote": "Every plan includes free cPanel, free SSL, free migration, daily backups & 24/7 support.",
   "tiers": [
     {
-      "name": "Starter", "price": "1.99", "priceAnnual": "1.59", "period": "/mo", "popular": false,
+      "name": "Starter",
+      "price": "1.99",
+      "priceAnnual": "1.59",
+      "period": "/mo",
+      "popular": false,
       "summary": "Perfect for a first website or blog.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=1",
-      "features": ["1 Domain", "10 GB SSD Storage", "100 GB Bandwidth", "3 Databases", "5 Email Accounts", "Free cPanel & SSL", "Free Migration"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=1",
+      "features": [
+        "1 Domain",
+        "10 GB SSD Storage",
+        "100 GB Bandwidth",
+        "3 Databases",
+        "5 Email Accounts",
+        "Free cPanel & SSL",
+        "Free Migration"
+      ]
     },
     {
-      "name": "Economy", "price": "3.99", "priceAnnual": "3.19", "period": "/mo", "popular": false,
+      "name": "Economy",
+      "price": "3.99",
+      "priceAnnual": "3.19",
+      "period": "/mo",
+      "popular": false,
       "summary": "Great for growing personal sites.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=2",
-      "features": ["3 Domains", "20 GB SSD Storage", "200 GB Bandwidth", "10 Databases", "10 Email Accounts", "Free cPanel & SSL", "Free Migration"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=2",
+      "features": [
+        "3 Domains",
+        "20 GB SSD Storage",
+        "200 GB Bandwidth",
+        "10 Databases",
+        "10 Email Accounts",
+        "Free cPanel & SSL",
+        "Free Migration"
+      ]
     },
     {
-      "name": "Deluxe", "price": "4.99", "priceAnnual": "3.99", "period": "/mo", "popular": true,
+      "name": "Deluxe",
+      "price": "4.99",
+      "priceAnnual": "3.99",
+      "period": "/mo",
+      "popular": true,
       "summary": "Our most popular plan for businesses.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=3",
-      "features": ["5 Domains", "30 GB SSD Storage", "300 GB Bandwidth", "15 Databases", "15 Email Accounts", "Free cPanel & SSL", "Free Migration"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=3",
+      "features": [
+        "5 Domains",
+        "30 GB SSD Storage",
+        "300 GB Bandwidth",
+        "15 Databases",
+        "15 Email Accounts",
+        "Free cPanel & SSL",
+        "Free Migration"
+      ]
     },
     {
-      "name": "Ultimate", "price": "9.99", "priceAnnual": "7.99", "period": "/mo", "popular": false,
+      "name": "Ultimate",
+      "price": "9.99",
+      "priceAnnual": "7.99",
+      "period": "/mo",
+      "popular": false,
       "summary": "For high-traffic and store sites.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=4",
-      "features": ["10 Domains", "50 GB SSD Storage", "500 GB Bandwidth", "20 Databases", "20 Email Accounts", "Free cPanel & SSL", "Free Migration"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=4",
+      "features": [
+        "10 Domains",
+        "50 GB SSD Storage",
+        "500 GB Bandwidth",
+        "20 Databases",
+        "20 Email Accounts",
+        "Free cPanel & SSL",
+        "Free Migration"
+      ]
     },
     {
-      "name": "Expert", "price": "19.99", "priceAnnual": "15.99", "period": "/mo", "popular": false,
+      "name": "Expert",
+      "price": "19.99",
+      "priceAnnual": "15.99",
+      "period": "/mo",
+      "popular": false,
       "summary": "Maximum power for agencies.",
-      "cta": "Get Started", "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=5",
-      "features": ["20 Domains", "100 GB SSD Storage", "Unlimited Bandwidth", "Unlimited Databases", "Unlimited Email Accounts", "Free cPanel & SSL", "Free Migration"]
+      "cta": "Get Started",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=5",
+      "features": [
+        "20 Domains",
+        "100 GB SSD Storage",
+        "Unlimited Bandwidth",
+        "Unlimited Databases",
+        "Unlimited Email Accounts",
+        "Free cPanel & SSL",
+        "Free Migration"
+      ]
     }
   ],
   "highlights": [
-    { "icon": "bolt", "title": "LiteSpeed + LSCache", "text": "Serve pages up to 15x faster than standard Apache HDD hosting." },
-    { "icon": "shield", "title": "Free SSL & DDoS Protection", "text": "Every site is encrypted and shielded with Cloudflare and free SSL." },
-    { "icon": "apps", "title": "Softaculous 1-Click Apps", "text": "Install WordPress, Joomla, Drupal and more in seconds via Softaculous." },
-    { "icon": "headset", "title": "24/7 Friendly Support", "text": "Real hosting specialists on live chat, email and tickets, around the clock." }
+    {
+      "icon": "bolt",
+      "title": "LiteSpeed + LSCache",
+      "text": "Serve pages up to 15x faster than standard Apache HDD hosting."
+    },
+    {
+      "icon": "shield",
+      "title": "Free SSL & DDoS Protection",
+      "text": "Every site is encrypted and shielded with Cloudflare and free SSL."
+    },
+    {
+      "icon": "apps",
+      "title": "Softaculous 1-Click Apps",
+      "text": "Install WordPress, Joomla, Drupal and more in seconds via Softaculous."
+    },
+    {
+      "icon": "headset",
+      "title": "24/7 Friendly Support",
+      "text": "Real hosting specialists on live chat, email and tickets, around the clock."
+    }
   ]
 }

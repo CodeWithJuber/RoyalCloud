@@ -8,7 +8,7 @@ export const USD_TO_INR = 84;
 
 const groupINR = (n: number) => n.toLocaleString("en-IN");
 
-/** "1.99" → "169", "130" → "10,899" — nearest 9 under ₹1000, nearest 99 above. */
+/** "1.99" → "169", "130" → "10,899", nearest 9 under ₹1000, nearest 99 above. */
 export function toINR(usd: string | number): string {
   const value = typeof usd === "number" ? usd : parseFloat(usd);
   if (!isFinite(value)) return String(usd);

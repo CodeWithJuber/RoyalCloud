@@ -1,0 +1,29 @@
+---
+/**
+ * IlShared - SSD shared hosting: two server cards resting on a soft cloud, a
+ * gold spark. Flat spot illo, 240x240, transparent (the tile supplies the
+ * pastel backdrop). Composed from primitives so it shares the brand world.
+ */
+import Cloud from '../primitives/Cloud.astro';
+import RackUnit from '../primitives/RackUnit.astro';
+import Star from '../primitives/Star.astro';
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg class:list={['rc-spot', className]} viewBox="0 0 240 240" fill="none" aria-hidden="true">
+  <Cloud x={42} y={132} scale={1.15} tone="lavender" />
+  <RackUnit x={64} y={70} w={112} tone="#ffffff" />
+  <RackUnit x={64} y={112} w={112} tone="#ffffff" lit={false} />
+  <Star x={196} y={58} size={9} tone="gold" />
+</svg>
+
+<style>
+  .rc-spot {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

@@ -10,23 +10,18 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    title: India's <em>fastest</em> hosting — minus the big-brand price
+    title: India's <em>fastest</em> hosting, minus the big-brand price
     subtitle: >-
-      Pure SSD RAID-10 servers with LiteSpeed, CloudLinux, free cPanel &amp; SSL, daily backups and genuinely
-      friendly 24/7 support.
+      Pure SSD servers with LiteSpeed, free SSL and daily backups, plus
+      genuinely friendly 24/7 support.
     offer: Up to 30% off domains &amp; hosting
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: "#pricing"
-    badges:
-      - 99.99% Uptime SLA
-      - Free SSL Certificate
-      - 30-Day Money-Back
-      - Instant Setup
   - type: trustbar
     items:
       - icon: uptime
@@ -40,9 +35,8 @@ sections:
       - icon: headset
         text: 24/7 Friendly Support
   - type: features
-    eyebrow: Hosting Solutions
     title: One platform, every kind of hosting
-    subtitle: From a first blog to bare-metal power — pick the plan that fits and upgrade any time.
+    subtitle: From a first blog to bare-metal power. Pick the plan that fits, upgrade any time.
     columns: 4
     variant: tiles
     items:
@@ -60,7 +54,7 @@ sections:
         href: /kvm-vps-hosting
       - icon: database
         title: Dedicated Servers
-        text: The entire machine is yours — custom configs and premium network.
+        text: The entire machine is yours, with custom configs and a premium network.
         href: /dedicated-servers
       - icon: terminal
         title: CyberPanel VPS
@@ -78,32 +72,8 @@ sections:
         title: Domain Names
         text: Register or transfer domains with free DNS management.
         href: /domains
-  - type: pricing
-    id: pricing
-    plan: shared
-    eyebrow: Pricing
-    title: SSD Shared Hosting plans
-    subtitle: Transparent pricing with everything included — no surprise renewals.
-  - type: content
-    eyebrow: Top Speed Solutions
-    title: Up to <em>15x faster</em> with SSD + LiteSpeed
-    subtitle: >-
-      Every Royal Clouds server pairs pure SSD RAID-10 storage with the LiteSpeed Web Server and CloudLinux
-      isolation, so your pages render fast and stay fast — even at peak traffic.
-    image: datacenter
-    items:
-      - icon: bolt
-        title: LiteSpeed + LSCache
-        text: Serve pages up to 15x faster than standard Apache HDD hosting.
-      - icon: gauge
-        title: Pure SSD RAID-10
-        text: Enterprise SSDs in RAID-10 for blazing I/O with redundancy built in.
-      - icon: globe
-        title: Cloudflare CDN
-        text: Content cached at the edge, close to your visitors worldwide.
   - type: race
-    eyebrow: Speed Race
-    title: Don't take our word — watch the race
+    title: Don't take our word, watch the race
     note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
     items:
       - label: Royal Clouds (SSD + LiteSpeed)
@@ -117,23 +87,22 @@ sections:
         value: 3.2
         display: 3.2s
   - type: content
-    eyebrow: Amazing Uptime
-    title: 99.99% uptime, monitored around the clock
+    title: Up to <em>15x faster</em> with SSD + LiteSpeed
     subtitle: >-
-      Redundant power and network, proactive monitoring, automated daily backups and always-on DDoS protection
-      keep your website online — backed by a real SLA.
-    image: support
-    reverse: true
+      Every Royal Clouds server pairs pure SSD RAID-10 storage with the LiteSpeed Web Server and CloudLinux
+      isolation, so your pages render fast and stay fast, even at peak traffic.
+    image: datacenter
+    layout: chips
     items:
-      - icon: uptime
-        title: 99.99% SLA
-        text: An uptime promise we publish and stand behind.
-      - icon: backup
-        title: Daily Backups
-        text: Automatic backups with one-click restore, every single day.
-      - icon: shield
-        title: DDoS Protection
-        text: Network-level filtering shields your site from attacks.
+      - icon: bolt
+        title: LiteSpeed + LSCache
+        text: Serve pages up to 15x faster than standard Apache HDD hosting.
+      - icon: gauge
+        title: Pure SSD RAID-10
+        text: Enterprise SSDs in RAID-10 for blazing I/O with redundancy built in.
+      - icon: globe
+        title: Cloudflare CDN
+        text: Content cached at the edge, close to your visitors worldwide.
   - type: stats
     items:
       - value: 99.99%
@@ -144,25 +113,47 @@ sections:
         label: Friendly Expert Support
       - value: 9.6/10
         label: Customer Rating
+  - type: content
+    title: 99.99% uptime, monitored around the clock
+    subtitle: >-
+      Redundant power and network, proactive monitoring, automated daily backups and always-on DDoS protection
+      keep your website online, backed by a real SLA.
+    image: support
+    reverse: true
+    layout: list
+    items:
+      - icon: uptime
+        title: 99.99% SLA
+        text: An uptime promise we publish and stand behind.
+      - icon: backup
+        title: Daily Backups
+        text: Automatic backups with one-click restore, every single day.
+      - icon: shield
+        title: DDoS Protection
+        text: Network-level filtering shields your site from attacks.
+  - type: pricing
+    id: pricing
+    plan: shared
+    eyebrow: Pricing
+    title: SSD Shared Hosting plans
+    subtitle: Transparent pricing with everything included, no surprise renewals.
   - type: steps
-    eyebrow: Getting Started
+    eyebrow: Getting started
     title: Online in three simple steps
     items:
       - title: Pick your plan
-        text: Choose shared, WordPress, VPS or dedicated — every plan includes free SSL and 24/7 support.
+        text: Choose shared, WordPress, VPS or dedicated. Every plan includes free SSL and 24/7 support.
       - title: We migrate you for free
         text: Already hosted elsewhere? Our team moves your sites with zero downtime, free of charge.
       - title: Launch and grow
         text: Instant setup gets you live in minutes, and upgrades are one click away as you grow.
   - type: showcase
-    eyebrow: Your Panel
-    title: Everything is a click — see for yourself
+    title: Everything is a click. See for yourself
     subtitle: Files, SSL, backups and live stats in one clean panel. No command line, no tickets for basics.
   - type: techlogos
-    eyebrow: Powered By
     title: Built on technology you can trust
   - type: testimonials
-    eyebrow: Testimonials
+    eyebrow: 9.6/10 average rating
     title: Loved by website owners across the world
     source: global
     limit: 6
@@ -171,17 +162,16 @@ sections:
     title: Frequently asked questions
     source: global
   - type: domainsearch
-    eyebrow: Domains
     title: Find your perfect domain name
-    subtitle: Short, memorable and yours — search availability across all popular extensions.
+    subtitle: Short, memorable and yours. Search availability across all popular extensions.
   - type: cta
     title: Ready for premium, speed-optimized hosting?
-    subtitle: Join thousands of happy customers — instant setup, free migration and a 30-day money-back guarantee.
+    subtitle: Join thousands of happy customers. Instant setup, free migration and a 30-day money-back guarantee.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: Talk to Us
+      text: Contact sales
       href: /contact
 ---

@@ -27,29 +27,47 @@ export interface Plan {
 
 // Our semantic icon names → Tabler icon names (AstroWind uses astro-icon/tabler).
 const ICONS: Record<string, string> = {
-  server: 'tabler:server', cpu: 'tabler:cpu', database: 'tabler:database-cog',
-  cloud: 'tabler:cloud', wordpress: 'tabler:brand-wordpress', users: 'tabler:users',
-  bolt: 'tabler:bolt', shield: 'tabler:shield-check', apps: 'tabler:apps',
-  headset: 'tabler:headset', terminal: 'tabler:terminal-2', settings: 'tabler:settings',
-  refresh: 'tabler:refresh', backup: 'tabler:database-export', scale: 'tabler:arrows-maximize',
-  billing: 'tabler:receipt', rocket: 'tabler:rocket', failover: 'tabler:git-fork',
-  uptime: 'tabler:activity-heartbeat', gauge: 'tabler:gauge', report: 'tabler:file-text',
-  audit: 'tabler:shield-search', logs: 'tabler:list-details', firewall: 'tabler:wall',
-  globe: 'tabler:world', lock: 'tabler:lock',
+  server: "tabler:server",
+  cpu: "tabler:cpu",
+  database: "tabler:database-cog",
+  cloud: "tabler:cloud",
+  wordpress: "tabler:brand-wordpress",
+  users: "tabler:users",
+  bolt: "tabler:bolt",
+  shield: "tabler:shield-check",
+  apps: "tabler:apps",
+  headset: "tabler:headset",
+  terminal: "tabler:terminal-2",
+  settings: "tabler:settings",
+  refresh: "tabler:refresh",
+  backup: "tabler:database-export",
+  scale: "tabler:arrows-maximize",
+  billing: "tabler:receipt",
+  rocket: "tabler:rocket",
+  failover: "tabler:git-fork",
+  uptime: "tabler:activity-heartbeat",
+  gauge: "tabler:gauge",
+  report: "tabler:file-text",
+  audit: "tabler:shield-search",
+  logs: "tabler:list-details",
+  firewall: "tabler:wall",
+  globe: "tabler:world",
+  lock: "tabler:lock",
 };
 
-export const tablerIcon = (name: string): string => ICONS[name] ?? 'tabler:point';
+export const tablerIcon = (name: string): string =>
+  ICONS[name] ?? "tabler:point";
 
-export function toPrices(plan: Plan, billed: 'monthly' | 'annual' = 'monthly') {
+export function toPrices(plan: Plan, billed: "monthly" | "annual" = "monthly") {
   return plan.tiers.map((t) => ({
     title: t.name,
     subtitle: t.summary,
-    price: billed === 'annual' && t.priceAnnual ? t.priceAnnual : t.price,
-    period: 'per month',
+    price: billed === "annual" && t.priceAnnual ? t.priceAnnual : t.price,
+    period: "per month",
     items: t.features.map((f) => ({ description: f })),
-    callToAction: { text: t.cta, href: t.ctaUrl, target: '_blank' },
+    callToAction: { text: t.cta, href: t.ctaUrl, target: "_blank" },
     hasRibbon: !!t.popular,
-    ribbonTitle: 'Popular',
+    ribbonTitle: "Popular",
   }));
 }
 

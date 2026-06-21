@@ -13,25 +13,30 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    eyebrow: Cheap Linux VPS
-    title: Cheap Linux VPS on <em>Pure SSD</em> — Built for Speed
+    title: Cheap Linux VPS with full root and <em>any distro</em> you pick
     subtitle: >-
-      Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and
-      friendly 24/7 support.
+      Premium KVM VPS with full root access, your choice of six Linux distributions, pure SSD RAID-10 storage,
+      instant setup, DDoS protection and friendly 24/7 support.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: "#pricing"
     badges:
       - Full Root Access
       - Pure SSD Storage
       - 99.99% Uptime SLA
     art: terminal:linux
+  - type: pricing
+    id: pricing
+    plan: vps
+    eyebrow: Plans & Pricing
+    title: Choose your cheap linux vps plan
+    showToggle: true
+    note: 30-day money-back guarantee · Instant setup · Free migration.
   - type: osstrip
-    eyebrow: Operating Systems
     title: Your distro, ready in one click
     items:
       - name: Ubuntu
@@ -46,13 +51,6 @@ sections:
         color: "#73ba25"
       - name: Scientific
         color: "#7a99ac"
-  - type: pricing
-    id: pricing
-    plan: vps
-    eyebrow: Plans & Pricing
-    title: Choose your cheap linux vps plan
-    showToggle: true
-    note: 30-day money-back guarantee · Instant setup · Free migration.
   - type: content
     eyebrow: Why This Distro
     title: Any distro. <em>Your</em> rules.
@@ -65,35 +63,34 @@ sections:
         text: Reinstall a different distribution from the control panel in one click.
       - icon: key
         title: Full root access
-        text: Your kernel, your packages, your firewall — complete control via SSH.
+        text: Your kernel, your packages, your firewall, complete control via SSH.
     image: datacenter
     reverse: true
   - type: features
-    eyebrow: Why Royal Clouds
     title: Everything your cheap linux vps needs
     columns: 3
     items:
       - icon: cpu
         title: KVM Virtualization
-        text: True hardware isolation — your cheap linux vps gets dedicated resources that are never oversold.
+        text: True hardware isolation, your cheap linux vps gets dedicated resources that are never oversold.
       - icon: bolt
         title: Pure SSD RAID-10
         text: Enterprise SSDs in RAID-10 deliver up to 15x faster disk I/O than HDD servers.
       - icon: terminal
         title: Any Linux Distro
-        text: Ubuntu, Debian, CentOS, Fedora, openSUSE & more — reinstall from the control panel in one click.
+        text: Ubuntu, Debian, CentOS, Fedora, openSUSE & more, reinstall from the control panel in one click.
       - icon: shield
         title: DDoS Protection
         text: Always-on network filtering keeps your server online through volumetric attacks.
       - icon: scale
         title: Instant Scaling
-        text: Upgrade CPU, RAM and storage in seconds from the client area — no migration needed.
+        text: Upgrade CPU, RAM and storage in seconds from the client area, no migration needed.
       - icon: headset
         title: 24/7 Expert Support
         text: Real engineers on live chat and tickets around the clock, every day of the year.
   - type: faq
     eyebrow: FAQ
-    title: Cheap Linux VPS — common questions
+    title: Cheap Linux VPS, common questions
     source: inline
     items:
       - q: What do I get with Cheap Linux VPS?
@@ -110,13 +107,13 @@ sections:
           details are emailed to you.
       - q: Can I upgrade later?
         a: >-
-          Yes — upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
+          Yes, upgrade to a bigger plan at any time from the client area. Your data stays in place; only the
           resources change.
   - type: cta
     title: Launch your cheap linux vps today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 theme: linux

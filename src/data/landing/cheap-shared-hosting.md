@@ -13,17 +13,16 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    eyebrow: Cheap Shared Hosting
-    title: Cheap Shared Hosting on <em>Pure SSD</em> — Built for Speed
+    title: Cheap Shared Hosting on <em>Pure SSD</em>, Built for Speed
     subtitle: >-
       Lightning-fast SSD hosting with LiteSpeed, free cPanel & SSL, free migration, daily backups and friendly
       24/7 support.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: "#pricing"
     badges:
       - Free cPanel & SSL
@@ -42,22 +41,15 @@ sections:
         text: Instant Setup
       - icon: headset
         text: 24/7 Human Support
-  - type: pricing
-    id: pricing
-    plan: shared
-    eyebrow: Plans & Pricing
-    title: Choose your cheap shared hosting plan
-    showToggle: true
-    note: 30-day money-back guarantee · Instant setup · Free migration.
   - type: storycards
-    eyebrow: Success Stories
+    eyebrow: Real Savings
     title: Real savings. Real growth.
     items:
       - tag: Online Store
         metric: 75%
         metricLabel: lower monthly hosting bill
         quote: >-
-          We moved three stores over and our bill dropped by three quarters — and pages actually open faster
+          We moved three stores over and our bill dropped by three quarters, and pages actually open faster
           now.
         name: Arjun Mehta
         site: Furniture retailer
@@ -73,22 +65,28 @@ sections:
         quote: My blog stopped timing out on traffic spikes. Search rankings followed within a couple of months.
         name: Kabir Shah
         site: Travel blogger
+  - type: pricing
+    id: pricing
+    plan: shared
+    eyebrow: Plans & Pricing
+    title: Choose your cheap shared hosting plan
+    showToggle: true
+    note: 30-day money-back guarantee · Instant setup · Free migration.
   - type: features
-    eyebrow: Why Royal Clouds
     title: Everything your cheap shared hosting needs
     columns: 3
     items:
       - icon: bolt
         title: LiteSpeed + LSCache
         text: >-
-          Our cheap shared hosting runs on LiteSpeed web servers with pure SSD storage — pages load up to 15x
+          Our cheap shared hosting runs on LiteSpeed web servers with pure SSD storage, pages load up to 15x
           faster.
       - icon: apps
         title: Free cPanel & Softaculous
         text: Manage everything from the familiar cPanel and install WordPress, Joomla & 400+ apps in one click.
       - icon: lock
         title: Free SSL Certificates
-        text: Every domain gets a free Let's Encrypt SSL — automatically installed and renewed.
+        text: Every domain gets a free Let's Encrypt SSL, automatically installed and renewed.
       - icon: backup
         title: Daily Backups
         text: Automatic daily backups with easy one-click restore keep your data safe.
@@ -97,11 +95,11 @@ sections:
         text: Our team moves your existing websites over for free, with zero downtime.
       - icon: headset
         title: 24/7 Friendly Support
-        text: Hosting specialists on live chat, email and tickets — around the clock.
+        text: Hosting specialists on live chat, email and tickets, around the clock.
     variant: tiles
   - type: faq
     eyebrow: FAQ
-    title: Cheap Shared Hosting — common questions
+    title: Cheap Shared Hosting, common questions
     source: inline
     items:
       - q: What is included with cheap shared hosting?
@@ -109,7 +107,7 @@ sections:
           Free cPanel, free SSL certificates, free website migration, daily backups, LiteSpeed caching and
           24/7 support are included on every plan.
       - q: Is there a money-back guarantee?
-        a: Yes — all shared hosting plans come with a 30-day money-back guarantee, no questions asked.
+        a: Yes, all shared hosting plans come with a 30-day money-back guarantee, no questions asked.
       - q: Can you move my website for free?
         a: >-
           Absolutely. Our migration team transfers your sites, emails and databases for free, usually within
@@ -122,7 +120,7 @@ sections:
     title: Launch your cheap shared hosting today
     subtitle: Instant setup · 99.99% uptime SLA · 24/7 friendly support.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
 theme: money

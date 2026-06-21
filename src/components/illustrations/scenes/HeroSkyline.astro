@@ -1,0 +1,147 @@
+---
+/**
+ * HeroSkyline - the brand's signature centerpiece: an isometric "Royal Cloud
+ * City" floating island of server towers with a glowing cloud-core, a neon
+ * spectrum arc, drifting clouds and gold stars. Composed ENTIRELY from the
+ * primitive kit (IsoBlock / Cloud / CoreGlow / SpectrumArc / Star) so it shares
+ * the one locked light source and reads as the same world as every spot illo.
+ *
+ * Tuned for the dark royal-night hero gradient: bright iso tones, white clouds,
+ * neon arc. Motion (drift / pulse) uses the CSS `translate`/`scale` properties
+ * so it composes with each primitive's own `transform`, and is gated behind
+ * prefers-reduced-motion.
+ */
+import IsoBlock from '../primitives/IsoBlock.astro';
+import Cloud from '../primitives/Cloud.astro';
+import CoreGlow from '../primitives/CoreGlow.astro';
+import SpectrumArc from '../primitives/SpectrumArc.astro';
+import Star from '../primitives/Star.astro';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg
+  class:list={['rc-skyline', className]}
+  viewBox="0 0 460 420"
+  fill="none"
+  role="img"
+  aria-label="Illustration of an isometric cloud-city of server towers"
+>
+  <!-- back: arc + core + back cloud -->
+  <SpectrumArc x={36} y={150} w={388} thickness={5} grad="neon" class="sky-arc" />
+  <CoreGlow x={304} y={128} r={26} class="sky-core" />
+  <Cloud x={262} y={36} scale={0.72} tone="white" class="sky-cloud sky-cloud--a" />
+
+  <!-- island -->
+  <IsoBlock x={230} y={252} w={140} h={22} tone="#2a1370" />
+
+  <!-- towers -->
+  <IsoBlock x={190} y={150} w={28} h={120} tone="#7a3bff" />
+  <IsoBlock x={235} y={118} w={24} h={152} tone="#1e96e8" />
+  <IsoBlock x={285} y={180} w={30} h={86} tone="#9e73ff" />
+
+  <!-- window lights (animatable) -->
+  <g class="sky-lights" fill="#ffd98a">
+    <circle cx="232" cy="172" r="2.6"></circle>
+    <circle cx="232" cy="196" r="2.6"></circle>
+    <circle cx="232" cy="220" r="2.6"></circle>
+    <circle cx="188" cy="206" r="2.4" fill="#4dc3ff"></circle>
+    <circle cx="188" cy="228" r="2.4" fill="#4dc3ff"></circle>
+    <circle cx="284" cy="222" r="2.4" fill="#ffd98a"></circle>
+  </g>
+
+  <!-- front clouds -->
+  <Cloud x={48} y={176} scale={0.82} tone="white" class="sky-cloud sky-cloud--b" />
+  <Cloud x={332} y={244} scale={0.58} tone="white" class="sky-cloud sky-cloud--c" />
+
+  <!-- stars -->
+  <Star x={108} y={112} size={7} tone="gold" class="sky-star sky-star--a" />
+  <Star x={384} y={172} size={6} tone="gold" class="sky-star sky-star--b" />
+  <Star x={150} y={332} size={5} tone="white" class="sky-star sky-star--c" />
+  <Star x={336} y={92} size={5} tone="gold" class="sky-star sky-star--d" />
+</svg>
+
+<style>
+  .rc-skyline {
+    width: 100%;
+    height: auto;
+    max-width: 520px;
+    overflow: visible;
+    filter: drop-shadow(0 24px 60px rgba(10, 6, 40, 0.5));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sky-cloud {
+      animation: sky-drift 9s ease-in-out infinite;
+    }
+    .sky-cloud--b {
+      animation-duration: 11s;
+      animation-delay: -2s;
+    }
+    .sky-cloud--c {
+      animation-duration: 8s;
+      animation-delay: -4s;
+    }
+    .sky-core {
+      animation: sky-pulse 5s ease-in-out infinite;
+    }
+    .sky-lights circle {
+      animation: sky-blink 3.4s ease-in-out infinite;
+    }
+    .sky-lights circle:nth-child(2n) {
+      animation-delay: -1.2s;
+    }
+    .sky-lights circle:nth-child(3n) {
+      animation-delay: -2.1s;
+    }
+    .sky-star {
+      animation: sky-twinkle 4s ease-in-out infinite;
+    }
+    .sky-star--b {
+      animation-delay: -1.5s;
+    }
+    .sky-star--c {
+      animation-delay: -2.6s;
+    }
+  }
+  @keyframes sky-drift {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -8px;
+    }
+  }
+  @keyframes sky-pulse {
+    0%,
+    100% {
+      scale: 1;
+    }
+    50% {
+      scale: 1.07;
+    }
+  }
+  @keyframes sky-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  @keyframes sky-twinkle {
+    0%,
+    100% {
+      opacity: 1;
+      scale: 1;
+    }
+    50% {
+      opacity: 0.5;
+      scale: 0.8;
+    }
+  }
+</style>

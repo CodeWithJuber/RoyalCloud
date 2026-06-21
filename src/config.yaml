@@ -1,7 +1,7 @@
 site:
   name: Royal Clouds
-  site: 'https://royalclouds.net'
-  base: '/'
+  site: "https://royalclouds.net"
+  base: "/"
   trailingSlash: false
 
   googleSiteVerificationId: false
@@ -9,22 +9,22 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: Royal Clouds — Premium SSD Web Hosting, KVM VPS & Dedicated Servers
-    template: '%s — Royal Clouds'
-  description: "Royal Clouds delivers premium SSD web hosting, KVM VPS, CyberPanel VPS, managed WordPress and dedicated servers — built for speed with LiteSpeed, CloudLinux, free cPanel & SSL and friendly 24/7 support."
+    default: Royal Clouds, Premium SSD Web Hosting, KVM VPS & Dedicated Servers
+    template: "%s, Royal Clouds"
+  description: "Royal Clouds delivers premium SSD web hosting, KVM VPS, CyberPanel VPS, managed WordPress and dedicated servers, built for speed with LiteSpeed, CloudLinux, free cPanel & SSL and friendly 24/7 support."
   robots:
     index: true
     follow: true
   openGraph:
     site_name: Royal Clouds
     images:
-      - url: '~/assets/images/default.png'
+      - url: "~/assets/images/default.png"
         width: 1200
         height: 628
     type: website
   twitter:
-    handle: '@royalclouds'
-    site: '@royalclouds'
+    handle: "@royalclouds"
+    site: "@royalclouds"
     cardType: summary_large_image
 
 i18n:
@@ -38,25 +38,25 @@ apps:
 
     post:
       isEnabled: true
-      permalink: '/blog/%slug%'
+      permalink: "/blog/%slug%"
       robots:
         index: true
 
     list:
       isEnabled: true
-      pathname: 'blog'
+      pathname: "blog"
       robots:
         index: true
 
     category:
       isEnabled: true
-      pathname: 'category'
+      pathname: "category"
       robots:
         index: true
 
     tag:
       isEnabled: true
-      pathname: 'tag'
+      pathname: "tag"
       robots:
         index: false
 
@@ -69,4 +69,4 @@ analytics:
       id: null
 
 ui:
-  theme: 'light:only'
+  theme: "light:only"

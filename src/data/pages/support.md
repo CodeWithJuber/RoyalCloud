@@ -10,11 +10,10 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
-    eyebrow: Support Center
     title: Help is here <em>24/7</em>
     subtitle: >-
       Real hosting specialists, available around the clock on live chat, tickets
-      and email — plus a growing knowledge base so you can self-serve any time.
+      and email, plus a growing knowledge base so you can self-serve any time.
     primaryCta:
       text: Submit a Ticket
       href: https://my.royalclouds.net/submitticket.php
@@ -36,7 +35,7 @@ sections:
         text: Chat with our team in real time for quick questions and account help.
       - icon: report
         title: Support Tickets
-        text: Open a ticket for anything technical — tracked end to end until resolved.
+        text: Open a ticket for anything technical, tracked end to end until resolved.
       - icon: logs
         title: Knowledge Base
         text: Step-by-step guides for cPanel, WordPress, email, DNS and more.

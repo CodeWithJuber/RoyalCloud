@@ -126,6 +126,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
     ...base,
     image: z.string().optional(),
     reverse: z.boolean().optional(),
+    layout: z.enum(["chips", "list"]).optional(),
     body: z.string().optional(),
     items: z.array(iconItemSchema).optional(),
   }),
@@ -320,7 +321,7 @@ const landingCollection = defineCollection({
 });
 
 const plansCollection = defineCollection({
-  // generateId: ignore the legacy `slug` field inside the JSON — plan ids are
+  // generateId: ignore the legacy `slug` field inside the JSON, plan ids are
   // the filenames (shared, vps, wordpress, ...) referenced by pricing sections.
   loader: glob({
     pattern: "*.json",

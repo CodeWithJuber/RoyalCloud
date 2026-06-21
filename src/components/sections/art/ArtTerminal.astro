@@ -1,6 +1,6 @@
 ---
 /**
- * Terminal scene — dark console window with typed commands and a blinking
+ * Terminal scene, dark console window with typed commands and a blinking
  * cursor. `flavor` switches the distro story (ubuntu, debian, centos,
  * fedora, opensuse, scientific) so every Linux landing page reads native.
  */
@@ -12,7 +12,7 @@ const { flavor = "linux" } = Astro.props;
 const FLAVORS: Record<string, { title: string; lines: string[]; chip: string }> = {
   linux: {
     title: "root@royal-vps: ~",
-    lines: ["$ ssh root@your-vps", "Linux kernel 6.x — KVM virtualized", "$ uptime", "up 412 days · load 0.08"],
+    lines: ["$ ssh root@your-vps", "Linux kernel 6.x, KVM virtualized", "$ uptime", "up 412 days · load 0.08"],
     chip: "Full root access",
   },
   ubuntu: {
@@ -32,7 +32,7 @@ const FLAVORS: Record<string, { title: string; lines: string[]; chip: string }> 
   },
   fedora: {
     title: "root@fedora-vps: ~",
-    lines: ["$ ssh root@your-vps", "Fedora Server — latest stack", "$ dnf install podman -y", "✓ cutting-edge packages"],
+    lines: ["$ ssh root@your-vps", "Fedora Server, latest stack", "$ dnf install podman -y", "✓ cutting-edge packages"],
     chip: "Latest packages",
   },
   opensuse: {

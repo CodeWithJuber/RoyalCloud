@@ -7,7 +7,7 @@
  * BASIC_AUTH_USER / BASIC_AUTH_PASS secrets are set, the whole site is gated
  * behind an HTTP Basic Auth prompt so the public can't see it. Remove those
  * secrets (Cloudflare → Workers → royalfront → Settings → Variables & Secrets)
- * to make the site public again — no code change needed.
+ * to make the site public again, no code change needed.
  */
 
 interface Env {
@@ -102,7 +102,7 @@ function readCookie(request: Request, name: string): string | null {
   return null;
 }
 
-/** Step 1 — redirect the editor to GitHub's authorize screen. */
+/** Step 1, redirect the editor to GitHub's authorize screen. */
 function handleOAuthAuth(url: URL, env: Env): Response {
   if (!env.GITHUB_OAUTH_CLIENT_ID) {
     return new Response("GitHub OAuth is not configured on this Worker.", {
@@ -125,7 +125,7 @@ function handleOAuthAuth(url: URL, env: Env): Response {
   });
 }
 
-/** Step 2 — exchange the code for a token and hand it to the Decap popup. */
+/** Step 2, exchange the code for a token and hand it to the Decap popup. */
 async function handleOAuthCallback(
   url: URL,
   request: Request,
@@ -237,7 +237,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
-    // Decap CMS OAuth — handled BEFORE the Basic Auth gate, because GitHub's
+    // Decap CMS OAuth, handled BEFORE the Basic Auth gate, because GitHub's
     // redirect to /oauth/callback carries no Basic Auth credentials.
     if (url.pathname === "/oauth/auth") return handleOAuthAuth(url, env);
     if (url.pathname === "/oauth/callback") {

@@ -15,15 +15,15 @@ sections:
     eyebrow: Managed Cloud
     title: Fully Managed DigitalOcean Cloud Hosting
     subtitle: >-
-      Get the speed and scalability of DigitalOcean droplets with none of the sysadmin work. We deploy, secure, monitor
-      and manage your cloud server 24/7.
+      Scalable, global cloud servers we deploy, secure, monitor and manage 24/7. Pick a DigitalOcean
+      region, ship your project, and scale up in one click.
     offer: From $15/mo · Free Setup
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Pricing
+      text: See plans
       href: "#pricing"
     badges:
       - 99.99% Uptime SLA
@@ -32,59 +32,89 @@ sections:
       - Instant Setup
   - type: trustbar
     items:
-      - icon: bolt
-        text: LiteSpeed Powered
+      - icon: rocket
+        text: Deploy in Minutes
       - icon: lock
-        text: Free SSL
+        text: We Patch & Secure
       - icon: backup
         text: Daily Backups
-      - icon: shield
-        text: DDoS Protection
+      - icon: uptime
+        text: 99.99% Uptime SLA
       - icon: headset
-        text: 24/7 Support
+        text: 24/7 Managed
+  - type: mapband
+    eyebrow: Global Regions
+    title: Launch close to your users
+    subtitle: Deploy your managed droplet in the DigitalOcean region nearest your audience.
+    note: Choose your region at checkout. More locations coming online.
+    pins:
+      - label: New York
+        x: 22
+        y: 32
+        live: true
+      - label: San Francisco
+        x: 11
+        y: 35
+        live: true
+      - label: London
+        x: 46
+        y: 22
+        live: true
+      - label: Amsterdam
+        x: 49
+        y: 21
+        live: true
+      - label: Bangalore
+        x: 70
+        y: 50
+        live: true
+      - label: Singapore
+        x: 76
+        y: 58
+        live: true
+  - type: stats
+    items:
+      - value: "6"
+        label: Global regions available
+      - value: "1-click"
+        label: Vertical scaling
+      - value: "24/7"
+        label: Managed monitoring
+      - value: "99.99%"
+        label: Uptime SLA
+  - type: features
+    title: Everything your managed cloud needs
+    columns: 4
+    items:
+      - icon: scale
+        title: One-Click Vertical Scaling
+        text: Resize CPU, RAM and storage as traffic grows, no migration or downtime juggling.
+      - icon: shield
+        title: We Patch, Secure & Monitor
+        text: OS updates, firewall, hardening and 24/7 monitoring are all handled for you.
+      - icon: backup
+        title: Daily Backups
+        text: Automatic off-site backups with one-click restore if anything goes wrong.
+      - icon: rocket
+        title: Deploy in Minutes
+        text: Pick a plan and region, and your managed droplet is provisioned fast.
   - type: pricing
     id: pricing
     plan: cloud
     eyebrow: Managed Cloud
     title: Managed Cloud Hosting plans
     subtitle: Transparent pricing with everything you need included.
-  - type: features
-    eyebrow: Why Royal Clouds
-    title: Everything your managed cloud needs
-    columns: 4
-    items:
-      - icon: cloud
-        title: Fully Managed
-        text: We handle OS, security patches, monitoring and updates so you don't have to.
-      - icon: scale
-        title: Scale in One Click
-        text: Resize your cloud server up or down as your traffic grows.
-      - icon: shield
-        title: Managed Security
-        text: Firewall, malware scanning and automated hardening included.
-      - icon: backup
-        title: Remote Backups
-        text: Automatic off-site backups with one-click disaster recovery.
-  - type: techlogos
-    eyebrow: Powered By
-    title: Built on technology you can trust
-  - type: testimonials
-    eyebrow: Reviews
-    title: Loved by website owners
-    source: global
-    limit: 3
   - type: faq
-    eyebrow: FAQ
     title: Frequently asked questions
     source: global
   - type: cta
     title: Ready to launch your managed cloud?
     subtitle: Instant setup · Free migration · 30-day money-back guarantee.
     primaryCta:
-      text: Get Started Now
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: Talk to Sales
+      text: Contact sales
       href: /contact
 ---

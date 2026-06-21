@@ -30,6 +30,9 @@ interface Props {
   subtitle?: string;
   image?: string;
   reverse?: boolean;
+  /** "chips" = horizontal mini-stat chips; "list" (default) = vertical icon rows.
+      Lets two adjacent splits read as different layout families. */
+  layout?: "chips" | "list";
   body?: string;
   items?: { icon?: string; title?: string; text?: string }[];
 }
@@ -39,6 +42,7 @@ const {
   subtitle,
   image,
   reverse = false,
+  layout = "list",
   body,
   items,
 } = Astro.props;
@@ -83,7 +87,24 @@ const html = body ? await marked.parse(body) : undefined;
       {subtitle && <p set:html={subtitle} />}
       {html && <div class="split-prose" set:html={html} />}
       {
-        items && items.length > 0 && (
+        items && items.length > 0 && layout === "chips" && (
+          <div class="point-chips">
+            {items.map((p) => (
+              <div class="chip">
+                <span class="chip-ic f-icon-grad">
+                  <Icon name={tablerIcon(p.icon ?? "bolt")} />
+                </span>
+                <span class="chip-tx">
+                  <strong>{p.title}</strong>
+                  <small>{p.text}</small>
+                </span>
+              </div>
+            ))}
+          </div>
+        )
+      }
+      {
+        items && items.length > 0 && layout !== "chips" && (
           <div class="point-list">
             {items.map((p) => (
               <div class="point">
@@ -123,5 +144,65 @@ const html = body ? await marked.parse(body) : undefined;
   .split-prose :global(a) {
     color: var(--rc-purple);
     font-weight: 500;
+  }
+
+  /* chips layout: horizontal mini-stat row (distinct from the vertical list) */
+  .point-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1 1 200px;
+    background: var(--bg-tint);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    transition:
+      transform 0.18s var(--ease-out),
+      box-shadow 0.18s ease;
+  }
+  .chip:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+  }
+  .chip-ic {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+  }
+  .chip-ic :global(svg) {
+    width: 21px;
+    height: 21px;
+  }
+  .chip-tx {
+    min-width: 0;
+  }
+  .chip-tx strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-heading);
+    line-height: 1.25;
+  }
+  .chip-tx small {
+    display: block;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  @media (max-width: 560px) {
+    .chip {
+      flex: 1 1 100%;
+    }
   }
 </style>

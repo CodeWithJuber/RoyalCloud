@@ -1,6 +1,6 @@
 ---
 /**
- * Speed race — interactive proof. Each host is a racer on a track;
+ * Speed race, interactive proof. Each host is a racer on a track;
  * lane travel time is proportional to its real load time, so Royal
  * Clouds' rocket visibly smokes the competition. Auto-runs on reveal,
  * replayable via the "Race again" button.
@@ -82,7 +82,7 @@ const winDur = (
       </div>
       <div class="race-foot">
         <span class="race-win" data-race-win>
-          🏆 {items.find((i) => i.highlight)?.display} — {
+          🏆 {items.find((i) => i.highlight)?.display}, {
             items.find((i) => i.highlight)?.label
           }
         </span>

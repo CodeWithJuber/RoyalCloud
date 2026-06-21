@@ -1,5 +1,5 @@
 /* ============================================================
-   ROYAL CLOUDS — "Aurora Depth" visual layer
+   ROYAL CLOUDS, "Aurora Depth" visual layer
    Loaded AFTER rc-premium.css so it elevates the existing system
    without forking it. Brand tokens stay; this adds depth, glass,
    glow, aurora backgrounds and a livelier, mobile-first feel.
@@ -66,7 +66,7 @@
 }
 
 /* ============================================================
-   MOBILE-FIRST TYPE SCALE — fixes "too small on the phone".
+   MOBILE-FIRST TYPE SCALE, fixes "too small on the phone".
    Targets the real selectors; aurora.css loads last so these win
    over rc-premium's base AND its 560px override (.sec-head h2:27px).
    Floors raised so the h2:body ratio stays healthy on phones.
@@ -135,7 +135,7 @@
 }
 
 /* ============================================================
-   AURORA SECTION BACKGROUND — orbs + grain behind a section.
+   AURORA SECTION BACKGROUND, orbs + grain behind a section.
    Use on dark panels (hero, cta, domain). overflow:hidden so orbs
    never cause horizontal scroll.
    ============================================================ */
@@ -203,7 +203,7 @@
 }
 
 /* ============================================================
-   BUTTON ATOM — glow + tactile press + sheen + bigger on mobile
+   BUTTON ATOM, glow + tactile press + sheen + bigger on mobile
    ============================================================ */
 .btn {
   min-height: 48px;
@@ -219,7 +219,7 @@
 .btn-secondary:active {
   transform: translateY(0) scale(0.97);
 }
-/* quiet-premium: no sheen sweep, no resting pulse — restraint is craft */
+/* quiet-premium: no sheen sweep, no resting pulse, restraint is craft */
 
 /* glass ghost button */
 .btn-glass {
@@ -246,7 +246,7 @@
 }
 
 /* ============================================================
-   FOCUS RINGS on glass / aurora — keep PR #38 a11y intact
+   FOCUS RINGS on glass / aurora, keep PR #38 a11y intact
    ============================================================ */
 .aurora-bg :focus-visible,
 .glass-dark :focus-visible,
@@ -256,7 +256,7 @@
 }
 
 /* ============================================================
-   PHASE B — MOLECULES: card depth, glow, tactile interaction,
+   PHASE B, MOLECULES: card depth, glow, tactile interaction,
    bigger mobile type, and restored carousel motion.
    ============================================================ */
 
@@ -271,7 +271,7 @@
     box-shadow 0.3s ease,
     border-color 0.3s ease;
 }
-/* quiet-premium: calm lift, plain elevation — no coloured glows */
+/* quiet-premium: calm lift, plain elevation, no coloured glows */
 @media (hover: hover) {
   .feature-card:hover,
   .card:hover,
@@ -365,7 +365,7 @@
 }
 
 /* ============================================================
-   PHASE C — ORGANISMS: aurora depth on the dark panels.
+   PHASE C, ORGANISMS: aurora depth on the dark panels.
    Layer glow orbs into existing gradients (no pseudo-element
    conflicts) and turn stat figures into frosted glass tiles.
    ============================================================ */
@@ -397,7 +397,7 @@
 }
 
 /* ============================================================
-   PHASE D — PAGE rhythm & polish.
+   PHASE D, PAGE rhythm & polish.
    Soft aurora tints behind the light card sections so the card
    depth/glow reads, giving a premium alternating scroll.
    ============================================================ */
@@ -413,7 +413,7 @@
 }
 
 /* ============================================================
-   PHASE E — site-wide best-practice interactions (from refs).
+   PHASE E, site-wide best-practice interactions (from refs).
    ============================================================ */
 
 /* Scroll progress bar (goal-gradient / Von Restorff progress cue) */
@@ -440,7 +440,7 @@
   transition: width 0.08s linear;
 }
 
-/* (removed: looping aurora-drift on dark panels — quiet over busy) */
+/* (removed: looping aurora-drift on dark panels, quiet over busy) */
 
 /* On phones the sticky action bar already owns the bottom zone, so the
    floating back-to-top button is redundant and was overlapping cards/the
@@ -489,7 +489,7 @@
    page-level clip is needed (a root overflow-x clip re-anchors position:fixed). */
 
 /* ============================================================
-   STRATOSPHERE — v3 reinvention layer (loads last; wins).
+   STRATOSPHERE, v3 reinvention layer (loads last; wins).
    Data reads in the mono face with tabular figures; the spectrum
    "altitude rule" becomes a reusable connective motif; the gold CTA
    stays the single loud accent.
@@ -510,7 +510,7 @@
   font-weight: 600;
 }
 
-/* reusable spectrum hairline — thread it between sections / inside panels */
+/* reusable spectrum hairline, thread it between sections / inside panels */
 .altitude-rule {
   height: 3px;
   border-radius: 3px;
@@ -542,7 +542,7 @@
 }
 
 /* ============================================================
-   STRATOSPHERE — responsive component fixes (verification pass)
+   STRATOSPHERE, responsive component fixes (verification pass)
    ============================================================ */
 
 /* Pricing: between mobile carousel (<=700) and the 5-up desktop grid,

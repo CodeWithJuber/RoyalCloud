@@ -12,22 +12,35 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
-    eyebrow: Top Speed Solutions
     title: Websites that load <em>up to 15x faster</em>
     subtitle: >-
-      Speed isn't a feature you bolt on — it's engineered into every layer of the Royal Clouds platform, from
+      Speed isn't a feature you bolt on, it's engineered into every layer of the Royal Clouds platform, from
       the SSD array to the edge cache.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: View Plans
+      text: See plans
       href: /shared-hosting
     badges:
       - Pure SSD RAID-10
       - LiteSpeed + LSCache
       - Cloudflare CDN
+  - type: race
+    title: Watch the load times race
+    note: Median full-page load of a standard WordPress site in our lab tests.
+    items:
+      - label: Royal Clouds (SSD + LiteSpeed)
+        value: 0.4
+        display: 0.4s
+        highlight: true
+      - label: Typical shared hosting
+        value: 1.9
+        display: 1.9s
+      - label: Budget HDD server
+        value: 3.2
+        display: 3.2s
   - type: content
     eyebrow: The Stack
     title: Engineered for raw speed
@@ -75,12 +88,12 @@ sections:
         label: Cloudflare Edge Locations
   - type: cta
     title: Give your website the speed it deserves
-    subtitle: Migrate for free and feel the difference — backed by a 30-day money-back guarantee.
+    subtitle: Migrate for free and feel the difference, backed by a 30-day money-back guarantee.
     primaryCta:
-      text: Get Started
+      text: Get started
       href: https://my.royalclouds.net/cart.php
       external: true
     secondaryCta:
-      text: See Pricing
+      text: See plans
       href: /shared-hosting
 ---
