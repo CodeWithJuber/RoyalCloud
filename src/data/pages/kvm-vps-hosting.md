@@ -12,6 +12,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-vps
     eyebrow: KVM VPS Hosting
     title: High-Performance KVM VPS Hosting
     subtitle: >-

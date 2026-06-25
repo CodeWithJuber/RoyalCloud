@@ -12,6 +12,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-wordpress
     eyebrow: WordPress Hosting
     title: Sub-second WordPress page loads, measured
     subtitle: >-

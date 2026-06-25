@@ -72,9 +72,10 @@
    Floors raised so the h2:body ratio stays healthy on phones.
    ============================================================ */
 .sec-head h2 {
-  font-size: clamp(31px, 7.2vw, 48px);
-  line-height: 1.12;
-  letter-spacing: -0.018em;
+  font-size: clamp(33px, 7.4vw, 56px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
 }
 .sec-head p {
   font-size: clamp(16px, 4.2vw, 18.5px);
@@ -672,4 +673,63 @@
 .fcol a:active,
 .footer-social a:active {
   transform: scale(0.98);
+}
+
+/* ============================================================
+   ELEVATION — high-energy vibrant utilities
+   Cursor-follow spotlight, glow CTAs, gradient text/border.
+   GPU-cheap (a single radial-gradient layer); motion-safe.
+   JS sets --mx / --my (px) on .rc-spotlight elements on pointermove.
+   ============================================================ */
+.rc-spotlight {
+  position: relative;
+}
+.rc-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    var(--spot, rgba(122, 59, 255, 0.16)),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.rc-spotlight:hover::after {
+  opacity: 1;
+}
+
+/* tinted glow shadows for key CTAs / hero cards */
+.glow-cta {
+  box-shadow: 0 14px 40px -12px rgba(245, 165, 36, 0.6);
+}
+.glow-violet-soft {
+  box-shadow: var(--glow-violet);
+}
+
+/* gradient-clip emphasis (wrap the emphasised word) */
+.grad-text {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* gradient border via padding-box / border-box */
+.grad-border {
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    var(--grad-violet-azure) border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rc-spotlight::after {
+    display: none;
+  }
 }

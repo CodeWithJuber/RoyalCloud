@@ -27,3 +27,5 @@ pnpm-debug.log*
 
 # local visual-test output
 shots/
+.playwright-cli/
+output/playwright/

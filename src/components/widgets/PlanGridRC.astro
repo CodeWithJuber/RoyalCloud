@@ -7,6 +7,8 @@
  * dual-currency (₹ default, $ via the header toggle).
  */
 import { toINR } from "~/utils/currency";
+import { Icon } from "astro-icon/components";
+import { tablerIcon } from "~/utils/plans";
 
 interface Tier {
   name: string;
@@ -26,6 +28,10 @@ interface Props {
   tiers: Tier[];
   note?: string;
   showToggle?: boolean;
+  /** product tabler icon (per-plan glyph badge on each card) */
+  icon?: string;
+  /** product slug, drives the per-product card accent */
+  product?: string;
 }
 const {
   id = "pricing",
@@ -35,6 +41,8 @@ const {
   tiers,
   note,
   showToggle = true,
+  icon,
+  product,
 } = Astro.props;
 const cols = Math.min(tiers.length, 5);
 
@@ -50,7 +58,7 @@ const shownPrice = (t: Tier) =>
   toINR(defaultBill === "annual" ? (t.priceAnnual ?? t.price) : t.price);
 ---
 
-<section class="pricing" id={id} data-bill={defaultBill}>
+<section class="pricing" id={id} data-bill={defaultBill} data-product={product}>
   <div class="wrap">
     <div class="sec-head center reveal">
       {eyebrow && <span class="eyebrow">{eyebrow}</span>}
@@ -89,9 +97,14 @@ const shownPrice = (t: Tier) =>
       {
         tiers.map((t, i) => (
           <div
-            class={`plan reveal rv-scale reveal-d${(i % 4) + 1}${t.popular ? " popular" : ""}`}
+            class={`plan rc-spotlight reveal rv-scale reveal-d${(i % 4) + 1}${t.popular ? " popular" : ""}`}
           >
             {t.popular && <span class="plan-band">Best Value</span>}
+            {icon && (
+              <span class="plan-ic">
+                <Icon name={tablerIcon(icon)} />
+              </span>
+            )}
             <h3>{t.name}</h3>
             <p class="summary">{t.summary}</p>
             <div class="was-row">
@@ -178,7 +191,9 @@ const shownPrice = (t: Tier) =>
       const bill = sec.dataset.bill || "monthly";
       sec
         .querySelectorAll(`[data-${cur}-${bill}]`)
-        .forEach((p) => (p.textContent = p.getAttribute(`data-${cur}-${bill}`)));
+        .forEach(
+          (p) => (p.textContent = p.getAttribute(`data-${cur}-${bill}`)),
+        );
     };
     document.querySelectorAll<HTMLElement>(".pricing").forEach((sec) => {
       const buttons = sec.querySelectorAll(".bill-toggle button");

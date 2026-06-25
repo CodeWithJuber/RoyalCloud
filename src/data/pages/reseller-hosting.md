@@ -12,6 +12,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-reseller
     eyebrow: Reseller Hosting
     title: Start Your Own Hosting Business
     subtitle: >-

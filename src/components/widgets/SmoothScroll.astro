@@ -60,7 +60,7 @@
 
     // ── Hero handoff: copy + veil drift up and fade as you leave the hero
     const hero = document.querySelector<HTMLElement>("[data-rc-hero]");
-    const copy = hero?.querySelector<HTMLElement>(".rc-hero-copy");
+    const copy = hero?.querySelector<HTMLElement>(".rc-hero-inner");
     if (hero && copy) {
       const tl = gsap.to(copy, {
         y: -60,
@@ -80,11 +80,152 @@
       });
     }
 
+    document
+      .querySelectorAll<HTMLElement>("[data-word-reveal]")
+      .forEach((statement) => {
+        const words = Array.from(
+          statement.querySelectorAll<HTMLElement>("[data-word]"),
+        );
+        const reveal = gsap.fromTo(
+          words,
+          { opacity: 0.12 },
+          {
+            opacity: 1,
+            stagger: 0.08,
+            ease: "none",
+            scrollTrigger: {
+              trigger: statement,
+              start: "top 78%",
+              end: "bottom 42%",
+              scrub: true,
+            },
+          },
+        );
+        teardowns.push(() => {
+          reveal.scrollTrigger?.kill();
+          reveal.kill();
+          gsap.set(words, { clearProps: "opacity" });
+        });
+      });
+
+    document.querySelectorAll<HTMLElement>("[data-scale-fade]").forEach((media) => {
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: media,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+      timeline
+        .fromTo(media, { scale: 0.86, opacity: 0.58 }, { scale: 1, opacity: 0.86, ease: "none" })
+        .to(media, { scale: 1.08, opacity: 0.2, ease: "none" });
+      teardowns.push(() => {
+        timeline.scrollTrigger?.kill();
+        timeline.kill();
+        gsap.set(media, { clearProps: "scale,opacity" });
+      });
+    });
+
+    // ── Signature: cursor-reactive hero. Depth-parallax layers + a whole-scene
+    //    3D tilt toward the cursor + a glow that follows the pointer. Motion
+    //    values via quickTo (no per-frame DOM/React state); transform/opacity
+    //    only. Desktop fine-pointer; the whole setup() already early-returns on
+    //    reduced-motion.
+    const fine = window.matchMedia(
+      "(hover: hover) and (pointer: fine)",
+    ).matches;
+    if (hero && fine) {
+      const aside = hero.querySelector<HTMLElement>(".rc-hero-aside");
+      const glow = hero.querySelector<HTMLElement>(".rc-hero-cursorglow");
+      const layers = Array.from(
+        hero.querySelectorAll<HTMLElement>(".sky-depth"),
+      );
+      const movers = layers.map((el) => ({
+        depth: parseFloat(el.dataset.depth || "0"),
+        x: gsap.quickTo(el, "x", { duration: 0.6, ease: "power3" }),
+        y: gsap.quickTo(el, "y", { duration: 0.6, ease: "power3" }),
+      }));
+      const ry = aside
+        ? gsap.quickTo(aside, "rotationY", { duration: 0.7, ease: "power3" })
+        : null;
+      const rx = aside
+        ? gsap.quickTo(aside, "rotationX", { duration: 0.7, ease: "power3" })
+        : null;
+      if (aside)
+        gsap.set(aside, {
+          transformPerspective: 900,
+          transformOrigin: "center",
+        });
+      const onMove = (e: PointerEvent) => {
+        const r = hero.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        movers.forEach((m) => {
+          m.x(-px * r.width * m.depth);
+          m.y(-py * r.height * m.depth);
+        });
+        ry?.(px * 6);
+        rx?.(-py * 5);
+        if (glow && aside) {
+          const ar = aside.getBoundingClientRect();
+          glow.style.setProperty("--mx", `${e.clientX - ar.left}px`);
+          glow.style.setProperty("--my", `${e.clientY - ar.top}px`);
+        }
+      };
+      const onLeave = () => {
+        movers.forEach((m) => {
+          m.x(0);
+          m.y(0);
+        });
+        ry?.(0);
+        rx?.(0);
+      };
+      hero.addEventListener("pointermove", onMove);
+      hero.addEventListener("pointerleave", onLeave);
+      teardowns.push(() => {
+        hero.removeEventListener("pointermove", onMove);
+        hero.removeEventListener("pointerleave", onLeave);
+        layers.forEach((el) => gsap.set(el, { clearProps: "all" }));
+        if (aside) gsap.set(aside, { clearProps: "all" });
+      });
+    }
+
+    // ── Magnetic CTAs: [data-magnetic] eases toward the cursor on hover.
+    if (fine) {
+      document
+        .querySelectorAll<HTMLElement>("[data-magnetic]")
+        .forEach((el) => {
+          const mx = gsap.quickTo(el, "x", { duration: 0.4, ease: "power3" });
+          const my = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3" });
+          const onMove = (e: PointerEvent) => {
+            const r = el.getBoundingClientRect();
+            mx((e.clientX - (r.left + r.width / 2)) * 0.4);
+            my((e.clientY - (r.top + r.height / 2)) * 0.4);
+          };
+          const onLeave = () => {
+            mx(0);
+            my(0);
+          };
+          el.addEventListener("pointermove", onMove);
+          el.addEventListener("pointerleave", onLeave);
+          teardowns.push(() => {
+            el.removeEventListener("pointermove", onMove);
+            el.removeEventListener("pointerleave", onLeave);
+            gsap.set(el, { clearProps: "all" });
+          });
+        });
+    }
+
     // ── Scroll-story: briefly hold on the speed race so it plays as a beat
     //    (desktop only; pinning feels heavy / janky on phones). The section's
     //    own IntersectionObserver still starts the race.
     const raceSec = document.querySelector<HTMLElement>(".race-sec");
-    if (raceSec && window.innerWidth >= 768 && window.matchMedia("(hover: hover)").matches) {
+    if (
+      raceSec &&
+      window.innerWidth >= 768 &&
+      window.matchMedia("(hover: hover)").matches
+    ) {
       const st = ScrollTrigger.create({
         trigger: raceSec,
         start: "top top",
@@ -96,25 +237,31 @@
       teardowns.push(() => st.kill());
     }
 
-    // ── Hover physics: pricing cards + bento flagship tiles tilt toward the
-    //    cursor (desktop fine-pointer only). Motion values via gsap.quickTo so
-    //    nothing touches DOM/React state per frame; reset on pointer leave.
+    // ── Hover physics + cursor spotlight: pricing + feature cards tilt toward
+    //    the cursor AND a soft glow tracks the pointer (--mx/--my). quickTo
+    //    motion values; transform + CSS var only. Desktop fine-pointer.
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      const tiltEls = gsap.utils.toArray<HTMLElement>(
-        ".plan, .feature-card.tile-wide",
-      );
+      const tiltEls = gsap.utils.toArray<HTMLElement>(".plan, .feature-card");
       tiltEls.forEach((el) => {
         gsap.set(el, { transformPerspective: 820, transformOrigin: "center" });
-        const rx = gsap.quickTo(el, "rotationX", { duration: 0.5, ease: "power3" });
-        const ry = gsap.quickTo(el, "rotationY", { duration: 0.5, ease: "power3" });
+        const rx = gsap.quickTo(el, "rotationX", {
+          duration: 0.5,
+          ease: "power3",
+        });
+        const ry = gsap.quickTo(el, "rotationY", {
+          duration: 0.5,
+          ease: "power3",
+        });
         const ty = gsap.quickTo(el, "y", { duration: 0.5, ease: "power3" });
         const onMove = (e: PointerEvent) => {
           const r = el.getBoundingClientRect();
           const px = (e.clientX - r.left) / r.width - 0.5;
           const py = (e.clientY - r.top) / r.height - 0.5;
-          rx(-py * 5);
-          ry(px * 5);
+          rx(-py * 4);
+          ry(px * 4);
           ty(-6);
+          el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+          el.style.setProperty("--my", `${e.clientY - r.top}px`);
         };
         const onLeave = () => {
           rx(0);

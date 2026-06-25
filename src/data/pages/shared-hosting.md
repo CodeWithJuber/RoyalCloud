@@ -12,6 +12,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-shared
     eyebrow: SSD Shared Hosting
     title: Lightning-Fast SSD Shared Hosting
     subtitle: >-

@@ -1,294 +1,277 @@
 ---
-import HeroSkyline from "~/components/illustrations/scenes/HeroSkyline.astro";
+import { Image } from "astro:assets";
+import datacenter from "~/assets/images/photos/datacenter.jpg";
 import { pricify } from "~/utils/currency";
 
-/**
- * Royal Clouds home hero. Disciplined 4-element stack (offer eyebrow, headline,
- * subtext, CTAs) on the deep royal-night gradient, with the custom isometric
- * "HeroSkyline" cloud-city on the right (desktop). The proof/trust signals that
- * used to crowd the hero now live in the TrustBar + Stats sections directly
- * below. A gentle GSAP copy parallax (motion-safe) lives in SmoothScroll.astro
- * via [data-rc-hero].
- */
 interface Action {
   text: string;
   href: string;
   target?: string;
 }
+
 interface Props {
   title?: string;
   subtitle?: string;
   offer?: string;
   primary?: Action;
   secondary?: Action;
-  /** kept for API compatibility */
   art?: string;
   badges?: string[];
 }
+
 const {
-  title = "India's <em>fastest</em> hosting, minus the big-brand price",
-  subtitle = "Pure SSD servers with LiteSpeed, free SSL and daily backups, plus genuinely friendly 24/7 support.",
-  offer = "Up to 30% off domains &amp; hosting",
+  title = "Fast hosting. <em>No slow days.</em>",
+  subtitle = "Pure SSD infrastructure, LiteSpeed, daily backups and real 24/7 support. Everything essential is included from day one.",
+  offer = "Hosting from $1.59/mo · 30-day money-back guarantee",
   primary = {
-    text: "Get started",
+    text: "Choose your plan",
     href: "https://my.royalclouds.net/cart.php",
     target: "_blank",
   },
-  secondary = { text: "See plans", href: "#pricing" },
+  secondary = { text: "Explore hosting", href: "#hosting" },
 } = Astro.props;
 ---
 
-<section class="rc-hero" data-rc-hero>
-  <div class="rc-sky-veil" aria-hidden="true"></div>
+<section class="rc-hero" data-rc-hero aria-labelledby="home-title">
+  <div class="rc-hero-media">
+    <Image
+      src={datacenter}
+      alt="Royal Clouds server infrastructure"
+      widths={[960, 1440, 1920]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="rc-hero-image"
+      data-scale-fade
+    />
+  </div>
+  <div class="rc-hero-wash" aria-hidden="true"></div>
+  <div class="rc-hero-grid" aria-hidden="true"></div>
 
-  <div class="wrap rc-hero-grid">
-    <div class="rc-hero-copy">
-      <span class="hero-eyebrow"
-        ><span class="dot"></span><span set:html={pricify(offer)} /></span
+  <div class="wrap rc-hero-inner">
+    <p class="rc-hero-kicker"><span></span><span set:html={pricify(offer)} /></p>
+    <h1 id="home-title" set:html={title} />
+    <p class="rc-sub" set:html={subtitle} />
+    <div class="hero-ctas">
+      <a
+        href={primary.href}
+        target={primary.target}
+        rel={primary.target === "_blank" ? "noopener" : undefined}
+        class="btn btn-primary btn-lg"
+        data-magnetic
       >
-      <h1 set:html={title} />
-      <p class="rc-sub" set:html={subtitle} />
-      <div class="hero-ctas">
-        <a
-          href={primary.href}
-          target={primary.target}
-          rel={primary.target === "_blank" ? "noopener" : undefined}
-          class="btn btn-primary btn-lg">{primary.text}</a
-        >
-        <a
-          href={secondary.href}
-          target={secondary.target}
-          class="btn btn-ghost-dark btn-lg">{secondary.text}</a
-        >
-      </div>
-    </div>
-
-    <div class="rc-hero-aside" aria-hidden="true">
-      <HeroSkyline class="rc-hero-skyline" />
+        {primary.text}
+      </a>
+      <a
+        href={secondary.href}
+        target={secondary.target}
+        class="btn btn-ghost-light btn-lg"
+      >
+        {secondary.text}
+      </a>
     </div>
   </div>
 
-  <div class="rc-hero-rule" aria-hidden="true"></div>
+  <div class="rc-hero-foot" aria-hidden="true">
+    <span>SSD RAID-10</span>
+    <i></i>
+    <span>LiteSpeed edge</span>
+    <i></i>
+    <span>Human support</span>
+  </div>
 </section>
 
 <style>
   .rc-hero {
     position: relative;
     isolation: isolate;
+    display: grid;
+    place-items: center;
+    min-height: min(880px, calc(100dvh - 42px));
     overflow: hidden;
-    background: var(--rc-grad-vivid);
+    padding: clamp(110px, 15vw, 190px) 0 clamp(104px, 13vw, 160px);
+    background: #080b12;
     color: #fff;
-    padding: clamp(48px, 7vw, 96px) 0 clamp(44px, 6vw, 80px);
   }
-  /* one soft static bloom for depth */
-  .rc-hero::before {
-    content: "";
-    position: absolute;
-    z-index: -2;
-    width: min(70vw, 760px);
-    aspect-ratio: 1;
-    top: -28%;
-    right: -10%;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(30, 150, 232, 0.32) 0%, transparent 66%);
-    pointer-events: none;
-  }
-  .rc-sky-veil {
+  .rc-hero-media {
     position: absolute;
     inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(
-      120% 100% at 20% 30%,
-      rgba(5, 7, 15, 0.5) 0%,
-      rgba(5, 7, 15, 0.12) 46%,
-      transparent 74%
-    );
+    z-index: -4;
+    overflow: hidden;
   }
-
+  .rc-hero-media :global(.rc-hero-image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.58) contrast(1.16);
+    transform: scale(0.86);
+    opacity: 0.72;
+  }
+  .rc-hero-wash {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background:
+      radial-gradient(circle at 50% 42%, rgba(8, 11, 18, 0.18), rgba(8, 11, 18, 0.84) 68%),
+      linear-gradient(180deg, rgba(8, 11, 18, 0.58), rgba(8, 11, 18, 0.96));
+  }
   .rc-hero-grid {
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    align-items: center;
-    gap: 48px;
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    opacity: 0.16;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(circle at center, #000, transparent 76%);
   }
-  .rc-hero-copy {
+  .rc-hero-inner {
     position: relative;
     z-index: 1;
-    max-width: 620px;
-  }
-  .rc-hero-aside {
-    position: relative;
-    z-index: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
   }
-  .rc-hero-aside :global(.rc-hero-skyline) {
-    width: clamp(340px, 40vw, 520px);
-    height: auto;
+  .rc-hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    margin: 0 0 26px;
+    color: rgba(255, 255, 255, 0.72);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
-  @media (max-width: 980px) {
-    .rc-hero-grid {
-      display: block;
-      max-width: 760px;
-    }
-    .rc-hero-aside {
-      display: none;
-    }
-  }
-
-  /* white-on-sky overrides */
-  .rc-hero :global(.hero-eyebrow) {
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-  }
-  .rc-hero :global(.hero-eyebrow .dot) {
+  .rc-hero-kicker span:first-child {
+    width: 8px;
+    height: 8px;
     background: var(--rc-yellow);
+    box-shadow: 0 0 22px rgba(238, 190, 88, 0.72);
   }
   .rc-hero h1 {
+    width: 100%;
+    max-width: 70rem;
+    margin: 0;
     color: #fff;
-    font-size: clamp(34px, 4.8vw, 56px);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.06;
-    margin: 20px 0 0;
+    font-size: clamp(3.1rem, 6.7vw, 6.8rem);
+    font-weight: 650;
+    letter-spacing: -0.062em;
+    line-height: 0.92;
+    text-wrap: balance;
   }
   .rc-hero h1 :global(em) {
-    font-style: normal;
     color: var(--rc-yellow);
-    background: linear-gradient(96deg, #ffd680 0%, #f5a524 45%, #ffd680 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-style: normal;
+    -webkit-text-fill-color: currentColor;
+    background: none;
   }
   .rc-sub {
-    font-size: clamp(17px, 2vw, 20px);
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.86);
-    max-width: 540px;
-    margin: 20px 0 0;
+    max-width: 43rem;
+    margin: 30px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: clamp(1rem, 1.45vw, 1.25rem);
+    line-height: 1.62;
   }
   .rc-hero .hero-ctas {
-    margin-top: 28px;
+    justify-content: center;
+    margin-top: 38px;
   }
-  .rc-hero :global(.btn-ghost-dark) {
-    background: rgba(255, 255, 255, 0.06);
+  .rc-hero :global(.btn-primary) {
+    color: #0a0d14;
+    background: var(--rc-yellow);
+    box-shadow: 0 18px 42px -16px rgba(238, 190, 88, 0.62);
+  }
+  .rc-hero :global(.btn-ghost-light) {
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(8, 11, 18, 0.34);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
   }
-  .rc-hero :global(.btn-ghost-dark:hover) {
-    border-color: #fff;
+  .rc-hero :global(.btn-ghost-light:hover) {
     color: #fff;
-    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.1);
   }
-
-  /* the spectrum "altitude rule" closes the hero */
-  .rc-hero-rule {
+  .rc-hero-foot {
     position: absolute;
-    left: 0;
     right: 0;
     bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    min-height: 54px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.52);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+  }
+  .rc-hero-foot i {
+    width: 3px;
     height: 3px;
-    background: var(--spectrum);
-    z-index: 1;
+    background: var(--rc-yellow);
   }
-
-  /* living hero: gentle, continuous, low-key motion (motion-safe) */
   @media (prefers-reduced-motion: no-preference) {
-    .rc-hero {
-      background-size: 150% 150%;
-      animation: rcHeroDrift 24s ease-in-out infinite;
-    }
-    .rc-hero::before {
-      animation: rcBloom 10s ease-in-out infinite;
-    }
-    .rc-hero-aside {
-      animation: rcFloatY 8s ease-in-out infinite;
-    }
-  }
-  @keyframes rcHeroDrift {
-    0%,
-    100% {
-      background-position: 0% 0%;
-    }
-    50% {
-      background-position: 100% 100%;
-    }
-  }
-  @keyframes rcBloom {
-    0%,
-    100% {
-      opacity: 0.85;
-      transform: translate(0, 0) scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: translate(-3%, 3%) scale(1.08);
-    }
-  }
-  @keyframes rcFloatY {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-12px);
-    }
-  }
-
-  /* page-load entrance (motion-safe) */
-  @media (prefers-reduced-motion: no-preference) {
-    .rc-hero-copy > * {
+    .rc-hero-inner > * {
       opacity: 0;
-      transform: translateY(16px);
-      animation: rcRise 0.6s cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
+      transform: translateY(24px);
+      animation: rcHeroEnter 0.9s var(--ease-out) forwards;
     }
-    .rc-hero-copy > :nth-child(2) {
+    .rc-hero-inner > :nth-child(2) {
       animation-delay: 0.08s;
     }
-    .rc-hero-copy > :nth-child(3) {
+    .rc-hero-inner > :nth-child(3) {
       animation-delay: 0.16s;
     }
-    .rc-hero-copy > :nth-child(4) {
+    .rc-hero-inner > :nth-child(4) {
       animation-delay: 0.24s;
     }
-    @keyframes rcRise {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+  }
+  @keyframes rcHeroEnter {
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
-
-  @media (max-width: 860px) {
-    .rc-hero-grid {
-      max-width: none;
+  @media (max-width: 720px) {
+    .rc-hero {
+      place-items: start center;
+      min-height: 720px;
+      padding-block: 92px 110px;
     }
-    .rc-hero-copy {
-      text-align: center;
-      margin-inline: auto;
+    .rc-hero h1 {
+      font-size: clamp(2.65rem, 11vw, 3.4rem);
+      line-height: 0.96;
+    }
+    .rc-hero-kicker {
+      max-width: 19rem;
+      justify-content: center;
+      line-height: 1.5;
     }
     .rc-sub {
-      margin-inline: auto;
+      margin-top: 24px;
+      font-size: 1rem;
     }
     .rc-hero .hero-ctas {
-      justify-content: center;
+      width: min(100%, 24rem);
+      margin-top: 30px;
     }
-  }
-  @media (max-width: 560px) {
-    .rc-hero h1 {
-      font-size: clamp(32px, 8.5vw, 44px);
-    }
-    .rc-sub {
-      font-size: 16px;
-    }
-    .hero-ctas .btn {
+    .rc-hero .hero-ctas :global(.btn) {
       width: 100%;
+    }
+    .rc-hero-foot {
+      gap: 10px;
+      padding-inline: 14px;
+      font-size: 8px;
     }
   }
 </style>

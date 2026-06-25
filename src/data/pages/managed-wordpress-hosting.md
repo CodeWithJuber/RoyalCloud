@@ -12,6 +12,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-wordpress
     eyebrow: Managed WordPress
     title: Managed WordPress Hosting, Up to 10x Faster
     subtitle: >-

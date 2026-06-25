@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import logoDark from "~/assets/images/brand/logo-dark.png";
+import logoWhite from "~/assets/images/brand/logo-white.png";
 import { headerData } from "~/navigation";
 import { tablerIcon } from "~/utils/plans";
 import { pricify } from "~/utils/currency";
@@ -59,7 +60,7 @@ const navIcon = (text: string) =>
     </div>
   )
 }
-<header class={`site-header ${solid ? "scrolled solid" : ""}`} id="siteHeader">
+<header class={`site-header ${solid ? "scrolled solid" : "overlay"}`} id="siteHeader">
   <div class="wrap header-inner">
     <a class="header-logo" href="/" aria-label="Royal Clouds home">
       <Image
@@ -68,6 +69,15 @@ const navIcon = (text: string) =>
         width={176}
         height={60}
         loading="eager"
+        class="logo-dark"
+      />
+      <Image
+        src={logoWhite}
+        alt=""
+        width={176}
+        height={60}
+        loading="eager"
+        class="logo-light"
       />
     </a>
     <nav class="nav" aria-label="Primary">
@@ -245,6 +255,49 @@ const navIcon = (text: string) =>
 </header>
 
 <style>
+  .header-logo {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  .header-logo :global(.logo-light) {
+    position: absolute;
+    inset: 0 auto auto 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .site-header.overlay:not(.scrolled) .header-logo :global(.logo-dark) {
+    opacity: 0;
+  }
+  .site-header.overlay:not(.scrolled) .header-logo :global(.logo-light) {
+    opacity: 1;
+  }
+  .site-header.overlay:not(.scrolled) .nav > a,
+  .site-header.overlay:not(.scrolled) .nav-dd > a,
+  .site-header.overlay:not(.scrolled) .header-cta .login {
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .site-header.overlay:not(.scrolled) .nav > a:hover,
+  .site-header.overlay:not(.scrolled) .nav-dd > a:hover,
+  .site-header.overlay:not(.scrolled) .header-cta .login:hover {
+    color: #fff;
+  }
+  .site-header.overlay:not(.scrolled) .cur-toggle {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .site-header.overlay:not(.scrolled) .cur-toggle button {
+    color: rgba(255, 255, 255, 0.64);
+  }
+  .site-header.overlay:not(.scrolled) .cur-toggle button.active {
+    color: #0b0f18;
+    background: #fff;
+  }
+  .site-header.overlay:not(.scrolled) .menu-btn {
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
   /* dropdowns + mobile menu, styled to the design language */
   .nav-dd {
     position: relative;
