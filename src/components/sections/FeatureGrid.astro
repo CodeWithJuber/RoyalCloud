@@ -49,16 +49,29 @@ const SPOT: Record<string, AstroComponentFactory> = {
   "Domain Names": IlDomains,
 };
 const TILE: Record<string, { role: string; span: number; bg: string }> = {
-  "SSD Shared Hosting": { role: "flagship", span: 6, bg: "linear-gradient(135deg,#e7f0ff,#ffffff)" },
-  "KVM VPS Hosting": { role: "flagship", span: 6, bg: "linear-gradient(135deg,#efe9fe,#ffffff)" },
-  "Managed WordPress": { role: "regular", span: 3, bg: "var(--pastel-lavender)" },
+  "SSD Shared Hosting": {
+    role: "flagship",
+    span: 6,
+    bg: "linear-gradient(135deg,#e7f0ff,#ffffff)",
+  },
+  "KVM VPS Hosting": {
+    role: "flagship",
+    span: 6,
+    bg: "linear-gradient(135deg,#efe9fe,#ffffff)",
+  },
+  "Managed WordPress": {
+    role: "regular",
+    span: 3,
+    bg: "var(--pastel-lavender)",
+  },
   "Dedicated Servers": { role: "regular", span: 3, bg: "var(--pastel-sky)" },
   "CyberPanel VPS": { role: "regular", span: 3, bg: "var(--pastel-butter)" },
   "Managed Cloud": { role: "regular", span: 3, bg: "var(--pastel-peach)" },
   "Reseller Hosting": { role: "half", span: 6, bg: "var(--pastel-mint)" },
   "Domain Names": { role: "half", span: 6, bg: "var(--pastel-lavender)" },
 };
-const tileFor = (t = "") => TILE[t] ?? { role: "regular", span: 3, bg: "var(--pastel-lavender)" };
+const tileFor = (t = "") =>
+  TILE[t] ?? { role: "regular", span: 3, bg: "var(--pastel-lavender)" };
 
 const isTiles = variant === "tiles";
 const gridStyle = isTiles
@@ -77,7 +90,10 @@ const gridStyle = isTiles
         </div>
       )
     }
-    <div class={`feature-grid${isTiles ? " tiles bento" : ""}`} style={gridStyle}>
+    <div
+      class={`feature-grid${isTiles ? " tiles bento" : ""}`}
+      style={gridStyle}
+    >
       {
         isTiles
           ? items.map((item, i) => {
@@ -86,12 +102,14 @@ const gridStyle = isTiles
               const wide = t.role !== "regular";
               return (
                 <a
-                  class={`card feature-card reveal reveal-d${(i % 3) + 1}${wide ? " tile-wide" : ""}`}
+                  class={`card feature-card rc-spotlight reveal reveal-d${(i % 3) + 1}${wide ? " tile-wide" : ""}`}
                   href={item.href}
                   style={`background:${t.bg}; grid-column: span ${t.span};`}
                   data-role={t.role}
                 >
-                  <span class={`tile-il ${wide ? "il-lg" : "il-sm"}`}>{Spot && <Spot />}</span>
+                  <span class={`tile-il ${wide ? "il-lg" : "il-sm"}`}>
+                    {Spot && <Spot />}
+                  </span>
                   <span class="tile-body">
                     <h3>{item.title}</h3>
                     <p set:html={pricify(item.text ?? "")} />
@@ -101,14 +119,26 @@ const gridStyle = isTiles
               );
             })
           : items.map((item, i) => (
-              <div class={`card feature-card reveal reveal-d${(i % 3) + 1}`}>
+              <div
+                class={`card feature-card rc-spotlight reveal reveal-d${(i % 3) + 1}`}
+              >
                 <div class="f-icon f-icon-grad">
                   <Icon name={tablerIcon(item.icon ?? "bolt")} />
                 </div>
-                <h3>{item.href ? <a href={item.href}>{item.title}</a> : item.title}</h3>
+                <h3>
+                  {item.href ? (
+                    <a href={item.href}>{item.title}</a>
+                  ) : (
+                    item.title
+                  )}
+                </h3>
                 <p set:html={pricify(item.text ?? "")} />
                 {item.href && (
-                  <a class="f-more" href={item.href} aria-label={`Explore ${item.title}`}>
+                  <a
+                    class="f-more"
+                    href={item.href}
+                    aria-label={`Explore ${item.title}`}
+                  >
                     Explore {item.title}
                   </a>
                 )}

@@ -10,6 +10,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-domains
     title: Find the <em>perfect domain</em> for your idea
     subtitle: >-
       Search hundreds of extensions, register in seconds and manage your DNS for

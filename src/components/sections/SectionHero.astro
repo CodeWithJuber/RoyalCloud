@@ -4,6 +4,15 @@ import HeroRC from "~/components/widgets/HeroRC.astro";
 import SectionArt from "./SectionArt.astro";
 import AltitudeScene from "~/components/widgets/AltitudeScene.astro";
 import cloud from "~/assets/images/brand/cloud.png";
+import IlShared from "~/components/illustrations/spots/IlShared.astro";
+import IlWordpress from "~/components/illustrations/spots/IlWordpress.astro";
+import IlVps from "~/components/illustrations/spots/IlVps.astro";
+import IlDedicated from "~/components/illustrations/spots/IlDedicated.astro";
+import IlCyberpanel from "~/components/illustrations/spots/IlCyberpanel.astro";
+import IlCloud from "~/components/illustrations/spots/IlCloud.astro";
+import IlReseller from "~/components/illustrations/spots/IlReseller.astro";
+import IlDomains from "~/components/illustrations/spots/IlDomains.astro";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 interface Cta {
   text: string;
@@ -35,6 +44,20 @@ const {
 } = Astro.props;
 const target = (cta?: Cta) =>
   cta?.external || /^https?:\/\//.test(cta?.href ?? "") ? "_blank" : undefined;
+
+// Per-product hero illustration: each product page leads with its OWN custom
+// spot illustration (passed as art: "il-vps" etc.) instead of the shared orbit.
+const SPOT: Record<string, AstroComponentFactory> = {
+  "il-shared": IlShared,
+  "il-wordpress": IlWordpress,
+  "il-vps": IlVps,
+  "il-dedicated": IlDedicated,
+  "il-cyberpanel": IlCyberpanel,
+  "il-cloud": IlCloud,
+  "il-reseller": IlReseller,
+  "il-domains": IlDomains,
+};
+const Spot = art ? SPOT[art] : undefined;
 ---
 
 {
@@ -102,7 +125,12 @@ const target = (cta?: Cta) =>
           )}
         </div>
         <div class="p-hero-art" aria-hidden="true">
-          {art ? (
+          {Spot ? (
+            <div class="p-hero-illus" data-phero-illus>
+              <span class="p-hero-halo" />
+              <Spot />
+            </div>
+          ) : art ? (
             <>
               <div class="disc" />
               <Image src={cloud} alt="" width={120} height={90} class="c1" />
@@ -131,6 +159,47 @@ const target = (cta?: Cta) =>
 }
 
 <style>
+  /* per-product hero illustration on a soft glow halo (gentle cursor tilt
+     wired in SmoothScroll via [data-phero-illus]) */
+  .p-hero-illus {
+    position: relative;
+    width: clamp(280px, 33vw, 430px);
+    display: grid;
+    place-items: center;
+    transform-style: preserve-3d;
+  }
+  .p-hero-illus :global(.rc-spot) {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    filter: drop-shadow(0 22px 44px rgba(81, 17, 224, 0.2));
+  }
+  .p-hero-halo {
+    position: absolute;
+    inset: -10%;
+    z-index: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 50% 46%,
+      color-mix(in srgb, var(--theme-accent, #5a1ee6) 22%, transparent),
+      rgba(30, 150, 232, 0.08) 46%,
+      transparent 70%
+    );
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .p-hero-illus {
+      animation: pHeroFloat 7s ease-in-out infinite;
+    }
+  }
+  @keyframes pHeroFloat {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -10px;
+    }
+  }
   /* default product-hero art: the Altitude scene on a soft spectrum halo */
   .p-hero-art :global(.p-hero-altitude) {
     width: clamp(260px, 30vw, 380px);

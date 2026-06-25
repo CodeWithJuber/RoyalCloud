@@ -13,6 +13,7 @@ interface Props {
   subtitle?: string;
   showToggle?: boolean;
   note?: string;
+  featured?: string[];
 }
 const {
   id = "pricing",
@@ -22,11 +23,15 @@ const {
   subtitle,
   showToggle = true,
   note,
+  featured,
 } = Astro.props;
 
 const entry = await getEntry("plans", planId);
 if (!entry) throw new Error(`PricingSection: unknown plan "${planId}"`);
 const plan = entry.data;
+const tiers = featured?.length
+  ? plan.tiers.filter((tier) => featured.includes(tier.name))
+  : plan.tiers;
 
 const pageUrl = new URL(Astro.url.pathname, site.url).href;
 ---
@@ -36,8 +41,10 @@ const pageUrl = new URL(Astro.url.pathname, site.url).href;
   eyebrow={eyebrow}
   title={title ?? plan.title}
   subtitle={subtitle ?? plan.subtitle}
-  tiers={plan.tiers}
+  tiers={tiers}
   note={note ?? plan.billingNote}
   showToggle={showToggle}
+  icon={plan.icon}
+  product={planId}
 />
 <StructuredData schema={product(plan, pageUrl)} />

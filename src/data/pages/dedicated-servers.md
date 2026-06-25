@@ -12,6 +12,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-dedicated
     eyebrow: Dedicated Servers
     title: Enterprise Dedicated Servers
     subtitle: >-

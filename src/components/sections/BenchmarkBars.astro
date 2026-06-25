@@ -9,7 +9,12 @@ interface Props {
   title?: string;
   subtitle?: string;
   note?: string;
-  items: { label: string; value: number; display: string; highlight?: boolean }[];
+  items: {
+    label: string;
+    value: number;
+    display: string;
+    highlight?: boolean;
+  }[];
 }
 const { eyebrow, title, subtitle, note, items } = Astro.props;
 const max = Math.max(...items.map((i) => i.value));
@@ -85,11 +90,17 @@ const max = Math.max(...items.map((i) => i.value));
     inset: 0;
     width: var(--w);
     border-radius: 9px;
-    background: var(--line-strong);
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-accent) 30%, var(--line-strong)),
+      color-mix(in srgb, var(--theme-accent) 14%, var(--line-strong))
+    );
     transform-origin: left;
   }
   .brow.hl .btrack i {
     background: linear-gradient(90deg, var(--theme-art-a), var(--theme-art-b));
+    box-shadow: 0 0 16px -2px
+      color-mix(in srgb, var(--theme-accent) 60%, transparent);
   }
   .bval {
     font-family: var(--font-heading);

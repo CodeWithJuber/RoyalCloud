@@ -19,6 +19,7 @@ import SpeedRace from "./SpeedRace.astro";
 import SecurityLayers from "./SecurityLayers.astro";
 import MapBand from "./MapBand.astro";
 import ShowcaseTabs from "./ShowcaseTabs.astro";
+import HomeExperience from "./HomeExperience.astro";
 
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
@@ -48,6 +49,7 @@ const registry: Record<string, AstroComponentFactory> = {
   security: SecurityLayers,
   mapband: MapBand,
   showcase: ShowcaseTabs,
+  homeexperience: HomeExperience,
 };
 ---
 

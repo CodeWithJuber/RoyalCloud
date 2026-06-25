@@ -12,6 +12,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-cyberpanel
     eyebrow: CyberPanel VPS
     title: CyberPanel VPS Hosting
     subtitle: >-

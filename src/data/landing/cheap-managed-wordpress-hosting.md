@@ -13,7 +13,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    title: Managed WordPress hosting with <em>automatic updates</em> handled for you
+    title: Managed WordPress. <em>Updates handled.</em>
     subtitle: >-
       WordPress core and plugins updated automatically with safety checks, LSCache pre-wired, free SSL, daily
       backups and WordPress experts on call 24/7.

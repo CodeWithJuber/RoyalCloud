@@ -113,6 +113,10 @@ export const sectionSchema = z.discriminatedUnion("type", [
     plan: z.string(),
     showToggle: z.boolean().optional(),
     note: z.string().optional(),
+    featured: z.array(z.string()).optional(),
+  }),
+  z.object({
+    type: z.literal("homeexperience"),
   }),
   z.object({
     type: z.literal("features"),

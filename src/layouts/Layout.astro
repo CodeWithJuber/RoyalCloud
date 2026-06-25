@@ -4,8 +4,7 @@ import "~/assets/styles/rc-premium.css";
 import "~/assets/styles/aurora.css";
 import "~/assets/styles/energy.css";
 
-import bricolageWoff2 from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
-import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import outfitWoff2 from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
 
 import { I18N } from "astrowind:config";
 
@@ -39,7 +38,7 @@ const { language, textDirection } = I18N;
 <html lang={language} dir={textDirection} class="2xl:text-[20px]">
   <head>
     <CommonMeta />
-    <meta name="theme-color" content="#120536" />
+    <meta name="theme-color" content="#0b0f18" />
     <Favicons />
     <CustomStyles />
     <ApplyColorMode />
@@ -53,14 +52,7 @@ const { language, textDirection } = I18N;
       rel="preload"
       as="font"
       type="font/woff2"
-      href={bricolageWoff2}
-      crossorigin
-    />
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href={interWoff2}
+      href={outfitWoff2}
       crossorigin
     />
 

@@ -12,6 +12,7 @@ transparentHeader: true
 sections:
   - type: hero
     variant: product
+    art: il-cloud
     eyebrow: Managed Cloud
     title: Fully Managed DigitalOcean Cloud Hosting
     subtitle: >-
