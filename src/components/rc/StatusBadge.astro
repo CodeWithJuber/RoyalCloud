@@ -1,0 +1,13 @@
+---
+/** Royal Clouds — StatusBadge. Pulse dot (≤16px) + label. Telemetry only. */
+interface Props {
+  state?: "ok" | "warn" | "down";
+  class?: string;
+}
+const { state = "ok", class: extra = "" } = Astro.props;
+---
+
+<span class:list={["rc-badge", extra]} data-state={state}>
+  <span class="rc-badge__dot" aria-hidden="true"></span>
+  <slot />
+</span>

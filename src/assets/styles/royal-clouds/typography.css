@@ -1,0 +1,63 @@
+/* Royal Clouds — Typography tokens (spec §5)
+ * Display: Bricolage Grotesque (optical-sizing auto)
+ * Body/UI: Manrope
+ * Data/terminal: JetBrains Mono — terminals, code, telemetry readouts, IP/route labels only
+ * Numerals: tabular in all prices, specs, telemetry. */
+
+:root {
+  /* ── Families ──────────────────────────────────────────── */
+  --font-display: 'Bricolage Grotesque', 'Manrope', system-ui, sans-serif;
+  --font-body:    'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ── Weights (Bricolage 560–720 · Manrope 450–760 · Mono 400–600) ── */
+  --fw-display:        640; /* @kind font */
+  --fw-display-hero:   680; /* @kind font */
+  --fw-display-strong: 720; /* @kind font */
+  --fw-display-card:   600; /* @kind font */
+  --fw-body:           470; /* @kind font */
+  --fw-body-med:       500; /* @kind font */
+  --fw-body-semi:      600; /* @kind font */
+  --fw-body-bold:      700; /* @kind font */
+  --fw-mono:           450; /* @kind font */
+  --fw-mono-med:       550; /* @kind font */
+
+  /* ── Type scale (role tokens) ──────────────────────────── */
+  /* hero: Bricolage 680, max 2 lines · h2: 640 · h3: 600 · price: 700 tabular */
+  --t-hero:       clamp(4rem, 7.6vw, 7.4rem);     /* @kind font */
+  --t-h2:         clamp(2.2rem, 4vw, 3.4rem);     /* @kind font */
+  --t-h3:         clamp(1.35rem, 2vw, 1.7rem);    /* @kind font */
+  --t-lead:       clamp(1.125rem, 1.4vw, 1.3rem); /* @kind font */
+  --t-body:       1rem;                            /* @kind font */
+  --t-body-sm:    0.9375rem;                       /* @kind font */
+  --t-label:      0.8125rem;                       /* @kind font */
+  --t-label-sm:   0.75rem;                         /* @kind font */
+  --t-price:      clamp(2.4rem, 3.4vw, 3.2rem);   /* @kind font */
+  --t-terminal:   0.875rem;                        /* @kind font */
+  --t-telemetry:  0.8125rem;                       /* @kind font */
+
+  /* ── Line-height ───────────────────────────────────────── */
+  --lh-hero:    1.02; /* @kind font */
+  --lh-tight:   1.08; /* @kind font */
+  --lh-heading: 1.12; /* @kind font */
+  --lh-lead:    1.55; /* @kind font */
+  --lh-body:    1.6;  /* @kind font */
+  --lh-mono:    1.7;  /* @kind font */
+
+  /* ── Tracking (technical labels use --tracking-label) ──── */
+  --tracking-label:  0.16em;   /* @kind font */
+  --tracking-hero:  -0.02em;   /* @kind font */
+  --tracking-tight: -0.015em;  /* @kind font */
+
+  /* ── Measure (max line length) ─────────────────────────── */
+  --measure-lead: 62ch; /* @kind spacing */
+  --measure-body: 68ch; /* @kind spacing */
+
+  --tabular: tabular-nums; /* @kind font */
+}
+
+/* Optical sizing on for the variable display face */
+[data-face="display"],
+h1, h2, h3 {
+  font-optical-sizing: auto;
+}

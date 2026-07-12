@@ -1,10 +1,8 @@
 ---
 import "~/assets/styles/tailwind.css";
+import "~/assets/styles/royal-clouds/tokens.css";
 import "~/assets/styles/rc-premium.css";
-import "~/assets/styles/aurora.css";
 import "~/assets/styles/energy.css";
-
-import outfitWoff2 from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
 
 import { I18N } from "astrowind:config";
 
@@ -38,7 +36,7 @@ const { language, textDirection } = I18N;
 <html lang={language} dir={textDirection} class="2xl:text-[20px]">
   <head>
     <CommonMeta />
-    <meta name="theme-color" content="#0b0f18" />
+    <meta name="theme-color" content="#050712" />
     <Favicons />
     <CustomStyles />
     <ApplyColorMode />
@@ -47,13 +45,14 @@ const { language, textDirection } = I18N;
     <StructuredData schema={organization()} />
     <StructuredData schema={webSite()} />
 
-    <!-- fonts ready before first paint: no swap reflow (CLS) on the hero -->
+    <!-- Royal Clouds type system: Bricolage Grotesque (display), Manrope
+         (body/UI), JetBrains Mono (data/terminal). Self-host via fontsource
+         in production; loaded from the Google CDN here per the design system. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href={outfitWoff2}
-      crossorigin
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Manrope:wght@300..800&family=JetBrains+Mono:wght@400..700&display=swap"
     />
 
     <!-- Comment the line below to disable View Transitions -->

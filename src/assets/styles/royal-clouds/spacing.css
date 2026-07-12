@@ -1,0 +1,63 @@
+/* Royal Clouds — Space, Radius, Depth, Motion tokens (spec §4.2, §6, §9) */
+
+:root {
+  /* ── Space (4px base) ──────────────────────────────────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  48px;
+  --sp-8:  64px;
+  --sp-9:  96px;
+  --sp-10: 128px;
+
+  /* ── Radius ────────────────────────────────────────────── */
+  --r-input: 14px;   /* utility inputs */
+  --r-inner: 23px;   /* inner bezel / terminal body */
+  --r-shell: 30px;   /* outer bezel of major shells */
+  --r-pill:  999px;  /* controls, chips, primary actions */
+  --r-none:  0px;    /* editorial content sections */
+  --bezel-reveal: 7px; /* @kind spacing */
+
+  /* ── Shadow — cobalt-tinted ambient (light surfaces only) ─ */
+  --sh-1: 0 2px 8px rgb(47 54 212 / 0.08);
+  --sh-2: 0 8px 28px rgb(47 54 212 / 0.12);
+  --sh-3: 0 20px 60px rgb(10 14 36 / 0.28);
+  /* Dark surfaces use --inner-highlight + layered chrome linework, never black drop shadows. */
+
+  /* ── Z-scale ───────────────────────────────────────────── */
+  --z-base:    0;   /* @kind other */
+  --z-raised:  10;  /* @kind other */
+  --z-nav:     100; /* @kind other */
+  --z-overlay: 200; /* @kind other */
+  --z-toast:   300; /* @kind other */
+
+  /* ── Layout (spec §6) ──────────────────────────────────── */
+  --canvas-max:     1320px;                 /* @kind spacing */
+  --page-gutter:    clamp(1rem, 3vw, 2rem); /* @kind spacing */
+  --grid-gap:       24px;                    /* @kind spacing */
+  --rhythm-section: var(--sp-9);             /* @kind spacing */
+  --rhythm-field:   var(--sp-10);            /* @kind spacing */
+  --nav-height:     64px;                    /* @kind spacing */
+
+  /* ── Motion (spec §9) ──────────────────────────────────── */
+  /* entry 720ms · micro 180ms · settle 900ms count-up · stagger 60ms */
+  --ease-entry:   cubic-bezier(0.32, 0.72, 0, 1); /* @kind other */
+  --dur-entry:    720ms;   /* @kind other */
+  --dur-micro:    180ms;   /* @kind other */
+  --dur-settle:   900ms;   /* @kind other */
+  --stagger:      60ms;    /* @kind other */
+  --hover-lift:  -6px;     /* @kind spacing */
+  --press-scale:  0.985;   /* @kind other */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-entry:  0ms; /* @kind other */
+    --dur-micro:  0ms; /* @kind other */
+    --dur-settle: 0ms; /* @kind other */
+    --stagger:    0ms; /* @kind other */
+  }
+}
