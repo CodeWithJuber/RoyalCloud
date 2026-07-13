@@ -21,6 +21,17 @@ import MapBand from "./MapBand.astro";
 import ShowcaseTabs from "./ShowcaseTabs.astro";
 import HomeExperience from "./HomeExperience.astro";
 
+// Royal Clouds design-system sections (Royal Systems Design Language v2)
+import RcHero from "./RcHero.astro";
+import RcFeatures from "./RcFeatures.astro";
+import RcTelemetry from "./RcTelemetry.astro";
+import RcDeploy from "./RcDeploy.astro";
+import RcPricing from "./RcPricing.astro";
+import RcCompare from "./RcCompare.astro";
+import RcTestimonials from "./RcTestimonials.astro";
+import RcFaq from "./RcFaq.astro";
+import RcCta from "./RcCta.astro";
+
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 interface Props {
@@ -50,6 +61,16 @@ const registry: Record<string, AstroComponentFactory> = {
   mapband: MapBand,
   showcase: ShowcaseTabs,
   homeexperience: HomeExperience,
+  // Royal Clouds design-system section types
+  rchero: RcHero,
+  rcfeatures: RcFeatures,
+  rctelemetry: RcTelemetry,
+  rcdeploy: RcDeploy,
+  rcpricing: RcPricing,
+  rccompare: RcCompare,
+  rctestimonials: RcTestimonials,
+  rcfaq: RcFaq,
+  rccta: RcCta,
 };
 ---
 

@@ -1,0 +1,79 @@
+---
+import { Icon } from "astro-icon/components";
+import faqs from "~/data/faqs.json";
+
+interface QA { q: string; a: string }
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  source?: string;
+  limit?: number;
+  items?: QA[];
+}
+const {
+  eyebrow = "FAQ",
+  title = "Questions, answered plainly.",
+  source = "general",
+  limit = 6,
+  items,
+} = Astro.props;
+
+const pool = (faqs as Record<string, QA[]>)[source] || [];
+const list = (items && items.length ? items : pool).slice(0, limit);
+---
+
+<section class="rc-sect" id="faq">
+  <div class="rc-container rc-narrow">
+    <div class="rc-sect__head reveal">
+      <span class="rc-eyebrow">{eyebrow}</span>
+      <h2>{title}</h2>
+    </div>
+    <div class="rc-faq reveal" data-rc-faq>
+      {list.map((f, i) => (
+        <div class="rc-faq__item" data-open={i === 0 ? "true" : "false"}>
+          <button class="rc-faq__q" aria-expanded={i === 0 ? "true" : "false"}>
+            <span>{f.q}</span>
+            <span class="rc-faq__chev"><Icon name="tabler:chevron-down" size={22} /></span>
+          </button>
+          <div class="rc-faq__a" style="height:auto">
+            <div class="rc-faq__a-inner">{f.a}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function rcSetupFaq() {
+    document.querySelectorAll<HTMLElement>("[data-rc-faq]").forEach((root) => {
+      if (root.dataset.rcInit) return;
+      root.dataset.rcInit = "1";
+      const items = Array.from(root.querySelectorAll<HTMLElement>(".rc-faq__item"));
+      const setOpen = (item: HTMLElement, open: boolean) => {
+        const a = item.querySelector<HTMLElement>(".rc-faq__a");
+        const inner = item.querySelector<HTMLElement>(".rc-faq__a-inner");
+        const btn = item.querySelector<HTMLElement>(".rc-faq__q");
+        item.dataset.open = open ? "true" : "false";
+        if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+        if (a && inner) a.style.height = open ? inner.scrollHeight + "px" : "0px";
+      };
+      // Initialize: collapse all but the first (JS now controls height).
+      items.forEach((item, i) => setOpen(item, i === 0));
+      items.forEach((item) => {
+        const btn = item.querySelector<HTMLElement>(".rc-faq__q");
+        btn?.addEventListener("click", () => {
+          const willOpen = item.dataset.open !== "true";
+          items.forEach((o) => setOpen(o, false));
+          if (willOpen) setOpen(item, true);
+        });
+      });
+      window.addEventListener("resize", () => {
+        const open = items.find((i) => i.dataset.open === "true");
+        if (open) setOpen(open, true);
+      });
+    });
+  }
+  rcSetupFaq();
+  document.addEventListener("astro:after-swap", rcSetupFaq);
+</script>

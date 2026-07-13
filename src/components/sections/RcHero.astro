@@ -1,0 +1,72 @@
+---
+import Button from "~/components/rc/Button.astro";
+import StatusBadge from "~/components/rc/StatusBadge.astro";
+import TelemetryRibbon from "~/components/rc/TelemetryRibbon.astro";
+import HeroAtlas from "~/components/rc/HeroAtlas.astro";
+import { Icon } from "astro-icon/components";
+
+interface Cta { text: string; href: string; external?: boolean }
+interface Trust { value: string; text: string }
+interface Stat { value: string; label: string }
+interface Props {
+  badge?: string;
+  title?: string;
+  lead?: string;
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+  trust?: Trust[];
+  ribbon?: Stat[];
+}
+const {
+  badge = "All 6 regions operational",
+  title = "Hosting that shows its work.",
+  lead = "Pure SSD infrastructure, LiteSpeed and a global edge — engineered, decisive, and running in the open. Deploy your first project tonight.",
+  primaryCta = { text: "Choose your plan", href: "#pricing" },
+  secondaryCta = { text: "See it deploy", href: "#deploy" },
+  trust = [
+    { value: "99.99%", text: "uptime SLA" },
+    { value: "24/7", text: "human support" },
+    { value: "30-day", text: "money-back" },
+  ],
+  ribbon = [
+    { value: "41ms", label: "median TTFB" },
+    { value: "99.99%", label: "uptime · 90d" },
+    { value: "6", label: "edge regions" },
+    { value: "8.4s", label: "avg deploy" },
+    { value: "18,412", label: "sites hosted" },
+  ],
+} = Astro.props;
+---
+
+<header class="rc-hero rc-sect" id="top">
+  <div class="rc-hero__mesh" aria-hidden="true"></div>
+  <div class="rc-container">
+    <div class="rc-hero__grid">
+      <div class="rc-hero__col reveal">
+        <StatusBadge state="ok">{badge}</StatusBadge>
+        <h1>{title}</h1>
+        <p class="rc-hero__lead">{lead}</p>
+        <div class="rc-hero__actions">
+          <Button href={primaryCta.href} external={primaryCta.external}>{primaryCta.text}</Button>
+          <Button variant="secondary" arrow href={secondaryCta.href}>{secondaryCta.text}</Button>
+        </div>
+        <div class="rc-hero__trust">
+          {trust.map((t) => (
+            <span class="rc-hero__trust-item">
+              <Icon name="tabler:check" size={16} style="color:var(--interactive)" />
+              <span><b>{t.value}</b> {t.text}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+      <div class="rc-hero__visual reveal">
+        <HeroAtlas />
+      </div>
+    </div>
+    {ribbon && ribbon.length > 0 && (
+      <div class="rc-hero__ribbon reveal">
+        <TelemetryRibbon stats={ribbon} />
+      </div>
+    )}
+  </div>
+</header>

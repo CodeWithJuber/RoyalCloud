@@ -1,0 +1,44 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Feature { ico: string; title: string; body: string; meta: string }
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  items?: Feature[];
+}
+const {
+  eyebrow = "Why Royal Clouds",
+  title = "Everything the website needs, running by default.",
+  lead = "No add-on cart, no upsell maze. The performance, security, and support most hosts charge extra for are in every plan on day one.",
+  items = [
+    { ico: "tabler:bolt", title: "One-click installs", body: "WordPress, Joomla, Drupal and 150+ apps deploy in a click — updated automatically, no shell required.", meta: "150+ apps" },
+    { ico: "tabler:cpu", title: "LiteSpeed on NVMe", body: "SSD RAID-10 arrays, LiteSpeed, and built-in caching. Pages built and served before a visitor blinks.", meta: "NVMe RAID-10" },
+    { ico: "tabler:world", title: "Global edge & DNS", body: "Cloudflare CDN and anycast DNS across six regions. Your site sits close to whoever loads it.", meta: "6 regions" },
+    { ico: "tabler:shield", title: "SSL & DDoS, included", body: "Free auto-renewing SSL, network DDoS mitigation, and a configured firewall on every plan.", meta: "Auto-renew SSL" },
+    { ico: "tabler:database", title: "Backups you can trust", body: "Daily off-site backups with one-click restore. Roll a whole site back to yesterday in seconds.", meta: "1-click restore" },
+    { ico: "tabler:mail", title: "Support that answers", body: "Live chat, email, and tickets staffed by engineers — not scripts. First reply in about two hours.", meta: "~2h first reply" },
+  ],
+} = Astro.props;
+---
+
+<section class="rc-sect" id="features">
+  <div class="rc-container">
+    <div class="rc-sect__head reveal">
+      <span class="rc-eyebrow">{eyebrow}</span>
+      <h2>{title}</h2>
+      <p class="rc-sect__lead">{lead}</p>
+    </div>
+    <div class="rc-feat__grid">
+      {items.map((f) => (
+        <article class="rc-feat__cell reveal">
+          <span class="rc-feat__ico"><Icon name={f.ico} size={22} /></span>
+          <h3>{f.title}</h3>
+          <p>{f.body}</p>
+          <div class="rc-feat__meta"><span class="rc-feat__dotok"></span>{f.meta}</div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

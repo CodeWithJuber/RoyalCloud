@@ -11,83 +11,77 @@
    stay. Familiar bones, original skin.
    ============================================================ */
 :root {
-  /* ---- brand (6 named colors + supporting tones) ---- */
-  --rc-ink: #0b0f18;
-  --rc-ink-deep: #070a10;
-  --rc-violet: #1f2733;
-  --rc-violet-dark: #111722;
-  --rc-blue: #58677b;
-  --rc-yellow: #eebe58;
-  --rc-orange: #d8a844;
-  --rc-orange-dark: #a67418;
-  --rc-orange-deep: #75510e;
-  --rc-plum: #0b0f18;
-  --rc-coral: #a94f45;
-  --rc-purple: #1f2733;
-  --rc-indigo: #0b0f18;
-  --rc-indigo-deep: #070a10;
+  /* ---- brand — Royal Clouds bridge ----
+     Legacy token NAMES preserved; VALUES re-pointed at the Royal Clouds
+     primitives (loaded before this file via royal-clouds/tokens.css) so every
+     token-driven component recolors to cobalt/signal at once. Cobalt is a
+     structural field; signal orange is the ONLY conversion accent. */
+  --rc-ink: var(--night);
+  --rc-ink-deep: var(--night);
+  --rc-violet: var(--cobalt);
+  --rc-violet-dark: var(--cobalt-dim);
+  --rc-blue: var(--smoke);
+  --rc-yellow: var(--signal);
+  --rc-orange: var(--signal);
+  --rc-orange-dark: var(--signal);
+  --rc-orange-deep: var(--signal-hot);
+  --rc-plum: var(--midnight);
+  --rc-coral: var(--signal-hot);
+  --rc-purple: var(--cobalt);
+  --rc-indigo: var(--night);
+  --rc-indigo-deep: var(--night);
 
-  /* brand spectrum, the one signature device (hairlines / hero only) */
-  --spectrum: linear-gradient(100deg, #0b0f18 0%, #58677b 58%, #eebe58 100%);
-  --rc-gradient: linear-gradient(110deg, #111722 0%, #343d4c 100%);
-  /* energetic gradient set (Hostinger-confident), violet→azure fields,
-     gold reserved as punctuation only (≤10% area) */
-  --grad-cta: linear-gradient(120deg, #111722 0%, #343d4c 100%);
-  --grad-energy: linear-gradient(135deg, #1f2733 0%, #58677b 100%);
-  --grad-gold-spark: linear-gradient(120deg, #eebe58 0%, #f6d992 100%);
-  /* high-energy vibrant set (elevation pass) */
-  --grad-hot: linear-gradient(115deg, #111722 0%, #343d4c 68%, #eebe58 100%);
-  --grad-gold-cta: linear-gradient(
-    120deg,
-    #ffb43a 0%,
-    #f5a524 55%,
-    #ff9d2e 100%
-  );
-  --grad-text: linear-gradient(96deg, #0b0f18 0%, #58677b 64%, #a67418 100%);
-  --grad-violet-azure: linear-gradient(120deg, #111722 0%, #58677b 100%);
-  /* deep "royal night" gradient for the dark contrast panels
-     (hero glow, stats, cta, domain), a sky seen from altitude */
+  /* Signature device is now a chrome/cobalt hairline, not a gold spectrum.
+     No decorative gradient fields: cobalt is flat, signal is the only accent. */
+  --spectrum: linear-gradient(100deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
+  --rc-gradient: linear-gradient(110deg, var(--cobalt) 0%, var(--cobalt-dim) 100%);
+  --grad-cta: linear-gradient(120deg, var(--cobalt) 0%, var(--cobalt-dim) 100%);
+  --grad-energy: linear-gradient(135deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
+  --grad-gold-spark: linear-gradient(120deg, var(--signal) 0%, var(--signal-hot) 100%);
+  --grad-hot: linear-gradient(115deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
+  --grad-gold-cta: linear-gradient(120deg, var(--signal) 0%, var(--signal-hot) 100%);
+  --grad-text: linear-gradient(96deg, var(--midnight) 0%, var(--cobalt) 64%, var(--cobalt-bright) 100%);
+  --grad-violet-azure: linear-gradient(120deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
+  /* Dark contrast panels: flat night stack, no gold/blue decorative washes. */
   --rc-grad-vivid:
-    radial-gradient(720px 420px at 8% 112%, rgba(238, 190, 88, 0.13) 0%, transparent 58%),
-    radial-gradient(640px 380px at 96% -10%, rgba(88, 103, 123, 0.22) 0%, transparent 58%),
-    linear-gradient(122deg, #070a10 0%, #111722 55%, #1f2733 100%);
+    linear-gradient(122deg, var(--night) 0%, var(--midnight) 55%, var(--abyss) 100%);
 
-  /* ---- surfaces (refined warm-violet neutral ramp) ---- */
-  --bg-page: #f6f4ef;
-  --bg-tint: #efede7;
-  --bg-tint-strong: #e4e1da;
-  --bg-sky: #e9ecef;
-  /* refined cool pastel tiles (one family, crisp-edged) */
-  --pastel-lavender: #e8e6e0;
-  --pastel-sky: #e3e7e9;
-  --pastel-mint: #e4e8e2;
-  --pastel-butter: #f5e8c9;
-  --pastel-peach: #efe2d4;
-  /* hairline border for pastel tiles (anti-smear crisp edge) */
-  --tile-border: rgba(10, 14, 31, 0.08);
+  /* ---- surfaces (cool ice / cobalt-tinted neutral ramp) ---- */
+  --bg-page: var(--ice);
+  --bg-tint: #EAEEF7;
+  --bg-tint-strong: #DFE5F2;
+  --bg-sky: #E7EDF7;
+  /* cool cobalt-tinted tiles (one family, crisp-edged); one signal wash */
+  --pastel-lavender: #E7EAF6;
+  --pastel-sky: #E3E9F5;
+  --pastel-mint: #E5ECF3;
+  --pastel-butter: #E8ECF6;
+  --pastel-peach: #FBE7DF;
+  /* hairline border for tiles (chrome hairline on light) */
+  --tile-border: rgb(32 38 59 / 0.08);
 
   /* per-page theme hooks (overridden by main[data-theme=…] at end of file) */
-  --theme-accent: var(--rc-violet);
-  --theme-soft: var(--pastel-lavender);
-  --theme-art-a: #5111e0;
-  --theme-art-b: #19b6ff;
-  --line: #e2e3f0;
-  --line-strong: #cbccde;
+  --theme-accent: var(--cobalt);
+  --theme-soft: #E7EAF6;
+  --theme-art-a: var(--cobalt);
+  --theme-art-b: var(--cobalt-bright);
+  --line: var(--line-hairline);
+  --line-strong: rgb(32 38 59 / 0.20);
   /* status + accent surfaces */
-  --ok: #16a34a;
-  --ok-soft: #e7f8ee;
-  --save-bg: #ffe7eb;
+  --ok: var(--pulse-ok);
+  --ok-soft: rgb(61 220 151 / 0.14);
+  --save-bg: var(--wash-signal-10);
 
   /* ---- text ---- */
-  --text-heading: var(--rc-ink);
-  --text-default: #3c3e54;
-  --text-muted: #64667e;
+  --text-heading: var(--midnight);
+  --text-default: var(--graphite);
+  --text-muted: #566076;
 
-  /* ---- type ---- */
-  --font-heading: "Outfit Variable", sans-serif;
-  --font-body: "Outfit Variable", sans-serif;
+  /* ---- type — Royal Clouds families ---- */
+  --font-heading: "Bricolage Grotesque", "Manrope", system-ui, sans-serif;
+  --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono:
-    "Geist Mono Variable", ui-monospace, "SFMono-Regular", "Menlo", monospace;
+    "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
 
   /* ---- radius (crisper, more editorial) ---- */
   --radius-panel: 24px;
@@ -135,25 +129,18 @@
   /* ---- one colored-lift alias for energetic moments ---- */
   --shadow-violet: 0 18px 50px -14px rgba(81, 17, 224, 0.42);
 
-  /* ---- dark-premium section tokens (Ultahost register; .section--dark only) ---- */
-  --dk-bg: #0b0a1f;
-  --dk-bg-2: #120e2e;
-  --dk-line: rgba(255, 255, 255, 0.1);
-  --dk-text: #eceaf8;
-  --dk-muted: #a8a6c4;
-  --dk-neon-violet: #9e73ff;
-  --dk-neon-azure: #4dc3ff;
-  --dk-cta: linear-gradient(120deg, #9e73ff 0%, #4dc3ff 100%);
-  --dk-glow-violet: radial-gradient(
-    620px 360px at 12% 0%,
-    rgba(122, 59, 255, 0.4),
-    transparent 60%
-  );
-  --dk-glow-azure: radial-gradient(
-    560px 340px at 92% 100%,
-    rgba(30, 150, 232, 0.32),
-    transparent 60%
-  );
+  /* ---- dark section tokens (Royal Clouds night stack; .section--dark only) ---- */
+  --dk-bg: var(--midnight);
+  --dk-bg-2: var(--abyss);
+  --dk-line: var(--line-chrome-16);
+  --dk-text: var(--ice);
+  --dk-muted: var(--smoke);
+  --dk-neon-violet: var(--cobalt-bright);
+  --dk-neon-azure: var(--cobalt-bright);
+  --dk-cta: linear-gradient(120deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
+  /* No decorative color washes on dark — depth is chrome linework + inner highlight. */
+  --dk-glow-violet: none;
+  --dk-glow-azure: none;
 }
 
 /* ============================================================

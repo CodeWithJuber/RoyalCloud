@@ -1,0 +1,90 @@
+---
+/**
+ * Royal Clouds — DeployConsole. Ticks through a deploy → live → rollback log,
+ * line by line, then loops. No-JS: the full log renders (nothing hidden).
+ * With JS + motion: replays on scroll into view. Reduced-motion: static log,
+ * no caret. Chrome-hairline terminal shell with three decorative dots.
+ */
+const SEQ = [
+  { k: "cmd", g: "$", t: "royal deploy --prod" },
+  { k: "muted", g: " ", t: "building image  ·  node 20 · 214 MB" },
+  { k: "ok", g: "→", t: "image built            ok  4.1s" },
+  { k: "info", g: "→", t: "pushing to royal backbone" },
+  { k: "ok", g: "→", t: "replicated · 6 edge regions   live" },
+  { k: "ok", g: "✓", t: "deployed in 8.4s  ·  TTFB 41ms" },
+  { k: "cmd", g: "$", t: "royal rollback --to prev" },
+  { k: "info", g: "→", t: "restoring snapshot 4f2a9c1" },
+  { k: "ok", g: "✓", t: "rolled back in 1.2s  ·  zero downtime" },
+];
+---
+
+<div class="rc-console" data-rc-console>
+  <div class="rc-console__bar">
+    <span class="rc-console__dot"></span><span class="rc-console__dot"></span><span class="rc-console__dot"></span>
+    <span class="rc-console__title">royal@backbone — deploy</span>
+  </div>
+  <div class="rc-console__body">
+    {SEQ.map((l, i) => (
+      <div class={`rc-line rc-line--${l.k}`} data-line data-i={i}>
+        <span class="rc-line__gut">{l.g}</span>
+        <span class="rc-line__txt">{l.t}</span>
+      </div>
+    ))}
+    <div class="rc-line rc-console__cursor-row">
+      <span class="rc-line__gut" data-cursor-gut>$</span>
+      <span class="rc-line__txt"><span class="rc-caret" data-caret hidden aria-hidden="true"></span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function rcSetupConsoles() {
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll<HTMLElement>("[data-rc-console]").forEach((root) => {
+      if (root.dataset.rcInit) return;
+      root.dataset.rcInit = "1";
+      const lines = Array.from(root.querySelectorAll<HTMLElement>("[data-line]"));
+      const caret = root.querySelector<HTMLElement>("[data-caret]");
+      const gut = root.querySelector<HTMLElement>("[data-cursor-gut]");
+      if (!lines.length) return;
+
+      const show = (n: number) => {
+        lines.forEach((el, i) => { el.hidden = i >= n; });
+        const done = n >= lines.length;
+        if (caret) caret.hidden = !done;
+        if (gut) gut.textContent = done ? "$" : " ";
+      };
+
+      if (reduce) { show(lines.length); if (caret) caret.hidden = true; return; }
+
+      let timer: number | undefined;
+      const run = () => {
+        let n = 0;
+        show(0);
+        const step = () => {
+          n += 1;
+          show(n);
+          if (n >= lines.length) {
+            timer = window.setTimeout(run, 2600);
+            return;
+          }
+          const delay = lines[n] && lines[n].classList.contains("rc-line--cmd") ? 620 : 780;
+          timer = window.setTimeout(step, delay);
+        };
+        timer = window.setTimeout(step, 500);
+      };
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { run(); io.disconnect(); }
+          });
+        },
+        { threshold: 0.4 },
+      );
+      io.observe(root);
+    });
+  }
+  rcSetupConsoles();
+  document.addEventListener("astro:after-swap", rcSetupConsoles);
+</script>

@@ -1,0 +1,59 @@
+---
+/**
+ * Royal Clouds — HeroAtlas signature visual.
+ * A live edge route map: concentric arcs, region nodes, packet dots that run
+ * along offset-paths, and a ping ripple on the backbone hub. Purely decorative
+ * → aria-hidden on the moving parts; the <svg> carries a label + desc. Motion
+ * is transform/offset-path only and stops under prefers-reduced-motion (CSS).
+ */
+const nodes = [
+  { x: 96, y: 300, label: "sfo" },
+  { x: 470, y: 96, label: "fra" },
+  { x: 168, y: 372, label: "sin" },
+  { x: 452, y: 300, label: "blr" },
+  { x: 120, y: 150, label: "iad" },
+];
+const gridY = [70, 140, 210, 280, 350, 420];
+---
+
+<svg class="rc-atlas" viewBox="0 0 520 460" role="img" aria-label="Royal Clouds edge network, six regions online">
+  <desc>Concentric route map of the Royal Clouds edge fleet with live packets in transit.</desc>
+  {/* faint ground grid */}
+  <g aria-hidden="true">
+    {gridY.map((y) => <line class="rc-atlas__grid" x1="0" y1={y} x2="520" y2={y} />)}
+  </g>
+  {/* concentric arcs around the hub */}
+  <g class="rc-atlas__spin" aria-hidden="true">
+    <circle class="rc-atlas__arc" cx="330" cy="224" r="120" stroke-dasharray="180 999" />
+    <circle class="rc-atlas__arc" cx="330" cy="224" r="168" stroke-dasharray="120 999" stroke-dashoffset="40" />
+    <circle class="rc-atlas__arc" cx="330" cy="224" r="212" stroke-dasharray="260 999" stroke-dashoffset="120" />
+  </g>
+  {/* routes */}
+  <g aria-hidden="true">
+    <path class="rc-atlas__route rc-atlas__route--live" d="M 96 300 C 150 250, 230 232, 330 224" />
+    <path class="rc-atlas__route" d="M 330 224 C 400 210, 452 150, 470 96" />
+    <path class="rc-atlas__route" d="M 330 224 C 300 300, 250 340, 168 372" />
+    <path class="rc-atlas__route" d="M 330 224 C 400 250, 430 280, 452 300" />
+    <path class="rc-atlas__route" d="M 330 224 C 240 190, 180 170, 120 150" />
+  </g>
+  {/* region nodes */}
+  <g aria-hidden="true">
+    {nodes.map((n) => (
+      <g>
+        <circle class="rc-atlas__node" cx={n.x} cy={n.y} r="5.5" />
+        <circle class="rc-atlas__dotok" cx={n.x} cy={n.y} r="2" />
+        <text class="rc-atlas__label" x={n.x + 10} y={n.y + 3.5}>{n.label}</text>
+      </g>
+    ))}
+    {/* hub */}
+    <circle class="rc-atlas__ping" cx="330" cy="224" r="7" />
+    <circle class="rc-atlas__hub" cx="330" cy="224" r="8.5" />
+    <text class="rc-atlas__labelv" x="330" y="205" text-anchor="middle">royal backbone</text>
+  </g>
+  {/* packets in transit */}
+  <g aria-hidden="true">
+    <circle class="rc-atlas__packet" r="3.5" />
+    <circle class="rc-atlas__packet rc-atlas__packet--b" r="3.5" />
+    <circle class="rc-atlas__packet rc-atlas__packet--c" r="3.5" />
+  </g>
+</svg>

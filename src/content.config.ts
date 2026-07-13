@@ -275,6 +275,19 @@ export const sectionSchema = z.discriminatedUnion("type", [
       )
       .optional(),
   }),
+  // ── Royal Clouds design-system sections ──────────────────────────
+  // Each carries many optional presentation props (leads, ledgers,
+  // telemetry, ribbons); passthrough keeps the frontmatter flexible
+  // while the components own the shape + sensible defaults.
+  z.object({ type: z.literal("rchero"), ...base }).passthrough(),
+  z.object({ type: z.literal("rcfeatures"), ...base }).passthrough(),
+  z.object({ type: z.literal("rctelemetry"), ...base }).passthrough(),
+  z.object({ type: z.literal("rcdeploy"), ...base }).passthrough(),
+  z.object({ type: z.literal("rcpricing"), ...base }).passthrough(),
+  z.object({ type: z.literal("rccompare"), ...base }).passthrough(),
+  z.object({ type: z.literal("rctestimonials"), ...base }).passthrough(),
+  z.object({ type: z.literal("rcfaq"), ...base }).passthrough(),
+  z.object({ type: z.literal("rccta"), ...base }).passthrough(),
 ]);
 
 // Page metadata is looser than the blog one: canonical may be a relative

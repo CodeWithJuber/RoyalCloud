@@ -1,9 +1,9 @@
 ---
 import Layout from '~/layouts/Layout.astro';
 import HeaderRC from '~/components/widgets/HeaderRC.astro';
+import RcNav from '~/components/widgets/RcNav.astro';
 import FooterRC from '~/components/widgets/FooterRC.astro';
 import RevealScript from '~/components/widgets/RevealScript.astro';
-import AuroraScript from '~/components/widgets/AuroraScript.astro';
 import CountUp from '~/components/widgets/CountUp.astro';
 import MobileCTA from '~/components/widgets/MobileCTA.astro';
 import SvgDefs from '~/components/illustrations/SvgDefs.astro';
@@ -28,9 +28,15 @@ const { metadata, transparentHeader = false, theme, page } = Astro.props;
   <SvgDefs />
   <div class="rc-progress" aria-hidden="true"><span></span></div>
   <slot name="header">
-    <HeaderRC solid={!transparentHeader} />
+    {page === 'index' ? <RcNav /> : <HeaderRC solid={!transparentHeader} />}
   </slot>
-  <main id="main" tabindex="-1" data-theme={theme} data-page={page}>
+  <main
+    id="main"
+    tabindex="-1"
+    data-theme={theme}
+    data-page={page}
+    class:list={[{ 'rc-page': page === 'index' }]}
+  >
     <slot />
   </main>
   <slot name="footer">
@@ -39,5 +45,4 @@ const { metadata, transparentHeader = false, theme, page } = Astro.props;
   <MobileCTA />
   <RevealScript />
   <CountUp />
-  <AuroraScript />
 </Layout>
