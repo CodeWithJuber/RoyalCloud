@@ -1,77 +1,46 @@
-# Royal Clouds — STRATOSPHERE redesign notes
+# Royal Clouds — design system notes (current)
 
-A bold, light, regal reinvention of the Royal Clouds site, built **in Astro**
-(the existing stack). The whole site renders through one `SectionRenderer` + a
-single token/CSS layer, so the redesign works by reskinning that layer — the
-section skeleton (Layer-1) is unchanged; the brand soul (Layer-2) is new.
+This site uses **one** design system: the real royalclouds.net brand,
+faithfully carried over from the live site and polished. It intentionally
+replaces the earlier AI-invented systems ("Royal Systems v2" cobalt/orange and
+"STRATOSPHERE v3.1" royal/azure/gold), which client feedback rejected as
+"not professional". **Do not reintroduce those palettes, glassmorphism,
+aurora/WebGL effects, or heavy scroll motion.**
 
-## What changed
+## The system
 
-- **Tokens** (`src/assets/styles/rc-premium.css` `:root`): new palette mapped
-  onto the existing token names so every component recolored at once.
-  - ink `#0A0E1F` · royal `#5111E0` · azure `#19B6FF` · gold `#FFB627` ·
-    mist `#F3F4FB` · paper `#FBFBFD`, plus a `--spectrum` (royal→azure→gold).
-  - crisper radii, ink-based shadows, motion tokens.
-- **Type**: Bricolage Grotesque (display) + Inter (body) + Geist Mono (data).
-  Eyebrows and all prices/stats/figures now read in the mono face with
-  tabular figures. Font loading updated in `Layout.astro` + `CustomStyles.astro`.
-- **Signature — "Living Sky" hero** (`HeroRC.astro`): a full-bleed, dependency-
-  free WebGL GLSL cloud/aurora field reacting to cursor + scroll. Falls back to
-  the static `--rc-grad-vivid` gradient on no-WebGL / low-power /
-  `prefers-reduced-motion` (zero CLS). Pauses offscreen via IntersectionObserver.
-- **Motion spine** (`SmoothScroll.astro`): Lenis smooth scroll + a GSAP
-  ScrollTrigger hero→content handoff, fully gated behind reduced motion and
-  re-initialised across Astro view transitions.
-- **Altitude rule**: the old `brand-separator.svg` under headings is replaced by
-  a thin spectrum hairline — the recurring connective motif. Reusable as
-  `.altitude-rule`.
-- **aurora.css**: recolored to the new palette and given a STRATOSPHERE layer
-  (mono data, spectrum motifs, gold CTA focus).
+- **Tokens** — `src/assets/styles/tokens.css`, three layers
+  (primitive → semantic → component). Live-site palette:
+  - sky `#00a7f5` (primary) · purple `#7652f2` (secondary) ·
+    gold `#fdd700` (CTA accent) · navy `#22105f` (dark section bands) ·
+    ink `#181b22` (footer) · orange `#fa4612` / magenta `#a5215e` (rare accents)
+  - Light-first; dark sections are flat navy bands (`.section--dark`).
+- **Type** — Open Sans (variable), self-hosted via
+  `@fontsource-variable/open-sans`, imported in `CustomStyles.astro`.
+  No Google Fonts CDN.
+- **Component styles** — `src/assets/styles/components.css`: the structural
+  classes every section component consumes (`.wrap`, `.sec-head`, `.btn*`,
+  `.plan*`, `.compare`, `.faq`, `.site-header/footer`, `.prose-body`, …).
+  Values come from tokens only.
+- **Per-page accents** — `main[data-theme=…]` (8 frontmatter values kept for
+  content stability) collapse to two brand pairs: sky (speed, panel, linux,
+  domains) and purple (security, server, wordpress, money).
+- **Motion policy** — restrained: IntersectionObserver reveals
+  (`RevealScript.astro`), count-ups, card hover lift. Native
+  `scroll-behavior: smooth` + `scroll-margin-top`; no GSAP/Lenis, no WebGL.
 
-## Layer-1 kept generic on purpose (Jakob's Law)
+## Contracts to respect
 
-Section order, nav/dropdown behaviour, FAQ accordion, pricing toggle, comparison
-table, the `SectionRenderer` registry — conventions users already know. Novelty
-is spent on the signature, not the controls.
-
-## What I cut (Chanel's mirror)
-
-- A spectrum-filled "popular plan" band — reverted to solid royal because the
-  gold portion of the spectrum failed contrast against the band label.
-- Did not 3D-ify every section; the WebGL is reserved for the one hero.
+- Section types in `src/content.config.ts` ↔ `SectionRenderer.astro` ↔
+  `public/admin/config.yml` (Decap CMS) must stay in lockstep — Decap silently
+  drops blocks/fields it doesn't know about on save.
+  `node scripts/verify-cms.mjs` checks this drift.
+- `astro.config.ts` `build.format: "file"` keeps dist filenames matching the
+  live extensionless URLs — don't change.
+- WHMCS deep links (`https://my.royalclouds.net/...`) in
+  `src/data/plans/*.json` and `site.json` are real cart/portal URLs.
 
 ## Verify
 
-- `npm run build` (passes; 80 pages) · `node scripts/screenshots.mjs` (visual QA)
-- `npm run dev` → http://localhost:4321
-
-## Known, out of scope
-
-The parallel `royalclouds-redesign/` Next.js folder is untouched by request. Its
-pre-existing TypeScript/ESLint errors are surfaced by the repo-wide `astro check`
-/ `eslint` but are unrelated to this Astro redesign.
-
-## v3.1 — Quiet-premium discipline pass
-
-Feedback after launch: it read "not professional" — diagnosed as _spectacle_
-(the §5 trap). Restraint pass:
-
-- **Palette deepened:** royal `#4B16D6`, azure `#1E96E8` (holds as text), gold
-  `#F5A524`, paper `#FCFCFE`. Gold radial dropped from the dark-panel gradient.
-- **Cut (Chanel's mirror):** all glassmorphism (stat tiles, chips), every
-  coloured hover glow, the button sheen sweep, the looping aurora-drift on dark
-  panels, the radial orbs behind light sections, the CTA pulse + plan-glow.
-  Cards now lift with plain elevation; dark panels use one calm gradient.
-- **Hero calmed:** slower shader drift, softer hues, restrained gold motes,
-  stronger top-darken for headline legibility.
-- **Rhythm:** body line-height 1.6; fixed `.sec-head` margin inversion.
-- Net: less motion, fewer effects, one signature (the calm sky + spectrum
-  hairline) — reads premium through restraint, not spectacle.
-
-## Sign-off
-
-- **Palette:** ink · royal `#4B16D6` · azure `#1E96E8` · gold `#F5A524` · mist · paper
-- **Type:** Bricolage Grotesque · Inter · Geist Mono
-- **Signature:** the (now calm) Living Sky WebGL hero + one spectrum altitude rule
-- **Risk:** stripped the spectacle (glass + glows + busy motion) for disciplined
-  quiet-premium — betting that _less_ finally reads _professional_.
+- `npm run check` · `npm run build` · `node scripts/verify-slugs.mjs`
+- `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node scripts/screenshots.mjs`
