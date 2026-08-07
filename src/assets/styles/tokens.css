@@ -124,6 +124,7 @@
 
   /* ── Layout & spacing ───────────────────────────────────── */
   --space-section: 100px;
+  --space-section-sm: 60px;
   --maxw: 1140px;
   --wrap-pad: 15px;
   --s-1: 4px;

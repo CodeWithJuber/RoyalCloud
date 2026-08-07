@@ -92,7 +92,7 @@ const formAction = `${action.origin}${action.pathname}`;
 <style>
   .rc-domainsearch {
     background: #f6f6f6;
-    padding: 100px 0;
+    padding: var(--space-section) 0;
   }
 
   .ds-eyebrow {
@@ -117,7 +117,7 @@ const formAction = `${action.origin}${action.pathname}`;
     border-radius: 50px;
     overflow: hidden;
     box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-    border: 2px solid #eee;
+    border: 1px solid #eaeaea;
     transition: border-color 0.2s;
   }
   .ds-input-wrap:focus-within {
@@ -219,7 +219,7 @@ const formAction = `${action.origin}${action.pathname}`;
   @media (max-width: 600px) {
     .ds-input-wrap {
       flex-wrap: wrap;
-      border-radius: 15px;
+      border-radius: 12px;
     }
     .ds-input {
       width: 100%;

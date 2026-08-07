@@ -47,7 +47,7 @@ const { eyebrow, title, subtitle, layers, stats } = Astro.props;
 
 <style>
   .rc-security {
-    padding: 100px 0;
+    padding: var(--space-section) 0;
     background: #fafafa;
   }
 
@@ -70,15 +70,15 @@ const { eyebrow, title, subtitle, layers, stats } = Astro.props;
 
   .sec-card {
     background: #fff;
-    border-radius: 15px;
+    border-radius: 12px;
     padding: 30px 25px;
-    border: 2px solid #eee;
+    border: 1px solid #eaeaea;
     transition: transform 0.2s, box-shadow 0.2s;
     position: relative;
   }
   .sec-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
   }
 
   .sec-num {
@@ -97,7 +97,7 @@ const { eyebrow, title, subtitle, layers, stats } = Astro.props;
 
   .sec-card h3 {
     font-family: var(--font-heading);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     color: #22105f;
     margin: 0 0 10px;
@@ -118,8 +118,8 @@ const { eyebrow, title, subtitle, layers, stats } = Astro.props;
   }
   .sec-stat {
     background: #fff;
-    border: 2px solid #eee;
-    border-radius: 15px;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
     padding: 20px;
     text-align: center;
   }

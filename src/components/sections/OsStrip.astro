@@ -39,7 +39,7 @@ const { eyebrow, title, subtitle, items } = Astro.props;
 
 <style>
   .rc-osstrip {
-    padding: 60px 0;
+    padding: var(--space-section-sm) 0;
   }
 
   .os-eyebrow {
@@ -65,7 +65,7 @@ const { eyebrow, title, subtitle, items } = Astro.props;
     align-items: center;
     gap: 12px;
     background: #fff;
-    border: 2px solid #eee;
+    border: 1px solid #eaeaea;
     border-radius: 50px;
     padding: 10px 22px 10px 12px;
     transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
