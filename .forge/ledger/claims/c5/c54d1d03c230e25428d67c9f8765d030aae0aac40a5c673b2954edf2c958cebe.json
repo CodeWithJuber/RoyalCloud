@@ -1,0 +1,1 @@
+{"body":{"name":"cms-lockstep","text":"content.config.ts + SectionRenderer.astro + public/admin/config.yml change together in one commit; npm run check:cms gates it"},"kind":"fact","scope":{"level":"repo"},"v":1}

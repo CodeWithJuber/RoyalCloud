@@ -29,3 +29,10 @@ pnpm-debug.log*
 shots/
 .playwright-cli/
 output/playwright/
+
+# pixel-clone reference captures (local ground truth)
+refs/
+
+# forge regenerable mirrors + session state
+.agents/
+.forge/sessions/
