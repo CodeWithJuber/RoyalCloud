@@ -1,14 +1,8 @@
 ---
-/**
- * Pricing grid, SiteGround card anatomy on Royal Clouds branding.
- * Defaults to annual pricing: big discounted price, struck monthly
- * "regular" price with a SAVE chip, and a renews fine print. The
- * monthly/annual toggle swaps everything client-side; prices are
- * dual-currency (₹ default, $ via the header toggle).
- */
 import { toINR } from "~/utils/currency";
 import { Icon } from "astro-icon/components";
 import { tablerIcon } from "~/utils/plans";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
 
 interface Tier {
   name: string;
@@ -28,9 +22,7 @@ interface Props {
   tiers: Tier[];
   note?: string;
   showToggle?: boolean;
-  /** product tabler icon (per-plan glyph badge on each card) */
   icon?: string;
-  /** product slug, drives the per-product card accent */
   product?: string;
 }
 const {
@@ -58,145 +50,356 @@ const shownPrice = (t: Tier) =>
   toINR(defaultBill === "annual" ? (t.priceAnnual ?? t.price) : t.price);
 ---
 
-<section class="pricing" id={id} data-bill={defaultBill} data-product={product}>
+<section class="rc-pricing" id={id} data-bill={defaultBill} data-product={product}>
   <div class="wrap">
-    <div class="sec-head center reveal">
-      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <div class="section-title">
+      {eyebrow && <span class="pricing-eyebrow">{eyebrow}</span>}
       <h2>{title}</h2>
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
       {subtitle && <p>{subtitle}</p>}
     </div>
-    {
-      showToggle && (
-        <div style="text-align: center;">
-          <div class="bill-toggle" role="group" aria-label="Billing period">
-            <button
-              type="button"
-              class={defaultBill === "monthly" ? "active" : ""}
-              aria-pressed={defaultBill === "monthly" ? "true" : "false"}
-              data-bill="monthly"
-            >
-              Monthly
-            </button>
-            <button
-              type="button"
-              class={defaultBill === "annual" ? "active" : ""}
-              aria-pressed={defaultBill === "annual" ? "true" : "false"}
-              data-bill="annual"
-            >
-              Annual <span class="save">SAVE 20%</span>
-            </button>
-          </div>
+
+    {showToggle && (
+      <div class="toggle-wrap">
+        <div class="bill-toggle" role="group" aria-label="Billing period">
+          <button
+            type="button"
+            class={defaultBill === "monthly" ? "active" : ""}
+            aria-pressed={defaultBill === "monthly" ? "true" : "false"}
+            data-bill="monthly"
+          >Monthly</button>
+          <button
+            type="button"
+            class={defaultBill === "annual" ? "active" : ""}
+            aria-pressed={defaultBill === "annual" ? "true" : "false"}
+            data-bill="annual"
+          >Annual <span class="save-tag">SAVE 20%</span></button>
         </div>
-      )
-    }
+      </div>
+    )}
+
     <div
-      class="plan-grid"
+      class="plan-cards"
       style={`grid-template-columns: repeat(${cols}, 1fr);`}
       data-plan-grid
     >
-      {
-        tiers.map((t, i) => (
-          <div
-            class={`plan rc-spotlight reveal rv-scale reveal-d${(i % 4) + 1}${t.popular ? " popular" : ""}`}
-          >
-            {t.popular && <span class="plan-band">Best Value</span>}
-            {icon && (
-              <span class="plan-ic">
-                <Icon name={tablerIcon(icon)} />
-              </span>
+      {tiers.map((t) => (
+        <div class={`plan-card ${t.popular ? "plan-popular" : ""}`}>
+          {t.popular && <span class="plan-badge">Best Value</span>}
+          {icon && (
+            <span class="plan-icon">
+              <Icon name={tablerIcon(icon)} />
+            </span>
+          )}
+          <h3>{t.name}</h3>
+          {t.summary && <p class="plan-summary">{t.summary}</p>}
+
+          <div class="plan-was">
+            {savePct(t) > 0 && (
+              <>
+                <span class="was px" data-usd={`$${t.price}`} data-inr={`₹${toINR(t.price)}`}>
+                  ₹{toINR(t.price)}
+                </span>
+                <span class="save-chip">SAVE {savePct(t)}%</span>
+              </>
             )}
-            <h3>{t.name}</h3>
-            <p class="summary">{t.summary}</p>
-            <div class="was-row">
-              {savePct(t) > 0 && (
-                <>
-                  <span
-                    class="was px"
-                    data-usd={`$${t.price}`}
-                    data-inr={`₹${toINR(t.price)}`}
-                  >
-                    ₹{toINR(t.price)}
-                  </span>
-                  <span class="save-chip">SAVE {savePct(t)}%</span>
-                </>
-              )}
-            </div>
-            <div class="price-row">
-              <span class="cur" data-cur-sym>
-                ₹
-              </span>
-              <span
-                class="price"
-                data-usd-monthly={t.price}
-                data-usd-annual={t.priceAnnual ?? t.price}
-                data-inr-monthly={toINR(t.price)}
-                data-inr-annual={toINR(t.priceAnnual ?? t.price)}
-              >
-                {shownPrice(t)}
-              </span>
-              <span class="period">/mo</span>
-            </div>
-            <a
-              class={`btn ${t.popular ? "btn-primary" : "btn-plan"}`}
-              href={t.ctaUrl}
-              target="_blank"
-              rel="noopener"
-            >
-              {t.cta ?? "Get Started"}
-            </a>
-            <p
-              class="price-note"
-              data-bill-note
-              data-usd-monthly="Billed monthly. Cancel anytime."
-              data-usd-annual={`Renews at $${t.price}/mo. Billed annually.`}
-              data-inr-monthly="Billed monthly. Cancel anytime."
-              data-inr-annual={`Renews at ₹${toINR(t.price)}/mo. Billed annually.`}
-            >
-              {defaultBill === "annual"
-                ? `Renews at ₹${toINR(t.price)}/mo. Billed annually.`
-                : "Billed monthly. Cancel anytime."}
-            </p>
-            <ul class="feat">
-              {t.features.map((f) => (
-                <li>{f}</li>
-              ))}
-            </ul>
           </div>
-        ))
-      }
+
+          <div class="plan-price">
+            <span class="cur" data-cur-sym>₹</span>
+            <span
+              class="price-val"
+              data-usd-monthly={t.price}
+              data-usd-annual={t.priceAnnual ?? t.price}
+              data-inr-monthly={toINR(t.price)}
+              data-inr-annual={toINR(t.priceAnnual ?? t.price)}
+            >{shownPrice(t)}</span>
+            <span class="period">/mo</span>
+          </div>
+
+          <a
+            class="btn-yellow plan-cta"
+            href={t.ctaUrl}
+            target="_blank"
+            rel="noopener"
+          >{t.cta ?? "Buy Now"}</a>
+
+          <p
+            class="plan-note"
+            data-bill-note
+            data-usd-monthly="Billed monthly. Cancel anytime."
+            data-usd-annual={`Renews at $${t.price}/mo. Billed annually.`}
+            data-inr-monthly="Billed monthly. Cancel anytime."
+            data-inr-annual={`Renews at ₹${toINR(t.price)}/mo. Billed annually.`}
+          >
+            {defaultBill === "annual"
+              ? `Renews at ₹${toINR(t.price)}/mo. Billed annually.`
+              : "Billed monthly. Cancel anytime."}
+          </p>
+
+          <details class="plan-features">
+            <summary>See all features</summary>
+            <ul>
+              {t.features.map((f) => <li>{f}</li>)}
+            </ul>
+          </details>
+        </div>
+      ))}
     </div>
-    {note && <p class="pricing-note">{note}</p>}
+    {note && <p class="pricing-footnote">{note}</p>}
   </div>
 </section>
 
 <style>
-  /* inline column count is overridden responsively; <=700px becomes a
-     swipe carousel (see rc-premium.css) */
-  @media (max-width: 1080px) {
-    .plan-grid {
-      grid-template-columns: repeat(3, 1fr) !important;
-    }
+  .rc-pricing {
+    padding: 100px 0;
   }
-  @media (max-width: 860px) and (min-width: 701px) {
-    .plan-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
-    }
+
+  .pricing-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .toggle-wrap {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .bill-toggle {
+    display: inline-flex;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 2px solid #eee;
+    background: #fff;
+  }
+  .bill-toggle button {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 25px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--body-color);
+    transition: background 0.2s, color 0.2s;
+  }
+  .bill-toggle button.active {
+    background: var(--heading-blue);
+    color: #fff;
+  }
+  .save-tag {
+    font-size: 11px;
+    color: var(--accent-hot);
+    margin-left: 4px;
+  }
+  .bill-toggle button.active .save-tag {
+    color: #fdd700;
+  }
+
+  .plan-cards {
+    display: grid;
+    gap: 30px;
+  }
+
+  .plan-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 35px 25px;
+    text-align: center;
+    border: 2px solid #eee;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  }
+  .plan-popular {
+    border-color: var(--heading-blue);
+  }
+  .plan-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--heading-blue);
+    padding: 4px 18px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  .plan-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(38,159,216,0.1), rgba(123,31,162,0.08));
+    color: var(--heading-blue);
+    margin-bottom: 15px;
+  }
+  .plan-icon :global(svg) {
+    width: 28px;
+    height: 28px;
+  }
+
+  .plan-card h3 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    margin: 0 0 8px;
+  }
+  .plan-summary {
+    font-size: 13px;
+    color: #999;
+    margin: 0 0 15px;
+  }
+
+  .plan-was {
+    min-height: 20px;
+    margin-bottom: 5px;
+  }
+  .was {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 6px;
+  }
+  .save-chip {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent-hot);
+    border-radius: 50px;
+    padding: 2px 8px;
+  }
+
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: 15px;
+  }
+  .cur {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--heading-blue);
+  }
+  .price-val {
+    font-family: var(--font-heading);
+    font-size: 45px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    line-height: 1;
+  }
+  .period {
+    font-size: 14px;
+    color: #999;
+  }
+
+  .plan-cta {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+  }
+
+  .plan-note {
+    font-size: 12px;
+    color: #999;
+    margin: 0 0 15px;
+    min-height: 1.2em;
+  }
+
+  .plan-features {
+    text-align: left;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+  .plan-features summary {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    cursor: pointer;
+    padding: 8px 0;
+    list-style: none;
+  }
+  .plan-features summary::-webkit-details-marker {
+    display: none;
+  }
+  .plan-features summary::after {
+    content: " ▸";
+  }
+  .plan-features[open] summary::after {
+    content: " ▾";
+  }
+  .plan-features ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .plan-features li {
+    font-size: 13px;
+    color: var(--body-color);
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .plan-features li::before {
+    content: "✓";
+    color: #1fa463;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  @media (max-width: 1080px) {
+    .plan-cards { grid-template-columns: repeat(3, 1fr) !important; }
+  }
+  @media (max-width: 860px) {
+    .plan-cards { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 560px) {
+    .plan-cards { grid-template-columns: 1fr !important; }
   }
 </style>
 
 <script>
   function rcPlansInit() {
     const apply = (sec: HTMLElement) => {
-      const cur = document.documentElement.dataset.currency || "inr";
+      const cur = localStorage.getItem("rc-cur") || "inr";
       const bill = sec.dataset.bill || "monthly";
-      sec
-        .querySelectorAll(`[data-${cur}-${bill}]`)
-        .forEach(
-          (p) => (p.textContent = p.getAttribute(`data-${cur}-${bill}`)),
-        );
+      sec.querySelectorAll<HTMLElement>(`[data-${cur}-${bill}]`).forEach((p) => {
+        const val = p.getAttribute(`data-${cur}-${bill}`);
+        if (val) p.textContent = val;
+      });
+      sec.querySelectorAll<HTMLElement>("[data-bill-note]").forEach((p) => {
+        const val = p.getAttribute(`data-${cur}-${bill}`);
+        if (val) p.textContent = val;
+      });
+      sec.querySelectorAll<HTMLElement>("[data-cur-sym]").forEach((s) => {
+        s.textContent = cur === "inr" ? "₹" : "$";
+      });
+      sec.querySelectorAll<HTMLElement>(".px").forEach((el) => {
+        el.textContent = cur === "inr" ? (el.dataset.inr || "") : (el.dataset.usd || "");
+      });
     };
-    document.querySelectorAll<HTMLElement>(".pricing").forEach((sec) => {
-      const buttons = sec.querySelectorAll(".bill-toggle button");
+    document.querySelectorAll<HTMLElement>(".rc-pricing").forEach((sec) => {
+      const buttons = sec.querySelectorAll<HTMLButtonElement>(".bill-toggle button");
       buttons.forEach((btn) => {
         btn.addEventListener("click", () => {
           const bill = btn.getAttribute("data-bill") || "monthly";
@@ -209,7 +412,7 @@ const shownPrice = (t: Tier) =>
         });
       });
       apply(sec);
-      document.addEventListener("rc-currency", () => apply(sec));
+      window.addEventListener("rc-currency", () => apply(sec));
     });
   }
   rcPlansInit();

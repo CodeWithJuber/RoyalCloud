@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import testimonialsData from "~/data/testimonials.json";
-import site from "~/data/site.json";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
 
 interface Testimonial {
   name: string;
@@ -20,8 +20,8 @@ interface Props {
 }
 
 const {
-  eyebrow = "Customer stories",
-  title = "People stay when support keeps showing up.",
+  eyebrow,
+  title = "Customers Feedback",
   subtitle,
   source = "global",
   limit,
@@ -35,320 +35,163 @@ let list: Testimonial[] =
 if (limit) list = list.slice(0, limit);
 
 const initials = (name: string) =>
-  name
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
+  name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 ---
 
-<section class="testi-sec" aria-labelledby="stories-title">
-  <div class="wrap testi-shell" data-testimonials>
-    <header class="testi-intro reveal">
-      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-      <h2 id="stories-title" set:html={title} />
+<section class="rc-testimonials">
+  <div class="wrap">
+    <div class="section-title">
+      {eyebrow && <span class="testi-eyebrow">{eyebrow}</span>}
+      <h2 set:html={title} />
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
       {subtitle && <p set:html={subtitle} />}
-      <div class="score-lockup">
-        <strong>{site.rating}<span>/{site.ratingMax}</span></strong>
-        <span class="score-stars" aria-label={`${site.rating} out of ${site.ratingMax}`}>
-          {Array.from({ length: 5 }).map(() => <Icon name="tabler:star-filled" />)}
-        </span>
-        <small>Average customer rating</small>
-      </div>
-    </header>
+    </div>
 
-    <div class="testi-carousel reveal">
-      <div class="testi-slides" aria-live="polite">
-        {
-          list.map((testimonial, index) => (
-            <article
-              class={`testi-slide ${index === 0 ? "is-active" : ""}`}
-              aria-hidden={index === 0 ? "false" : "true"}
-              data-slide={index}
-            >
-              <blockquote>“{testimonial.quote}”</blockquote>
-              <footer>
-                <span class="testi-avatar">{initials(testimonial.name)}</span>
-                <span>
-                  <strong>{testimonial.name}</strong>
-                  {testimonial.site && <small>{testimonial.site}</small>}
-                </span>
-                <span class="verified"><Icon name="tabler:rosette-discount-check-filled" /> Verified customer</span>
-              </footer>
-            </article>
-          ))
-        }
-      </div>
+    <div class="testi-grid" data-testimonials>
+      {list.map((t, i) => (
+        <div class="testi-card">
+          <div class="testi-stars">
+            {Array.from({ length: t.rating ?? 5 }).map(() => (
+              <Icon name="tabler:star-filled" />
+            ))}
+          </div>
+          <blockquote>"{t.quote}"</blockquote>
+          <div class="testi-footer">
+            <span class="testi-avatar">{initials(t.name)}</span>
+            <div>
+              <strong>{t.name}</strong>
+              {t.site && <small>{t.site}</small>}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
 
-      <div class="testi-controls">
-        <span class="testi-count"><b data-current>01</b> / {String(list.length).padStart(2, "0")}</span>
-        <span class="testi-progress"><i data-progress></i></span>
-        <button type="button" data-previous aria-label="Previous customer story">
-          <Icon name="tabler:arrow-left" />
-        </button>
-        <button type="button" data-next aria-label="Next customer story">
-          <Icon name="tabler:arrow-right" />
-        </button>
-      </div>
+    <div class="testi-cta">
+      <a href="/testimonials" class="btn-pink">See All Testimonials</a>
     </div>
   </div>
 </section>
 
-<script>
-  function initTestimonials() {
-    document.querySelectorAll<HTMLElement>("[data-testimonials]").forEach((root) => {
-      const slides = Array.from(root.querySelectorAll<HTMLElement>("[data-slide]"));
-      const current = root.querySelector<HTMLElement>("[data-current]");
-      const progress = root.querySelector<HTMLElement>("[data-progress]");
-      let activeIndex = 0;
-
-      const show = (nextIndex: number) => {
-        activeIndex = (nextIndex + slides.length) % slides.length;
-        slides.forEach((slide, index) => {
-          const isActive = index === activeIndex;
-          slide.classList.toggle("is-active", isActive);
-          slide.setAttribute("aria-hidden", String(!isActive));
-        });
-        if (current) current.textContent = String(activeIndex + 1).padStart(2, "0");
-        if (progress) progress.style.transform = `scaleX(${(activeIndex + 1) / slides.length})`;
-      };
-
-      root.querySelector("[data-previous]")?.addEventListener("click", () => show(activeIndex - 1));
-      root.querySelector("[data-next]")?.addEventListener("click", () => show(activeIndex + 1));
-      show(0);
-    });
-  }
-
-  initTestimonials();
-  document.addEventListener("astro:after-swap", initTestimonials);
-</script>
-
 <style>
-  .testi-sec {
-    padding-block: clamp(7rem, 13vw, 12rem);
-    background: #0b0f18;
-    color: #fff;
+  .rc-testimonials {
+    padding: 100px 0;
+    background: #fff;
   }
-  .testi-shell {
-    display: grid;
-    grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
-    gap: clamp(3rem, 8vw, 8rem);
-    align-items: end;
-  }
-  .testi-intro .eyebrow {
-    color: var(--rc-yellow);
-  }
-  .testi-intro h2 {
-    max-width: 34rem;
-    margin: 1.2rem 0 0;
-    color: #fff;
-    font-size: clamp(2.8rem, 5.5vw, 5.6rem);
+
+  .testi-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: -0.06em;
-    line-height: 0.96;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
   }
-  .testi-intro > p {
-    max-width: 31rem;
-    margin-top: 1.5rem;
-    color: rgba(255, 255, 255, 0.58);
-  }
-  .score-lockup {
+
+  .testi-grid {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.35rem 1rem;
-    align-items: center;
-    margin-top: 3.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
   }
-  .score-lockup > strong {
-    grid-row: span 2;
-    color: #fff;
-    font-family: var(--font-heading);
-    font-size: 3.4rem;
-    font-variant-numeric: tabular-nums;
-    font-weight: 620;
-    letter-spacing: -0.06em;
-    line-height: 1;
+
+  .testi-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px 25px;
+    box-shadow: -9px 9px 0 0 #eee, 0 5px 25px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
   }
-  .score-lockup strong span {
-    color: rgba(255, 255, 255, 0.34);
-    font-size: 1rem;
-    letter-spacing: 0;
+  .testi-card:hover {
+    transform: translateY(-5px);
   }
-  .score-stars {
-    display: inline-flex;
-    gap: 0.18rem;
-    color: var(--rc-yellow);
-  }
-  .score-stars :global(svg) {
-    width: 1rem;
-  }
-  .score-lockup small {
-    color: rgba(255, 255, 255, 0.46);
-    font-size: 0.76rem;
-  }
-  .testi-carousel {
-    min-width: 0;
-  }
-  .testi-slides {
-    position: relative;
-    min-height: 26rem;
-  }
-  .testi-slide {
-    position: absolute;
-    inset: 0;
+
+  .testi-stars {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: clamp(2rem, 5vw, 4rem);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 1.2rem;
-    background:
-      radial-gradient(circle at 100% 0%, rgba(238, 190, 88, 0.16), transparent 34%),
-      #141a25;
-    opacity: 0;
-    transform: translateX(2rem) scale(0.98);
-    pointer-events: none;
-    transition:
-      opacity 0.45s ease,
-      transform 0.65s var(--ease-out);
+    gap: 2px;
+    color: #ffc107;
+    margin-bottom: 15px;
   }
-  .testi-slide.is-active {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    pointer-events: auto;
+  .testi-stars :global(svg) {
+    width: 18px;
+    height: 18px;
   }
-  .testi-slide blockquote {
-    max-width: 47rem;
-    margin: 0;
-    color: #fff;
-    font-family: var(--font-heading);
-    font-size: clamp(1.65rem, 3vw, 2.85rem);
-    font-weight: 480;
-    letter-spacing: -0.035em;
-    line-height: 1.18;
+
+  .testi-card blockquote {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin: 0 0 20px;
+    font-style: italic;
   }
-  .testi-slide footer {
+
+  .testi-footer {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-top: 3rem;
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
   }
+
   .testi-avatar {
-    display: grid;
-    place-items: center;
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 0.75rem;
-    background: var(--rc-yellow);
-    color: #0b0f18;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 700;
-  }
-  .testi-slide footer strong,
-  .testi-slide footer small {
-    display: block;
-  }
-  .testi-slide footer strong {
-    font-size: 0.92rem;
-  }
-  .testi-slide footer small {
-    margin-top: 0.12rem;
-    color: rgba(255, 255, 255, 0.44);
-    font-size: 0.76rem;
-  }
-  .verified {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.42rem;
-    margin-left: auto;
-    color: rgba(255, 255, 255, 0.54);
-    font-size: 0.72rem;
-  }
-  .verified :global(svg) {
-    width: 1rem;
-    color: var(--rc-yellow);
-  }
-  .testi-controls {
-    display: grid;
-    grid-template-columns: auto 1fr auto auto;
-    gap: 0.8rem;
-    align-items: center;
-    margin-top: 1.2rem;
-  }
-  .testi-count {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.38);
-  }
-  .testi-count b {
-    color: #fff;
-  }
-  .testi-progress {
-    position: relative;
-    height: 1px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.15);
-  }
-  .testi-progress i {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: var(--rc-yellow);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.45s var(--ease-out);
-  }
-  .testi-controls button {
-    display: grid;
-    place-items: center;
-    width: 2.8rem;
-    height: 2.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    background: var(--heading-blue);
     color: #fff;
-    background: transparent;
-    cursor: pointer;
-    transition:
-      color 0.2s ease,
-      background 0.2s ease,
-      transform 0.2s ease;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
   }
-  .testi-controls button:hover {
-    color: #0b0f18;
-    background: var(--rc-yellow);
+
+  .testi-footer strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--heading-blue);
+  }
+  .testi-footer small {
+    display: block;
+    font-size: 13px;
+    color: #999;
+    margin-top: 2px;
+  }
+
+  .testi-cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .btn-pink {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--pink);
+    padding: 14px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-pink:hover {
+    background: #8c1a50;
     transform: translateY(-2px);
   }
-  .testi-controls button:active {
-    transform: scale(0.96);
-  }
-  .testi-controls button :global(svg) {
-    width: 1.1rem;
-  }
-  @media (max-width: 900px) {
-    .testi-shell {
-      grid-template-columns: 1fr;
-    }
-    .testi-intro h2 {
-      max-width: 42rem;
+
+  @media (max-width: 991px) {
+    .testi-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
   @media (max-width: 600px) {
-    .testi-slides {
-      min-height: 34rem;
-    }
-    .testi-slide {
-      padding: 1.6rem;
-    }
-    .testi-slide footer {
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-    .verified {
-      width: 100%;
-      margin-left: 4.2rem;
-      margin-top: -0.8rem;
+    .testi-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

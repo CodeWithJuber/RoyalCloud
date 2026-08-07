@@ -2,22 +2,13 @@
 import { Icon } from "astro-icon/components";
 import { tablerIcon } from "~/utils/plans";
 import { pricify } from "~/utils/currency";
-import IlShared from "~/components/illustrations/spots/IlShared.astro";
-import IlWordpress from "~/components/illustrations/spots/IlWordpress.astro";
-import IlVps from "~/components/illustrations/spots/IlVps.astro";
-import IlDedicated from "~/components/illustrations/spots/IlDedicated.astro";
-import IlCyberpanel from "~/components/illustrations/spots/IlCyberpanel.astro";
-import IlCloud from "~/components/illustrations/spots/IlCloud.astro";
-import IlReseller from "~/components/illustrations/spots/IlReseller.astro";
-import IlDomains from "~/components/illustrations/spots/IlDomains.astro";
-import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
 
 interface Props {
   eyebrow?: string;
   title?: string;
   subtitle?: string;
   columns?: number;
-  /** "tiles" renders the SiteGround-style bento of service cards with spot art. */
   variant?: "cards" | "tiles";
   items: {
     icon?: string;
@@ -35,175 +26,116 @@ const {
   items,
 } = Astro.props;
 
-// Map each product to its custom spot illustration, bento span and a
-// contrast-aware tile background (so the spot never washes into its tile).
-// flagship = wide gradient lead tile; half = wide pastel row-3 tile; regular = quarter.
-const SPOT: Record<string, AstroComponentFactory> = {
-  "SSD Shared Hosting": IlShared,
-  "Managed WordPress": IlWordpress,
-  "KVM VPS Hosting": IlVps,
-  "Dedicated Servers": IlDedicated,
-  "CyberPanel VPS": IlCyberpanel,
-  "Managed Cloud": IlCloud,
-  "Reseller Hosting": IlReseller,
-  "Domain Names": IlDomains,
-};
-const TILE: Record<string, { role: string; span: number; bg: string }> = {
-  "SSD Shared Hosting": {
-    role: "flagship",
-    span: 6,
-    bg: "linear-gradient(135deg,#e7f0ff,#ffffff)",
-  },
-  "KVM VPS Hosting": {
-    role: "flagship",
-    span: 6,
-    bg: "linear-gradient(135deg,#efe9fe,#ffffff)",
-  },
-  "Managed WordPress": {
-    role: "regular",
-    span: 3,
-    bg: "var(--pastel-lavender)",
-  },
-  "Dedicated Servers": { role: "regular", span: 3, bg: "var(--pastel-sky)" },
-  "CyberPanel VPS": { role: "regular", span: 3, bg: "var(--pastel-butter)" },
-  "Managed Cloud": { role: "regular", span: 3, bg: "var(--pastel-peach)" },
-  "Reseller Hosting": { role: "half", span: 6, bg: "var(--pastel-mint)" },
-  "Domain Names": { role: "half", span: 6, bg: "var(--pastel-lavender)" },
-};
-const tileFor = (t = "") =>
-  TILE[t] ?? { role: "regular", span: 3, bg: "var(--pastel-lavender)" };
-
-const isTiles = variant === "tiles";
-const gridStyle = isTiles
-  ? "grid-template-columns: repeat(12, 1fr); grid-auto-flow: dense;"
-  : `grid-template-columns: repeat(${Math.min(columns, 4)}, 1fr);`;
+const colCount = Math.min(columns, 4);
 ---
 
-<section class="features cv-auto">
+<section class="rc-features">
   <div class="wrap">
-    {
-      (eyebrow || title) && (
-        <div class="sec-head center reveal">
-          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-          {title && <h2 set:html={title} />}
-          {subtitle && <p set:html={subtitle} />}
-        </div>
-      )
-    }
+    {(eyebrow || title) && (
+      <div class="section-title">
+        {eyebrow && <span class="rc-eyebrow">{eyebrow}</span>}
+        {title && <h2 set:html={title} />}
+        <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+        {subtitle && <p set:html={subtitle} />}
+      </div>
+    )}
     <div
-      class={`feature-grid${isTiles ? " tiles bento" : ""}`}
-      style={gridStyle}
+      class="rc-feature-grid"
+      style={`grid-template-columns: repeat(${colCount}, 1fr);`}
     >
-      {
-        isTiles
-          ? items.map((item, i) => {
-              const t = tileFor(item.title);
-              const Spot = SPOT[item.title ?? ""];
-              const wide = t.role !== "regular";
-              return (
-                <a
-                  class={`card feature-card rc-spotlight reveal reveal-d${(i % 3) + 1}${wide ? " tile-wide" : ""}`}
-                  href={item.href}
-                  style={`background:${t.bg}; grid-column: span ${t.span};`}
-                  data-role={t.role}
-                >
-                  <span class={`tile-il ${wide ? "il-lg" : "il-sm"}`}>
-                    {Spot && <Spot />}
-                  </span>
-                  <span class="tile-body">
-                    <h3>{item.title}</h3>
-                    <p set:html={pricify(item.text ?? "")} />
-                    <span class="f-more">Explore {item.title}</span>
-                  </span>
-                </a>
-              );
-            })
-          : items.map((item, i) => (
-              <div
-                class={`card feature-card rc-spotlight reveal reveal-d${(i % 3) + 1}`}
-              >
-                <div class="f-icon f-icon-grad">
-                  <Icon name={tablerIcon(item.icon ?? "bolt")} />
-                </div>
-                <h3>
-                  {item.href ? (
-                    <a href={item.href}>{item.title}</a>
-                  ) : (
-                    item.title
-                  )}
-                </h3>
-                <p set:html={pricify(item.text ?? "")} />
-                {item.href && (
-                  <a
-                    class="f-more"
-                    href={item.href}
-                    aria-label={`Explore ${item.title}`}
-                  >
-                    Explore {item.title}
-                  </a>
-                )}
-              </div>
-            ))
-      }
+      {items.map((item) => (
+        <div class="rc-feature-card">
+          {item.icon && (
+            <div class="rc-feature-icon">
+              <Icon name={tablerIcon(item.icon)} />
+            </div>
+          )}
+          <h3>
+            {item.href ? (
+              <a href={item.href}>{item.title}</a>
+            ) : (
+              item.title
+            )}
+          </h3>
+          {item.text && <p set:html={pricify(item.text)} />}
+        </div>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
-  .feature-card h3 a:hover {
-    color: var(--rc-violet);
+  .rc-features {
+    padding: 100px 0;
   }
 
-  /* ---- bento tiles (desktop: 12-col dense grid) ---- */
-  .feature-card.tile-wide {
-    flex-direction: row;
-    align-items: center;
-    gap: 22px;
-  }
-  .tile-il {
+  .rc-eyebrow {
     display: block;
-  }
-  .tile-il.il-sm {
-    width: 100%;
-    max-width: 148px;
-    margin: 0 auto 6px;
-  }
-  .tile-il.il-lg {
-    flex: 0 0 42%;
-    max-width: 210px;
-  }
-  .tile-body {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 0;
-  }
-  /* whole tile is the link; kill underline, keep heading ink */
-  a.feature-card,
-  a.feature-card:hover {
-    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
   }
 
-  /* keep tiles out of the generic 2-col / 1-col collapse used by `cards` */
-  @media (max-width: 1080px) {
-    .feature-grid:not(.tiles) {
+  .rc-feature-grid {
+    display: grid;
+    gap: 30px;
+  }
+
+  .rc-feature-card {
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .rc-feature-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(38,159,216,0.1), rgba(123,31,162,0.1));
+    color: var(--heading-blue);
+  }
+  .rc-feature-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rc-feature-card h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    margin: 0 0 12px;
+  }
+  .rc-feature-card h3 a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .rc-feature-card h3 a:hover {
+    color: var(--royal-purple);
+  }
+
+  .rc-feature-card p {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  @media (max-width: 991px) {
+    .rc-feature-grid {
       grid-template-columns: repeat(2, 1fr) !important;
     }
   }
   @media (max-width: 560px) {
-    .feature-grid:not(.tiles) {
+    .rc-feature-grid {
       grid-template-columns: 1fr !important;
-    }
-  }
-  /* in the mobile swipe carousel (<=700px) every tile is a vertical slide */
-  @media (max-width: 700px) {
-    .feature-card.tile-wide {
-      flex-direction: column;
-      align-items: stretch;
-    }
-    .tile-il.il-lg {
-      max-width: 150px;
-      margin: 0 auto 6px;
     }
   }
 </style>

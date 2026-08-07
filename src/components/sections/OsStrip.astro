@@ -1,8 +1,6 @@
 ---
-/**
- * OS strip, distro lettermark chips for the Linux landing family.
- * The active distro gets the filled theme-accent treatment.
- */
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
 interface Props {
   eyebrow?: string;
   title?: string;
@@ -12,24 +10,23 @@ interface Props {
 const { eyebrow, title, subtitle, items } = Astro.props;
 ---
 
-<section class="os-sec">
+<section class="rc-osstrip">
   <div class="wrap">
     {
       (eyebrow || title) && (
-        <div class="sec-head center reveal">
-          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        <div class="section-title">
+          {eyebrow && <span class="os-eyebrow">{eyebrow}</span>}
           {title && <h2 set:html={title} />}
+          <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
           {subtitle && <p set:html={subtitle} />}
         </div>
       )
     }
     <div class="os-row">
       {
-        items.map((os, i) => (
-          <div
-            class={`os reveal reveal-d${(i % 4) + 1} ${os.active ? "on" : ""}`}
-          >
-            <span class="mark" style={os.color ? `--os-c: ${os.color}` : undefined}>
+        items.map((os) => (
+          <div class={`os-chip ${os.active ? "active" : ""}`}>
+            <span class="os-mark" style={os.color ? `--os-c: ${os.color}` : undefined}>
               {os.name.slice(0, 1)}
             </span>
             <b>{os.name}</b>
@@ -41,67 +38,71 @@ const { eyebrow, title, subtitle, items } = Astro.props;
 </section>
 
 <style>
-  .os-sec {
-    padding-block: clamp(48px, 6vw, 72px);
+  .rc-osstrip {
+    padding: 60px 0;
   }
+
+  .os-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
   .os-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 14px;
   }
-  .os {
+
+  .os-chip {
     display: flex;
     align-items: center;
     gap: 12px;
     background: #fff;
-    border: 1.5px solid var(--line);
-    border-radius: 999px;
+    border: 2px solid #eee;
+    border-radius: 50px;
     padding: 10px 22px 10px 12px;
-    box-shadow: var(--shadow-xs);
-    transition:
-      transform 0.18s ease,
-      box-shadow 0.18s ease,
-      border-color 0.18s ease;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   }
-  .os:hover {
+  .os-chip:hover {
     transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--theme-accent);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-color: var(--heading-blue);
   }
-  .os.on {
-    border-color: var(--theme-accent);
-    background: var(--theme-soft);
+  .os-chip.active {
+    border-color: var(--heading-blue);
+    background: rgba(38,159,216,0.05);
   }
-  .mark {
+
+  .os-mark {
     display: grid;
     place-items: center;
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: var(--os-c, var(--theme-accent));
+    background: var(--os-c, var(--heading-blue));
     color: #fff;
     font-family: var(--font-heading);
     font-size: 17px;
     font-weight: 700;
   }
-  .os b {
+
+  .os-chip b {
     font-family: var(--font-heading);
-    font-size: 14.5px;
+    font-size: 14px;
     font-weight: 700;
-    color: var(--rc-ink);
+    color: #22105f;
   }
+
   @media (max-width: 560px) {
-    .os {
-      padding: 8px 16px 8px 9px;
-    }
-    .mark {
-      width: 32px;
-      height: 32px;
-      font-size: 14px;
-    }
-    .os b {
-      font-size: 13px;
-    }
+    .os-chip { padding: 8px 16px 8px 9px; }
+    .os-mark { width: 32px; height: 32px; font-size: 14px; }
+    .os-chip b { font-size: 13px; }
   }
 </style>
