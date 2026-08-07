@@ -43,21 +43,15 @@ sections:
         text: DDoS Protection
       - icon: headset
         text: 24/7 Support
-  - type: benchmark
-    eyebrow: Raw Hardware
-    title: Bare metal you do not share with anyone
-    note: Relative throughput on the base Dual Xeon L5520, 8 cores at 2.26 GHz, 24 GB DDR3, SSD. Results vary by workload.
-    items:
-      - label: Dedicated bare metal (8 cores, SSD)
-        value: 100
-        display: 100%
-        highlight: true
-      - label: Typical VPS slice
-        value: 45
-        display: 45%
-      - label: Shared hosting account
-        value: 18
-        display: 18%
+  - type: pricing
+    id: pricing
+    plan: dedicated
+    eyebrow: Bare Metal
+    title: Dedicated Servers plans
+    subtitle: Transparent pricing with everything you need included.
+  - type: comparison
+    title: Compare Our Dedicated Server Plans
+    plan: dedicated
   - type: mapband
     title: Hosted in Los Angeles, USA
     note: Single-tenant hardware with 10 TB bandwidth, dedicated IPv4 addresses and DDoS protection.
@@ -82,12 +76,6 @@ sections:
       - icon: shield
         title: DDoS-Protected Network
         text: Redundant, filtered network keeps your hardware online under attack.
-  - type: pricing
-    id: pricing
-    plan: dedicated
-    eyebrow: Bare Metal
-    title: Dedicated Servers plans
-    subtitle: Transparent pricing with everything you need included.
   - type: faq
     title: Frequently asked questions
     source: global

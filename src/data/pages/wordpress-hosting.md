@@ -43,21 +43,15 @@ sections:
         text: DDoS Protection
       - icon: headset
         text: 24/7 Support
-  - type: benchmark
-    eyebrow: Speed Test
-    title: WordPress simply loads faster on LiteSpeed
-    note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
-    items:
-      - label: Royal Clouds (SSD + LiteSpeed)
-        value: 0.4
-        display: 0.4s
-        highlight: true
-      - label: Typical shared hosting
-        value: 1.9
-        display: 1.9s
-      - label: Budget HDD server
-        value: 3.2
-        display: 3.2s
+  - type: pricing
+    id: pricing
+    plan: wordpress
+    eyebrow: WordPress
+    title: Managed WordPress Hosting plans
+    subtitle: Transparent pricing with everything you need included.
+  - type: comparison
+    title: Compare Our WordPress Hosting Plans
+    plan: wordpress
   - type: features
     title: Everything your wordpress hosting needs
     columns: 4
@@ -74,12 +68,6 @@ sections:
       - icon: backup
         title: Weekly Backups
         text: Restore your whole site in one click from automatic remote backups.
-  - type: pricing
-    id: pricing
-    plan: wordpress
-    eyebrow: WordPress
-    title: Managed WordPress Hosting plans
-    subtitle: Transparent pricing with everything you need included.
   - type: testimonials
     title: Loved by website owners
     source: global

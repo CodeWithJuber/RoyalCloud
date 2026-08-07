@@ -41,30 +41,6 @@ sections:
         text: Instant Setup
       - icon: headset
         text: 24/7 Human Support
-  - type: storycards
-    eyebrow: Real Savings
-    title: Real savings. Real growth.
-    items:
-      - tag: Online Store
-        metric: 75%
-        metricLabel: lower monthly hosting bill
-        quote: >-
-          We moved three stores over and our bill dropped by three quarters, and pages actually open faster
-          now.
-        name: Arjun Mehta
-        site: Furniture retailer
-      - tag: Creative Agency
-        metric: 40+
-        metricLabel: client sites on one account
-        quote: Cheap doesn't mean compromised here. Every client site gets SSL, backups and real support.
-        name: Sara Pinto
-        site: Design studio
-      - tag: Personal Blog
-        metric: 2x
-        metricLabel: traffic after the switch
-        quote: My blog stopped timing out on traffic spikes. Search rankings followed within a couple of months.
-        name: Kabir Shah
-        site: Travel blogger
   - type: pricing
     id: pricing
     plan: shared

@@ -1,7 +1,6 @@
 ---
 import Layout from '~/layouts/Layout.astro';
 import HeaderRC from '~/components/widgets/HeaderRC.astro';
-import RcNav from '~/components/widgets/RcNav.astro';
 import FooterRC from '~/components/widgets/FooterRC.astro';
 import RevealScript from '~/components/widgets/RevealScript.astro';
 import CountUp from '~/components/widgets/CountUp.astro';
@@ -14,7 +13,7 @@ export interface Props {
   metadata?: MetaData;
   /** Pages with their own dark hero can render the transparent header. */
   transparentHeader?: boolean;
-  /** Per-page visual identity, sets data-theme on <main> (see rc-premium.css). */
+  /** Per-page visual identity, sets data-theme on <main> (see components.css). */
   theme?: string;
   /** Page id, sets data-page on <main> for page-scoped styling (e.g. home). */
   page?: string;
@@ -26,17 +25,10 @@ const { metadata, transparentHeader = false, theme, page } = Astro.props;
 <Layout metadata={metadata}>
   <a href="#main" class="skip-link">Skip to main content</a>
   <SvgDefs />
-  <div class="rc-progress" aria-hidden="true"><span></span></div>
   <slot name="header">
-    {page === 'index' ? <RcNav /> : <HeaderRC solid={!transparentHeader} />}
+    <HeaderRC solid={!transparentHeader} />
   </slot>
-  <main
-    id="main"
-    tabindex="-1"
-    data-theme={theme}
-    data-page={page}
-    class:list={[{ 'rc-page': page === 'index' }]}
-  >
+  <main id="main" tabindex="-1" data-theme={theme} data-page={page}>
     <slot />
   </main>
   <slot name="footer">

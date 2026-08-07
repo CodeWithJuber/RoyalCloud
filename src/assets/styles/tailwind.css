@@ -58,20 +58,31 @@
 }
 
 @utility btn {
-  @apply inline-flex items-center justify-center rounded-full bg-transparent font-bold text-center text-sm uppercase tracking-wider text-[#22105f] leading-snug transition-all py-4 px-8 duration-150 cursor-pointer;
+  @apply inline-flex items-center justify-center rounded-full bg-transparent font-bold text-center text-sm uppercase tracking-wider leading-snug transition-all py-4 px-8 duration-150 cursor-pointer;
+  color: var(--btn-secondary-fg, #22105f);
 }
 
-/* Primary CTA = original royalclouds.net yellow pill */
+/* Primary CTA = original royalclouds.net gold pill */
 @utility btn-primary {
-  @apply btn font-bold text-[#22105f];
-  background-color: #fdd700;
-  box-shadow: 0 10px 22px -10px rgba(200, 170, 0, 0.55);
+  @apply btn font-bold;
+  color: var(--btn-primary-fg, #22105f);
+  background-color: var(--btn-primary-bg, #fdd700);
+  box-shadow: var(--shadow-cta, 0 10px 22px -10px rgba(200, 170, 0, 0.55));
 }
 @utility btn-secondary {
-  @apply btn text-[#22105f] bg-white border border-[#d9d2f1] hover:text-[#7652f2] hover:border-[#7652f2];
+  @apply btn bg-white border;
+  color: var(--btn-secondary-fg, #22105f);
+  border-color: var(--btn-secondary-border, #d9d2f1);
+  &:hover {
+    color: var(--brand-secondary, #7652f2);
+    border-color: var(--brand-secondary, #7652f2);
+  }
 }
 @utility btn-tertiary {
-  @apply btn shadow-none text-muted hover:text-[#7652f2];
+  @apply btn shadow-none text-muted;
+  &:hover {
+    color: var(--brand-secondary, #7652f2);
+  }
 }
 @utility btn-cta {
   @apply btn-primary;

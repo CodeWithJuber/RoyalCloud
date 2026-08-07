@@ -5,7 +5,7 @@
  * two-tone face shading is deterministic and cross-browser (no runtime
  * color-mix). One shared light source = one shared shade ramp.
  */
-const INK: [number, number, number] = [10, 14, 31]; // #0a0e1f
+const INK: [number, number, number] = [24, 27, 34]; // #181b22
 const WHITE: [number, number, number] = [255, 255, 255];
 
 function parse(hex: string): [number, number, number] {

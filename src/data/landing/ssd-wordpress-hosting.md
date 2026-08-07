@@ -60,27 +60,6 @@ sections:
     title: Choose your ssd wordpress hosting plan
     showToggle: true
     note: 30-day money-back guarantee · Instant setup · Free migration.
-  - type: storycards
-    title: WordPress owners who made the move
-    items:
-      - tag: WooCommerce
-        metric: 0.9s
-        metricLabel: checkout page load
-        quote: LiteSpeed plus their cache plugin took our checkout under a second. Abandonment fell immediately.
-        name: Meera Iyer
-        site: Fashion store
-      - tag: Publisher
-        metric: 85%
-        metricLabel: faster than the old host
-        quote: The free migration was genuinely free and genuinely painless. The speed jump shocked us.
-        name: Dan Kowalski
-        site: News site
-      - tag: Agency
-        metric: 30+
-        metricLabel: WordPress sites managed
-        quote: Staging, daily backups and one-click restores, managing client WordPress finally feels safe.
-        name: Lena Fischer
-        site: Web agency
   - type: faq
     eyebrow: FAQ
     title: SSD Wordpress Hosting, common questions

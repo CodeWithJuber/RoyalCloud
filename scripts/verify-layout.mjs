@@ -61,7 +61,7 @@ const pages = [
 ];
 const widths = [320, 360, 375, 390, 393, 412, 430, 768, 1024, 1280, 1440];
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_BIN || undefined });
 const report = [];
 
 for (const w of widths) {

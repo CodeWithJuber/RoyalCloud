@@ -21,26 +21,26 @@ const bar = 28;
 
 <g transform={`translate(${x} ${y})`} class:list={['rc-il__panel', className]}>
   <!-- frame -->
-  <rect x="0" y="0" width={w} height={h} rx="12" fill="#ffffff" stroke="rgba(10,14,31,0.14)" stroke-width="2"></rect>
+  <rect x="0" y="0" width={w} height={h} rx="12" fill="#ffffff" stroke="rgba(24,27,34,0.14)" stroke-width="2"></rect>
   <!-- title bar -->
   <path
     d={`M0 12 a12 12 0 0 1 12 -12 h${w - 24} a12 12 0 0 1 12 12 v${bar - 12} h${-w} Z`}
     fill="#f4f4fb"></path>
-  <line x1="0" y1={bar} x2={w} y2={bar} stroke="rgba(10,14,31,0.1)" stroke-width="2"></line>
+  <line x1="0" y1={bar} x2={w} y2={bar} stroke="rgba(24,27,34,0.1)" stroke-width="2"></line>
   <!-- window controls -->
   <circle cx="16" cy="14" r="4" fill="#ef4361"></circle>
-  <circle cx="30" cy="14" r="4" fill="#f5a524"></circle>
+  <circle cx="30" cy="14" r="4" fill="#fdd700"></circle>
   <circle cx="44" cy="14" r="4" fill="#3ddc97"></circle>
   <!-- url pill -->
-  <rect x="62" y="8" width={w - 78} height="12" rx="6" fill="#ffffff" stroke="rgba(10,14,31,0.12)" stroke-width="1.5"></rect>
+  <rect x="62" y="8" width={w - 78} height="12" rx="6" fill="#ffffff" stroke="rgba(24,27,34,0.12)" stroke-width="1.5"></rect>
   <!-- content -->
   <g transform={`translate(0 ${bar})`}>
     <slot>
-      <rect x="16" y="18" width={Math.round((w - 32) * 0.5)} height="10" rx="5" fill="rgba(10,14,31,0.1)"></rect>
-      <rect x="16" y="38" width={w - 32} height="8" rx="4" fill="rgba(10,14,31,0.06)"></rect>
-      <rect x="16" y="54" width={Math.round((w - 32) * 0.82)} height="8" rx="4" fill="rgba(10,14,31,0.06)"></rect>
+      <rect x="16" y="18" width={Math.round((w - 32) * 0.5)} height="10" rx="5" fill="rgba(24,27,34,0.1)"></rect>
+      <rect x="16" y="38" width={w - 32} height="8" rx="4" fill="rgba(24,27,34,0.06)"></rect>
+      <rect x="16" y="54" width={Math.round((w - 32) * 0.82)} height="8" rx="4" fill="rgba(24,27,34,0.06)"></rect>
       <rect x="16" y="78" width={Math.round((w - 40) / 2)} height="34" rx="8" fill="url(#rcgEnergy)" opacity="0.16"></rect>
-      <rect x={24 + Math.round((w - 40) / 2)} y="78" width={Math.round((w - 40) / 2)} height="34" rx="8" fill="rgba(10,14,31,0.05)"></rect>
+      <rect x={24 + Math.round((w - 40) / 2)} y="78" width={Math.round((w - 40) / 2)} height="34" rx="8" fill="rgba(24,27,34,0.05)"></rect>
     </slot>
   </g>
 </g>

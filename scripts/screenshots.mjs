@@ -80,7 +80,7 @@ const viewports = {
 };
 await mkdir("shots", { recursive: true });
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_BIN || undefined });
 const consoleErrors = {};
 
 for (const [vp, size] of Object.entries(viewports)) {

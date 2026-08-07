@@ -43,6 +43,15 @@ sections:
         text: 99.99% Uptime SLA
       - icon: headset
         text: 24/7 Support
+  - type: pricing
+    id: pricing
+    plan: cyberpanel
+    eyebrow: CyberPanel VPS
+    title: CyberPanel VPS Hosting plans
+    subtitle: Transparent pricing with everything you need included.
+  - type: comparison
+    title: Compare Our CyberPanel VPS Plans
+    plan: cyberpanel
   - type: showcase
     eyebrow: Control Panel
     title: Run your sites from a free, modern panel
@@ -88,12 +97,6 @@ sections:
       - icon: terminal
         title: Staging and Full Root
         text: Spin up staging sites and manage everything from CyberPanel or the command line.
-  - type: pricing
-    id: pricing
-    plan: cyberpanel
-    eyebrow: CyberPanel VPS
-    title: CyberPanel VPS Hosting plans
-    subtitle: Transparent pricing with everything you need included.
   - type: faq
     title: Frequently asked questions
     source: global

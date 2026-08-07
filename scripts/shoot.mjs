@@ -5,7 +5,7 @@ const pages = [
   ['kvm-vps-hosting', 'http://localhost:4321/kvm-vps-hosting.html'],
   ['dedicated-servers', 'http://localhost:4321/dedicated-servers.html'],
 ];
-const b = await chromium.launch();
+const b = await chromium.launch({ executablePath: process.env.CHROMIUM_BIN || undefined });
 for (const [name, url] of pages) {
   for (const [w, tag] of [[1440, 'desktop'], [390, 'mobile']]) {
     const p = await b.newPage({ viewport: { width: w, height: 900 } });

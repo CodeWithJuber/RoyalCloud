@@ -43,6 +43,14 @@ sections:
         text: DDoS Protection
       - icon: headset
         text: 24/7 Support
+  - type: pricing
+    id: pricing
+    plan: vps
+    title: KVM VPS Hosting plans
+    subtitle: Transparent pricing with everything you need included.
+  - type: comparison
+    title: Compare Our KVM VPS Plans
+    plan: vps
   - type: osstrip
     eyebrow: Operating Systems
     title: Pick your distro, deploy in one click
@@ -95,25 +103,6 @@ sections:
         label: days of backups
       - value: 24/7
         label: expert monitoring
-  - type: benchmark
-    title: Dedicated vCPU, never a noisy neighbor
-    note: Relative throughput under load. Shared plans contend for the same cores; KVM gives you guaranteed resources, never shared.
-    items:
-      - label: Royal Clouds KVM (dedicated vCPU)
-        value: 100
-        display: 100%
-        highlight: true
-      - label: Typical shared hosting (busy node)
-        value: 45
-        display: 45%
-      - label: Oversold budget VPS (peak hours)
-        value: 30
-        display: 30%
-  - type: pricing
-    id: pricing
-    plan: vps
-    title: KVM VPS Hosting plans
-    subtitle: Transparent pricing with everything you need included.
   - type: faq
     title: Frequently asked questions
     source: global
