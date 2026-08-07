@@ -32,3 +32,8 @@
 {"t":1786099878830,"stage":"route","tier":"medium"}
 {"t":1786100179715,"stage":"gate","outcome":"halt"}
 {"t":1786100179715,"stage":"route","tier":"medium"}
+{"t":1786109531168,"stage":"gate","outcome":"halt"}
+{"t":1786109531168,"stage":"route","tier":"simple"}
+{"t":1786109919838,"stage":"gate","outcome":"halt"}
+{"t":1786109919839,"stage":"route","tier":"medium"}
+{"t":1786114541255,"stage":"gate","outcome":"stop-block"}
