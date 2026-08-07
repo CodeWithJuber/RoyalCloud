@@ -40,9 +40,9 @@ const quickLinks = [
         This page drifted away, but your website never will. Let's get you back
         somewhere useful.
       </p>
-      <div class="hero-ctas nf-ctas">
-        <a class="btn btn-primary btn-lg" href="/">Back to homepage</a>
-        <a class="btn btn-ghost-dark btn-lg" href="/contact">Contact support</a>
+      <div class="nf-ctas">
+        <a class="default-btn" href="/">Back to homepage</a>
+        <a class="btn-yellow" href="/contact">Contact support</a>
       </div>
       <nav class="nf-links" aria-label="Popular pages">
         <span class="nf-links-label">Popular pages:</span>
@@ -130,6 +130,9 @@ const quickLinks = [
     margin: 0 0 28px;
   }
   .nf-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
     justify-content: center;
   }
   .nf-links {
@@ -220,7 +223,7 @@ const quickLinks = [
     .nf-mascot {
       width: 104px;
     }
-    .nf-ctas .btn {
+    .nf-ctas a {
       width: 100%;
     }
   }

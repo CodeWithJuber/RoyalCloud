@@ -55,7 +55,7 @@ const { eyebrow, title, subtitle, items } = Astro.props;
 
 <style>
   .rc-stories {
-    padding: 100px 0;
+    padding: var(--space-section) 0;
     background: #fafafa;
   }
 
@@ -83,16 +83,16 @@ const { eyebrow, title, subtitle, items } = Astro.props;
 
   .story-card {
     background: #fff;
-    border: 2px solid #eee;
-    border-radius: 15px;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
     padding: 30px 25px;
     display: flex;
     flex-direction: column;
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .story-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
   }
 
   .story-tag {
