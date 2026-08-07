@@ -43,6 +43,15 @@ sections:
         text: 99.99% Uptime SLA
       - icon: headset
         text: 24/7 Managed
+  - type: pricing
+    id: pricing
+    plan: cloud
+    eyebrow: Managed Cloud
+    title: Managed Cloud Hosting plans
+    subtitle: Transparent pricing with everything you need included.
+  - type: comparison
+    title: Compare Our Cloud SSD Hosting Plans
+    plan: cloud
   - type: mapband
     eyebrow: Global Regions
     title: Launch close to your users
@@ -99,12 +108,6 @@ sections:
       - icon: rocket
         title: Deploy in Minutes
         text: Pick a plan and region, and your managed droplet is provisioned fast.
-  - type: pricing
-    id: pricing
-    plan: cloud
-    eyebrow: Managed Cloud
-    title: Managed Cloud Hosting plans
-    subtitle: Transparent pricing with everything you need included.
   - type: faq
     title: Frequently asked questions
     source: global

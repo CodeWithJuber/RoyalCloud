@@ -43,6 +43,15 @@ sections:
         text: DDoS Protection
       - icon: headset
         text: 24/7 Support
+  - type: pricing
+    id: pricing
+    plan: cpanel
+    eyebrow: cPanel Web Hosting
+    title: cPanel Hosting plans
+    subtitle: Transparent pricing with everything you need included.
+  - type: comparison
+    title: Compare Our cPanel Hosting Plans
+    plan: cpanel
   - type: showcase
     eyebrow: The cPanel you know
     title: The same panel, on faster hardware
@@ -76,12 +85,6 @@ sections:
       - icon: lock
         title: Email & DNS Included
         text: Create mailboxes and edit DNS records right from cPanel, no add-ons needed.
-  - type: pricing
-    id: pricing
-    plan: cpanel
-    eyebrow: cPanel Web Hosting
-    title: cPanel Hosting plans
-    subtitle: Transparent pricing with everything you need included.
   - type: faq
     title: Frequently asked questions
     source: global
