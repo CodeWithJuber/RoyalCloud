@@ -1,0 +1,225 @@
+/* ============================================================
+   ROYAL CLOUDS — clone primitives
+   Shared classes that faithfully reproduce the live
+   royalclouds.net visual language: 1140px container, section
+   headers with separator flourish, pill buttons with hover
+   slide, band utilities, and base typography.
+   All values come from tokens.css — no raw hex here.
+   ============================================================ */
+
+/* ── Base typography (live: Dosis headings, Open Sans 14px) ── */
+body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--body-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--heading-blue);
+}
+
+/* ── Container: 1140px / 15px gutters (live Bootstrap) ────── */
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: max(var(--wrap-pad), env(safe-area-inset-left));
+  padding-right: max(var(--wrap-pad), env(safe-area-inset-right));
+}
+
+/* ── Section header: centered .section-title ─────────────── */
+.section-title {
+  text-align: center;
+  max-width: 625px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+}
+
+.section-title h2 {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--heading-blue);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.section-title p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--body-color);
+  margin-top: 15px;
+}
+
+/* accent words in section titles */
+.section-title .sky,
+.section-title .blue {
+  color: #269fd8;
+}
+.section-title .hot {
+  color: var(--accent-hot);
+}
+
+/* ── Separator flourish (separator-rc.svg) ───────────────── */
+.separator-rc {
+  display: block;
+  margin: 27px auto 0;
+  width: 250px;
+  height: 30px;
+}
+
+/* ── Live buttons ────────────────────────────────────────── */
+
+/* .default-btn: white-text pill on royal gradient, hover slide */
+.default-btn {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  background: var(--grad-royal);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 40px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.default-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--grad-btn-hot);
+  border-radius: 50px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.default-btn:hover::before {
+  opacity: 1;
+}
+
+/* .btn-yellow: gold CTA with dark text (AA on white) */
+.btn-yellow {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  color: #000;
+  background: var(--gold);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 40px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.4;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.btn-yellow:hover {
+  background: var(--gold-deep);
+  transform: translateY(-2px);
+}
+
+/* .btn-pink: pink accent CTA */
+.btn-pink {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  background: var(--pink);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 40px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.4;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.btn-pink:hover {
+  background: #8a1a4e;
+  transform: translateY(-2px);
+}
+
+/* ── Band utilities ──────────────────────────────────────── */
+.band-royal {
+  background: var(--grad-royal);
+  color: #fff;
+}
+
+.band-gray {
+  background: #f6f6f6;
+}
+
+.band-light {
+  background: #fafafa;
+}
+
+.band-dark {
+  background: var(--navy);
+  color: #fff;
+}
+
+.band-footer {
+  background: var(--grad-footer);
+  color: #fff;
+}
+
+/* ── Section padding (live ptb-100) ──────────────────────── */
+section {
+  padding-block: var(--space-section);
+}
+
+/* ── Responsive adjustments ──────────────────────────────── */
+@media (max-width: 991px) {
+  .section-title h2 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --space-section: 70px;
+  }
+
+  .section-title h2 {
+    font-size: 28px;
+  }
+
+  .default-btn,
+  .btn-yellow,
+  .btn-pink {
+    font-size: 14px;
+    padding: 12px 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-section: 50px;
+    --wrap-pad: 15px;
+  }
+}
