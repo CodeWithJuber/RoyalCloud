@@ -42,7 +42,13 @@ definitions:
     fields:
       - { name: text, label: "Button Text", widget: string }
       - { name: href, label: "Link URL or /path", widget: string }
-      - { name: external, label: "Open in new tab", widget: boolean, default: false, required: false }
+      - {
+          name: external,
+          label: "Open in new tab",
+          widget: boolean,
+          default: false,
+          required: false,
+        }
 
   page_fields: &pageFields
     - name: title
@@ -53,17 +59,50 @@ definitions:
       label: "SEO Metadata"
       widget: object
       fields:
-        - { name: title, label: "SEO Title (<title>)", widget: string, hint: "50–60 chars. The exact text shown in Google's result." }
-        - { name: description, label: "Meta Description", widget: text, hint: "150–160 chars." }
-        - { name: ignoreTitleTemplate, label: "Use exact title (don't append “— Royal Clouds”)", widget: boolean, default: true }
-        - { name: canonical, label: "Canonical URL override", widget: string, required: false, hint: "Leave blank to self-canonicalize. Use to point a near-duplicate page at its primary page." }
-        - { name: noindex, label: "Hide from search engines", widget: boolean, default: false, required: false }
+        - {
+            name: title,
+            label: "SEO Title (<title>)",
+            widget: string,
+            hint: "50–60 chars. The exact text shown in Google's result.",
+          }
+        - {
+            name: description,
+            label: "Meta Description",
+            widget: text,
+            hint: "150–160 chars.",
+          }
+        - {
+            name: ignoreTitleTemplate,
+            label: "Use exact title (don't append “— Royal Clouds”)",
+            widget: boolean,
+            default: true,
+          }
+        - {
+            name: canonical,
+            label: "Canonical URL override",
+            widget: string,
+            required: false,
+            hint: "Leave blank to self-canonicalize. Use to point a near-duplicate page at its primary page.",
+          }
+        - {
+            name: noindex,
+            label: "Hide from search engines",
+            widget: boolean,
+            default: false,
+            required: false,
+          }
     - name: transparentHeader
       label: "Transparent header over hero"
       widget: boolean
       default: true
       required: false
       hint: "On for pages whose first section is a dark/gradient hero."
+    - name: newsletter
+      label: "Show newsletter signup"
+      widget: boolean
+      default: false
+      required: false
+      hint: "Show the newsletter band above the footer (homepage only)."
     - name: redirect
       label: "Redirect URL"
       widget: string
@@ -87,15 +126,50 @@ definitions:
           label: "Hero"
           summary: "Hero — {{fields.title}}"
           fields:
-            - { name: variant, label: "Style", widget: select, options: ["gradient", "product", "simple"], default: "product" }
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
-            - { name: title, label: "Heading (HTML/<em> allowed)", widget: string }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: offer, label: "Offer line", widget: string, required: false }
-            - { name: art, label: "Hero illustration (il-shared, il-vps, il-dedicated, …)", widget: string, required: false }
+            - {
+                name: variant,
+                label: "Style",
+                widget: select,
+                options: ["gradient", "product", "simple"],
+                default: "product",
+              }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
+            - {
+                name: title,
+                label: "Heading (HTML/<em> allowed)",
+                widget: string,
+              }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
+            - {
+                name: offer,
+                label: "Offer line",
+                widget: string,
+                required: false,
+              }
+            - {
+                name: art,
+                label: "Hero illustration (il-shared, il-vps, il-dedicated, …)",
+                widget: string,
+                required: false,
+              }
             - { name: primaryCta, label: "Primary Button", <<: *ctaObject }
             - { name: secondaryCta, label: "Secondary Button", <<: *ctaObject }
-            - { name: badges, label: "Trust Badges", widget: list, required: false }
+            - {
+                name: badges,
+                label: "Trust Badges",
+                widget: list,
+                required: false,
+              }
         # ---- Trust bar ----
         - name: trustbar
           label: "Trust Bar"
@@ -113,24 +187,88 @@ definitions:
           label: "Pricing Table"
           summary: "Pricing — {{fields.plan}}"
           fields:
-            - { name: id, label: "Anchor id", widget: string, default: "pricing", required: false }
-            - { name: plan, label: "Plan", widget: select, options: ["shared", "cpanel", "vps", "cyberpanel", "wordpress", "cloud", "dedicated", "reseller"] }
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: id,
+                label: "Anchor id",
+                widget: string,
+                default: "pricing",
+                required: false,
+              }
+            - {
+                name: plan,
+                label: "Plan",
+                widget: select,
+                options:
+                  [
+                    "shared",
+                    "cpanel",
+                    "vps",
+                    "cyberpanel",
+                    "wordpress",
+                    "cloud",
+                    "dedicated",
+                    "reseller",
+                  ],
+              }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: showToggle, label: "Show monthly/annual toggle", widget: boolean, default: true }
-            - { name: note, label: "Note under prices", widget: string, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
+            - {
+                name: showToggle,
+                label: "Show monthly/annual toggle",
+                widget: boolean,
+                default: true,
+              }
+            - {
+                name: note,
+                label: "Note under prices",
+                widget: string,
+                required: false,
+              }
         # ---- Features ----
         - name: features
           label: "Feature Grid"
           summary: "Features — {{fields.title}}"
           fields:
             - { name: id, label: "Anchor id", widget: string, required: false }
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: columns, label: "Columns", widget: number, default: 3, min: 2, max: 4 }
-            - { name: variant, label: "Card style", widget: select, options: ["cards", "tiles"], required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
+            - {
+                name: columns,
+                label: "Columns",
+                widget: number,
+                default: 3,
+                min: 2,
+                max: 4,
+              }
+            - {
+                name: variant,
+                label: "Card style",
+                widget: select,
+                options: ["cards", "tiles"],
+                required: false,
+              }
             - name: items
               label: "Features"
               widget: list
@@ -139,19 +277,57 @@ definitions:
                 - { name: icon, label: "Icon", widget: string, required: false }
                 - { name: title, label: "Title", widget: string }
                 - { name: text, label: "Text", widget: text, required: false }
-                - { name: href, label: "Link (card links to this URL)", widget: string, required: false }
+                - {
+                    name: href,
+                    label: "Link (card links to this URL)",
+                    widget: string,
+                    required: false,
+                  }
         # ---- Content split ----
         - name: content
           label: "Content + Media"
           summary: "Content — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: image, label: "Image", widget: image, required: false, choose_url: true, hint: "Upload/pick an image — or type a bundled keyword (hero, datacenter, support, working, mascot) via 'Insert from URL'." }
-            - { name: reverse, label: "Image on right", widget: boolean, default: false }
-            - { name: layout, label: "Bullet layout", widget: select, options: ["chips", "list"], required: false }
-            - { name: body, label: "Body (Markdown)", widget: markdown, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
+            - {
+                name: image,
+                label: "Image",
+                widget: image,
+                required: false,
+                choose_url: true,
+                hint: "Upload/pick an image — or type a bundled keyword (hero, datacenter, support, working, mascot) via 'Insert from URL'.",
+              }
+            - {
+                name: reverse,
+                label: "Image on right",
+                widget: boolean,
+                default: false,
+              }
+            - {
+                name: layout,
+                label: "Bullet layout",
+                widget: select,
+                options: ["chips", "list"],
+                required: false,
+              }
+            - {
+                name: body,
+                label: "Body (Markdown)",
+                widget: markdown,
+                required: false,
+              }
             - name: items
               label: "Bullet Points"
               widget: list
@@ -166,9 +342,19 @@ definitions:
           label: "Steps / Process"
           summary: "Steps — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
             - name: items
               label: "Steps"
               widget: list
@@ -194,21 +380,68 @@ definitions:
           label: "Comparison Table"
           summary: "Comparison — {{fields.plan}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: plan, label: "Plan", widget: select, options: ["shared", "cpanel", "vps", "cyberpanel", "wordpress", "cloud", "dedicated", "reseller"] }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
+            - {
+                name: plan,
+                label: "Plan",
+                widget: select,
+                options:
+                  [
+                    "shared",
+                    "cpanel",
+                    "vps",
+                    "cyberpanel",
+                    "wordpress",
+                    "cloud",
+                    "dedicated",
+                    "reseller",
+                  ],
+              }
             - { name: note, label: "Note", widget: string, required: false }
         # ---- Testimonials ----
         - name: testimonials
           label: "Testimonials"
           summary: "Testimonials — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: source, label: "Source", widget: select, options: ["global", "inline"], default: "global" }
-            - { name: limit, label: "Max to show", widget: number, required: false, min: 1 }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
+            - {
+                name: source,
+                label: "Source",
+                widget: select,
+                options: ["global", "inline"],
+                default: "global",
+              }
+            - {
+                name: limit,
+                label: "Max to show",
+                widget: number,
+                required: false,
+                min: 1,
+              }
             - name: items
               label: "Inline Testimonials (only if source = inline)"
               widget: list
@@ -216,19 +449,52 @@ definitions:
               summary: "{{fields.name}}"
               fields:
                 - { name: name, label: "Name", widget: string }
-                - { name: site, label: "Website", widget: string, required: false }
-                - { name: rating, label: "Rating", widget: number, default: 5, min: 1, max: 5 }
+                - {
+                    name: site,
+                    label: "Website",
+                    widget: string,
+                    required: false,
+                  }
+                - {
+                    name: rating,
+                    label: "Rating",
+                    widget: number,
+                    default: 5,
+                    min: 1,
+                    max: 5,
+                  }
                 - { name: quote, label: "Quote", widget: text }
         # ---- FAQ ----
         - name: faq
           label: "FAQ Accordion"
           summary: "FAQ — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: source, label: "Source", widget: select, options: ["global", "inline"], default: "global" }
-            - { name: jsonld, label: "Emit FAQ structured data", widget: boolean, default: true }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
+            - {
+                name: source,
+                label: "Source",
+                widget: select,
+                options: ["global", "inline"],
+                default: "global",
+              }
+            - {
+                name: jsonld,
+                label: "Emit FAQ structured data",
+                widget: boolean,
+                default: true,
+              }
             - name: items
               label: "Inline Q&A (only if source = inline)"
               widget: list
@@ -242,25 +508,55 @@ definitions:
           label: "Domain Search"
           summary: "Domain search"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
         # ---- Tech logos ----
         - name: techlogos
           label: "Technology Logos"
           summary: "Tech logos"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
-            - { name: logos, label: "Logo slugs (iconify logos)", widget: list, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
+            - {
+                name: logos,
+                label: "Logo slugs (iconify logos)",
+                widget: list,
+                required: false,
+              }
         # ---- CTA band ----
         - name: cta
           label: "Call To Action"
           summary: "CTA — {{fields.title}}"
           fields:
             - { name: title, label: "Heading", widget: string }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
             - { name: primaryCta, label: "Primary Button", <<: *ctaObject }
             - { name: secondaryCta, label: "Secondary Button", <<: *ctaObject }
         # ---- Benchmark bars ----
@@ -268,9 +564,19 @@ definitions:
           label: "Benchmark / Ratings Bars"
           summary: "Benchmark — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
             - { name: note, label: "Footnote", widget: string, required: false }
             - name: items
               label: "Bars"
@@ -278,17 +584,38 @@ definitions:
               summary: "{{fields.label}} — {{fields.display}}"
               fields:
                 - { name: label, label: "Label", widget: string }
-                - { name: value, label: "Value (number, sets bar length)", widget: number, value_type: float }
+                - {
+                    name: value,
+                    label: "Value (number, sets bar length)",
+                    widget: number,
+                    value_type: float,
+                  }
                 - { name: display, label: "Displayed value", widget: string }
-                - { name: highlight, label: "Highlight", widget: boolean, default: false, required: false }
+                - {
+                    name: highlight,
+                    label: "Highlight",
+                    widget: boolean,
+                    default: false,
+                    required: false,
+                  }
         # ---- Speed race ----
         - name: race
           label: "Speed Race"
           summary: "Speed race — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
             - { name: note, label: "Footnote", widget: string, required: false }
             - name: items
               label: "Racers"
@@ -296,17 +623,38 @@ definitions:
               summary: "{{fields.label}} — {{fields.display}}"
               fields:
                 - { name: label, label: "Label", widget: string }
-                - { name: value, label: "Relative speed (number)", widget: number, value_type: float }
+                - {
+                    name: value,
+                    label: "Relative speed (number)",
+                    widget: number,
+                    value_type: float,
+                  }
                 - { name: display, label: "Displayed value", widget: string }
-                - { name: highlight, label: "Highlight", widget: boolean, default: false, required: false }
+                - {
+                    name: highlight,
+                    label: "Highlight",
+                    widget: boolean,
+                    default: false,
+                    required: false,
+                  }
         # ---- Security layers ----
         - name: security
           label: "Security Layers"
           summary: "Security — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
             - name: layers
               label: "Layers"
               widget: list
@@ -327,25 +675,56 @@ definitions:
           label: "OS Strip"
           summary: "OS strip — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
             - name: items
               label: "Operating systems"
               widget: list
               summary: "{{fields.name}}"
               fields:
                 - { name: name, label: "Name", widget: string }
-                - { name: color, label: "Accent color (CSS)", widget: string, required: false }
-                - { name: active, label: "Active", widget: boolean, default: false, required: false }
+                - {
+                    name: color,
+                    label: "Accent color (CSS)",
+                    widget: string,
+                    required: false,
+                  }
+                - {
+                    name: active,
+                    label: "Active",
+                    widget: boolean,
+                    default: false,
+                    required: false,
+                  }
         # ---- Map band ----
         - name: mapband
           label: "Datacenter Map"
           summary: "Map — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
             - { name: note, label: "Footnote", widget: string, required: false }
             - name: pins
               label: "Location pins"
@@ -354,17 +733,43 @@ definitions:
               summary: "{{fields.label}}"
               fields:
                 - { name: label, label: "Label", widget: string }
-                - { name: x, label: "X position (0–100)", widget: number, value_type: float }
-                - { name: y, label: "Y position (0–100)", widget: number, value_type: float }
-                - { name: live, label: "Live", widget: boolean, default: false, required: false }
+                - {
+                    name: x,
+                    label: "X position (0–100)",
+                    widget: number,
+                    value_type: float,
+                  }
+                - {
+                    name: y,
+                    label: "Y position (0–100)",
+                    widget: number,
+                    value_type: float,
+                  }
+                - {
+                    name: live,
+                    label: "Live",
+                    widget: boolean,
+                    default: false,
+                    required: false,
+                  }
         # ---- Showcase tabs ----
         - name: showcase
           label: "Showcase Tabs"
           summary: "Showcase — {{fields.title}}"
           fields:
-            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
             - { name: title, label: "Heading", widget: string, required: false }
-            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
             - name: tabs
               label: "Tabs"
               widget: list
@@ -372,8 +777,18 @@ definitions:
               summary: "{{fields.label}}"
               fields:
                 - { name: label, label: "Tab label", widget: string }
-                - { name: panel, label: "Panel", widget: select, options: ["files", "ssl", "backups", "stats"] }
-                - { name: text, label: "Caption", widget: text, required: false }
+                - {
+                    name: panel,
+                    label: "Panel",
+                    widget: select,
+                    options: ["files", "ssl", "backups", "stats"],
+                  }
+                - {
+                    name: text,
+                    label: "Caption",
+                    widget: text,
+                    required: false,
+                  }
     - name: body
       label: "Long-form Body (Markdown — for legal/policy pages)"
       widget: markdown
@@ -433,8 +848,18 @@ collections:
                     fields:
                       - { name: text, label: "Text", widget: string }
                       - { name: href, label: "Link", widget: string }
-                      - { name: icon, label: "Icon (mega-menu)", widget: string, required: false }
-                      - { name: description, label: "Description (mega-menu)", widget: string, required: false }
+                      - {
+                          name: icon,
+                          label: "Icon (mega-menu)",
+                          widget: string,
+                          required: false,
+                        }
+                      - {
+                          name: description,
+                          label: "Description (mega-menu)",
+                          widget: string,
+                          required: false,
+                        }
               - name: links
                 label: "Top-level Links"
                 widget: list
@@ -449,7 +874,13 @@ collections:
                 fields:
                   - { name: text, label: "Text", widget: string }
                   - { name: href, label: "Link", widget: string }
-                  - { name: variant, label: "Variant", widget: select, options: ["primary", "secondary"], required: false }
+                  - {
+                      name: variant,
+                      label: "Variant",
+                      widget: select,
+                      options: ["primary", "secondary"],
+                      required: false,
+                    }
           - name: footer
             label: "Footer"
             widget: object
@@ -497,15 +928,67 @@ collections:
     summary: "{{title}} — {{publishDate}}"
     sortable_fields: ["publishDate", "title"]
     fields:
-      - { name: title, label: "Title", widget: string, hint: "Used as the SEO <title> and H1." }
-      - { name: excerpt, label: "Excerpt / Meta Description", widget: text, hint: "150–160 chars. Shown in Google results & social shares." }
-      - { name: publishDate, label: "Publish Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
-      - { name: updateDate, label: "Updated Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false }
-      - { name: author, label: "Author", widget: string, default: "Royal Clouds Team" }
-      - { name: category, label: "Category", widget: string, default: "Hosting" }
-      - { name: tags, label: "Tags", widget: list, default: [], required: false }
-      - { name: image, label: "Featured Image", widget: image, required: false, hint: "Used for social cards and the article header." }
-      - { name: draft, label: "Draft (don't publish)", widget: boolean, default: false }
+      - {
+          name: title,
+          label: "Title",
+          widget: string,
+          hint: "Used as the SEO <title> and H1.",
+        }
+      - {
+          name: excerpt,
+          label: "Excerpt / Meta Description",
+          widget: text,
+          hint: "150–160 chars. Shown in Google results & social shares.",
+        }
+      - {
+          name: publishDate,
+          label: "Publish Date",
+          widget: datetime,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+          picker_utc: true,
+        }
+      - {
+          name: updateDate,
+          label: "Updated Date",
+          widget: datetime,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+          picker_utc: true,
+          required: false,
+        }
+      - {
+          name: author,
+          label: "Author",
+          widget: string,
+          default: "Royal Clouds Team",
+        }
+      - {
+          name: category,
+          label: "Category",
+          widget: string,
+          default: "Hosting",
+        }
+      - {
+          name: tags,
+          label: "Tags",
+          widget: list,
+          default: [],
+          required: false,
+        }
+      - {
+          name: image,
+          label: "Featured Image",
+          widget: image,
+          required: false,
+          hint: "Used for social cards and the article header.",
+        }
+      - {
+          name: draft,
+          label: "Draft (don't publish)",
+          widget: boolean,
+          default: false,
+        }
       - { name: body, label: "Content", widget: markdown }
 
   # ---------------- Hosting Plans ----------------
@@ -524,8 +1007,18 @@ collections:
           - { name: eyebrow, label: "Eyebrow Label", widget: string }
           - { name: title, label: "Page Heading", widget: string }
           - { name: subtitle, label: "Page Subtitle", widget: text }
-          - { name: currency, label: "Currency Symbol", widget: string, default: "$" }
-          - { name: billingNote, label: "Billing Note", widget: string, required: false }
+          - {
+              name: currency,
+              label: "Currency Symbol",
+              widget: string,
+              default: "$",
+            }
+          - {
+              name: billingNote,
+              label: "Billing Note",
+              widget: string,
+              required: false,
+            }
           - name: tiers
             label: "Pricing Tiers"
             widget: list
@@ -533,12 +1026,41 @@ collections:
             fields:
               - { name: name, label: "Tier Name", widget: string }
               - { name: price, label: "Monthly Price", widget: string }
-              - { name: priceAnnual, label: "Annual Price (per month, billed yearly)", widget: string, required: false }
-              - { name: period, label: "Period", widget: string, default: "/mo" }
-              - { name: popular, label: "Most Popular", widget: boolean, default: false }
-              - { name: summary, label: "Short Summary", widget: string, required: false }
-              - { name: cta, label: "Button Label", widget: string, default: "Get Started" }
-              - { name: ctaUrl, label: "Button URL (order link)", widget: string }
+              - {
+                  name: priceAnnual,
+                  label: "Annual Price (per month, billed yearly)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: period,
+                  label: "Period",
+                  widget: string,
+                  default: "/mo",
+                }
+              - {
+                  name: popular,
+                  label: "Most Popular",
+                  widget: boolean,
+                  default: false,
+                }
+              - {
+                  name: summary,
+                  label: "Short Summary",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: cta,
+                  label: "Button Label",
+                  widget: string,
+                  default: "Get Started",
+                }
+              - {
+                  name: ctaUrl,
+                  label: "Button URL (order link)",
+                  widget: string,
+                }
               - { name: features, label: "Features", widget: list }
           - name: highlights
             label: "Highlight Cards"
@@ -548,13 +1070,48 @@ collections:
               - { name: icon, label: "Icon Name", widget: string }
               - { name: title, label: "Title", widget: string }
               - { name: text, label: "Text", widget: text }
-      - { name: cpanel, label: "cPanel Hosting", file: "src/data/plans/cpanel.json", fields: *planFields }
-      - { name: vps, label: "KVM VPS Hosting", file: "src/data/plans/vps.json", fields: *planFields }
-      - { name: cyberpanel, label: "CyberPanel VPS", file: "src/data/plans/cyberpanel.json", fields: *planFields }
-      - { name: wordpress, label: "Managed WordPress", file: "src/data/plans/wordpress.json", fields: *planFields }
-      - { name: cloud, label: "Managed Cloud", file: "src/data/plans/cloud.json", fields: *planFields }
-      - { name: dedicated, label: "Dedicated Servers", file: "src/data/plans/dedicated.json", fields: *planFields }
-      - { name: reseller, label: "Reseller Hosting", file: "src/data/plans/reseller.json", fields: *planFields }
+      - {
+          name: cpanel,
+          label: "cPanel Hosting",
+          file: "src/data/plans/cpanel.json",
+          fields: *planFields,
+        }
+      - {
+          name: vps,
+          label: "KVM VPS Hosting",
+          file: "src/data/plans/vps.json",
+          fields: *planFields,
+        }
+      - {
+          name: cyberpanel,
+          label: "CyberPanel VPS",
+          file: "src/data/plans/cyberpanel.json",
+          fields: *planFields,
+        }
+      - {
+          name: wordpress,
+          label: "Managed WordPress",
+          file: "src/data/plans/wordpress.json",
+          fields: *planFields,
+        }
+      - {
+          name: cloud,
+          label: "Managed Cloud",
+          file: "src/data/plans/cloud.json",
+          fields: *planFields,
+        }
+      - {
+          name: dedicated,
+          label: "Dedicated Servers",
+          file: "src/data/plans/dedicated.json",
+          fields: *planFields,
+        }
+      - {
+          name: reseller,
+          label: "Reseller Hosting",
+          file: "src/data/plans/reseller.json",
+          fields: *planFields,
+        }
 
   # ---------------- Site-wide content ----------------
   - name: settings
@@ -565,17 +1122,52 @@ collections:
         file: "src/data/site.json"
         fields:
           - { name: name, label: "Site Name", widget: string }
-          - { name: legalName, label: "Legal Name", widget: string, required: false }
+          - {
+              name: legalName,
+              label: "Legal Name",
+              widget: string,
+              required: false,
+            }
           - { name: tagline, label: "Tagline", widget: string }
-          - { name: description, label: "Default Meta Description", widget: text }
+          - {
+              name: description,
+              label: "Default Meta Description",
+              widget: text,
+            }
           - { name: shortDescription, label: "Short Description", widget: text }
           - { name: url, label: "Site URL", widget: string }
-          - { name: logo, label: "Logo", widget: image, required: false, choose_url: true, hint: "Upload/pick a logo, or paste a /path." }
-          - { name: logoWhite, label: "Logo (white)", widget: image, required: false, choose_url: true, hint: "White logo for dark backgrounds." }
-          - { name: ogImage, label: "Default OG Image", widget: image, required: false, choose_url: true, hint: "Default social-share image (1200×628)." }
+          - {
+              name: logo,
+              label: "Logo",
+              widget: image,
+              required: false,
+              choose_url: true,
+              hint: "Upload/pick a logo, or paste a /path.",
+            }
+          - {
+              name: logoWhite,
+              label: "Logo (white)",
+              widget: image,
+              required: false,
+              choose_url: true,
+              hint: "White logo for dark backgrounds.",
+            }
+          - {
+              name: ogImage,
+              label: "Default OG Image",
+              widget: image,
+              required: false,
+              choose_url: true,
+              hint: "Default social-share image (1200×628).",
+            }
           - { name: startingPrice, label: "Starting Price", widget: string }
           - { name: rating, label: "Rating", widget: string, required: false }
-          - { name: ratingMax, label: "Rating Max", widget: string, required: false }
+          - {
+              name: ratingMax,
+              label: "Rating Max",
+              widget: string,
+              required: false,
+            }
           - name: contact
             label: "Contact"
             widget: object
@@ -583,8 +1175,18 @@ collections:
               - { name: email, label: "Support Email", widget: string }
               - { name: salesEmail, label: "Sales Email", widget: string }
               - { name: phone, label: "Phone", widget: string, required: false }
-              - { name: addressLocality, label: "City/Region", widget: string, required: false }
-              - { name: addressCountry, label: "Country Code", widget: string, required: false }
+              - {
+                  name: addressLocality,
+                  label: "City/Region",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: addressCountry,
+                  label: "Country Code",
+                  widget: string,
+                  required: false,
+                }
           - name: portal
             label: "Client Portal Links (WHMCS)"
             widget: object
@@ -602,11 +1204,36 @@ collections:
             label: "Social Links"
             widget: object
             fields:
-              - { name: facebook, label: "Facebook", widget: string, required: false }
-              - { name: twitter, label: "Twitter / X", widget: string, required: false }
-              - { name: instagram, label: "Instagram", widget: string, required: false }
-              - { name: github, label: "GitHub", widget: string, required: false }
-              - { name: linkedin, label: "LinkedIn", widget: string, required: false }
+              - {
+                  name: facebook,
+                  label: "Facebook",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: twitter,
+                  label: "Twitter / X",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: instagram,
+                  label: "Instagram",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: github,
+                  label: "GitHub",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: linkedin,
+                  label: "LinkedIn",
+                  widget: string,
+                  required: false,
+                }
           - { name: trustBadges, label: "Trust Badges", widget: list }
 
   # ---------------- Integrations & Tracking ----------------
@@ -624,29 +1251,99 @@ collections:
             label: "Analytics"
             widget: object
             fields:
-              - { name: ga4Id, label: "Google Analytics 4 ID", widget: string, required: false, hint: "Format G-XXXXXXX. Leave blank to disable." }
-              - { name: gtmId, label: "Google Tag Manager ID", widget: string, required: false, hint: "Format GTM-XXXXXXX. Leave blank to disable." }
+              - {
+                  name: ga4Id,
+                  label: "Google Analytics 4 ID",
+                  widget: string,
+                  required: false,
+                  hint: "Format G-XXXXXXX. Leave blank to disable.",
+                }
+              - {
+                  name: gtmId,
+                  label: "Google Tag Manager ID",
+                  widget: string,
+                  required: false,
+                  hint: "Format GTM-XXXXXXX. Leave blank to disable.",
+                }
           - name: verification
             label: "Search Console Verification"
             widget: object
             fields:
-              - { name: google, label: "Google site-verification token", widget: string, required: false, hint: "The content value of the google-site-verification meta tag (token only)." }
-              - { name: bing, label: "Bing (msvalidate.01) token", widget: string, required: false }
+              - {
+                  name: google,
+                  label: "Google site-verification token",
+                  widget: string,
+                  required: false,
+                  hint: "The content value of the google-site-verification meta tag (token only).",
+                }
+              - {
+                  name: bing,
+                  label: "Bing (msvalidate.01) token",
+                  widget: string,
+                  required: false,
+                }
           - name: pixels
             label: "Marketing Pixels"
             widget: object
             fields:
-              - { name: facebookPixelId, label: "Facebook / Meta Pixel ID", widget: string, required: false }
+              - {
+                  name: facebookPixelId,
+                  label: "Facebook / Meta Pixel ID",
+                  widget: string,
+                  required: false,
+                }
           - name: chat
             label: "Live Chat"
             widget: object
             fields:
-              - { name: provider, label: "Provider", widget: select, options: ["none", "tawk", "custom"], default: "none" }
-              - { name: tawkPropertyId, label: "Tawk.to Property ID", widget: string, required: false, hint: "Used only when Provider = tawk." }
-              - { name: tawkWidgetId, label: "Tawk.to Widget ID", widget: string, default: "default", required: false }
-              - { name: customEmbed, label: "Custom chat embed (raw HTML/JS)", widget: code, required: false, default_language: html, allow_language_selection: false, hint: "Used only when Provider = custom. Paste the full snippet (Crisp, WhatsApp, Intercom, …)." }
-          - { name: customHeadHtml, label: "Custom <head> code (raw HTML/JS)", widget: code, required: false, default_language: html, allow_language_selection: false, hint: "Injected into <head> on every page. Runs verbatim — paste only trusted code." }
-          - { name: customBodyHtml, label: "Custom end-of-<body> code (raw HTML/JS)", widget: code, required: false, default_language: html, allow_language_selection: false, hint: "Injected just before </body> on every page. Runs verbatim — paste only trusted code." }
+              - {
+                  name: provider,
+                  label: "Provider",
+                  widget: select,
+                  options: ["none", "tawk", "custom"],
+                  default: "none",
+                }
+              - {
+                  name: tawkPropertyId,
+                  label: "Tawk.to Property ID",
+                  widget: string,
+                  required: false,
+                  hint: "Used only when Provider = tawk.",
+                }
+              - {
+                  name: tawkWidgetId,
+                  label: "Tawk.to Widget ID",
+                  widget: string,
+                  default: "default",
+                  required: false,
+                }
+              - {
+                  name: customEmbed,
+                  label: "Custom chat embed (raw HTML/JS)",
+                  widget: code,
+                  required: false,
+                  default_language: html,
+                  allow_language_selection: false,
+                  hint: "Used only when Provider = custom. Paste the full snippet (Crisp, WhatsApp, Intercom, …).",
+                }
+          - {
+              name: customHeadHtml,
+              label: "Custom <head> code (raw HTML/JS)",
+              widget: code,
+              required: false,
+              default_language: html,
+              allow_language_selection: false,
+              hint: "Injected into <head> on every page. Runs verbatim — paste only trusted code.",
+            }
+          - {
+              name: customBodyHtml,
+              label: "Custom end-of-<body> code (raw HTML/JS)",
+              widget: code,
+              required: false,
+              default_language: html,
+              allow_language_selection: false,
+              hint: "Injected just before </body> on every page. Runs verbatim — paste only trusted code.",
+            }
 
   # ---------------- Testimonials ----------------
   - name: testimonials
@@ -663,7 +1360,14 @@ collections:
             fields:
               - { name: name, label: "Customer Name", widget: string }
               - { name: site, label: "Website / Company", widget: string }
-              - { name: rating, label: "Rating (1–5)", widget: number, default: 5, min: 1, max: 5 }
+              - {
+                  name: rating,
+                  label: "Rating (1–5)",
+                  widget: number,
+                  default: 5,
+                  min: 1,
+                  max: 5,
+                }
               - { name: quote, label: "Quote", widget: text }
 
   # ---------------- FAQs ----------------

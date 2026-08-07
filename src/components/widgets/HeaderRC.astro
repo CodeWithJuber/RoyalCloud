@@ -1,18 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
-import logoDark from "~/assets/images/brand/logo-dark.png";
 import logoWhite from "~/assets/images/brand/logo-white.png";
 import { headerData } from "~/navigation";
-import { tablerIcon } from "~/utils/plans";
-import { pricify } from "~/utils/currency";
 import site from "~/data/site.json";
+import { tablerIcon } from "~/utils/plans";
 
-/**
- * Royal Clouds header, clean white, always sticky.
- * `solid` pages start with the scrolled shadow; others gain it on scroll.
- * Navigation content comes from src/data/navigation.json (Decap-editable).
- */
 interface Props {
   solid?: boolean;
 }
@@ -22,16 +15,9 @@ type Link = { text: string; href: string; icon?: string; description?: string };
 type Item = Link | { text: string; links: Link[] };
 
 const items = headerData.links as Item[];
-const actions = headerData.actions as {
-  text: string;
-  href: string;
-  variant?: string;
-}[];
 const isGroup = (i: Item): i is { text: string; links: Link[] } => "links" in i;
 const external = (href: string) => /^https?:\/\//.test(href);
 
-// Wayfinding: mark the visitor's current location (aria-current) so they always
-// know where they are in the nav (Jakob's Law / WCAG 2.4.8).
 const pathname = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
 const isCurrent = (href: string) => {
   if (!href || external(href) || href.startsWith("#")) return false;
@@ -39,845 +25,523 @@ const isCurrent = (href: string) => {
   return h === pathname;
 };
 const groupActive = (links: Link[]) => links.some((l) => isCurrent(l.href));
-
-// icon chips for the mobile sheet's top-level items
-const NAV_ICONS: Record<string, string> = {
-  hosting: "tabler:server-2",
-  technology: "tabler:cpu",
-  domains: "tabler:world",
-  blog: "tabler:news",
-  about: "tabler:info-circle",
-  contact: "tabler:message-circle",
-};
-const navIcon = (text: string) =>
-  NAV_ICONS[text.toLowerCase()] ?? "tabler:point";
 ---
 
-{
-  "promo" in site && site.promo && (
-    <div class="promo-bar">
-      <span set:html={pricify(site.promo)} />
-    </div>
-  )
-}
-<header class={`site-header ${solid ? "scrolled solid" : "overlay"}`} id="siteHeader">
-  <div class="wrap header-inner">
-    <a class="header-logo" href="/" aria-label="Royal Clouds home">
-      <Image
-        src={logoDark}
-        alt="Royal Clouds"
-        width={176}
-        height={60}
-        loading="eager"
-        class="logo-dark"
-      />
-      <Image
-        src={logoWhite}
-        alt=""
-        width={176}
-        height={60}
-        loading="eager"
-        class="logo-light"
-      />
+<header class:list={["rc-header", { scrolled: solid }]} id="rcHeader">
+  <div class="wrap rc-header-inner">
+    <a href="/" class="rc-logo" aria-label="Royal Clouds home">
+      <Image src={logoWhite} alt="Royal Clouds" width={250} height={50} loading="eager" />
     </a>
-    <nav class="nav" aria-label="Primary">
-      {
-        items.map((item, gi) =>
-          isGroup(item) ? (
-            <span class="nav-dd" data-dd>
-              <a
-                href={item.links[0]?.href ?? "#"}
-                aria-haspopup="true"
-                aria-expanded="false"
-                aria-controls={`dd-panel-${gi}`}
-                class={groupActive(item.links) ? "is-current" : ""}
-                {...(groupActive(item.links) ? { "aria-current": "true" } : {})}
-              >
-                {item.text}
-                <Icon name="tabler:chevron-down" class="dd-caret" />
-              </a>
-              <span
-                id={`dd-panel-${gi}`}
-                class={`dd-panel ${item.links.some((l) => l.description) ? "mega" : ""}`}
-              >
-                {item.links.map((l) =>
-                  l.description ? (
-                    <a
-                      href={l.href}
-                      class="mega-item"
-                      {...(isCurrent(l.href) ? { "aria-current": "page" } : {})}
-                    >
-                      <span class="mega-ic">
-                        <Icon name={tablerIcon(l.icon ?? "")} />
-                      </span>
-                      <span>
-                        <strong>{l.text}</strong>
-                        <small>{l.description}</small>
-                      </span>
-                    </a>
-                  ) : (
-                    <a
-                      href={l.href}
-                      {...(isCurrent(l.href) ? { "aria-current": "page" } : {})}
-                    >
-                      {l.text}
-                    </a>
-                  ),
-                )}
-                {item.text === "Hosting" && (
-                  <a href="/compare-royalclouds-vps-plans" class="mega-foot">
-                    Compare all plans
-                    <Icon name="tabler:arrow-right" />
-                  </a>
-                )}
-              </span>
-            </span>
-          ) : (
-            <a
-              href={item.href}
-              class={isCurrent(item.href) ? "is-current" : ""}
-              {...(isCurrent(item.href) ? { "aria-current": "page" } : {})}
+
+    <nav class="rc-nav" id="rcNav" aria-label="Main">
+      {items.map((item) =>
+        isGroup(item) ? (
+          <div class="rc-dd-wrap" data-dd>
+            <button
+              type="button"
+              class:list={["rc-nav-link", { active: groupActive(item.links) }]}
+              aria-haspopup="true"
+              aria-expanded="false"
             >
               {item.text}
-            </a>
-          ),
+              {item.text === "Hosting" && <span class="promo-pill">PROMO</span>}
+              <Icon name="tabler:chevron-down" class="dd-chev" />
+            </button>
+            <div class="rc-dropdown" role="menu">
+              {item.links.map((link) => (
+                <a
+                  href={link.href}
+                  class="rc-dd-item"
+                  role="menuitem"
+                  aria-current={isCurrent(link.href) ? "page" : undefined}
+                  target={external(link.href) ? "_blank" : undefined}
+                  rel={external(link.href) ? "noopener" : undefined}
+                >
+                  {link.icon && (
+                    <span class="rc-dd-ic">
+                      <Icon name={tablerIcon(link.icon)} />
+                    </span>
+                  )}
+                  <span>
+                    <span class="rc-dd-title">{link.text}</span>
+                    {link.description && <span class="rc-dd-desc">{link.description}</span>}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={item.href}
+            class="rc-nav-link"
+            aria-current={isCurrent(item.href) ? "page" : undefined}
+          >
+            {item.text}
+          </a>
         )
-      }
+      )}
     </nav>
-    <div class="header-cta">
-      <div class="cur-toggle" role="group" aria-label="Currency">
-        <button type="button" data-cur="inr" class="active" aria-pressed="true"
-          >₹</button
-        >
-        <button type="button" data-cur="usd" aria-pressed="false">$</button>
+
+    <div class="rc-header-right">
+      <div class="cur-toggle" id="rcCurToggle" aria-label="Currency">
+        <button type="button" class="cur-btn active" data-cur="usd">USD</button>
+        <button type="button" class="cur-btn" data-cur="inr">INR</button>
       </div>
-      {
-        actions.map((a) =>
-          a.variant === "secondary" ? (
-            <a
-              class="login"
-              href={a.href}
-              {...(external(a.href)
-                ? { target: "_blank", rel: "noopener" }
-                : {})}
-            >
-              {a.text}
-            </a>
-          ) : (
-            <a
-              class="btn btn-primary"
-              href={a.href}
-              {...(external(a.href)
-                ? { target: "_blank", rel: "noopener" }
-                : {})}
-            >
-              {a.text}
-            </a>
-          ),
-        )
-      }
+      <a href={site.portal.login} class="default-btn rc-login-btn">Login</a>
       <button
-        class="menu-btn"
+        type="button"
+        class="rc-hamburger"
         id="rcMenuBtn"
-        aria-label="Open menu"
+        aria-label="Menu"
         aria-expanded="false"
         aria-controls="rcMobileNav"
       >
-        <Icon name="tabler:menu-2" />
+        <span></span><span></span><span></span>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="rcMobileNav" hidden aria-label="Mobile">
-    {
-      items.map((item) =>
+
+  <div class="rc-mobile-nav" id="rcMobileNav" hidden>
+    <div class="rc-mob-inner">
+      {items.map((item) =>
         isGroup(item) ? (
-          <details class="m-group">
-            <summary class="m-item">
-              <span class="m-ic">
-                <Icon name={navIcon(item.text)} />
-              </span>
-              {item.text}
-              <Icon name="tabler:chevron-down" class="dd-caret" />
-            </summary>
-            <div class="m-sub">
-              {item.links.map((l) => (
-                <a
-                  href={l.href}
-                  {...(isCurrent(l.href) ? { "aria-current": "page" } : {})}
-                >
-                  <span class="m-sub-ic">
-                    <Icon name={tablerIcon(l.icon ?? "point")} />
-                  </span>
-                  {l.text}
-                </a>
+          <details class="rc-mob-group">
+            <summary>{item.text}</summary>
+            <div class="rc-mob-links">
+              {item.links.map((link) => (
+                <a href={link.href}>{link.text}</a>
               ))}
             </div>
           </details>
         ) : (
-          <a
-            class="m-item"
-            href={item.href}
-            {...(isCurrent(item.href) ? { "aria-current": "page" } : {})}
-          >
-            <span class="m-ic">
-              <Icon name={navIcon(item.text)} />
-            </span>
-            {item.text}
-            <Icon name="tabler:chevron-right" class="dd-caret m-go" />
-          </a>
-        ),
-      )
-    }
-    <div class="cur-toggle m-cur" role="group" aria-label="Currency">
-      <button type="button" data-cur="inr" class="active" aria-pressed="true"
-        >₹ INR</button
-      >
-      <button type="button" data-cur="usd" aria-pressed="false">$ USD</button>
+          <a href={item.href} class="rc-mob-link">{item.text}</a>
+        )
+      )}
+      <div class="rc-mob-bottom">
+        <div class="cur-toggle" id="rcCurToggleMob">
+          <button type="button" class="cur-btn active" data-cur="usd">USD</button>
+          <button type="button" class="cur-btn" data-cur="inr">INR</button>
+        </div>
+        <a href={site.portal.login} class="default-btn rc-mob-login">Login</a>
+      </div>
     </div>
-    <div class="m-actions">
-      {
-        actions.map((a) => (
-          <a
-            class={`btn ${a.variant === "secondary" ? "btn-ghost-dark" : "btn-primary"}`}
-            href={a.href}
-            {...(external(a.href) ? { target: "_blank", rel: "noopener" } : {})}
-          >
-            {a.text}
-          </a>
-        ))
-      }
-    </div>
-    <p class="m-trust">
-      <Icon name="tabler:shield-check" /> 99.99% uptime, free SSL, 24/7 human support
-    </p>
-  </nav>
-  <div class="m-backdrop" id="rcMenuBackdrop" hidden aria-hidden="true"></div>
+  </div>
 </header>
+<div class="rc-backdrop" id="rcMenuBackdrop" hidden></div>
 
 <style>
-  .header-logo {
-    position: relative;
-    display: inline-flex;
+  /* ── Header: transparent over gradient, scrolled = #673AB7 ── */
+  .rc-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .rc-header:not(.scrolled) {
+    background: transparent;
+  }
+  .rc-header.scrolled {
+    background: var(--sticky-nav);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .rc-header-inner {
+    display: flex;
     align-items: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
-  .header-logo :global(.logo-light) {
-    position: absolute;
-    inset: 0 auto auto 0;
-    opacity: 0;
-    pointer-events: none;
+
+  /* ── Logo ── */
+  .rc-logo {
+    flex-shrink: 0;
+    display: block;
+    line-height: 0;
   }
-  .site-header.overlay:not(.scrolled) .header-logo :global(.logo-dark) {
-    opacity: 0;
+  .rc-logo img {
+    width: 250px;
+    height: auto;
   }
-  .site-header.overlay:not(.scrolled) .header-logo :global(.logo-light) {
-    opacity: 1;
+
+  /* ── Desktop nav ── */
+  .rc-nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-left: 30px;
   }
-  .site-header.overlay:not(.scrolled) .nav > a,
-  .site-header.overlay:not(.scrolled) .nav-dd > a,
-  .site-header.overlay:not(.scrolled) .header-cta .login {
-    color: rgba(255, 255, 255, 0.82);
-  }
-  .site-header.overlay:not(.scrolled) .nav > a:hover,
-  .site-header.overlay:not(.scrolled) .nav-dd > a:hover,
-  .site-header.overlay:not(.scrolled) .header-cta .login:hover {
-    color: #fff;
-  }
-  .site-header.overlay:not(.scrolled) .cur-toggle {
-    border-color: rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.08);
-  }
-  .site-header.overlay:not(.scrolled) .cur-toggle button {
-    color: rgba(255, 255, 255, 0.64);
-  }
-  .site-header.overlay:not(.scrolled) .cur-toggle button.active {
-    color: #0b0f18;
-    background: #fff;
-  }
-  .site-header.overlay:not(.scrolled) .menu-btn {
-    border-color: rgba(255, 255, 255, 0.18);
-    color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-  }
-  /* dropdowns + mobile menu, styled to the design language */
-  .nav-dd {
-    position: relative;
-    display: inline-flex;
-  }
-  .nav-dd > a {
-    font-size: 15px;
-    font-weight: 600;
-    font-family: var(--font-heading);
-    color: var(--rc-ink);
-    padding: 8px 0;
+  .rc-nav-link {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    padding: 10px 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    text-decoration: none;
   }
-  .nav-dd > a:hover {
-    color: var(--rc-violet);
+  .rc-nav-link:hover {
+    opacity: 0.85;
   }
-  /* Wayfinding: highlight the current top-level location */
-  .nav > a.is-current,
-  .nav-dd > a.is-current {
-    color: var(--rc-violet);
-  }
-  .nav > a.is-current::after,
-  .nav-dd > a.is-current::after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -2px;
-    height: 2px;
-    border-radius: 2px;
-    background: var(--rc-violet);
-  }
-  .nav > a {
-    position: relative;
-  }
-  .dd-panel a[aria-current="page"],
-  .m-sub a[aria-current="page"],
-  .m-item[aria-current="page"] {
-    color: var(--rc-violet) !important;
-    background: var(--bg-tint);
+
+  /* ── PROMO badge ── */
+  .promo-pill {
+    font-size: 10px;
     font-weight: 700;
+    color: #fff;
+    background: var(--pink);
+    border-radius: 50px;
+    padding: 2px 8px;
+    margin-left: 4px;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
   }
-  .nav :global(.dd-caret) {
+
+  /* ── Dropdown chevron ── */
+  .dd-chev {
     width: 14px;
     height: 14px;
     opacity: 0.7;
-    transition: transform 0.18s ease;
+    transition: transform 0.2s;
   }
-  .nav-dd:hover :global(.dd-caret),
-  .nav-dd:focus-within :global(.dd-caret) {
+  [data-dd][aria-expanded="true"] .dd-chev,
+  [data-dd]:hover .dd-chev {
     transform: rotate(180deg);
   }
-  .dd-panel {
+
+  /* ── Dropdown panel ── */
+  .rc-dd-wrap {
+    position: relative;
+  }
+  .rc-dropdown {
     position: absolute;
-    top: calc(100% + 14px);
+    top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(6px);
-    display: flex;
-    flex-direction: column;
-    min-width: 230px;
+    transform: translateX(-50%);
+    min-width: 280px;
     background: #fff;
-    border: 1px solid #efecfa;
-    border-radius: 14px;
-    box-shadow: 0 24px 56px -18px rgba(34, 16, 95, 0.35);
-    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 12px 0;
     opacity: 0;
     visibility: hidden;
-    transition:
-      opacity 0.18s ease,
-      transform 0.18s ease;
-    z-index: 60;
+    transition: opacity 0.2s, visibility 0.2s;
+    z-index: 200;
   }
-  .dd-panel::before {
-    content: "";
-    position: absolute;
-    top: -14px;
-    left: 0;
-    right: 0;
-    height: 14px;
-  }
-  .nav-dd:hover .dd-panel,
-  .nav-dd:focus-within .dd-panel {
+  .rc-dd-wrap:hover .rc-dropdown,
+  .rc-dd-wrap:focus-within .rc-dropdown {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
-  }
-  .dd-panel a {
-    font-family: var(--font-body);
-    font-size: 14.5px;
-    font-weight: 500;
-    color: #22105f !important;
-    padding: 9px 14px;
-    border-radius: 9px;
-    transition:
-      background 0.14s ease,
-      color 0.14s ease;
-  }
-  .dd-panel a:hover {
-    background: var(--bg-tint);
-    color: #7652f2 !important;
-  }
-  .dd-panel a::after {
-    display: none;
   }
 
-  /* mega panel: two-column product grid with icon + one-liner.
-     Anchored to the left of its nav item (not centered) so the 560px panel
-     can never clip off the viewport's left edge. */
-  .dd-panel.mega {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(250px, 1fr));
-    gap: 4px;
-    min-width: 560px;
-    padding: 14px;
-    left: -80px;
-    transform: translateY(6px);
-  }
-  .nav-dd:hover .dd-panel.mega,
-  .nav-dd:focus-within .dd-panel.mega {
-    transform: translateY(0);
-  }
-  .mega-item {
-    display: flex !important;
+  .rc-dd-item {
+    display: flex;
     align-items: flex-start;
     gap: 12px;
-    padding: 11px 12px !important;
+    padding: 10px 20px;
+    color: var(--body-color);
+    text-decoration: none;
+    transition: background 0.15s;
   }
-  .mega-item .mega-ic {
-    flex: none;
-    width: 38px;
-    height: 38px;
-    border-radius: 11px;
-    background: var(--bg-tint);
-    border: 1px solid var(--line);
+  .rc-dd-item:hover {
+    background: #f5f5f5;
+  }
+  .rc-dd-ic {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
     display: grid;
     place-items: center;
-    color: #7652f2;
-    transition:
-      background 0.14s ease,
-      color 0.14s ease,
-      border-color 0.14s ease;
+    border-radius: 8px;
+    background: #f0f0f0;
+    color: var(--heading-blue);
   }
-  .mega-item .mega-ic :global(svg) {
+  .rc-dd-ic svg {
     width: 20px;
     height: 20px;
   }
-  .mega-item:hover .mega-ic {
-    background: var(--rc-gradient);
-    border-color: transparent;
-    color: #fff;
-  }
-  .mega-item strong {
+  .rc-dd-title {
     display: block;
     font-family: var(--font-heading);
+    font-weight: 700;
     font-size: 14px;
-    font-weight: 600;
+    color: #333;
     line-height: 1.3;
   }
-  .mega-item small {
+  .rc-dd-desc {
     display: block;
-    font-size: 12.5px;
-    color: #6b6b88;
-    line-height: 1.45;
+    font-size: 12px;
+    color: #888;
+    line-height: 1.4;
     margin-top: 2px;
   }
 
-  /* ₹/$ currency switch */
+  /* ── Header right ── */
+  .rc-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  /* ── Currency toggle ── */
   .cur-toggle {
-    display: inline-flex;
-    background: var(--bg-tint);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 3px;
+    display: flex;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
-  .cur-toggle button {
-    border: none;
-    background: transparent;
-    cursor: pointer;
+  .cur-btn {
     font-family: var(--font-heading);
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 700;
-    color: var(--text-muted);
-    width: 30px;
-    height: 28px;
-    border-radius: 999px;
-    display: grid;
-    place-items: center;
-    transition:
-      background 0.15s ease,
-      color 0.15s ease;
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    border: none;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
   }
-  .cur-toggle button.active {
-    background: var(--rc-ink);
+  .cur-btn.active {
+    background: rgba(255, 255, 255, 0.2);
     color: #fff;
   }
-  .cur-toggle.m-cur {
-    margin-top: 12px;
-    align-self: center;
-  }
-  .cur-toggle.m-cur button {
-    width: auto;
-    padding: 0 18px;
-    height: 34px;
-    font-size: 12.5px;
-  }
-  @media (max-width: 860px) {
-    .header-cta > .cur-toggle {
-      display: none;
-    }
+
+  /* ── Login button ── */
+  .rc-login-btn {
+    font-size: 14px;
+    padding: 8px 25px;
   }
 
-  .menu-btn {
-    display: none;
-    background: var(--bg-tint);
-    color: var(--rc-ink);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    width: 42px;
-    height: 42px;
-    font-size: 18px;
-    cursor: pointer;
-  }
-  .menu-btn :global(svg) {
-    width: 20px;
-    height: 20px;
-    margin: auto;
-  }
-  /* modern mobile sheet: icon chips, rounded rows, action bar */
-  .mobile-nav {
+  /* ── Hamburger ── */
+  .rc-hamburger {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .rc-hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
     background: #fff;
-    padding: 14px 16px 22px;
-    border-top: 1px solid var(--line);
-    border-radius: 0 0 22px 22px;
-    box-shadow: 0 30px 50px -22px rgba(34, 16, 95, 0.28);
-    max-height: calc(100dvh - 70px);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .rc-hamburger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .rc-hamburger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .rc-hamburger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ── Mobile nav ── */
+  .rc-mobile-nav {
+    background: var(--sticky-nav-mobile);
+    padding: 0 var(--wrap-pad) 20px;
+    max-height: 80vh;
     overflow-y: auto;
   }
-  .mobile-nav.open {
-    display: flex;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .mobile-nav.open {
-      animation: mSheet 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .mobile-nav.open > * {
-      animation: mItem 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-    }
-    .mobile-nav.open > :nth-child(2) {
-      animation-delay: 0.04s;
-    }
-    .mobile-nav.open > :nth-child(3) {
-      animation-delay: 0.08s;
-    }
-    .mobile-nav.open > :nth-child(4) {
-      animation-delay: 0.12s;
-    }
-    .mobile-nav.open > :nth-child(5) {
-      animation-delay: 0.16s;
-    }
-    .mobile-nav.open > :nth-child(6) {
-      animation-delay: 0.2s;
-    }
-    .mobile-nav.open > :nth-child(7) {
-      animation-delay: 0.24s;
-    }
-    .mobile-nav.open > :nth-child(8) {
-      animation-delay: 0.28s;
-    }
-  }
-  @keyframes mSheet {
-    from {
-      opacity: 0;
-      translate: 0 -10px;
-    }
-  }
-  @keyframes mItem {
-    from {
-      opacity: 0;
-      translate: 0 8px;
-    }
-  }
-  .m-item {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    color: var(--rc-ink);
-    font-family: var(--font-heading);
-    font-size: 15.5px;
-    font-weight: 600;
-    padding: 10px 12px;
-    border-radius: 14px;
-    transition: background 0.15s ease;
-  }
-  .m-item:hover,
-  .m-item:active {
-    background: var(--bg-tint);
-  }
-  .m-ic {
-    flex: none;
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    background: var(--theme-soft, var(--pastel-lavender));
-    color: var(--theme-accent, var(--rc-violet));
-    display: grid;
-    place-items: center;
-  }
-  .m-ic :global(svg) {
-    width: 20px;
-    height: 20px;
-  }
-  .mobile-nav :global(.m-go) {
-    margin-left: auto;
-    opacity: 0.45;
-  }
-  .m-group summary.m-item {
-    list-style: none;
-    cursor: pointer;
-  }
-  .m-group summary::-webkit-details-marker {
-    display: none;
-  }
-  .m-group summary :global(.dd-caret) {
-    margin-left: auto;
-    width: 17px;
-    height: 17px;
-    opacity: 0.45;
-    transition: transform 0.2s ease;
-  }
-  .m-group[open] summary :global(.dd-caret) {
-    transform: rotate(180deg);
-  }
-  .m-group[open] summary.m-item {
-    background: var(--bg-tint);
-  }
-  .m-sub {
+  .rc-mob-inner {
     display: flex;
     flex-direction: column;
-    margin: 4px 0 6px 30px;
-    padding-left: 16px;
-    border-left: 2px solid var(--line);
   }
-  .m-sub a {
+  .rc-mob-group summary {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 14.5px;
-    font-weight: 500;
-    color: var(--text-default);
-    padding: 9px 10px;
-    border-radius: 10px;
-    transition:
-      background 0.15s ease,
-      color 0.15s ease;
-  }
-  .m-sub a:hover,
-  .m-sub a:active {
-    background: var(--bg-tint);
-    color: var(--rc-violet);
-  }
-  .m-sub-ic {
-    display: inline-flex;
-    color: var(--theme-accent, var(--rc-violet));
-    opacity: 0.8;
-  }
-  .m-sub-ic :global(svg) {
-    width: 17px;
-    height: 17px;
-  }
-  .m-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 14px;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-  }
-  .m-actions .btn {
-    justify-content: center;
-    padding: 14px 18px;
-  }
-  .m-trust {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    margin: 14px 0 0;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .m-trust :global(svg) {
-    width: 15px;
-    height: 15px;
-    color: var(--ok);
-  }
-
-  /* mega panel footer: full-width "compare all plans" row */
-  .mega-foot {
-    grid-column: 1 / -1;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 4px;
-    padding: 12px !important;
-    border-top: 1px solid var(--line);
-    border-radius: 0 0 9px 9px !important;
+    justify-content: space-between;
     font-family: var(--font-heading);
-    font-weight: 700 !important;
-    font-size: 13px !important;
-    color: var(--rc-violet) !important;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    list-style: none;
   }
-  .mega-foot :global(svg) {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.16s ease;
+  .rc-mob-group summary::-webkit-details-marker {
+    display: none;
   }
-  .mega-foot:hover {
-    background: var(--bg-tint);
+  .rc-mob-group summary::after {
+    content: "+";
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
   }
-  .mega-foot:hover :global(svg) {
-    transform: translateX(3px);
+  .rc-mob-group[open] summary::after {
+    content: "−";
+  }
+  .rc-mob-links {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0 8px 16px;
+  }
+  .rc-mob-links a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 8px 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .rc-mob-links a:hover {
+    color: #fff;
+  }
+  .rc-mob-link {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+  }
+  .rc-mob-bottom {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .rc-mob-login {
+    flex: 1;
+    text-align: center;
   }
 
-  /* mobile drawer backdrop (dims the page behind the sheet) */
-  .m-backdrop {
+  /* ── Backdrop ── */
+  .rc-backdrop {
     position: fixed;
     inset: 0;
-    z-index: 40;
-    background: rgba(24, 27, 34, 0.42);
-    opacity: 0;
-    transition: opacity 0.25s ease;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    backdrop-filter: blur(2px);
   }
-  .m-backdrop.open {
-    opacity: 1;
-  }
-  @supports (backdrop-filter: blur(2px)) {
-    .m-backdrop.open {
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
+
+  /* ── Responsive ── */
+  @media (max-width: 991px) {
+    .rc-logo img {
+      width: 180px;
+    }
+    .rc-nav-link {
+      font-size: 14px;
+      padding: 10px 10px;
     }
   }
 
   @media (max-width: 860px) {
-    .menu-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .header-cta .login {
+    .rc-nav {
       display: none;
     }
-    .header-cta > .btn {
+    .rc-login-btn {
       display: none;
+    }
+    .cur-toggle {
+      display: none;
+    }
+    .rc-hamburger {
+      display: flex;
+    }
+    .rc-header.scrolled,
+    .rc-header {
+      background: var(--sticky-nav-mobile);
+    }
+    .rc-logo img {
+      width: 180px;
     }
   }
 </style>
 
 <script>
   function rcHeaderInit() {
-    const header = document.getElementById("siteHeader");
+    const header = document.getElementById("rcHeader");
+    const menuBtn = document.getElementById("rcMenuBtn");
+    const mobileNav = document.getElementById("rcMobileNav");
+    const backdrop = document.getElementById("rcMenuBackdrop");
     if (!header) return;
-    const solid = header.classList.contains("solid");
+
+    const isSolid = header.classList.contains("scrolled");
+
     const onScroll = () => {
-      if (!solid) header.classList.toggle("scrolled", window.scrollY > 24);
+      if (window.scrollY > 50) {
+        header.classList.add("scrolled");
+      } else if (!isSolid) {
+        header.classList.remove("scrolled");
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 
-    // Desktop dropdowns: keep aria-expanded in sync with the CSS hover/focus
-    // state and let Escape dismiss an open menu (WAI-ARIA menu conventions).
-    header.querySelectorAll<HTMLElement>("[data-dd]").forEach((dd) => {
-      const trigger = dd.querySelector<HTMLElement>("a[aria-haspopup]");
-      const sync = (open: boolean) =>
-        trigger?.setAttribute("aria-expanded", String(open));
-      dd.addEventListener("mouseenter", () => sync(true));
-      dd.addEventListener("mouseleave", () => sync(false));
-      dd.addEventListener("focusin", () => sync(true));
-      dd.addEventListener("focusout", (e) => {
-        if (!dd.contains(e.relatedTarget as Node)) sync(false);
-      });
-      dd.addEventListener("keydown", (e) => {
-        if ((e as KeyboardEvent).key === "Escape") {
-          sync(false);
-          (document.activeElement as HTMLElement)?.blur();
-          trigger?.focus();
-        }
-      });
-    });
-
-    const btn = document.getElementById("rcMenuBtn");
-    const nav = document.getElementById("rcMobileNav");
-    const backdrop = document.getElementById("rcMenuBackdrop");
-    const setMenu = (open: boolean) => {
-      nav?.classList.toggle("open", open);
-      if (nav) nav.hidden = !open;
-      if (backdrop) {
-        backdrop.hidden = !open;
-        backdrop.classList.toggle("open", open);
-      }
-      btn?.setAttribute("aria-expanded", String(open));
-      btn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-      if (open) header.classList.add("scrolled");
-      // Lock the page behind the sheet so it feels like a native overlay
-      // (no scroll bleed-through); restore on close.
-      document.documentElement.style.overflow = open ? "hidden" : "";
+    // Mobile menu
+    const openMenu = () => {
+      if (!mobileNav || !menuBtn || !backdrop) return;
+      mobileNav.hidden = false;
+      backdrop.hidden = false;
+      menuBtn.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
     };
-    btn?.addEventListener("click", () => {
-      const open = !nav?.classList.contains("open");
-      setMenu(open);
-      if (open) {
-        // Move focus into the sheet so keyboard users land where they expect.
-        nav?.querySelector<HTMLElement>("a, button, summary")?.focus();
-      }
+    const closeMenu = () => {
+      if (!mobileNav || !menuBtn || !backdrop) return;
+      mobileNav.hidden = true;
+      backdrop.hidden = true;
+      menuBtn.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    };
+
+    menuBtn?.addEventListener("click", () => {
+      const open = menuBtn.getAttribute("aria-expanded") === "true";
+      if (open) closeMenu(); else openMenu();
     });
-    // Escape closes the mobile sheet and returns focus to its toggle.
-    nav?.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        setMenu(false);
-        btn?.focus();
-      }
+    backdrop?.addEventListener("click", closeMenu);
+    mobileNav?.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).tagName === "A") closeMenu();
     });
-    // Clicking a destination link closes the sheet.
-    nav?.querySelectorAll("a[href]").forEach((a) =>
-      a.addEventListener("click", () => setMenu(false)),
-    );
-    // Tapping the dimmed backdrop closes the sheet.
-    backdrop?.addEventListener("click", () => {
-      setMenu(false);
-      btn?.focus();
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
     });
   }
-  rcHeaderInit();
-  document.addEventListener("astro:after-swap", rcHeaderInit);
 
-  /** Global ₹/$ switch, swaps every .px span and plan-grid symbol,
-      persists in localStorage, notifies pricing grids via rc-currency. */
   function rcCurrencyInit() {
-    const KEY = "rc-currency";
+    const stored = localStorage.getItem("rc-cur") || "usd";
     const apply = (cur: string) => {
-      document.documentElement.dataset.currency = cur;
+      localStorage.setItem("rc-cur", cur);
+      document.querySelectorAll(".cur-btn").forEach((b) => {
+        b.classList.toggle("active", (b as HTMLElement).dataset.cur === cur);
+      });
       document.querySelectorAll(".px").forEach((el) => {
-        const v = el.getAttribute(cur === "usd" ? "data-usd" : "data-inr");
-        if (v) el.textContent = v;
+        const e = el as HTMLElement;
+        e.textContent = cur === "inr" ? (e.dataset.inr || "") : (e.dataset.usd || "");
       });
       document.querySelectorAll("[data-cur-sym]").forEach((el) => {
-        el.textContent = cur === "usd" ? "$" : "₹";
+        (el as HTMLElement).textContent = cur === "inr" ? "₹" : "$";
       });
-      document.querySelectorAll(".cur-toggle button").forEach((b) => {
-        const on = b.getAttribute("data-cur") === cur;
-        b.classList.toggle("active", on);
-        b.setAttribute("aria-pressed", String(on));
-      });
-      document.dispatchEvent(new CustomEvent("rc-currency"));
+      window.dispatchEvent(new CustomEvent("rc-currency", { detail: cur }));
     };
-    document.querySelectorAll(".cur-toggle button").forEach((b) => {
-      b.addEventListener("click", () => {
-        const cur = b.getAttribute("data-cur") || "inr";
-        try {
-          localStorage.setItem(KEY, cur);
-        } catch {
-          /* private mode */
-        }
-        apply(cur);
-      });
+    document.querySelectorAll(".cur-btn").forEach((btn) => {
+      btn.addEventListener("click", () => apply((btn as HTMLElement).dataset.cur || "usd"));
     });
-    let saved = "inr";
-    try {
-      saved = localStorage.getItem(KEY) || "inr";
-    } catch {
-      /* private mode */
-    }
-    if (saved !== "inr") apply(saved);
+    apply(stored);
   }
+
+  rcHeaderInit();
   rcCurrencyInit();
-  document.addEventListener("astro:after-swap", rcCurrencyInit);
+  document.addEventListener("astro:after-swap", () => {
+    rcHeaderInit();
+    rcCurrencyInit();
+  });
 </script>
