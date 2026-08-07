@@ -92,6 +92,7 @@ definitions:
             - { name: title, label: "Heading (HTML/<em> allowed)", widget: string }
             - { name: subtitle, label: "Subtitle", widget: text, required: false }
             - { name: offer, label: "Offer line", widget: string, required: false }
+            - { name: art, label: "Hero illustration (il-shared, il-vps, il-dedicated, …)", widget: string, required: false }
             - { name: primaryCta, label: "Primary Button", <<: *ctaObject }
             - { name: secondaryCta, label: "Secondary Button", <<: *ctaObject }
             - { name: badges, label: "Trust Badges", widget: list, required: false }
@@ -124,10 +125,12 @@ definitions:
           label: "Feature Grid"
           summary: "Features — {{fields.title}}"
           fields:
+            - { name: id, label: "Anchor id", widget: string, required: false }
             - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
             - { name: title, label: "Heading", widget: string, required: false }
             - { name: subtitle, label: "Subtitle", widget: text, required: false }
             - { name: columns, label: "Columns", widget: number, default: 3, min: 2, max: 4 }
+            - { name: variant, label: "Card style", widget: select, options: ["cards", "tiles"], required: false }
             - name: items
               label: "Features"
               widget: list
@@ -135,7 +138,8 @@ definitions:
               fields:
                 - { name: icon, label: "Icon", widget: string, required: false }
                 - { name: title, label: "Title", widget: string }
-                - { name: text, label: "Text", widget: text }
+                - { name: text, label: "Text", widget: text, required: false }
+                - { name: href, label: "Link (card links to this URL)", widget: string, required: false }
         # ---- Content split ----
         - name: content
           label: "Content + Media"
@@ -146,6 +150,7 @@ definitions:
             - { name: subtitle, label: "Subtitle", widget: text, required: false }
             - { name: image, label: "Image", widget: image, required: false, choose_url: true, hint: "Upload/pick an image — or type a bundled keyword (hero, datacenter, support, working, mascot) via 'Insert from URL'." }
             - { name: reverse, label: "Image on right", widget: boolean, default: false }
+            - { name: layout, label: "Bullet layout", widget: select, options: ["chips", "list"], required: false }
             - { name: body, label: "Body (Markdown)", widget: markdown, required: false }
             - name: items
               label: "Bullet Points"
@@ -169,6 +174,7 @@ definitions:
               widget: list
               summary: "{{fields.title}}"
               fields:
+                - { name: icon, label: "Icon", widget: string, required: false }
                 - { name: title, label: "Title", widget: string }
                 - { name: text, label: "Text", widget: text }
         # ---- Stats ----
@@ -257,6 +263,117 @@ definitions:
             - { name: subtitle, label: "Subtitle", widget: text, required: false }
             - { name: primaryCta, label: "Primary Button", <<: *ctaObject }
             - { name: secondaryCta, label: "Secondary Button", <<: *ctaObject }
+        # ---- Benchmark bars ----
+        - name: benchmark
+          label: "Benchmark / Ratings Bars"
+          summary: "Benchmark — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: note, label: "Footnote", widget: string, required: false }
+            - name: items
+              label: "Bars"
+              widget: list
+              summary: "{{fields.label}} — {{fields.display}}"
+              fields:
+                - { name: label, label: "Label", widget: string }
+                - { name: value, label: "Value (number, sets bar length)", widget: number, value_type: float }
+                - { name: display, label: "Displayed value", widget: string }
+                - { name: highlight, label: "Highlight", widget: boolean, default: false, required: false }
+        # ---- Speed race ----
+        - name: race
+          label: "Speed Race"
+          summary: "Speed race — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: note, label: "Footnote", widget: string, required: false }
+            - name: items
+              label: "Racers"
+              widget: list
+              summary: "{{fields.label}} — {{fields.display}}"
+              fields:
+                - { name: label, label: "Label", widget: string }
+                - { name: value, label: "Relative speed (number)", widget: number, value_type: float }
+                - { name: display, label: "Displayed value", widget: string }
+                - { name: highlight, label: "Highlight", widget: boolean, default: false, required: false }
+        # ---- Security layers ----
+        - name: security
+          label: "Security Layers"
+          summary: "Security — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - name: layers
+              label: "Layers"
+              widget: list
+              summary: "{{fields.title}}"
+              fields:
+                - { name: title, label: "Title", widget: string }
+                - { name: text, label: "Text", widget: text }
+            - name: stats
+              label: "Stats (optional)"
+              widget: list
+              required: false
+              summary: "{{fields.value}} {{fields.label}}"
+              fields:
+                - { name: value, label: "Value", widget: string }
+                - { name: label, label: "Label", widget: string }
+        # ---- OS strip ----
+        - name: osstrip
+          label: "OS Strip"
+          summary: "OS strip — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - name: items
+              label: "Operating systems"
+              widget: list
+              summary: "{{fields.name}}"
+              fields:
+                - { name: name, label: "Name", widget: string }
+                - { name: color, label: "Accent color (CSS)", widget: string, required: false }
+                - { name: active, label: "Active", widget: boolean, default: false, required: false }
+        # ---- Map band ----
+        - name: mapband
+          label: "Datacenter Map"
+          summary: "Map — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - { name: note, label: "Footnote", widget: string, required: false }
+            - name: pins
+              label: "Location pins"
+              widget: list
+              required: false
+              summary: "{{fields.label}}"
+              fields:
+                - { name: label, label: "Label", widget: string }
+                - { name: x, label: "X position (0–100)", widget: number, value_type: float }
+                - { name: y, label: "Y position (0–100)", widget: number, value_type: float }
+                - { name: live, label: "Live", widget: boolean, default: false, required: false }
+        # ---- Showcase tabs ----
+        - name: showcase
+          label: "Showcase Tabs"
+          summary: "Showcase — {{fields.title}}"
+          fields:
+            - { name: eyebrow, label: "Eyebrow", widget: string, required: false }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - { name: subtitle, label: "Subtitle", widget: text, required: false }
+            - name: tabs
+              label: "Tabs"
+              widget: list
+              required: false
+              summary: "{{fields.label}}"
+              fields:
+                - { name: label, label: "Tab label", widget: string }
+                - { name: panel, label: "Panel", widget: select, options: ["files", "ssl", "backups", "stats"] }
+                - { name: text, label: "Caption", widget: text, required: false }
     - name: body
       label: "Long-form Body (Markdown — for legal/policy pages)"
       widget: markdown

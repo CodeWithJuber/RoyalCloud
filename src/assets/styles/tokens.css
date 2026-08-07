@@ -7,27 +7,27 @@
    ============================================================ */
 :root {
   /* ── Primitives — live-site palette ─────────────────────── */
-  --sky:         #00a7f5; /* primary brand blue */
-  --sky-deep:    #0086cf; /* hover / pressed */
-  --sky-tint:    #e5f6fe; /* wash */
-  --purple:      #7652f2; /* secondary brand */
+  --sky: #00a7f5; /* primary brand blue */
+  --sky-deep: #0086cf; /* hover / pressed */
+  --sky-tint: #e5f6fe; /* wash */
+  --purple: #7652f2; /* secondary brand */
   --purple-deep: #5b3bd6; /* pressed */
   --purple-tint: #efeafe; /* wash */
-  --gold:        #fdd700; /* THE conversion accent (CTA pill) */
-  --gold-deep:   #e5c300;
-  --navy:        #22105f; /* dark section bands */
-  --navy-2:      #2c1a6e; /* elevated surface on navy */
-  --ink:         #181b22; /* footer / darkest chrome */
-  --orange:      #fa4612; /* rare alert accent */
-  --magenta:     #a5215e; /* rare accent */
-  --paper:       #ffffff;
-  --mist:        #f6f8fc; /* tinted section background */
+  --gold: #fdd700; /* THE conversion accent (CTA pill) */
+  --gold-deep: #e5c300;
+  --navy: #22105f; /* dark section bands */
+  --navy-2: #2c1a6e; /* elevated surface on navy */
+  --ink: #181b22; /* footer / darkest chrome */
+  --orange: #fa4612; /* rare alert accent */
+  --magenta: #a5215e; /* rare accent */
+  --paper: #ffffff;
+  --mist: #f6f8fc; /* tinted section background */
   --heading-ink: #1b2033;
-  --gray-700:    #3d4453;
-  --gray-500:    #5f6673;
-  --green:       #1fa463; /* status ok */
-  --amber:       #ffc107; /* status warn */
-  --red:         #dc3545; /* status down */
+  --gray-700: #3d4453;
+  --gray-500: #5f6673;
+  --green: #1fa463; /* status ok */
+  --amber: #ffc107; /* status warn */
+  --red: #dc3545; /* status down */
 
   /* ── Semantic — surfaces ────────────────────────────────── */
   --bg-page: var(--paper);
@@ -63,15 +63,19 @@
   --theme-art-b: var(--purple);
 
   /* ── Semantic — lines & status ──────────────────────────── */
-  --line: rgb(27 32 51 / 0.10);
-  --line-strong: rgb(27 32 51 / 0.20);
+  --line: rgb(27 32 51 / 0.1);
+  --line-strong: rgb(27 32 51 / 0.2);
   --ok: var(--green);
   --ok-soft: rgb(31 164 99 / 0.13);
   --save-bg: rgb(253 215 0 / 0.16);
 
   /* ── Type — Open Sans everywhere (self-hosted variable) ─── */
-  --font-heading: "Open Sans Variable", "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-body: "Open Sans Variable", "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading:
+    "Open Sans Variable", "Open Sans", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-body:
+    "Open Sans Variable", "Open Sans", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
 
   /* ── Radius ─────────────────────────────────────────────── */
@@ -172,7 +176,7 @@
   --pulse-ok: var(--green);
   --pulse-warn: var(--amber);
   --pulse-down: var(--red);
-  --line-chrome-10: rgb(202 209 229 / 0.10);
+  --line-chrome-10: rgb(202 209 229 / 0.1);
   --line-chrome-16: rgb(202 209 229 / 0.16);
   --line-chrome-24: rgb(202 209 229 / 0.24);
   --inner-highlight: inset 0 1px 0 rgb(255 255 255 / 0.07);
@@ -181,17 +185,26 @@
   --interactive: var(--sky);
   --interactive-pressed: var(--sky-deep);
   --wash-cobalt-06: rgb(118 82 242 / 0.06);
-  --wash-cobalt-10: rgb(118 82 242 / 0.10);
+  --wash-cobalt-10: rgb(118 82 242 / 0.1);
   --wash-signal-10: rgb(253 215 0 / 0.14);
   --font-display: var(--font-heading);
   --spectrum: linear-gradient(100deg, var(--sky) 0%, var(--purple) 100%);
   --rc-gradient: linear-gradient(110deg, var(--navy) 0%, var(--navy-2) 100%);
   --grad-cta: var(--rc-gradient);
   --grad-energy: linear-gradient(135deg, var(--sky) 0%, var(--purple) 100%);
-  --grad-gold-spark: linear-gradient(120deg, var(--gold) 0%, var(--gold-deep) 100%);
+  --grad-gold-spark: linear-gradient(
+    120deg,
+    var(--gold) 0%,
+    var(--gold-deep) 100%
+  );
   --grad-hot: var(--grad-energy);
   --grad-gold-cta: var(--grad-gold-spark);
-  --grad-text: linear-gradient(96deg, var(--navy) 0%, var(--purple) 64%, var(--sky) 100%);
+  --grad-text: linear-gradient(
+    96deg,
+    var(--navy) 0%,
+    var(--purple) 64%,
+    var(--sky) 100%
+  );
   --grad-violet-azure: var(--grad-energy);
   --rc-grad-vivid: linear-gradient(122deg, var(--navy) 0%, var(--navy-2) 100%);
   --shadow-violet: 0 18px 50px -14px rgba(118, 82, 242, 0.35);

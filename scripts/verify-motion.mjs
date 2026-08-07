@@ -45,7 +45,7 @@ const server = createServer(async (req, res) => {
 await new Promise((r) => server.listen(PORT, r));
 const base = `http://localhost:${PORT}`;
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_BIN || undefined });
 const ctx = await browser.newContext({
   viewport: { width: 1440, height: 900 },
   reducedMotion: "no-preference",
