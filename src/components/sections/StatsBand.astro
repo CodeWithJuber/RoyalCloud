@@ -4,7 +4,6 @@ interface Props {
 }
 const { items } = Astro.props;
 
-// Split "99.99%" → count target 99.99 + suffix "%"; "24/7" stays static.
 const parse = (v: string) => {
   const m = v.match(/^(\d+(?:\.\d+)?)([^\d].*)?$/);
   if (!m || v.includes("/")) return null;
@@ -12,16 +11,16 @@ const parse = (v: string) => {
 };
 ---
 
-<section class="stats">
+<section class="rc-stats">
   <div class="wrap">
     <div class="stat-grid">
       {
-        items.map((s, i) => {
+        items.map((s) => {
           const c = parse(s.value);
           return (
-            <div class={`stat reveal reveal-d${(i % 4) + 1}`}>
+            <div class="stat-item">
               <div
-                class="amount"
+                class="stat-value"
                 {...(c
                   ? {
                       "data-count": c.target,
@@ -31,7 +30,7 @@ const parse = (v: string) => {
               >
                 {s.value}
               </div>
-              <div class="label">{s.label}</div>
+              <div class="stat-label">{s.label}</div>
             </div>
           );
         })
@@ -40,3 +39,43 @@ const parse = (v: string) => {
   </div>
 </section>
 
+<style>
+  .rc-stats {
+    background: var(--grad-royal);
+    padding: 60px 0;
+  }
+
+  .stat-grid {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+    color: #fff;
+  }
+
+  .stat-value {
+    font-family: var(--font-heading);
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .stat-grid {
+      gap: 30px;
+    }
+    .stat-value {
+      font-size: 32px;
+    }
+  }
+</style>

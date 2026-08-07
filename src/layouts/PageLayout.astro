@@ -1,25 +1,22 @@
 ---
-import Layout from '~/layouts/Layout.astro';
-import HeaderRC from '~/components/widgets/HeaderRC.astro';
-import FooterRC from '~/components/widgets/FooterRC.astro';
-import RevealScript from '~/components/widgets/RevealScript.astro';
-import CountUp from '~/components/widgets/CountUp.astro';
-import MobileCTA from '~/components/widgets/MobileCTA.astro';
-import SvgDefs from '~/components/illustrations/SvgDefs.astro';
+import Layout from "~/layouts/Layout.astro";
+import HeaderRC from "~/components/widgets/HeaderRC.astro";
+import FooterRC from "~/components/widgets/FooterRC.astro";
+import RevealScript from "~/components/widgets/RevealScript.astro";
+import CountUp from "~/components/widgets/CountUp.astro";
+import SvgDefs from "~/components/illustrations/SvgDefs.astro";
 
-import type { MetaData } from '~/types';
+import type { MetaData } from "~/types";
 
 export interface Props {
   metadata?: MetaData;
-  /** Pages with their own dark hero can render the transparent header. */
   transparentHeader?: boolean;
-  /** Per-page visual identity, sets data-theme on <main> (see components.css). */
   theme?: string;
-  /** Page id, sets data-page on <main> for page-scoped styling (e.g. home). */
   page?: string;
+  newsletter?: boolean;
 }
 
-const { metadata, transparentHeader = false, theme, page } = Astro.props;
+const { metadata, transparentHeader = false, theme, page, newsletter = false } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
@@ -32,9 +29,8 @@ const { metadata, transparentHeader = false, theme, page } = Astro.props;
     <slot />
   </main>
   <slot name="footer">
-    <FooterRC />
+    <FooterRC newsletter={newsletter} />
   </slot>
-  <MobileCTA />
   <RevealScript />
   <CountUp />
 </Layout>

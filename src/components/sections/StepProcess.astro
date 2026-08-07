@@ -1,129 +1,109 @@
 ---
+import { Icon } from "astro-icon/components";
+import { tablerIcon } from "~/utils/plans";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
 interface Props {
   eyebrow?: string;
   title?: string;
   subtitle?: string;
-  items: { title?: string; text?: string }[];
+  items: { icon?: string; title?: string; text?: string }[];
 }
 const { eyebrow, title, subtitle, items } = Astro.props;
 ---
 
-<section class="steps-sec cv-auto">
+<section class="rc-steps">
   <div class="wrap">
-    {
-      (eyebrow || title) && (
-        <div class="sec-head center reveal">
-          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-          {title && <h2 set:html={title} />}
-          {subtitle && <p set:html={subtitle} />}
+    {(eyebrow || title) && (
+      <div class="section-title">
+        {eyebrow && <span class="rc-steps-eyebrow">{eyebrow}</span>}
+        {title && <h2 set:html={title} />}
+        <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+        {subtitle && <p set:html={subtitle} />}
+      </div>
+    )}
+    <div class="rc-steps-grid" style={`grid-template-columns: repeat(${items.length}, 1fr);`}>
+      {items.map((s, i) => (
+        <div class="rc-step">
+          <div class="rc-step-num">
+            {s.icon ? (
+              <Icon name={tablerIcon(s.icon)} />
+            ) : (
+              <span>{i + 1}</span>
+            )}
+          </div>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
         </div>
-      )
-    }
-    <ol
-      class="timeline"
-      style={`grid-template-columns: repeat(${items.length}, 1fr); --n: ${items.length};`}
-    >
-      {
-        items.map((s, i) => (
-          <li class={`tl-step reveal reveal-d${(i % 4) + 1}`}>
-            <span class="tl-node">{i + 1}</span>
-            <div class="tl-body">
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </div>
-          </li>
-        ))
-      }
-    </ol>
+      ))}
+    </div>
   </div>
 </section>
 
 <style>
-  .timeline {
-    position: relative;
-    display: grid;
-    gap: 28px;
-    list-style: none;
-    margin: 40px 0 0;
-    padding: 0;
-  }
-  /* horizontal spectrum connector, spanning first node centre to last */
-  .timeline::before {
-    content: "";
-    position: absolute;
-    top: 27px;
-    left: calc(50% / var(--n));
-    right: calc(50% / var(--n));
-    height: 2px;
-    background: var(--spectrum);
-    opacity: 0.55;
-  }
-  .tl-step {
-    position: relative;
-    text-align: center;
-  }
-  .tl-node {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    width: 54px;
-    height: 54px;
-    margin: 0 auto 18px;
-    border-radius: 50%;
-    background: #fff;
-    border: 2px solid var(--theme-accent, var(--rc-violet));
-    color: var(--theme-accent, var(--rc-violet));
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 20px;
-    box-shadow: var(--shadow-sm);
-  }
-  .tl-body h3 {
-    font-family: var(--font-heading);
-    font-size: 18.5px;
-    font-weight: 600;
-    color: var(--text-heading);
-    margin: 0 0 6px;
-  }
-  .tl-body p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--text-muted);
-    max-width: 32ch;
-    margin: 0 auto;
+  .rc-steps {
+    padding: 100px 0;
+    background: #fafafa;
   }
 
-  /* vertical timeline on phones */
-  @media (max-width: 760px) {
-    .timeline {
+  .rc-steps-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .rc-steps-grid {
+    display: grid;
+    gap: 30px;
+    margin-top: 10px;
+  }
+
+  .rc-step {
+    text-align: center;
+    padding: 30px 20px;
+  }
+  .rc-step-num {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(38,159,216,0.1), rgba(123,31,162,0.08));
+    display: grid;
+    place-items: center;
+    color: var(--heading-blue);
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .rc-step-num svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rc-step h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    margin: 0 0 10px;
+  }
+  .rc-step p {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin: 0;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 860px) {
+    .rc-steps-grid {
       grid-template-columns: 1fr !important;
-      gap: 0;
-    }
-    .timeline::before {
-      top: 27px;
-      bottom: 27px;
-      left: 27px;
-      right: auto;
-      width: 2px;
-      height: auto;
-    }
-    .tl-step {
-      display: grid;
-      grid-template-columns: 54px 1fr;
-      gap: 0 16px;
-      text-align: left;
-      padding-bottom: 30px;
-    }
-    .tl-node {
-      margin: 0;
-    }
-    .tl-body {
-      padding-top: 6px;
-    }
-    .tl-body p {
-      max-width: none;
-      margin: 0;
     }
   }
 </style>

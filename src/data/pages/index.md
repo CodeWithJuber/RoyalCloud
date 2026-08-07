@@ -8,6 +8,7 @@ metadata:
     domains — free SSL and a money-back guarantee on every plan.
   ignoreTitleTemplate: true
 transparentHeader: true
+newsletter: true
 sections:
   - type: hero
     variant: gradient

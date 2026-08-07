@@ -1,6 +1,7 @@
 ---
 import site from "~/data/site.json";
 import { toINR } from "~/utils/currency";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
 
 const tlds = [
   { tld: ".com", usd: "9.99" },
@@ -16,96 +17,231 @@ interface Props {
 }
 const {
   eyebrow,
-  title = "Find your perfect domain name",
+  title = "Find the perfect domain name",
   subtitle,
 } = Astro.props;
 
-// WHMCS domain checker: GET cart.php with the search term in `query`.
 const action = new URL(site.portal.domainChecker);
 const hidden = [...action.searchParams.entries()];
 const formAction = `${action.origin}${action.pathname}`;
 ---
 
-<section class="domain-sec cv-auto">
+<section class="rc-domainsearch">
   <div class="wrap">
-    <div class="domain-panel reveal">
-      <div class="sec-head center">
-        {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-        {title && <h2 set:html={title} />}
-        {subtitle && <p set:html={subtitle} />}
-      </div>
-      <form
-        class="domain-search"
-        method="get"
-        action={formAction}
-        target="_blank"
-        novalidate
-      >
-        {
-          hidden.map(([name, value]) => (
-            <input type="hidden" name={name} value={value} />
-          ))
-        }
-        <span class="at">@</span>
+    <div class="section-title">
+      {eyebrow && <span class="ds-eyebrow">{eyebrow}</span>}
+      <h2 set:html={title} />
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+
+    <form
+      class="ds-form"
+      method="get"
+      action={formAction}
+      target="_blank"
+      novalidate
+    >
+      {hidden.map(([name, value]) => (
+        <input type="hidden" name={name} value={value} />
+      ))}
+      <div class="ds-input-wrap">
         <input
           type="text"
           name="query"
-          placeholder="Type the domain you want…"
+          placeholder="Enter your domain name…"
           aria-label="Domain name"
           aria-describedby="domain-status"
           autocomplete="off"
           required
+          class="ds-input"
         />
-        <button class="btn btn-primary" type="submit">Search</button>
-      </form>
-      <div
-        class="domain-suggest"
-        id="domainSuggest"
-        role="listbox"
-        aria-label="Domain suggestions"
-      >
+        <select class="ds-tld" aria-label="Extension">
+          <option>.com</option>
+          <option>.net</option>
+          <option>.org</option>
+          <option>.in</option>
+          <option>.info</option>
+          <option>.co</option>
+        </select>
+        <button class="default-btn ds-btn" type="submit">Search</button>
       </div>
-      <p id="domain-status" class="domain-status" role="status" aria-live="polite"></p>
-      <div class="domain-tlds">
-        {
-          tlds.map((t) => (
-            <span>
-              <b>{t.tld}</b>{" "}
-              <em
-                class="px"
-                data-usd={`$${t.usd}`}
-                data-inr={`₹${toINR(t.usd)}`}
-              >
-                ₹{toINR(t.usd)}
-              </em>
-            </span>
-          ))
-        }
-      </div>
+    </form>
+
+    <div
+      class="ds-suggest"
+      id="domainSuggest"
+      role="listbox"
+      aria-label="Domain suggestions"
+    ></div>
+    <p id="domain-status" class="ds-status" role="status" aria-live="polite"></p>
+
+    <div class="ds-tlds">
+      {tlds.map((t) => (
+        <span class="ds-tld-price">
+          <b>{t.tld}</b>
+          <em class="px" data-usd={`$${t.usd}`} data-inr={`₹${toINR(t.usd)}`}>
+            ${t.usd}
+          </em>
+        </span>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
-  .domain-status {
-    margin: 12px auto 0;
+  .rc-domainsearch {
+    background: #f6f6f6;
+    padding: 100px 0;
+  }
+
+  .ds-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .ds-form {
+    max-width: 700px;
+    margin: 0 auto 20px;
+  }
+
+  .ds-input-wrap {
+    display: flex;
+    background: #fff;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    border: 2px solid #eee;
+    transition: border-color 0.2s;
+  }
+  .ds-input-wrap:focus-within {
+    border-color: var(--heading-blue);
+  }
+
+  .ds-input {
+    flex: 1;
+    font-family: var(--font-body);
+    font-size: 16px;
+    padding: 16px 25px;
+    border: none;
+    outline: none;
+    background: transparent;
+    min-width: 0;
+  }
+
+  .ds-tld {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    padding: 0 12px;
+    border: none;
+    border-left: 1px solid #eee;
+    background: #fafafa;
+    cursor: pointer;
+    appearance: auto;
+  }
+
+  .ds-btn {
+    border-radius: 0 50px 50px 0;
+    padding: 16px 35px;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .ds-suggest {
+    display: none;
+    gap: 8px;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto 10px;
+    flex-wrap: wrap;
+  }
+  .ds-suggest.is-on {
+    display: flex;
+  }
+  .ds-suggest :global(button) {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--heading-blue);
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .ds-suggest :global(button:hover) {
+    background: var(--heading-blue);
+    border-color: var(--heading-blue);
+    color: #fff;
+  }
+
+  .ds-status {
+    margin: 10px auto 0;
     min-height: 1.2em;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
-    color: rgba(255, 255, 255, 0.92);
+    color: var(--body-color);
   }
-  .domain-status.is-error {
-    color: var(--rc-yellow);
+  .ds-status.is-error {
+    color: #e53e3e;
+  }
+
+  .ds-tlds {
+    display: flex;
+    justify-content: center;
+    gap: 20px 35px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+  }
+  .ds-tld-price {
+    font-size: 14px;
+    color: var(--body-color);
+  }
+  .ds-tld-price b {
+    color: var(--heading-blue);
+    font-weight: 700;
+    margin-right: 4px;
+  }
+  .ds-tld-price em {
+    font-style: normal;
+  }
+
+  @media (max-width: 600px) {
+    .ds-input-wrap {
+      flex-wrap: wrap;
+      border-radius: 15px;
+    }
+    .ds-input {
+      width: 100%;
+      border-radius: 0;
+      padding: 14px 20px;
+    }
+    .ds-tld {
+      border-left: none;
+      border-top: 1px solid #eee;
+      padding: 12px 15px;
+    }
+    .ds-btn {
+      border-radius: 0;
+      width: 100%;
+      border-top: 1px solid #eee;
+    }
   }
 </style>
 
 <script>
-  // Forgiving domain input (Postel's Law): strip protocol/www/spaces so a
-  // pasted URL still works; give instant feedback (Doherty) before handing
-  // off to the WHMCS checker.
   function initDomainSearch() {
-    document.querySelectorAll<HTMLFormElement>('form.domain-search').forEach((form) => {
+    document.querySelectorAll<HTMLFormElement>('form.ds-form').forEach((form) => {
       if (form.dataset.rcReady) return;
       form.dataset.rcReady = 'true';
       const input = form.querySelector<HTMLInputElement>('input[name=query]');
@@ -114,8 +250,6 @@ const formAction = `${action.origin}${action.pathname}`;
       const suggest = form.parentElement?.querySelector<HTMLElement>('#domainSuggest') ?? null;
       if (!input) return;
 
-      // Live suggestions (autocomplete affordance): as the visitor types a
-      // name, surface the popular TLDs as one-tap chips.
       const TLDS = ['.com', '.in', '.net', '.org'];
       const renderSuggest = () => {
         if (!suggest) return;
@@ -180,7 +314,6 @@ const formAction = `${action.origin}${action.pathname}`;
         if (btn) {
           btn.classList.add('is-loading');
           btn.disabled = true;
-          // Results open in a new tab, restore the button so the page stays usable.
           window.setTimeout(() => {
             btn.classList.remove('is-loading');
             btn.disabled = false;

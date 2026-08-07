@@ -1,5 +1,12 @@
 ---
-import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+const partnerImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/live/partners/*.{png,svg}",
+  { eager: true }
+);
+const partners = Object.values(partnerImages).map((m) => m.default);
 
 interface Props {
   eyebrow?: string;
@@ -7,49 +14,89 @@ interface Props {
   subtitle?: string;
   logos?: string[];
 }
-const DEFAULT_LOGOS = [
-  "cloudflare",
-  "cpanel",
-  "cloudlinux",
-  "letsencrypt",
-  "intel",
-  "ubuntu",
-  "mysql",
-  "php",
-];
 const {
   eyebrow,
-  title = "Powered by industry-leading technology",
+  title = "Built on Trusted Technology",
   subtitle,
-  logos = DEFAULT_LOGOS,
 } = Astro.props;
 ---
 
-<section class="techlogos cv-auto">
+<section class="rc-techlogos">
   <div class="wrap">
-    <div class="sec-head center reveal">
-      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-      {title && <h2 set:html={title} />}
+    <div class="section-title">
+      {eyebrow && <span class="tl-eyebrow">{eyebrow}</span>}
+      <h2 set:html={title} />
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
       {subtitle && <p set:html={subtitle} />}
     </div>
-    <div class="marquee reveal reveal-d1">
-      <div class="marquee-track">
-        {
-          [0, 1].map((dup) => (
-            <div
-              class="partner-row"
-              style="flex-wrap: nowrap;"
-              aria-hidden={dup === 1 ? "true" : undefined}
-            >
-              {logos.map((l) => (
-                <span class="mark" role="img" aria-label={l} title={l}>
-                  <Icon name={`logos:${l}`} aria-hidden="true" />
-                </span>
-              ))}
-            </div>
-          ))
-        }
-      </div>
+    <div class="tl-row">
+      {partners.map((img) => (
+        <span class="tl-logo">
+          <img
+            src={img.src}
+            alt=""
+            width={img.width}
+            height={img.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      ))}
     </div>
   </div>
 </section>
+
+<style>
+  .rc-techlogos {
+    background: var(--grad-royal);
+    padding: 80px 0;
+    color: #fff;
+  }
+
+  .rc-techlogos .section-title h2 {
+    color: #fff;
+  }
+  .rc-techlogos .section-title p {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .tl-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .tl-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .tl-logo {
+    display: block;
+  }
+  .tl-logo img {
+    height: 40px;
+    width: auto;
+    filter: grayscale(100%) brightness(2);
+    opacity: 0.7;
+    transition: opacity 0.3s, filter 0.3s;
+  }
+  .tl-logo:hover img {
+    opacity: 1;
+    filter: none;
+  }
+
+  @media (max-width: 600px) {
+    .tl-row { gap: 25px; }
+    .tl-logo img { height: 30px; }
+  }
+</style>

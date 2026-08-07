@@ -1,9 +1,6 @@
 ---
-/**
- * Benchmark bars, SiteGround-style horizontal speed comparison.
- * Bars fill via scaleX inside fixed-height tracks (CLS-safe) when the
- * section reveals; the highlighted row uses the theme gradient.
- */
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
 interface Props {
   eyebrow?: string;
   title?: string;
@@ -20,131 +17,125 @@ const { eyebrow, title, subtitle, note, items } = Astro.props;
 const max = Math.max(...items.map((i) => i.value));
 ---
 
-<section class="bench">
+<section class="rc-benchmark">
   <div class="wrap">
-    {
-      (eyebrow || title) && (
-        <div class="sec-head center reveal">
-          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-          {title && <h2 set:html={title} />}
-          {subtitle && <p set:html={subtitle} />}
+    {(eyebrow || title) && (
+      <div class="section-title">
+        {eyebrow && <span class="bench-eyebrow">{eyebrow}</span>}
+        {title && <h2 set:html={title} />}
+        <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+        {subtitle && <p set:html={subtitle} />}
+      </div>
+    )}
+    <div class="bench-panel">
+      {items.map((row) => (
+        <div class={`bench-row ${row.highlight ? "bench-hl" : ""}`}>
+          <span class="bench-label">{row.label}</span>
+          <span class="bench-track">
+            <i style={`--w: ${Math.max((row.value / max) * 100, 6)}%`} />
+          </span>
+          <b class="bench-val">{row.display}</b>
         </div>
-      )
-    }
-    <div class="bench-panel reveal">
-      {
-        items.map((row) => (
-          <div class={`brow ${row.highlight ? "hl" : ""}`}>
-            <span class="blabel">{row.label}</span>
-            <span class="btrack">
-              <i style={`--w: ${Math.max((row.value / max) * 100, 6)}%`} />
-            </span>
-            <b class="bval">{row.display}</b>
-          </div>
-        ))
-      }
-      {note && <p class="bnote">{note}</p>}
+      ))}
+      {note && <p class="bench-note">{note}</p>}
     </div>
   </div>
 </section>
 
 <style>
-  .bench-panel {
-    max-width: 880px;
-    margin-inline: auto;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-panel);
-    box-shadow: var(--shadow-sm);
-    padding: clamp(26px, 4vw, 44px);
+  .rc-benchmark {
+    padding: 100px 0;
   }
-  .brow {
-    display: grid;
-    grid-template-columns: 170px 1fr 84px;
-    align-items: center;
-    gap: 16px;
-    padding: 13px 0;
-  }
-  .brow + .brow {
-    border-top: 1px solid var(--line);
-  }
-  .blabel {
+
+  .bench-eyebrow {
+    display: block;
     font-family: var(--font-heading);
     font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .bench-panel {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+    padding: 40px;
+  }
+
+  .bench-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+  }
+  .bench-row + .bench-row {
+    border-top: 1px solid #eee;
+  }
+
+  .bench-label {
+    font-family: var(--font-heading);
+    font-size: 15px;
     font-weight: 700;
-    color: var(--text-muted);
+    color: var(--body-color);
   }
-  .brow.hl .blabel {
-    color: var(--rc-ink);
+  .bench-hl .bench-label {
+    color: var(--heading-blue);
   }
-  .btrack {
+
+  .bench-track {
     position: relative;
     display: block;
-    height: 18px;
-    border-radius: 9px;
-    background: var(--bg-tint);
+    height: 20px;
+    border-radius: 10px;
+    background: #f0f0f0;
     overflow: hidden;
   }
-  .btrack i {
+  .bench-track i {
     position: absolute;
     inset: 0;
     width: var(--w);
-    border-radius: 9px;
-    background: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--theme-accent) 30%, var(--line-strong)),
-      color-mix(in srgb, var(--theme-accent) 14%, var(--line-strong))
-    );
-    transform-origin: left;
+    border-radius: 10px;
+    background: #ccc;
+    transition: transform 1s ease;
   }
-  .brow.hl .btrack i {
-    background: linear-gradient(90deg, var(--theme-art-a), var(--theme-art-b));
-    box-shadow: 0 0 16px -2px
-      color-mix(in srgb, var(--theme-accent) 60%, transparent);
+  .bench-hl .bench-track i {
+    background: linear-gradient(90deg, var(--heading-blue), var(--royal-purple));
   }
-  .bval {
+
+  .bench-val {
     font-family: var(--font-heading);
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
-    color: var(--text-muted);
+    color: var(--body-color);
     text-align: right;
   }
-  .brow.hl .bval {
-    color: var(--theme-accent);
-    font-size: 18px;
+  .bench-hl .bench-val {
+    color: var(--heading-blue);
+    font-size: 20px;
   }
-  .bnote {
-    margin: 20px 4px 0;
-    font-size: 12.5px;
-    color: var(--text-muted);
+
+  .bench-note {
+    margin: 20px 0 0;
+    font-size: 13px;
+    color: #999;
+    text-align: center;
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .bench-panel.reveal .btrack i {
-      transform: scaleX(0);
-    }
-    .bench-panel.reveal.in .btrack i {
-      transform: scaleX(1);
-      transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.2, 1) 0.25s;
-    }
-    .bench-panel.reveal.in .brow.hl .btrack i {
-      transition-delay: 0.45s;
-    }
-  }
+
   @media (max-width: 640px) {
-    .brow {
-      grid-template-columns: 1fr 72px;
+    .bench-panel { padding: 25px; }
+    .bench-row {
+      grid-template-columns: 1fr 70px;
       grid-template-areas: "label label" "track val";
       gap: 8px 12px;
-      padding: 14px 0;
     }
-    .blabel {
-      grid-area: label;
-    }
-    .btrack {
-      grid-area: track;
-    }
-    .bval {
-      grid-area: val;
-    }
+    .bench-label { grid-area: label; }
+    .bench-track { grid-area: track; }
+    .bench-val { grid-area: val; }
   }
 </style>

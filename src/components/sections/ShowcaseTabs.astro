@@ -1,9 +1,6 @@
 ---
-/**
- * Panel showcase, a browser-framed control-panel mockup with a tab
- * switcher (Files / SSL / Backups / Stats). Panels are hand-built CSS
- * mocks; tabs swap them with a small re-initializable script.
- */
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
 interface Tab {
   label: string;
   panel: "files" | "ssl" | "backups" | "stats";
@@ -28,23 +25,25 @@ const {
 } = Astro.props;
 ---
 
-<section class="showcase">
+<section class="rc-showcase">
   <div class="wrap">
     {
       (eyebrow || title) && (
-        <div class="sec-head center reveal">
-          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+        <div class="section-title">
+          {eyebrow && <span class="sc-eyebrow">{eyebrow}</span>}
           {title && <h2 set:html={title} />}
+          <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
           {subtitle && <p set:html={subtitle} />}
         </div>
       )
     }
-    <div class="sc-stage reveal" data-showcase>
+
+    <div class="sc-stage" data-showcase>
       <div class="sc-tabs" role="tablist" aria-label="Control panel features">
         {
           tabs.map((t, i) => (
             <button
-              class={`sc-tab ${i === 0 ? "on" : ""}`}
+              class={`sc-tab ${i === 0 ? "active" : ""}`}
               role="tab"
               id={`sc-tab-${t.panel}`}
               aria-controls={`sc-panel-${t.panel}`}
@@ -57,14 +56,10 @@ const {
           ))
         }
       </div>
-      <div class="sc-frame">
-        <div class="sc-bar">
-          <i></i><i></i><i></i>
-          <span class="sc-url">panel.royalclouds.net</span>
-        </div>
 
+      <div class="sc-body">
         <div
-          class="sc-panel sc-files on"
+          class="sc-panel on"
           data-sc="files"
           role="tabpanel"
           id="sc-panel-files"
@@ -89,7 +84,7 @@ const {
         </div>
 
         <div
-          class="sc-panel sc-ssl"
+          class="sc-panel"
           data-sc="ssl"
           role="tabpanel"
           id="sc-panel-ssl"
@@ -116,7 +111,7 @@ const {
         </div>
 
         <div
-          class="sc-panel sc-backups"
+          class="sc-panel"
           data-sc="backups"
           role="tabpanel"
           id="sc-panel-backups"
@@ -137,7 +132,7 @@ const {
         </div>
 
         <div
-          class="sc-panel sc-stats"
+          class="sc-panel"
           data-sc="stats"
           role="tabpanel"
           id="sc-panel-stats"
@@ -159,6 +154,7 @@ const {
           </div>
         </div>
       </div>
+
       {
         tabs.map((t, i) => (
           <p
@@ -181,10 +177,9 @@ const {
       );
       const select = (tab: HTMLButtonElement, focus = false) => {
         const id = tab.dataset.panel;
-        // Roving tabindex: only the active tab is in the tab order (WAI-ARIA).
         tabs.forEach((t) => {
           const on = t === tab;
-          t.classList.toggle("on", on);
+          t.classList.toggle("active", on);
           t.setAttribute("aria-selected", on ? "true" : "false");
           t.tabIndex = on ? 0 : -1;
         });
@@ -219,83 +214,79 @@ const {
 </script>
 
 <style>
-  .sc-stage {
-    max-width: 760px;
-    margin-inline: auto;
+  .rc-showcase {
+    background: #22105f;
+    padding: 100px 0;
+    color: #fff;
   }
+  .rc-showcase .section-title h2 {
+    color: #fff;
+  }
+  .rc-showcase .section-title p {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .sc-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .sc-stage {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
   .sc-tabs {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 26px;
+    gap: 8px;
+    margin-bottom: 30px;
   }
   .sc-tab {
     font-family: var(--font-heading);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
-    color: var(--text-muted);
-    background: #fff;
-    border: 1.5px solid var(--line);
-    border-radius: 999px;
-    padding: 10px 20px;
+    color: rgba(255,255,255,0.6);
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 10px 22px;
     cursor: pointer;
-    transition:
-      color 0.16s ease,
-      background 0.16s ease,
-      border-color 0.16s ease;
+    transition: all 0.2s;
   }
   .sc-tab:hover {
-    border-color: var(--theme-accent);
-    color: var(--rc-ink);
-  }
-  .sc-tab.on {
-    background: var(--theme-accent);
-    border-color: var(--theme-accent);
+    border-color: rgba(255,255,255,0.4);
     color: #fff;
   }
-  .sc-frame {
+  .sc-tab.active {
+    background: #7652f2;
+    border-color: #7652f2;
+    color: #fff;
+  }
+
+  .sc-body {
     background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    box-shadow: var(--shadow-lg);
+    border-radius: 15px;
     overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
   }
-  .sc-bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--line);
-    background: #fbfaff;
-  }
-  .sc-bar i {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--line-strong);
-  }
-  .sc-bar i:first-child { background: var(--rc-coral); }
-  .sc-bar i:nth-child(2) { background: var(--rc-yellow); }
-  .sc-bar i:nth-child(3) { background: var(--ok); }
-  .sc-url {
-    margin-left: 10px;
-    font-size: 12px;
-    color: var(--text-muted);
-    background: var(--bg-tint);
-    border-radius: 6px;
-    padding: 3px 14px;
-  }
+
   .sc-panel {
     display: none;
-    padding: 26px 28px;
+    padding: 30px;
     min-height: 240px;
   }
   .sc-panel.on {
     display: block;
   }
 
-  /* files */
   .f-row {
     display: flex;
     align-items: center;
@@ -303,41 +294,35 @@ const {
     padding: 12px 6px;
   }
   .f-row + .f-row {
-    border-top: 1px solid var(--line);
+    border-top: 1px solid #eee;
   }
   .f-ic {
     width: 30px;
     height: 24px;
     border-radius: 6px;
-    background: var(--theme-soft);
-    position: relative;
+    background: rgba(38,159,216,0.1);
   }
-  .f-ic.folder {
-    background: var(--pastel-butter);
-  }
-  .f-ic.zip {
-    background: var(--pastel-peach);
-  }
+  .f-ic.folder { background: #fff3cd; }
+  .f-ic.zip { background: #fde2e2; }
   .f-row b {
     flex: 1;
     font-family: var(--font-heading);
     font-size: 14px;
-    color: var(--rc-ink);
+    color: #22105f;
   }
   .f-row small {
     font-size: 12px;
-    color: var(--text-muted);
+    color: #999;
   }
 
-  /* ssl */
   .ssl-card {
     display: flex;
     align-items: center;
     gap: 16px;
-    border: 1px solid var(--line);
+    border: 1px solid #eee;
     border-radius: 14px;
     padding: 18px 20px;
-    box-shadow: var(--shadow-xs);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
   .ssl-lock {
     display: grid;
@@ -345,88 +330,68 @@ const {
     width: 46px;
     height: 46px;
     border-radius: 12px;
-    background: var(--ok-soft);
-    color: #0e9f6e;
+    background: #e6f9f0;
+    color: #1fa463;
   }
-  .ssl-lock svg {
-    width: 22px;
-    height: 22px;
-  }
+  .ssl-lock svg { width: 22px; height: 22px; }
   .ssl-card b {
     display: block;
     font-family: var(--font-heading);
-    font-size: 15.5px;
-    color: var(--rc-ink);
+    font-size: 15px;
+    color: #22105f;
   }
-  .ssl-card small {
-    font-size: 12.5px;
-    color: var(--text-muted);
-  }
-  .ssl-card > div {
-    flex: 1;
-  }
+  .ssl-card small { font-size: 12px; color: #999; }
+  .ssl-card > div { flex: 1; }
   .ssl-state {
     font-style: normal;
     font-family: var(--font-heading);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #0e9f6e;
-    background: var(--ok-soft);
-    border-radius: 999px;
+    color: #1fa463;
+    background: #e6f9f0;
+    border-radius: 50px;
     padding: 6px 14px;
   }
   .ssl-meta {
     display: flex;
     gap: 18px;
     margin-top: 16px;
-    font-size: 12.5px;
-    color: var(--text-muted);
+    font-size: 12px;
+    color: #999;
   }
 
-  /* backups */
   .bk-row {
     display: flex;
     align-items: center;
     gap: 14px;
     padding: 13px 6px;
   }
-  .bk-row + .bk-row {
-    border-top: 1px solid var(--line);
-  }
+  .bk-row + .bk-row { border-top: 1px solid #eee; }
   .bk-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--ok);
+    background: #1fa463;
   }
   .bk-row b {
     font-family: var(--font-heading);
     font-size: 14px;
-    color: var(--rc-ink);
+    color: #22105f;
     width: 150px;
   }
-  .bk-row small {
-    flex: 1;
-    font-size: 12.5px;
-    color: var(--text-muted);
-  }
-  .bk-row em {
-    font-style: normal;
-    font-size: 12.5px;
-    color: var(--ok);
-  }
+  .bk-row small { flex: 1; font-size: 12px; color: #999; }
+  .bk-row em { font-style: normal; font-size: 12px; color: #1fa463; }
   .bk-row em.hot {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 11.5px;
-    color: var(--theme-accent);
-    background: var(--theme-soft);
-    border-radius: 999px;
+    font-size: 11px;
+    color: #fff;
+    background: var(--heading-blue);
+    border-radius: 50px;
     padding: 6px 14px;
   }
 
-  /* stats */
   .st-cards {
     display: flex;
     gap: 12px;
@@ -434,22 +399,22 @@ const {
   }
   .st {
     flex: 1;
-    border: 1px solid var(--line);
+    border: 1px solid #eee;
     border-radius: 12px;
     padding: 12px 14px;
-    box-shadow: var(--shadow-xs);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
   .st small {
     display: block;
-    font-size: 10.5px;
+    font-size: 10px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: #999;
   }
   .st b {
     font-family: var(--font-heading);
     font-size: 17px;
-    color: var(--rc-ink);
+    color: #22105f;
   }
   .st-bars {
     display: flex;
@@ -462,49 +427,35 @@ const {
     flex: 1;
     height: var(--h);
     border-radius: 6px 6px 0 0;
-    background: linear-gradient(180deg, var(--theme-art-b), var(--theme-art-a));
+    background: linear-gradient(180deg, var(--heading-blue), var(--royal-purple));
     opacity: 0.85;
   }
+
   .sc-caption {
     display: none;
     text-align: center;
-    font-size: 14.5px;
-    color: var(--text-muted);
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
     margin-top: 20px;
   }
-  .sc-caption.on {
-    display: block;
-  }
+  .sc-caption.on { display: block; }
 
   @media (prefers-reduced-motion: no-preference) {
-    .sc-stats.on .st-bars i {
+    .sc-panel[data-sc="stats"].on .st-bars i {
       animation: scBar 0.7s cubic-bezier(0.25, 0.1, 0.2, 1) backwards;
     }
-    .sc-stats.on .st-bars i:nth-child(2n) {
-      animation-delay: 0.12s;
-    }
-    .sc-stats.on .st-bars i:nth-child(3n) {
-      animation-delay: 0.2s;
-    }
+    .sc-panel[data-sc="stats"].on .st-bars i:nth-child(2n) { animation-delay: 0.12s; }
+    .sc-panel[data-sc="stats"].on .st-bars i:nth-child(3n) { animation-delay: 0.2s; }
     @keyframes scBar {
-      from {
-        transform: scaleY(0);
-        transform-origin: bottom;
-      }
+      from { transform: scaleY(0); transform-origin: bottom; }
     }
   }
+
   @media (max-width: 640px) {
-    .sc-panel {
-      padding: 18px 16px;
-    }
-    .bk-row b {
-      width: auto;
-    }
-    .st-cards {
-      flex-direction: column;
-    }
-    .st-bars {
-      height: 80px;
-    }
+    .sc-panel { padding: 18px 16px; }
+    .bk-row b { width: auto; }
+    .st-cards { flex-direction: column; }
+    .st-bars { height: 80px; }
+    .sc-tab { padding: 8px 16px; font-size: 13px; }
   }
 </style>

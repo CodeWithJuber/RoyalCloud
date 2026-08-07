@@ -307,6 +307,7 @@ const pageSchema = z.object({
     .array(z.object({ text: z.string(), href: z.string() }))
     .optional(),
   transparentHeader: z.boolean().optional(),
+  newsletter: z.boolean().optional(),
   redirect: z.string().optional(),
   sections: z.array(sectionSchema).default([]),
 });

@@ -3,26 +3,19 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import { marked } from "marked";
 import { tablerIcon } from "~/utils/plans";
-import { resolveSectionImage } from "~/utils/sectionImages";
-import SectionArt from "./SectionArt.astro";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
 
-// Bundled photo keywords now render hand-built brand illustrations
-// instead of the old stock photos. "terminal" accepts a distro flavor
-// suffix (terminal:ubuntu) handled inside SectionArt.
-const ART_KINDS = [
-  "datacenter",
-  "support",
-  "working",
-  "hero",
-  "terminal",
-  "rocket",
-  "panel",
-  "shield",
-] as const;
-const artKind = (ref?: string): string | undefined =>
-  ART_KINDS.includes(ref?.split(":")[0] as (typeof ART_KINDS)[number])
-    ? ref
-    : undefined;
+import companySvg from "~/assets/images/live/company_4.svg";
+import rocketSvg from "~/assets/images/live/rocket-bg.svg";
+import digitalSvg from "~/assets/images/live/digitalpresence_img-1.svg";
+import ssdHost from "~/assets/images/live/ssd-host.png";
+import supportShape from "~/assets/images/live/support-shape.png";
+
+const IMAGE_MAP: Record<string, { src: string; width: number; height: number }> = {
+  company: { src: companySvg.src, width: 500, height: 400 },
+  speed: { src: rocketSvg.src, width: 500, height: 400 },
+  support: { src: digitalSvg.src, width: 500, height: 400 },
+};
 
 interface Props {
   eyebrow?: string;
@@ -30,8 +23,6 @@ interface Props {
   subtitle?: string;
   image?: string;
   reverse?: boolean;
-  /** "chips" = horizontal mini-stat chips; "list" (default) = vertical icon rows.
-      Lets two adjacent splits read as different layout families. */
   layout?: "chips" | "list";
   body?: string;
   items?: { icon?: string; title?: string; text?: string }[];
@@ -46,163 +37,219 @@ const {
   body,
   items,
 } = Astro.props;
-const art = artKind(image);
-const img = art ? undefined : resolveSectionImage(image);
+
+const artEntry = image ? IMAGE_MAP[image] : undefined;
 const html = body ? await marked.parse(body) : undefined;
 ---
 
-<section class="cv-auto">
-  <div class={`wrap split ${reverse ? "rev" : ""}`}>
-    {
-      art && (
-        <div
-          class={`split-media illus reveal ${reverse ? "rv-right" : "rv-left"}`}
-        >
-          <SectionArt kind={art} />
-        </div>
-      )
-    }
-    {
-      img && (
-        <div class={`split-media reveal ${reverse ? "rv-right" : "rv-left"}`}>
-          {typeof img === "string" ? (
-            <img src={img} alt={title ?? ""} loading="lazy" decoding="async" />
-          ) : (
-            <Image
-              src={img}
-              alt={title ?? ""}
-              widths={[480, 760]}
-              sizes="(max-width: 860px) 100vw, 560px"
-              loading="lazy"
-            />
-          )}
-        </div>
-      )
-    }
-    <div
-      class={`split-body reveal reveal-d1 ${reverse ? "rv-left" : "rv-right"}`}
-    >
-      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+<section class="rc-split-section">
+  <div class={`wrap rc-split ${reverse ? "rc-split--rev" : ""}`}>
+    {artEntry && (
+      <div class="rc-split-media">
+        <img
+          src={artEntry.src}
+          alt={title ?? ""}
+          width={artEntry.width}
+          height={artEntry.height}
+          loading="lazy"
+          decoding="async"
+          class="rc-split-img"
+        />
+      </div>
+    )}
+    <div class="rc-split-body">
+      {eyebrow && <span class="rc-split-eyebrow">{eyebrow}</span>}
       {title && <h2 set:html={title} />}
-      {subtitle && <p set:html={subtitle} />}
-      {html && <div class="split-prose" set:html={html} />}
-      {
-        items && items.length > 0 && layout === "chips" && (
-          <div class="point-chips">
-            {items.map((p) => (
-              <div class="chip">
-                <span class="chip-ic f-icon-grad">
-                  <Icon name={tablerIcon(p.icon ?? "bolt")} />
-                </span>
-                <span class="chip-tx">
-                  <strong>{p.title}</strong>
-                  <small>{p.text}</small>
-                </span>
+      <img src={separatorSvg.src} alt="" class="separator-rc rc-split-sep" width="250" height="30" />
+      {html && <div class="rc-split-prose" set:html={html} />}
+      {items && items.length > 0 && layout === "chips" && (
+        <div class="rc-split-chips">
+          {items.map((p) => (
+            <div class="rc-chip">
+              <span class="rc-chip-icon">
+                <Icon name={tablerIcon(p.icon ?? "bolt")} />
+              </span>
+              <span class="rc-chip-text">{p.title}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {items && items.length > 0 && layout !== "chips" && (
+        <div class="rc-split-list">
+          {items.map((p) => (
+            <div class="rc-list-item">
+              <span class="rc-list-icon">
+                <Icon name={tablerIcon(p.icon ?? "bolt")} />
+              </span>
+              <div>
+                <h3>{p.title}</h3>
+                {p.text && <p>{p.text}</p>}
               </div>
-            ))}
-          </div>
-        )
-      }
-      {
-        items && items.length > 0 && layout !== "chips" && (
-          <div class="point-list">
-            {items.map((p) => (
-              <div class="point">
-                <div class="p-ic f-icon-grad">
-                  <Icon name={tablerIcon(p.icon ?? "bolt")} />
-                </div>
-                <div>
-                  <h3>{p.title}</h3>
-                  <p>{p.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )
-      }
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   </div>
 </section>
 
 <style>
-  .split-prose {
-    font-size: 16px;
-    color: var(--text-default);
+  .rc-split-section {
+    padding: 100px 0;
   }
-  .split-prose :global(p) {
-    margin-bottom: 14px;
+  .rc-split {
+    display: flex;
+    align-items: center;
+    gap: 60px;
   }
-  .split-prose :global(ul) {
-    margin: 0 0 14px 20px;
-  }
-  .split-prose :global(li) {
-    margin-bottom: 7px;
-  }
-  .split-prose :global(strong) {
-    color: var(--text-heading);
-  }
-  .split-prose :global(a) {
-    color: var(--rc-purple);
-    font-weight: 500;
+  .rc-split--rev {
+    flex-direction: row-reverse;
   }
 
-  /* chips layout: horizontal mini-stat row (distinct from the vertical list) */
-  .point-chips {
+  .rc-split-media {
+    flex: 0 0 45%;
+    text-align: center;
+  }
+  .rc-split-img {
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+  }
+
+  .rc-split-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .rc-split-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .rc-split-body h2 {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    margin: 0 0 5px;
+    line-height: 1.2;
+  }
+
+  .rc-split-sep {
+    margin: 0 0 15px;
+  }
+
+  .rc-split-prose {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .rc-split-prose :global(p) {
+    margin-bottom: 14px;
+  }
+
+  /* ── Chips (horizontal tag row) ── */
+  .rc-split-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 22px;
+    margin-top: 20px;
   }
-  .chip {
-    display: flex;
+  .rc-chip {
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
-    flex: 1 1 200px;
-    background: var(--bg-tint);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 14px 16px;
-    transition:
-      transform 0.18s var(--ease-out),
-      box-shadow 0.18s ease;
+    gap: 8px;
+    background: #f0f7ff;
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
   }
-  .chip:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-sm);
+  .rc-chip-icon {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    color: var(--heading-blue);
   }
-  .chip-ic {
+  .rc-chip-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ── List (vertical icon rows with check-style) ── */
+  .rc-split-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .rc-list-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .rc-list-icon {
     flex: none;
     width: 40px;
     height: 40px;
-    border-radius: 11px;
     display: grid;
     place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(38,159,216,0.1), rgba(123,31,162,0.08));
+    color: var(--heading-blue);
   }
-  .chip-ic :global(svg) {
-    width: 21px;
-    height: 21px;
+  .rc-list-icon svg {
+    width: 20px;
+    height: 20px;
   }
-  .chip-tx {
-    min-width: 0;
-  }
-  .chip-tx strong {
-    display: block;
+  .rc-list-item h3 {
     font-family: var(--font-heading);
-    font-size: 14.5px;
-    font-weight: 600;
-    color: var(--text-heading);
-    line-height: 1.25;
+    font-size: 18px;
+    font-weight: 700;
+    color: #22105f;
+    margin: 0 0 4px;
   }
-  .chip-tx small {
-    display: block;
-    font-size: 12.5px;
-    line-height: 1.45;
-    color: var(--text-muted);
-    margin-top: 2px;
+  .rc-list-item p {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.7;
+    margin: 0;
   }
-  @media (max-width: 560px) {
-    .chip {
-      flex: 1 1 100%;
+
+  @media (max-width: 860px) {
+    .rc-split, .rc-split--rev {
+      flex-direction: column;
+      gap: 40px;
+      text-align: center;
+    }
+    .rc-split-media {
+      flex: none;
+    }
+    .rc-split-img {
+      max-width: 320px;
+    }
+    .rc-split-sep {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .rc-split-chips {
+      justify-content: center;
+    }
+    .rc-split-list {
+      align-items: center;
+    }
+    .rc-list-item {
+      text-align: left;
     }
   }
 </style>
