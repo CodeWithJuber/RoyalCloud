@@ -1,8 +1,9 @@
 ---
 import "~/assets/styles/tailwind.css";
+/* royal-clouds/tokens.css stays only until the rc* homepage layer is
+   removed (its last consumers); tokens.css loads last and wins. */
 import "~/assets/styles/royal-clouds/tokens.css";
-import "~/assets/styles/rc-premium.css";
-import "~/assets/styles/energy.css";
+import "~/assets/styles/components.css";
 import "~/assets/styles/tokens.css";
 
 import { I18N } from "astrowind:config";
@@ -13,7 +14,6 @@ import CustomStyles from "~/components/CustomStyles.astro";
 import ApplyColorMode from "~/components/common/ApplyColorMode.astro";
 import Metadata from "~/components/common/Metadata.astro";
 import BasicScripts from "~/components/common/BasicScripts.astro";
-import SmoothScroll from "~/components/widgets/SmoothScroll.astro";
 import StructuredData from "~/components/common/StructuredData.astro";
 import { organization, webSite } from "~/utils/structuredData";
 import HeadIntegrations from "~/components/integrations/HeadIntegrations.astro";
@@ -58,7 +58,6 @@ const { language, textDirection } = I18N;
     <slot />
 
     <BasicScripts />
-    <SmoothScroll />
     <BodyIntegrations />
     <LiveChat />
   </body>

@@ -1,147 +1,12 @@
 /* ============================================================
-   ROYAL CLOUDS, "STRATOSPHERE" design system, v3
-   A bold, light, regal reinvention: hosting at altitude.
-   Space-ink on luminous paper, electric royal violet, sky azure,
-   and one loud royal-gold accent. The signature is a living WebGL
-   sky in the hero and a thin spectrum "altitude rule" threading
-   the sections below it.
-
-   Token names from the previous system are PRESERVED and re-mapped
-   so every component recolors at once; the soul changes, the bones
-   stay. Familiar bones, original skin.
+   ROYAL CLOUDS — component styles
+   The structural classes every section component consumes
+   (.wrap, .sec-head, .btn*, .plan*, .compare, .faq, header/footer,
+   .prose-body, dark navy bands, per-page theme accents).
+   All values come from src/assets/styles/tokens.css — the live
+   royalclouds.net brand. No decorative gradients or glows; the
+   gold pill is the only conversion accent.
    ============================================================ */
-:root {
-  /* ---- brand — Royal Clouds bridge ----
-     Legacy token NAMES preserved; VALUES re-pointed at the Royal Clouds
-     primitives (loaded before this file via royal-clouds/tokens.css) so every
-     token-driven component recolors to cobalt/signal at once. Cobalt is a
-     structural field; signal orange is the ONLY conversion accent. */
-  --rc-ink: var(--night);
-  --rc-ink-deep: var(--night);
-  --rc-violet: var(--cobalt);
-  --rc-violet-dark: var(--cobalt-dim);
-  --rc-blue: var(--smoke);
-  --rc-yellow: var(--signal);
-  --rc-orange: var(--signal);
-  --rc-orange-dark: var(--signal);
-  --rc-orange-deep: var(--signal-hot);
-  --rc-plum: var(--midnight);
-  --rc-coral: var(--signal-hot);
-  --rc-purple: var(--cobalt);
-  --rc-indigo: var(--night);
-  --rc-indigo-deep: var(--night);
-
-  /* Signature device is now a chrome/cobalt hairline, not a gold spectrum.
-     No decorative gradient fields: cobalt is flat, signal is the only accent. */
-  --spectrum: linear-gradient(100deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
-  --rc-gradient: linear-gradient(110deg, var(--cobalt) 0%, var(--cobalt-dim) 100%);
-  --grad-cta: linear-gradient(120deg, var(--cobalt) 0%, var(--cobalt-dim) 100%);
-  --grad-energy: linear-gradient(135deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
-  --grad-gold-spark: linear-gradient(120deg, var(--signal) 0%, var(--signal-hot) 100%);
-  --grad-hot: linear-gradient(115deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
-  --grad-gold-cta: linear-gradient(120deg, var(--signal) 0%, var(--signal-hot) 100%);
-  --grad-text: linear-gradient(96deg, var(--midnight) 0%, var(--cobalt) 64%, var(--cobalt-bright) 100%);
-  --grad-violet-azure: linear-gradient(120deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
-  /* Dark contrast panels: flat night stack, no gold/blue decorative washes. */
-  --rc-grad-vivid:
-    linear-gradient(122deg, var(--night) 0%, var(--midnight) 55%, var(--abyss) 100%);
-
-  /* ---- surfaces (cool ice / cobalt-tinted neutral ramp) ---- */
-  --bg-page: var(--ice);
-  --bg-tint: #EAEEF7;
-  --bg-tint-strong: #DFE5F2;
-  --bg-sky: #E7EDF7;
-  /* cool cobalt-tinted tiles (one family, crisp-edged); one signal wash */
-  --pastel-lavender: #E7EAF6;
-  --pastel-sky: #E3E9F5;
-  --pastel-mint: #E5ECF3;
-  --pastel-butter: #E8ECF6;
-  --pastel-peach: #FBE7DF;
-  /* hairline border for tiles (chrome hairline on light) */
-  --tile-border: rgb(32 38 59 / 0.08);
-
-  /* per-page theme hooks (overridden by main[data-theme=…] at end of file) */
-  --theme-accent: var(--cobalt);
-  --theme-soft: #E7EAF6;
-  --theme-art-a: var(--cobalt);
-  --theme-art-b: var(--cobalt-bright);
-  --line: var(--line-hairline);
-  --line-strong: rgb(32 38 59 / 0.20);
-  /* status + accent surfaces */
-  --ok: var(--pulse-ok);
-  --ok-soft: rgb(61 220 151 / 0.14);
-  --save-bg: var(--wash-signal-10);
-
-  /* ---- text ---- */
-  --text-heading: var(--midnight);
-  --text-default: var(--graphite);
-  --text-muted: #566076;
-
-  /* ---- type — Royal Clouds families ---- */
-  --font-heading: "Bricolage Grotesque", "Manrope", system-ui, sans-serif;
-  --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono:
-    "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
-
-  /* ---- radius (crisper, more editorial) ---- */
-  --radius-panel: 24px;
-  --radius-card: 16px;
-  --radius-btn: 10px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-  --r-sm: 8px;
-
-  /* ---- elevation (ink-based, one scale) ---- */
-  --shadow-xs:
-    0 1px 2px rgba(10, 14, 31, 0.05), 0 4px 14px -6px rgba(10, 14, 31, 0.1);
-  --shadow-sm:
-    0 1px 3px rgba(10, 14, 31, 0.06), 0 10px 26px -12px rgba(10, 14, 31, 0.16);
-  --shadow-md:
-    0 2px 6px rgba(10, 14, 31, 0.07), 0 18px 42px -16px rgba(10, 14, 31, 0.2);
-  --shadow-lg:
-    0 4px 10px rgba(10, 14, 31, 0.08), 0 30px 64px -20px rgba(10, 14, 31, 0.26);
-  --shadow-card: var(--shadow-sm);
-  --shadow-card-hover: var(--shadow-md);
-
-  /* ---- motion ---- */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-1: 0.15s;
-  --dur-2: 0.22s;
-  --dur-3: 0.32s;
-
-  --space-section: clamp(76px, 9vw, 136px);
-  --maxw: 1320px;
-  --wrap-pad: 28px; /* container gutter (tightened on mobile below) */
-
-  /* ---- 8px spacing scale (grid + illustration rhythm) ---- */
-  --s-1: 4px;
-  --s-2: 8px;
-  --s-3: 12px;
-  --s-4: 16px;
-  --s-6: 24px;
-  --s-8: 32px;
-  --s-12: 48px;
-  --s-16: 64px;
-
-  /* ---- display type (home hero only) ---- */
-  --fs-display: clamp(44px, 6.5vw, 88px);
-
-  /* ---- one colored-lift alias for energetic moments ---- */
-  --shadow-violet: 0 18px 50px -14px rgba(81, 17, 224, 0.42);
-
-  /* ---- dark section tokens (Royal Clouds night stack; .section--dark only) ---- */
-  --dk-bg: var(--midnight);
-  --dk-bg-2: var(--abyss);
-  --dk-line: var(--line-chrome-16);
-  --dk-text: var(--ice);
-  --dk-muted: var(--smoke);
-  --dk-neon-violet: var(--cobalt-bright);
-  --dk-neon-azure: var(--cobalt-bright);
-  --dk-cta: linear-gradient(120deg, var(--cobalt) 0%, var(--cobalt-bright) 100%);
-  /* No decorative color washes on dark — depth is chrome linework + inner highlight. */
-  --dk-glow-violet: none;
-  --dk-glow-azure: none;
-}
 
 /* ============================================================
    Dark-premium section, the "color block chorus".
@@ -163,24 +28,12 @@
   --text-muted: var(--dk-muted);
   color: var(--dk-text);
   background-color: var(--dk-bg);
-  background-image: var(--dk-glow-violet), var(--dk-glow-azure);
-  background-repeat: no-repeat;
 }
 .section--dark h1,
 .section--dark h2,
 .section--dark h3,
 .section--dark h4 {
   color: var(--dk-text);
-}
-.section--dark::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: var(--grain);
-  background-size: 160px 160px;
-  opacity: 0.035;
-  pointer-events: none;
 }
 
 * {
@@ -264,7 +117,7 @@ h2 em {
   .text-grad,
   h1 em,
   h2 em {
-    background: linear-gradient(96deg, #4b16d6 0%, #2f3fc8 52%, #0b7ec0 100%);
+    background: linear-gradient(96deg, var(--purple-deep) 0%, var(--purple) 45%, var(--sky-deep) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -386,8 +239,8 @@ h2 em {
     transform 0.16s ease;
 }
 .btn-primary:hover {
-  color: var(--rc-ink);
-  background: #f1cc79;
+  color: var(--btn-primary-fg);
+  background: var(--btn-primary-bg-hover);
   box-shadow: 0 18px 38px -14px rgba(166, 116, 24, 0.62);
 }
 
@@ -1302,7 +1155,6 @@ h2 em {
   height: 3px;
   border-radius: 3px;
   background: var(--spectrum);
-  box-shadow: 0 0 14px rgba(245, 165, 36, 0.7);
   margin: 14px auto 0;
 }
 .stat .label {
@@ -1365,7 +1217,7 @@ h2 em {
   height: 44px;
   border-radius: 50%;
   flex: none;
-  background: linear-gradient(150deg, #5111e0, #19b6ff);
+  background: linear-gradient(150deg, var(--purple), var(--sky));
   color: #fff;
   display: grid;
   place-items: center;
@@ -1851,9 +1703,9 @@ h2 em {
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 78% 22%, rgba(239, 190, 83, 0.22), transparent 30%),
-    radial-gradient(circle at 18% 12%, rgba(72, 105, 148, 0.18), transparent 34%),
-    linear-gradient(135deg, var(--rc-ink-deep), var(--rc-ink));
+    radial-gradient(circle at 78% 22%, rgba(253, 215, 0, 0.14), transparent 30%),
+    radial-gradient(circle at 18% 12%, rgba(0, 167, 245, 0.16), transparent 34%),
+    linear-gradient(135deg, var(--navy-2), var(--navy));
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
   padding: clamp(78px, 8vw, 126px) 0 clamp(68px, 7vw, 108px);
@@ -2720,74 +2572,29 @@ main:focus-visible {
    Only accent + tint variables change; ink, headings, buttons
    and typography stay constant so the system reads consistent.
    ============================================================ */
-main[data-theme="speed"] {
-  --theme-accent: #d63647;
-  --theme-soft: #ffeceb;
-  --theme-art-a: #ff7a18;
-  --theme-art-b: #fb3e58;
-  --bg-tint: #fff4ee;
-  --bg-tint-strong: #ffe7db;
-  --bg-sky: #fff9f2;
-}
-main[data-theme="security"] {
-  --theme-accent: #0e9f6e;
-  --theme-soft: #e3f7ef;
-  --theme-art-a: #0e9f6e;
-  --theme-art-b: #00a7f5;
-  --bg-tint: #effaf5;
-  --bg-tint-strong: #ddf3e9;
-  --bg-sky: #f2fbf7;
-}
-main[data-theme="server"] {
-  --theme-accent: #0284c7;
-  --theme-soft: #e4f4fd;
-  --theme-art-a: #0284c7;
-  --theme-art-b: #7652f2;
+main[data-theme="speed"],
+main[data-theme="panel"],
+main[data-theme="linux"],
+main[data-theme="domains"] {
+  --theme-accent: #0079b1; /* sky, darkened for AA text on white */
+  --theme-soft: var(--pastel-sky);
+  --theme-art-a: var(--sky);
+  --theme-art-b: var(--purple);
   --bg-tint: #eff8fe;
   --bg-tint-strong: #ddeffc;
   --bg-sky: #f3fafe;
 }
-main[data-theme="panel"] {
-  --theme-accent: var(--rc-violet);
-  --theme-soft: var(--pastel-lavender);
-  --theme-art-a: #7652f2;
-  --theme-art-b: #00a7f5;
-}
-main[data-theme="wordpress"] {
-  --theme-accent: #0a6e9e;
-  --theme-soft: #e2f2fa;
-  --theme-art-a: #0a86bf;
-  --theme-art-b: #7652f2;
-  --bg-tint: #eef7fc;
-  --bg-tint-strong: #dceefa;
-  --bg-sky: #f2fafe;
-}
-main[data-theme="linux"] {
-  --theme-accent: #0f766e;
-  --theme-soft: #def4f1;
-  --theme-art-a: #0f9b8e;
-  --theme-art-b: #22105f;
-  --bg-tint: #eefaf8;
-  --bg-tint-strong: #dcf3ef;
-  --bg-sky: #f1fbf9;
-}
+main[data-theme="security"],
+main[data-theme="server"],
+main[data-theme="wordpress"],
 main[data-theme="money"] {
-  --theme-accent: #b45309;
-  --theme-soft: #fff1dc;
-  --theme-art-a: #f59e0b;
-  --theme-art-b: #fb3e58;
-  --bg-tint: #fff7e9;
-  --bg-tint-strong: #ffefd6;
-  --bg-sky: #fffaf0;
-}
-main[data-theme="domains"] {
-  --theme-accent: #0079b1;
-  --theme-soft: var(--pastel-sky);
-  --theme-art-a: #00a7f5;
-  --theme-art-b: #7652f2;
-  --bg-tint: #eef9ff;
-  --bg-tint-strong: #dcf2fd;
-  --bg-sky: #f3fbff;
+  --theme-accent: var(--purple);
+  --theme-soft: var(--pastel-lavender);
+  --theme-art-a: var(--purple);
+  --theme-art-b: var(--sky);
+  --bg-tint: #f3effe;
+  --bg-tint-strong: #e8e0fd;
+  --bg-sky: #f7f4ff;
 }
 
 /* ============================================================
@@ -2836,7 +2643,7 @@ main[data-page="index"] .sec-head.center h2::after {
 
 main[data-page="index"] .pricing {
   padding-block: clamp(7rem, 12vw, 11rem);
-  background: #f6f4ef;
+  background: var(--bg-tint);
 }
 
 main[data-page="index"] .pricing .sec-head h2,
@@ -2954,4 +2761,57 @@ main[data-page="index"] .cta-band h2 {
   font-weight: 600;
   letter-spacing: -0.06em;
   line-height: 0.96;
+}
+
+/* ============================================================
+   Interaction layer — the kept moves: card lift + top hairline
+   wipe. transform/opacity only, hover-capable devices, honors
+   prefers-reduced-motion via the transition tokens.
+   ============================================================ */
+.feature-grid.tiles .feature-card {
+  position: relative;
+  overflow: hidden;
+}
+.feature-grid.tiles .feature-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(100deg, var(--sky) 0%, var(--purple) 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out, ease);
+}
+.feature-card,
+.plan,
+.testi {
+  transition:
+    transform 0.32s var(--ease-out),
+    box-shadow 0.32s ease,
+    border-color 0.2s ease;
+}
+@media (hover: hover) {
+  .feature-card:hover,
+  .plan:hover,
+  .testi:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+  }
+  .feature-grid.tiles .feature-card:hover::after {
+    transform: scaleX(1);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feature-card,
+  .plan,
+  .testi,
+  .btn-primary,
+  .feature-grid.tiles .feature-card::after {
+    transition: none;
+  }
 }

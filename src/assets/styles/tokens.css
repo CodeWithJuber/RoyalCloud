@@ -143,6 +143,20 @@
      page.css and a few components. Re-pointed at the live brand so
      everything recolors at once; trimmed as consumers migrate to the
      semantic names above. */
+  --rc-ink: var(--ink);
+  --rc-ink-deep: var(--ink);
+  --rc-violet: var(--purple);
+  --rc-violet-dark: var(--purple-deep);
+  --rc-blue: var(--sky);
+  --rc-yellow: var(--gold);
+  --rc-orange: var(--orange);
+  --rc-orange-dark: var(--orange);
+  --rc-orange-deep: var(--orange);
+  --rc-plum: var(--navy);
+  --rc-coral: var(--orange);
+  --rc-purple: var(--purple);
+  --rc-indigo: var(--navy);
+  --rc-indigo-deep: var(--ink);
   --night: var(--ink);
   --midnight: var(--navy);
   --abyss: var(--navy-2);
