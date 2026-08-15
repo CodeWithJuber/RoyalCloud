@@ -1,0 +1,201 @@
+---
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Pin {
+  label: string;
+  x: number;
+  y: number;
+  live?: boolean;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  note?: string;
+  pins?: Pin[];
+}
+const {
+  eyebrow,
+  title,
+  subtitle,
+  note,
+  pins = [
+    { label: "New York", x: 22, y: 30, live: true },
+    { label: "London", x: 47, y: 20, live: true },
+    { label: "Mumbai", x: 67, y: 48, live: true },
+    { label: "Singapore", x: 74, y: 58 },
+  ],
+} = Astro.props;
+
+const BITMAP = [
+  "........................................",
+  "...####.............###########........",
+  "..########.......##############........",
+  "..#########.....###################....",
+  "...########.....##################.....",
+  "....######......#######..########......",
+  ".....####........######...#####..##....",
+  "......###........######...####...##....",
+  ".......####......######....##..........",
+  ".......#####.....#####.....#...........",
+  "........####......####.........#####...",
+  "........###.......###.........######...",
+  "........###........#..........#####....",
+  ".........#.........#...........###.....",
+  ".........#..............................",
+  "........................................",
+];
+const CELL = 10;
+const dots: { cx: number; cy: number }[] = [];
+BITMAP.forEach((row, r) => {
+  [...row].forEach((ch, c) => {
+    if (ch === "#") dots.push({ cx: c * CELL + CELL / 2, cy: r * CELL + CELL / 2 });
+  });
+});
+const vw = BITMAP[0].length * CELL;
+const vh = BITMAP.length * CELL;
+---
+
+<section class="rc-map">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="section-title">
+          {eyebrow && <span class="map-eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="map-stage">
+      <svg viewBox={`0 0 ${vw} ${vh}`} aria-hidden="true">
+        {dots.map((d) => (
+          <circle cx={d.cx} cy={d.cy} r="2.6" />
+        ))}
+      </svg>
+      {
+        pins.map((p) => (
+          <div
+            class="pin"
+            style={`left: ${p.x}%; top: ${p.y}%`}
+          >
+            <i class="pulse" />
+            <i class="core" />
+            <span class="pl">
+              {p.label}
+              {p.live && <em>● live</em>}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+    {note && <p class="map-note">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .rc-map {
+    padding: var(--space-section) 0;
+    background: #f6f6f6;
+  }
+
+  .map-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .map-stage {
+    position: relative;
+    max-width: 940px;
+    margin: 0 auto;
+    aspect-ratio: 400 / 160;
+  }
+  .map-stage svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .map-stage svg circle {
+    fill: var(--heading-blue);
+    opacity: 0.22;
+  }
+
+  .pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+  }
+  .pin .core {
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background: var(--heading-blue);
+    border: 2.5px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .pin .pulse {
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+    background: var(--heading-blue);
+    opacity: 0.25;
+  }
+  .pin .pl {
+    position: absolute;
+    left: 50%;
+    top: -34px;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 50px;
+    padding: 4px 12px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    color: #22105f;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .pin .pl em {
+    font-style: normal;
+    font-size: 10px;
+    color: #1fa463;
+    margin-left: 5px;
+  }
+  .map-note {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    margin-top: 25px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pin .pulse {
+      animation: pinPulse 2.4s ease-out infinite;
+    }
+    .pin:nth-child(odd) .pulse {
+      animation-delay: 1.1s;
+    }
+    @keyframes pinPulse {
+      0% { transform: scale(0.5); opacity: 0.35; }
+      80%, 100% { transform: scale(1.7); opacity: 0; }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pin .pl {
+      font-size: 10px;
+      top: -28px;
+      padding: 3px 9px;
+    }
+    .pin .pl em { display: none; }
+  }
+</style>

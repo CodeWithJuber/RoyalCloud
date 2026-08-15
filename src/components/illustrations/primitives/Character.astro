@@ -1,0 +1,64 @@
+---
+/**
+ * Character - an abstract, faceless support person built from one construction
+ * so the whole "team" stays on-model (faces are where the AI-art tell lives, so
+ * there are none). Head, hair cap, torso, and two arms as SEPARATE paths so the
+ * motion layer can wave/type via `.rc-il__char-arm-r` / `.rc-il__char-arm-l`.
+ *
+ * Origin (x,y) = top-left of a ~80 x 116 box. `shirt` tones the torso; `pose`
+ * raises the right arm for a wave.
+ */
+interface Props {
+  x?: number;
+  y?: number;
+  scale?: number;
+  skin?: string;
+  shirt?: string;
+  hair?: string;
+  pose?: 'rest' | 'wave';
+  class?: string;
+}
+const {
+  x = 0,
+  y = 0,
+  scale = 1,
+  skin = '#f3c9a8',
+  shirt = '#6a2cf0',
+  hair = '#241a3a',
+  pose = 'rest',
+  class: className = '',
+} = Astro.props;
+// right arm: rest = down along torso, wave = raised up-right
+const rightArm = pose === 'wave'
+  ? 'M58 64 q16 -4 18 -24'
+  : 'M58 64 q12 6 12 26';
+---
+
+<g transform={`translate(${x} ${y}) scale(${scale})`} class:list={['rc-il__char', className]}>
+  <!-- left arm (behind torso) -->
+  <path
+    class="rc-il__char-arm-l"
+    d="M22 64 q-12 6 -12 26"
+    fill="none"
+    stroke={shirt}
+    stroke-width="11"
+    stroke-linecap="round"></path>
+  <!-- torso -->
+  <rect x="20" y="46" width="40" height="48" rx="15" fill={shirt}></rect>
+  <!-- collar accent (gradient) -->
+  <path d="M32 48 q8 10 16 0" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"></path>
+  <!-- right arm (foreground, animatable) -->
+  <path
+    class="rc-il__char-arm-r"
+    d={rightArm}
+    fill="none"
+    stroke={shirt}
+    stroke-width="11"
+    stroke-linecap="round"></path>
+  <!-- neck -->
+  <rect x="35" y="36" width="10" height="12" rx="5" fill={skin}></rect>
+  <!-- head -->
+  <circle cx="40" cy="24" r="16" fill={skin}></circle>
+  <!-- hair cap -->
+  <path d="M24 22 a16 16 0 0 1 32 0 q-16 -10 -32 0 Z" fill={hair}></path>
+</g>

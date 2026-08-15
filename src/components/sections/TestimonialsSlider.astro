@@ -1,0 +1,197 @@
+---
+import { Icon } from "astro-icon/components";
+import testimonialsData from "~/data/testimonials.json";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Testimonial {
+  name: string;
+  site?: string;
+  rating?: number;
+  quote: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  source?: "global" | "inline";
+  limit?: number;
+  items?: Testimonial[];
+}
+
+const {
+  eyebrow,
+  title = "Customers Feedback",
+  subtitle,
+  source = "global",
+  limit,
+  items,
+} = Astro.props;
+
+let list: Testimonial[] =
+  source === "inline" && items?.length
+    ? items
+    : (testimonialsData.items as Testimonial[]);
+if (limit) list = list.slice(0, limit);
+
+const initials = (name: string) =>
+  name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+---
+
+<section class="rc-testimonials">
+  <div class="wrap">
+    <div class="section-title">
+      {eyebrow && <span class="testi-eyebrow">{eyebrow}</span>}
+      <h2 set:html={title} />
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+
+    <div class="testi-grid" data-testimonials>
+      {list.map((t, i) => (
+        <div class="testi-card">
+          <div class="testi-stars">
+            {Array.from({ length: t.rating ?? 5 }).map(() => (
+              <Icon name="tabler:star-filled" />
+            ))}
+          </div>
+          <blockquote>"{t.quote}"</blockquote>
+          <div class="testi-footer">
+            <span class="testi-avatar">{initials(t.name)}</span>
+            <div>
+              <strong>{t.name}</strong>
+              {t.site && <small>{t.site}</small>}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="testi-cta">
+      <a href="/testimonials" class="btn-pink">See All Testimonials</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rc-testimonials {
+    padding: var(--space-section) 0;
+    background: #fff;
+  }
+
+  .testi-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .testi-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px 25px;
+    box-shadow: -9px 9px 0 0 #eee, 0 5px 25px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+  .testi-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .testi-stars {
+    display: flex;
+    gap: 2px;
+    color: #ffc107;
+    margin-bottom: 15px;
+  }
+  .testi-stars :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .testi-card blockquote {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin: 0 0 20px;
+    font-style: italic;
+  }
+
+  .testi-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+  }
+
+  .testi-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--heading-blue);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .testi-footer strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--heading-blue);
+  }
+  .testi-footer small {
+    display: block;
+    font-size: 13px;
+    color: #999;
+    margin-top: 2px;
+  }
+
+  .testi-cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .btn-pink {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--pink);
+    padding: 14px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-pink:hover {
+    background: #8c1a50;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 991px) {
+    .testi-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .testi-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

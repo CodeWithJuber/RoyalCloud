@@ -1,0 +1,480 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import logoWhite from "~/assets/images/brand/logo-white.png";
+import livechatSvg from "~/assets/images/live/help/livechat.svg";
+import emailSvg from "~/assets/images/live/help/email.svg";
+import ticketSvg from "~/assets/images/live/help/ticket.svg";
+import { footerData } from "~/navigation";
+import site from "~/data/site.json";
+
+interface Props {
+  newsletter?: boolean;
+}
+
+const { newsletter = false } = Astro.props;
+const year = new Date().getFullYear();
+const { links: columns, secondaryLinks, socialLinks } = footerData;
+
+const helpCards = [
+  {
+    icon: livechatSvg,
+    title: "Live Chat",
+    desc: "Chat with our friendly support team around the clock.",
+    cta: "Chat Now",
+    href: "#",
+  },
+  {
+    icon: emailSvg,
+    title: "Send Email",
+    desc: "Send us a message and we'll respond within 24 hours.",
+    cta: "Email Us",
+    href: `mailto:${site.contact.email}`,
+  },
+  {
+    icon: ticketSvg,
+    title: "Submit Ticket",
+    desc: "Open a support ticket for detailed technical assistance.",
+    cta: "Submit Ticket",
+    href: site.portal.submitTicket,
+  },
+];
+
+---
+
+<!-- Help section — every page -->
+<section class="rc-help">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Need help? We <span class="hot">love</span> to help!</h2>
+    </div>
+    <div class="help-grid">
+      {helpCards.map((card) => (
+        <div class="help-card">
+          <img src={card.icon.src} alt="" width="80" height="80" class="help-icon" />
+          <h3>{card.title}</h3>
+          <p>{card.desc}</p>
+          <a
+            href={card.href}
+            class="help-link"
+            target={card.href.startsWith("http") ? "_blank" : undefined}
+            rel={card.href.startsWith("http") ? "noopener" : undefined}
+          >
+            {card.cta} →
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter — homepage only -->
+{newsletter && (
+  <section class="rc-newsletter">
+    <div class="wrap">
+      <div class="section-title">
+        <h2>Join Our Newsletter</h2>
+        <p>Subscribe to receive our latest news, offers, and updates.</p>
+      </div>
+      <form class="nl-form" id="rcNewsletter" data-email={site.contact.salesEmail}>
+        <input
+          type="email"
+          placeholder="Your email address"
+          required
+          aria-label="Email address"
+          class="nl-input"
+        />
+        <button type="submit" class="default-btn nl-btn">Subscribe</button>
+      </form>
+      <p class="nl-status" id="rcNlStatus" aria-live="polite"></p>
+    </div>
+  </section>
+)}
+
+<!-- Footer -->
+<footer class="rc-footer">
+  <div class="rc-footer-top">
+    <div class="wrap">
+      <div class="rc-footer-grid">
+        <div class="rc-footer-brand">
+          <a href="/" aria-label="Royal Clouds home">
+            <Image src={logoWhite} alt="Royal Clouds" width={180} height={36} />
+          </a>
+          <p>{site.shortDescription}</p>
+          <div class="rc-social">
+            {socialLinks.map((s) => (
+              <a
+                href={s.href}
+                aria-label={s.ariaLabel}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={s.href.startsWith("http") ? "noopener" : undefined}
+                class="rc-social-circle"
+              >
+                <Icon name={s.icon} />
+              </a>
+            ))}
+          </div>
+        </div>
+        {columns.map((col) => (
+          <div class="rc-fcol">
+            <h3>{col.title}</h3>
+            <ul>
+              {col.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noopener" : undefined}
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="rc-footer-bottom">
+    <div class="wrap rc-bottom-inner">
+      <span class="rc-copy">&copy; {site.since}&ndash;{year} {site.name}. All Rights Reserved.</span>
+      <div class="rc-legal">
+        {secondaryLinks.map((link) => (
+          <a href={link.href}>{link.text}</a>
+        ))}
+      </div>
+      <div class="rc-payments">
+        <Icon name="tabler:brand-paypal" />
+        <Icon name="tabler:brand-visa" />
+        <Icon name="tabler:brand-mastercard" />
+        <Icon name="tabler:credit-card" />
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="rc-totop" id="rcToTop" aria-label="Back to top" hidden>
+  <Icon name="tabler:chevron-up" />
+</button>
+
+<style>
+  /* ── Help section ── */
+  .rc-help {
+    background: #f6f6f6;
+    padding: var(--space-section-sm) 0;
+  }
+  .help-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  .help-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .help-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+  }
+  .help-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+  .help-card h3 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    margin: 0 0 10px;
+  }
+  .help-card p {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin: 0 0 20px;
+  }
+  .help-link {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .help-link:hover {
+    color: var(--royal-purple);
+  }
+
+  /* ── Newsletter ── */
+  .rc-newsletter {
+    background: #efedf1;
+    padding: 60px 0;
+    text-align: center;
+  }
+  .nl-form {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+    gap: 0;
+  }
+  .nl-input {
+    flex: 1;
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 14px 20px;
+    border: 1px solid #ddd;
+    border-radius: 50px 0 0 50px;
+    outline: none;
+    min-width: 0;
+  }
+  .nl-input:focus {
+    border-color: var(--heading-blue);
+  }
+  .nl-btn {
+    border-radius: 0 50px 50px 0;
+    padding: 14px 30px;
+    white-space: nowrap;
+  }
+  .nl-status {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 13px;
+    min-height: 1.4em;
+  }
+
+  /* ── Footer ── */
+  .rc-footer {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .rc-footer-top {
+    background: var(--grad-footer);
+    padding: 60px 0 40px;
+  }
+  .rc-footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    gap: 30px;
+  }
+  .rc-footer-brand img {
+    width: 180px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  .rc-footer-brand p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 260px;
+    margin: 0 0 20px;
+  }
+
+  /* ── Social circles ── */
+  .rc-social {
+    display: flex;
+    gap: 10px;
+  }
+  .rc-social-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: grid;
+    place-items: center;
+    color: rgba(255, 255, 255, 0.6);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .rc-social-circle svg {
+    width: 18px;
+    height: 18px;
+  }
+  .rc-social-circle:hover {
+    border-color: var(--totop);
+    color: var(--totop);
+    background: rgba(74, 174, 222, 0.1);
+  }
+
+  /* ── Footer columns ── */
+  .rc-fcol h3 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--footer-line);
+  }
+  .rc-fcol ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .rc-fcol li {
+    margin-bottom: 8px;
+  }
+  .rc-fcol a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .rc-fcol a:hover {
+    color: var(--totop);
+  }
+
+  /* ── Footer bottom ── */
+  .rc-footer-bottom {
+    background: var(--footer-bottom-bg);
+    padding: 20px 0;
+  }
+  .rc-bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .rc-copy {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .rc-legal {
+    display: flex;
+    gap: 20px;
+  }
+  .rc-legal a {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .rc-legal a:hover {
+    color: var(--totop);
+  }
+  .rc-payments {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .rc-payments svg {
+    width: 28px;
+    height: 28px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* ── To-top ── */
+  .rc-totop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--totop);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    z-index: 80;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .rc-totop:hover {
+    background: #3d9cc8;
+    transform: translateY(-3px);
+  }
+  .rc-totop svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 991px) {
+    .rc-footer-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .rc-footer-brand {
+      grid-column: 1 / -1;
+    }
+    .rc-footer-brand p {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .help-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .nl-form {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .nl-input {
+      border-radius: 50px;
+    }
+    .nl-btn {
+      border-radius: 50px;
+    }
+    .rc-footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 30px 20px;
+    }
+    .rc-footer-brand {
+      grid-column: 1 / -1;
+    }
+    .rc-bottom-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .rc-footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  function rcFooterInit() {
+    // Newsletter form
+    const form = document.getElementById("rcNewsletter") as HTMLFormElement | null;
+    const status = document.getElementById("rcNlStatus");
+    if (form && status) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = (form.querySelector("input[type=email]") as HTMLInputElement)?.value;
+        if (!email) return;
+        const salesEmail = form.dataset.email || "sales@royalclouds.net";
+        window.location.href = `mailto:${salesEmail}?subject=Newsletter%20Subscription&body=Please%20add%20${encodeURIComponent(email)}%20to%20the%20newsletter.`;
+        status.textContent = "Thank you for subscribing!";
+        status.style.color = "#1fa463";
+      });
+    }
+
+    // Scroll to top
+    const toTop = document.getElementById("rcToTop");
+    if (toTop) {
+      const toggle = () => {
+        toTop.hidden = window.scrollY < 500;
+      };
+      window.addEventListener("scroll", toggle, { passive: true });
+      toggle();
+      toTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+  }
+
+  rcFooterInit();
+  document.addEventListener("astro:after-swap", rcFooterInit);
+</script>

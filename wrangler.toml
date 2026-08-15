@@ -1,0 +1,24 @@
+# Cloudflare config — Worker + static assets.
+#
+# A small Worker (src/worker.ts) runs in front of the static `dist/` output to
+# (a) gate the site behind Basic Auth while in preview, and (b) add security
+# headers. `run_worker_first = true` makes the Worker handle every request,
+# then it serves files via the ASSETS binding once authorized.
+#
+# Preview lock: set the BASIC_AUTH_USER / BASIC_AUTH_PASS secrets on the Worker
+# to require a login; remove them to make the site public. See README.
+name = "royalfront"
+main = "src/worker.ts"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+run_worker_first = true
+not_found_handling = "404-page"
+
+# GitHub OAuth for the Decap CMS login at /admin (see src/worker.ts + README).
+# The client id is public and safe to commit. The matching secret is NOT stored
+# here — set it once with: npx wrangler secret put GITHUB_OAUTH_CLIENT_SECRET
+[vars]
+GITHUB_OAUTH_CLIENT_ID = ""

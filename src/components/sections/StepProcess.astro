@@ -1,0 +1,109 @@
+---
+import { Icon } from "astro-icon/components";
+import { tablerIcon } from "~/utils/plans";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  items: { icon?: string; title?: string; text?: string }[];
+}
+const { eyebrow, title, subtitle, items } = Astro.props;
+---
+
+<section class="rc-steps">
+  <div class="wrap">
+    {(eyebrow || title) && (
+      <div class="section-title">
+        {eyebrow && <span class="rc-steps-eyebrow">{eyebrow}</span>}
+        {title && <h2 set:html={title} />}
+        <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+        {subtitle && <p set:html={subtitle} />}
+      </div>
+    )}
+    <div class="rc-steps-grid" style={`grid-template-columns: repeat(${items.length}, 1fr);`}>
+      {items.map((s, i) => (
+        <div class="rc-step">
+          <div class="rc-step-num">
+            {s.icon ? (
+              <Icon name={tablerIcon(s.icon)} />
+            ) : (
+              <span>{i + 1}</span>
+            )}
+          </div>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rc-steps {
+    padding: var(--space-section) 0;
+    background: #fafafa;
+  }
+
+  .rc-steps-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .rc-steps-grid {
+    display: grid;
+    gap: 30px;
+    margin-top: 10px;
+  }
+
+  .rc-step {
+    text-align: center;
+    padding: 30px 20px;
+  }
+  .rc-step-num {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(38,159,216,0.1), rgba(123,31,162,0.08));
+    display: grid;
+    place-items: center;
+    color: var(--heading-blue);
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .rc-step-num svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rc-step h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    margin: 0 0 10px;
+  }
+  .rc-step p {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin: 0;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 860px) {
+    .rc-steps-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

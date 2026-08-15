@@ -1,0 +1,59 @@
+---
+import SectionHero from "./SectionHero.astro";
+import TrustBar from "./TrustBar.astro";
+import PricingSection from "./PricingSection.astro";
+import FeatureGrid from "./FeatureGrid.astro";
+import ContentSplit from "./ContentSplit.astro";
+import StepProcess from "./StepProcess.astro";
+import StatsBand from "./StatsBand.astro";
+import ComparisonTable from "./ComparisonTable.astro";
+import TestimonialsSlider from "./TestimonialsSlider.astro";
+import FaqAccordion from "./FaqAccordion.astro";
+import DomainSearch from "./DomainSearch.astro";
+import TechLogos from "./TechLogos.astro";
+import CtaBand from "./CtaBand.astro";
+import OsStrip from "./OsStrip.astro";
+import StoryCards from "./StoryCards.astro";
+import BenchmarkBars from "./BenchmarkBars.astro";
+import SpeedRace from "./SpeedRace.astro";
+import SecurityLayers from "./SecurityLayers.astro";
+import MapBand from "./MapBand.astro";
+import ShowcaseTabs from "./ShowcaseTabs.astro";
+
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+interface Props {
+  sections: ({ type: string } & Record<string, unknown>)[];
+}
+const { sections } = Astro.props;
+
+const registry: Record<string, AstroComponentFactory> = {
+  hero: SectionHero,
+  trustbar: TrustBar,
+  pricing: PricingSection,
+  features: FeatureGrid,
+  content: ContentSplit,
+  steps: StepProcess,
+  stats: StatsBand,
+  comparison: ComparisonTable,
+  testimonials: TestimonialsSlider,
+  faq: FaqAccordion,
+  domainsearch: DomainSearch,
+  techlogos: TechLogos,
+  cta: CtaBand,
+  osstrip: OsStrip,
+  storycards: StoryCards,
+  benchmark: BenchmarkBars,
+  race: SpeedRace,
+  security: SecurityLayers,
+  mapband: MapBand,
+  showcase: ShowcaseTabs,
+};
+---
+
+{
+  sections.map(({ type, ...props }) => {
+    const Component = registry[type];
+    return Component ? <Component {...props} /> : null;
+  })
+}

@@ -1,0 +1,420 @@
+---
+import { toINR } from "~/utils/currency";
+import { Icon } from "astro-icon/components";
+import { tablerIcon } from "~/utils/plans";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Tier {
+  name: string;
+  price: string;
+  priceAnnual?: string;
+  popular?: boolean;
+  summary?: string;
+  cta?: string;
+  ctaUrl: string;
+  features: string[];
+}
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  tiers: Tier[];
+  note?: string;
+  showToggle?: boolean;
+  icon?: string;
+  product?: string;
+}
+const {
+  id = "pricing",
+  eyebrow,
+  title,
+  subtitle,
+  tiers,
+  note,
+  showToggle = true,
+  icon,
+  product,
+} = Astro.props;
+const cols = Math.min(tiers.length, 5);
+
+const savePct = (t: Tier) => {
+  const m = parseFloat(t.price);
+  const a = parseFloat(t.priceAnnual ?? t.price);
+  if (!m || !a || a >= m) return 0;
+  return Math.round((1 - a / m) * 100);
+};
+const hasAnnual = tiers.some((t) => savePct(t) > 0);
+const defaultBill = hasAnnual && showToggle ? "annual" : "monthly";
+const shownPrice = (t: Tier) =>
+  toINR(defaultBill === "annual" ? (t.priceAnnual ?? t.price) : t.price);
+---
+
+<section class="rc-pricing" id={id} data-bill={defaultBill} data-product={product}>
+  <div class="wrap">
+    <div class="section-title">
+      {eyebrow && <span class="pricing-eyebrow">{eyebrow}</span>}
+      <h2>{title}</h2>
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+      {subtitle && <p>{subtitle}</p>}
+    </div>
+
+    {showToggle && (
+      <div class="toggle-wrap">
+        <div class="bill-toggle" role="group" aria-label="Billing period">
+          <button
+            type="button"
+            class={defaultBill === "monthly" ? "active" : ""}
+            aria-pressed={defaultBill === "monthly" ? "true" : "false"}
+            data-bill="monthly"
+          >Monthly</button>
+          <button
+            type="button"
+            class={defaultBill === "annual" ? "active" : ""}
+            aria-pressed={defaultBill === "annual" ? "true" : "false"}
+            data-bill="annual"
+          >Annual <span class="save-tag">SAVE 20%</span></button>
+        </div>
+      </div>
+    )}
+
+    <div
+      class="plan-cards"
+      style={`grid-template-columns: repeat(${cols}, 1fr);`}
+      data-plan-grid
+    >
+      {tiers.map((t) => (
+        <div class={`plan-card ${t.popular ? "plan-popular" : ""}`}>
+          {t.popular && <span class="plan-badge">Best Value</span>}
+          {icon && (
+            <span class="plan-icon">
+              <Icon name={tablerIcon(icon)} />
+            </span>
+          )}
+          <h3>{t.name}</h3>
+          {t.summary && <p class="plan-summary">{t.summary}</p>}
+
+          <div class="plan-was">
+            {savePct(t) > 0 && (
+              <>
+                <span class="was px" data-usd={`$${t.price}`} data-inr={`₹${toINR(t.price)}`}>
+                  ₹{toINR(t.price)}
+                </span>
+                <span class="save-chip">SAVE {savePct(t)}%</span>
+              </>
+            )}
+          </div>
+
+          <div class="plan-price">
+            <span class="cur" data-cur-sym>₹</span>
+            <span
+              class="price-val"
+              data-usd-monthly={t.price}
+              data-usd-annual={t.priceAnnual ?? t.price}
+              data-inr-monthly={toINR(t.price)}
+              data-inr-annual={toINR(t.priceAnnual ?? t.price)}
+            >{shownPrice(t)}</span>
+            <span class="period">/mo</span>
+          </div>
+
+          <a
+            class="btn-yellow plan-cta"
+            href={t.ctaUrl}
+            target="_blank"
+            rel="noopener"
+          >{t.cta ?? "Buy Now"}</a>
+
+          <p
+            class="plan-note"
+            data-bill-note
+            data-usd-monthly="Billed monthly. Cancel anytime."
+            data-usd-annual={`Renews at $${t.price}/mo. Billed annually.`}
+            data-inr-monthly="Billed monthly. Cancel anytime."
+            data-inr-annual={`Renews at ₹${toINR(t.price)}/mo. Billed annually.`}
+          >
+            {defaultBill === "annual"
+              ? `Renews at ₹${toINR(t.price)}/mo. Billed annually.`
+              : "Billed monthly. Cancel anytime."}
+          </p>
+
+          <details class="plan-features">
+            <summary>See all features</summary>
+            <ul>
+              {t.features.map((f) => <li>{f}</li>)}
+            </ul>
+          </details>
+        </div>
+      ))}
+    </div>
+    {note && <p class="pricing-footnote">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .rc-pricing {
+    padding: var(--space-section) 0;
+  }
+
+  .pricing-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .toggle-wrap {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .bill-toggle {
+    display: inline-flex;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 2px solid #eee;
+    background: #fff;
+  }
+  .bill-toggle button {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 25px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--body-color);
+    transition: background 0.2s, color 0.2s;
+  }
+  .bill-toggle button.active {
+    background: var(--heading-blue);
+    color: #fff;
+  }
+  .save-tag {
+    font-size: 11px;
+    color: var(--accent-hot);
+    margin-left: 4px;
+  }
+  .bill-toggle button.active .save-tag {
+    color: #fdd700;
+  }
+
+  .plan-cards {
+    display: grid;
+    gap: 30px;
+  }
+
+  .plan-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 35px 25px;
+    text-align: center;
+    border: 1px solid #eaeaea;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .plan-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .plan-popular {
+    border-color: var(--heading-blue);
+  }
+  .plan-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--heading-blue);
+    padding: 4px 18px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  .plan-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(38,159,216,0.1), rgba(123,31,162,0.08));
+    color: var(--heading-blue);
+    margin-bottom: 15px;
+  }
+  .plan-icon :global(svg) {
+    width: 28px;
+    height: 28px;
+  }
+
+  .plan-card h3 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    margin: 0 0 8px;
+  }
+  .plan-summary {
+    font-size: 13px;
+    color: #999;
+    margin: 0 0 15px;
+  }
+
+  .plan-was {
+    min-height: 20px;
+    margin-bottom: 5px;
+  }
+  .was {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 6px;
+  }
+  .save-chip {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent-hot);
+    border-radius: 50px;
+    padding: 2px 8px;
+  }
+
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: 15px;
+  }
+  .cur {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--heading-blue);
+  }
+  .price-val {
+    font-family: var(--font-heading);
+    font-size: 45px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    line-height: 1;
+  }
+  .period {
+    font-size: 14px;
+    color: #999;
+  }
+
+  .plan-cta {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+  }
+
+  .plan-note {
+    font-size: 12px;
+    color: #999;
+    margin: 0 0 15px;
+    min-height: 1.2em;
+  }
+
+  .plan-features {
+    text-align: left;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+  .plan-features summary {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    cursor: pointer;
+    padding: 8px 0;
+    list-style: none;
+  }
+  .plan-features summary::-webkit-details-marker {
+    display: none;
+  }
+  .plan-features summary::after {
+    content: " ▸";
+  }
+  .plan-features[open] summary::after {
+    content: " ▾";
+  }
+  .plan-features ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .plan-features li {
+    font-size: 13px;
+    color: var(--body-color);
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .plan-features li::before {
+    content: "✓";
+    color: #1fa463;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  @media (max-width: 1080px) {
+    .plan-cards { grid-template-columns: repeat(3, 1fr) !important; }
+  }
+  @media (max-width: 860px) {
+    .plan-cards { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 560px) {
+    .plan-cards { grid-template-columns: 1fr !important; }
+  }
+</style>
+
+<script>
+  function rcPlansInit() {
+    const apply = (sec: HTMLElement) => {
+      const cur = localStorage.getItem("rc-cur") || "inr";
+      const bill = sec.dataset.bill || "monthly";
+      sec.querySelectorAll<HTMLElement>(`[data-${cur}-${bill}]`).forEach((p) => {
+        const val = p.getAttribute(`data-${cur}-${bill}`);
+        if (val) p.textContent = val;
+      });
+      sec.querySelectorAll<HTMLElement>("[data-bill-note]").forEach((p) => {
+        const val = p.getAttribute(`data-${cur}-${bill}`);
+        if (val) p.textContent = val;
+      });
+      sec.querySelectorAll<HTMLElement>("[data-cur-sym]").forEach((s) => {
+        s.textContent = cur === "inr" ? "₹" : "$";
+      });
+      sec.querySelectorAll<HTMLElement>(".px").forEach((el) => {
+        el.textContent = cur === "inr" ? (el.dataset.inr || "") : (el.dataset.usd || "");
+      });
+    };
+    document.querySelectorAll<HTMLElement>(".rc-pricing").forEach((sec) => {
+      const buttons = sec.querySelectorAll<HTMLButtonElement>(".bill-toggle button");
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const bill = btn.getAttribute("data-bill") || "monthly";
+          sec.dataset.bill = bill;
+          buttons.forEach((b) => {
+            b.classList.toggle("active", b === btn);
+            b.setAttribute("aria-pressed", String(b === btn));
+          });
+          apply(sec);
+        });
+      });
+      apply(sec);
+      window.addEventListener("rc-currency", () => apply(sec));
+    });
+  }
+  rcPlansInit();
+  document.addEventListener("astro:after-swap", rcPlansInit);
+</script>

@@ -1,0 +1,36 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import HeaderRC from "~/components/widgets/HeaderRC.astro";
+import FooterRC from "~/components/widgets/FooterRC.astro";
+import RevealScript from "~/components/widgets/RevealScript.astro";
+import CountUp from "~/components/widgets/CountUp.astro";
+import SvgDefs from "~/components/illustrations/SvgDefs.astro";
+
+import type { MetaData } from "~/types";
+
+export interface Props {
+  metadata?: MetaData;
+  transparentHeader?: boolean;
+  theme?: string;
+  page?: string;
+  newsletter?: boolean;
+}
+
+const { metadata, transparentHeader = false, theme, page, newsletter = false } = Astro.props;
+---
+
+<Layout metadata={metadata}>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <SvgDefs />
+  <slot name="header">
+    <HeaderRC solid={!transparentHeader} />
+  </slot>
+  <main id="main" tabindex="-1" data-theme={theme} data-page={page}>
+    <slot />
+  </main>
+  <slot name="footer">
+    <FooterRC newsletter={newsletter} />
+  </slot>
+  <RevealScript />
+  <CountUp />
+</Layout>

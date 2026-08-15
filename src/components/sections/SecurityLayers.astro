@@ -1,0 +1,144 @@
+---
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  layers: { title: string; text: string }[];
+  stats?: { value: string; label: string }[];
+}
+const { eyebrow, title, subtitle, layers, stats } = Astro.props;
+---
+
+<section class="rc-security">
+  <div class="wrap">
+    <div class="section-title">
+      {eyebrow && <span class="sec-eyebrow">{eyebrow}</span>}
+      {title && <h2 set:html={title} />}
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+    <div class="sec-grid">
+      {
+        layers.map((l, i) => (
+          <div class="sec-card">
+            <span class="sec-num">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{l.title}</h3>
+            <p>{l.text}</p>
+          </div>
+        ))
+      }
+    </div>
+    {
+      stats && stats.length > 0 && (
+        <div class="sec-stats">
+          {stats.map((s) => (
+            <div class="sec-stat">
+              <b>{s.value}</b>
+              <small>{s.label}</small>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .rc-security {
+    padding: var(--space-section) 0;
+    background: #fafafa;
+  }
+
+  .sec-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .sec-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .sec-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px 25px;
+    border: 1px solid #eaeaea;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .sec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+
+  .sec-num {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--heading-blue);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .sec-card h3 {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+    color: #22105f;
+    margin: 0 0 10px;
+  }
+
+  .sec-card p {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .sec-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 50px;
+  }
+  .sec-stat {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .sec-stat b {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--heading-blue);
+  }
+  .sec-stat small {
+    font-size: 13px;
+    color: #999;
+  }
+
+  @media (max-width: 991px) {
+    .sec-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .sec-grid { grid-template-columns: 1fr; }
+  }
+</style>

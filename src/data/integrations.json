@@ -1,0 +1,21 @@
+{
+  "analytics": {
+    "ga4Id": "",
+    "gtmId": ""
+  },
+  "verification": {
+    "google": "",
+    "bing": ""
+  },
+  "pixels": {
+    "facebookPixelId": ""
+  },
+  "chat": {
+    "provider": "none",
+    "tawkPropertyId": "",
+    "tawkWidgetId": "default",
+    "customEmbed": ""
+  },
+  "customHeadHtml": "",
+  "customBodyHtml": ""
+}

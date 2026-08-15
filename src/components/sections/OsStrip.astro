@@ -1,0 +1,108 @@
+---
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  items: { name: string; color?: string; active?: boolean }[];
+}
+const { eyebrow, title, subtitle, items } = Astro.props;
+---
+
+<section class="rc-osstrip">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="section-title">
+          {eyebrow && <span class="os-eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="os-row">
+      {
+        items.map((os) => (
+          <div class={`os-chip ${os.active ? "active" : ""}`}>
+            <span class="os-mark" style={os.color ? `--os-c: ${os.color}` : undefined}>
+              {os.name.slice(0, 1)}
+            </span>
+            <b>{os.name}</b>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .rc-osstrip {
+    padding: var(--space-section-sm) 0;
+  }
+
+  .os-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .os-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .os-chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 50px;
+    padding: 10px 22px 10px 12px;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .os-chip:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-color: var(--heading-blue);
+  }
+  .os-chip.active {
+    border-color: var(--heading-blue);
+    background: rgba(38,159,216,0.05);
+  }
+
+  .os-mark {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--os-c, var(--heading-blue));
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .os-chip b {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    color: #22105f;
+  }
+
+  @media (max-width: 560px) {
+    .os-chip { padding: 8px 16px 8px 9px; }
+    .os-mark { width: 32px; height: 32px; font-size: 14px; }
+    .os-chip b { font-size: 13px; }
+  }
+</style>

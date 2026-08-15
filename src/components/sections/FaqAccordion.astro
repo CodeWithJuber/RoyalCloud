@@ -1,0 +1,146 @@
+---
+import { marked } from "marked";
+import StructuredData from "~/components/common/StructuredData.astro";
+import { faqPage } from "~/utils/structuredData";
+import faqsData from "~/data/faqs.json";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Faq {
+  q: string;
+  a: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  source?: "global" | "inline";
+  items?: Faq[];
+  jsonld?: boolean;
+}
+const {
+  eyebrow = "FAQ",
+  title = "Frequently Asked Questions",
+  subtitle,
+  source = "global",
+  items,
+  jsonld = true,
+} = Astro.props;
+
+const list: Faq[] =
+  source === "inline" && items?.length ? items : (faqsData.general as Faq[]);
+const rendered = await Promise.all(
+  list.map(async (f) => ({ ...f, html: await marked.parseInline(f.a) })),
+);
+---
+
+<section class="rc-faq">
+  <div class="wrap">
+    <div class="section-title">
+      {eyebrow && <span class="faq-eyebrow">{eyebrow}</span>}
+      {title && <h2 set:html={title} />}
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+    <div class="faq-list">
+      {rendered.map((f, i) => (
+        <details class="faq-item" open={i === 0}>
+          <summary>
+            <span class="faq-num">{String(i + 1).padStart(2, "0")}</span>
+            <span class="faq-q">{f.q}</span>
+            <span class="faq-toggle">+</span>
+          </summary>
+          <div class="faq-answer" set:html={f.html} />
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+{jsonld && <StructuredData schema={faqPage(list)} />}
+
+<style>
+  .rc-faq {
+    padding: var(--space-section) 0;
+  }
+
+  .faq-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    border-bottom: 1px dashed #ddd;
+  }
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-num {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #00a7f5;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .faq-q {
+    flex: 1;
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    color: #22105f;
+  }
+
+  .faq-toggle {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    color: #999;
+    transition: transform 0.2s;
+  }
+  .faq-item[open] .faq-toggle {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    padding: 0 0 20px 55px;
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+  }
+  .faq-answer :global(a) {
+    color: var(--heading-blue);
+  }
+
+  @media (max-width: 600px) {
+    .faq-q { font-size: 16px; }
+    .faq-answer { padding-left: 0; }
+  }
+</style>

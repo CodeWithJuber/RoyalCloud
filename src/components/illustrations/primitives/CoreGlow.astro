@@ -1,0 +1,29 @@
+---
+/**
+ * CoreGlow - the radiant cloud-core focal: a soft gold halo, a white disc, and
+ * the brand "altitude" chevrons. The one place the radial gradient is allowed
+ * (a focal element, not a smeared field). Animatable wrapper `.rc-il__core`
+ * (pulse). Origin (x,y) = the core centre; `r` is the disc radius.
+ */
+interface Props {
+  x?: number;
+  y?: number;
+  r?: number;
+  class?: string;
+}
+const { x = 0, y = 0, r = 30, class: className = '' } = Astro.props;
+const halo = r * 2.4;
+const chev = r * 0.42;
+---
+
+<g transform={`translate(${x} ${y})`} class:list={['rc-il__core', className]}>
+  <circle cx="0" cy="0" r={halo} fill="url(#rcgCore)"></circle>
+  <circle cx="0" cy="0" r={r} fill="#ffffff"></circle>
+  <path
+    d={`M${-chev} ${chev * 0.5} L0 ${-chev * 0.5} L${chev} ${chev * 0.5} M${-chev} ${chev * 1.2} L0 ${chev * 0.2} L${chev} ${chev * 1.2}`}
+    fill="none"
+    stroke="#5a1ee6"
+    stroke-width={r * 0.1}
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+</g>

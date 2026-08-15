@@ -1,0 +1,201 @@
+---
+import { getEntry } from "astro:content";
+import { pricify } from "~/utils/currency";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  plan?: string;
+  note?: string;
+}
+const { eyebrow, title, subtitle, plan: planId, note } = Astro.props;
+
+const entry = planId ? await getEntry("plans", planId) : undefined;
+if (planId && !entry)
+  throw new Error(`ComparisonTable: unknown plan "${planId}"`);
+const tiers = entry?.data.tiers ?? [];
+
+const rowCount = Math.max(0, ...tiers.map((t) => t.features.length));
+const label = (text: string) =>
+  text.replace(/^(unlimited|free|\d+[\w.]*)\s+(gb\s+|tb\s+)?/i, "") || text;
+const rows = Array.from({ length: rowCount }, (_, i) => ({
+  label: label(tiers[0]?.features[i] ?? `Feature ${i + 1}`),
+  cells: tiers.map((t) => t.features[i] ?? "-"),
+}));
+---
+
+<section class="rc-compare">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="section-title">
+          {eyebrow && <span class="compare-eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <caption class="sr-only">
+          {title ? title : "Plan feature comparison"}, compare price and
+          features across {tiers.length} plans.
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Plan</th>
+            {
+              tiers.map((t) => (
+                <th scope="col" class={t.popular ? "col-popular" : ""}>
+                  {t.name}
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Price</th>
+            {
+              tiers.map((t) => (
+                <td class={t.popular ? "col-popular" : ""}>
+                  <span class="compare-price" set:html={pricify(`$${t.price}/mo`)} />
+                </td>
+              ))
+            }
+          </tr>
+          {
+            rows.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                {row.cells.map((c, j) => (
+                  <td class={tiers[j]?.popular ? "col-popular" : ""}>{c}</td>
+                ))}
+              </tr>
+            ))
+          }
+          <tr class="cta-row">
+            <th scope="row"><span class="sr-only">Choose plan</span></th>
+            {
+              tiers.map((t) => (
+                <td class={t.popular ? "col-popular" : ""}>
+                  <a
+                    class="btn-yellow"
+                    href={t.ctaUrl}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {t.cta ?? "Get Started"}
+                  </a>
+                </td>
+              ))
+            }
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    {note && <p class="compare-note">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .rc-compare {
+    padding: var(--space-section) 0;
+  }
+
+  .compare-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .compare-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  .compare-table thead th {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    background: #fafafa;
+  }
+  .compare-table thead th:first-child {
+    text-align: left;
+    color: #22105f;
+  }
+
+  .compare-table tbody th {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: #22105f;
+    text-align: left;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+  }
+
+  .compare-table tbody td {
+    font-size: 14px;
+    color: var(--body-color);
+    text-align: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .col-popular {
+    background: rgba(38, 159, 216, 0.04);
+  }
+
+  .compare-price {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--heading-blue);
+  }
+
+  .cta-row td {
+    padding: 20px;
+    border-bottom: none;
+  }
+  .cta-row .btn-yellow {
+    display: inline-block;
+    padding: 10px 25px;
+    font-size: 14px;
+  }
+
+  .compare-note {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .compare-table thead th,
+    .compare-table tbody th,
+    .compare-table tbody td {
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+  }
+</style>

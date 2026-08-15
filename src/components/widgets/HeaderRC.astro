@@ -1,0 +1,547 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import logoWhite from "~/assets/images/brand/logo-white.png";
+import { headerData } from "~/navigation";
+import site from "~/data/site.json";
+import { tablerIcon } from "~/utils/plans";
+
+interface Props {
+  solid?: boolean;
+}
+const { solid = false } = Astro.props;
+
+type Link = { text: string; href: string; icon?: string; description?: string };
+type Item = Link | { text: string; links: Link[] };
+
+const items = headerData.links as Item[];
+const isGroup = (i: Item): i is { text: string; links: Link[] } => "links" in i;
+const external = (href: string) => /^https?:\/\//.test(href);
+
+const pathname = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
+const isCurrent = (href: string) => {
+  if (!href || external(href) || href.startsWith("#")) return false;
+  const h = (href.replace(/\/+$/, "") || "/").toLowerCase();
+  return h === pathname;
+};
+const groupActive = (links: Link[]) => links.some((l) => isCurrent(l.href));
+---
+
+<header class:list={["rc-header", { scrolled: solid }]} id="rcHeader">
+  <div class="wrap rc-header-inner">
+    <a href="/" class="rc-logo" aria-label="Royal Clouds home">
+      <Image src={logoWhite} alt="Royal Clouds" width={250} height={50} loading="eager" />
+    </a>
+
+    <nav class="rc-nav" id="rcNav" aria-label="Main">
+      {items.map((item) =>
+        isGroup(item) ? (
+          <div class="rc-dd-wrap" data-dd>
+            <button
+              type="button"
+              class:list={["rc-nav-link", { active: groupActive(item.links) }]}
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              {item.text}
+              {item.text === "Hosting" && <span class="promo-pill">PROMO</span>}
+              <Icon name="tabler:chevron-down" class="dd-chev" />
+            </button>
+            <div class="rc-dropdown" role="menu">
+              {item.links.map((link) => (
+                <a
+                  href={link.href}
+                  class="rc-dd-item"
+                  role="menuitem"
+                  aria-current={isCurrent(link.href) ? "page" : undefined}
+                  target={external(link.href) ? "_blank" : undefined}
+                  rel={external(link.href) ? "noopener" : undefined}
+                >
+                  {link.icon && (
+                    <span class="rc-dd-ic">
+                      <Icon name={tablerIcon(link.icon)} />
+                    </span>
+                  )}
+                  <span>
+                    <span class="rc-dd-title">{link.text}</span>
+                    {link.description && <span class="rc-dd-desc">{link.description}</span>}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={item.href}
+            class="rc-nav-link"
+            aria-current={isCurrent(item.href) ? "page" : undefined}
+          >
+            {item.text}
+          </a>
+        )
+      )}
+    </nav>
+
+    <div class="rc-header-right">
+      <div class="cur-toggle" id="rcCurToggle" aria-label="Currency">
+        <button type="button" class="cur-btn active" data-cur="usd">USD</button>
+        <button type="button" class="cur-btn" data-cur="inr">INR</button>
+      </div>
+      <a href={site.portal.login} class="default-btn rc-login-btn">Login</a>
+      <button
+        type="button"
+        class="rc-hamburger"
+        id="rcMenuBtn"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="rcMobileNav"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="rc-mobile-nav" id="rcMobileNav" hidden>
+    <div class="rc-mob-inner">
+      {items.map((item) =>
+        isGroup(item) ? (
+          <details class="rc-mob-group">
+            <summary>{item.text}</summary>
+            <div class="rc-mob-links">
+              {item.links.map((link) => (
+                <a href={link.href}>{link.text}</a>
+              ))}
+            </div>
+          </details>
+        ) : (
+          <a href={item.href} class="rc-mob-link">{item.text}</a>
+        )
+      )}
+      <div class="rc-mob-bottom">
+        <div class="cur-toggle" id="rcCurToggleMob">
+          <button type="button" class="cur-btn active" data-cur="usd">USD</button>
+          <button type="button" class="cur-btn" data-cur="inr">INR</button>
+        </div>
+        <a href={site.portal.login} class="default-btn rc-mob-login">Login</a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="rc-backdrop" id="rcMenuBackdrop" hidden></div>
+
+<style>
+  /* ── Header: transparent over gradient, scrolled = #673AB7 ── */
+  .rc-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .rc-header:not(.scrolled) {
+    background: transparent;
+  }
+  .rc-header.scrolled {
+    background: var(--sticky-nav);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .rc-header-inner {
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  /* ── Logo ── */
+  .rc-logo {
+    flex-shrink: 0;
+    display: block;
+    line-height: 0;
+  }
+  .rc-logo img {
+    width: 250px;
+    height: auto;
+  }
+
+  /* ── Desktop nav ── */
+  .rc-nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-left: 30px;
+  }
+  .rc-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    padding: 10px 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    text-decoration: none;
+  }
+  .rc-nav-link:hover {
+    opacity: 0.85;
+  }
+
+  /* ── PROMO badge ── */
+  .promo-pill {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--pink);
+    border-radius: 50px;
+    padding: 2px 8px;
+    margin-left: 4px;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+
+  /* ── Dropdown chevron ── */
+  .dd-chev {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+    transition: transform 0.2s;
+  }
+  [data-dd][aria-expanded="true"] .dd-chev,
+  [data-dd]:hover .dd-chev {
+    transform: rotate(180deg);
+  }
+
+  /* ── Dropdown panel ── */
+  .rc-dd-wrap {
+    position: relative;
+  }
+  .rc-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 280px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 12px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    z-index: 200;
+  }
+  .rc-dd-wrap:hover .rc-dropdown,
+  .rc-dd-wrap:focus-within .rc-dropdown {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .rc-dd-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 20px;
+    color: var(--body-color);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .rc-dd-item:hover {
+    background: #f5f5f5;
+  }
+  .rc-dd-ic {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #f0f0f0;
+    color: var(--heading-blue);
+  }
+  .rc-dd-ic svg {
+    width: 20px;
+    height: 20px;
+  }
+  .rc-dd-title {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.3;
+  }
+  .rc-dd-desc {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  /* ── Header right ── */
+  .rc-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  /* ── Currency toggle ── */
+  .cur-toggle {
+    display: flex;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .cur-btn {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    border: none;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .cur-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+
+  /* ── Login button ── */
+  .rc-login-btn {
+    font-size: 14px;
+    padding: 8px 25px;
+  }
+
+  /* ── Hamburger ── */
+  .rc-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .rc-hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .rc-hamburger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .rc-hamburger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .rc-hamburger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ── Mobile nav ── */
+  .rc-mobile-nav {
+    background: var(--sticky-nav-mobile);
+    padding: 0 var(--wrap-pad) 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .rc-mob-inner {
+    display: flex;
+    flex-direction: column;
+  }
+  .rc-mob-group summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    list-style: none;
+  }
+  .rc-mob-group summary::-webkit-details-marker {
+    display: none;
+  }
+  .rc-mob-group summary::after {
+    content: "+";
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .rc-mob-group[open] summary::after {
+    content: "−";
+  }
+  .rc-mob-links {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0 8px 16px;
+  }
+  .rc-mob-links a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 8px 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .rc-mob-links a:hover {
+    color: #fff;
+  }
+  .rc-mob-link {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+  }
+  .rc-mob-bottom {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .rc-mob-login {
+    flex: 1;
+    text-align: center;
+  }
+
+  /* ── Backdrop ── */
+  .rc-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    backdrop-filter: blur(2px);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 991px) {
+    .rc-logo img {
+      width: 180px;
+    }
+    .rc-nav-link {
+      font-size: 14px;
+      padding: 10px 10px;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .rc-nav {
+      display: none;
+    }
+    .rc-login-btn {
+      display: none;
+    }
+    .cur-toggle {
+      display: none;
+    }
+    .rc-hamburger {
+      display: flex;
+    }
+    .rc-header.scrolled,
+    .rc-header {
+      background: var(--sticky-nav-mobile);
+    }
+    .rc-logo img {
+      width: 180px;
+    }
+  }
+</style>
+
+<script>
+  function rcHeaderInit() {
+    const header = document.getElementById("rcHeader");
+    const menuBtn = document.getElementById("rcMenuBtn");
+    const mobileNav = document.getElementById("rcMobileNav");
+    const backdrop = document.getElementById("rcMenuBackdrop");
+    if (!header) return;
+
+    const isSolid = header.classList.contains("scrolled");
+
+    const onScroll = () => {
+      if (window.scrollY > 50) {
+        header.classList.add("scrolled");
+      } else if (!isSolid) {
+        header.classList.remove("scrolled");
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // Mobile menu
+    const openMenu = () => {
+      if (!mobileNav || !menuBtn || !backdrop) return;
+      mobileNav.hidden = false;
+      backdrop.hidden = false;
+      menuBtn.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    };
+    const closeMenu = () => {
+      if (!mobileNav || !menuBtn || !backdrop) return;
+      mobileNav.hidden = true;
+      backdrop.hidden = true;
+      menuBtn.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    };
+
+    menuBtn?.addEventListener("click", () => {
+      const open = menuBtn.getAttribute("aria-expanded") === "true";
+      if (open) closeMenu(); else openMenu();
+    });
+    backdrop?.addEventListener("click", closeMenu);
+    mobileNav?.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).tagName === "A") closeMenu();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+  }
+
+  function rcCurrencyInit() {
+    const stored = localStorage.getItem("rc-cur") || "usd";
+    const apply = (cur: string) => {
+      localStorage.setItem("rc-cur", cur);
+      document.querySelectorAll(".cur-btn").forEach((b) => {
+        b.classList.toggle("active", (b as HTMLElement).dataset.cur === cur);
+      });
+      document.querySelectorAll(".px").forEach((el) => {
+        const e = el as HTMLElement;
+        e.textContent = cur === "inr" ? (e.dataset.inr || "") : (e.dataset.usd || "");
+      });
+      document.querySelectorAll("[data-cur-sym]").forEach((el) => {
+        (el as HTMLElement).textContent = cur === "inr" ? "₹" : "$";
+      });
+      window.dispatchEvent(new CustomEvent("rc-currency", { detail: cur }));
+    };
+    document.querySelectorAll(".cur-btn").forEach((btn) => {
+      btn.addEventListener("click", () => apply((btn as HTMLElement).dataset.cur || "usd"));
+    });
+    apply(stored);
+  }
+
+  rcHeaderInit();
+  rcCurrencyInit();
+  document.addEventListener("astro:after-swap", () => {
+    rcHeaderInit();
+    rcCurrencyInit();
+  });
+</script>

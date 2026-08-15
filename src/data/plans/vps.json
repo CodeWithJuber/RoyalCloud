@@ -1,0 +1,149 @@
+{
+  "id": "vps",
+  "name": "KVM VPS Hosting",
+  "slug": "kvm-vps-hosting",
+  "icon": "cpu",
+  "eyebrow": "Virtual Private Servers",
+  "title": "High-Performance KVM VPS Hosting",
+  "subtitle": "The ultimate in performance, speed, stability and isolation. Every KVM VPS includes full root access, free setup, a dedicated IP, DDoS protection and Cloud SSD storage.",
+  "currency": "$",
+  "billingNote": "Full root access · Free setup · Dedicated IP · DDoS protection · 24/7 support.",
+  "tiers": [
+    {
+      "name": "VPS I",
+      "price": "4",
+      "priceAnnual": "3",
+      "period": "/mo",
+      "popular": false,
+      "summary": "Ideal for a single app or dev box.",
+      "cta": "Deploy Now",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=11",
+      "features": [
+        "1 vCPU Core",
+        "1 GB RAM",
+        "10 GB SSD Storage",
+        "500 GB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ]
+    },
+    {
+      "name": "VPS II",
+      "price": "8",
+      "priceAnnual": "6",
+      "period": "/mo",
+      "popular": false,
+      "summary": "Great for a growing site.",
+      "cta": "Deploy Now",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=12",
+      "features": [
+        "2 vCPU Cores",
+        "2 GB RAM",
+        "20 GB SSD Storage",
+        "1 TB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ]
+    },
+    {
+      "name": "VPS III",
+      "price": "16",
+      "priceAnnual": "13",
+      "period": "/mo",
+      "popular": true,
+      "summary": "Best value for production workloads.",
+      "cta": "Deploy Now",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=13",
+      "features": [
+        "4 vCPU Cores",
+        "4 GB RAM",
+        "40 GB SSD Storage",
+        "2 TB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ]
+    },
+    {
+      "name": "VPS IV",
+      "price": "30",
+      "priceAnnual": "24",
+      "period": "/mo",
+      "popular": false,
+      "summary": "For busy sites and small clusters.",
+      "cta": "Deploy Now",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=14",
+      "features": [
+        "4 vCPU Cores",
+        "8 GB RAM",
+        "70 GB SSD Storage",
+        "3 TB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ]
+    },
+    {
+      "name": "VPS V",
+      "price": "60",
+      "priceAnnual": "48",
+      "period": "/mo",
+      "popular": false,
+      "summary": "Heavy applications and databases.",
+      "cta": "Deploy Now",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=15",
+      "features": [
+        "8 vCPU Cores",
+        "16 GB RAM",
+        "100 GB SSD Storage",
+        "4 TB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ]
+    },
+    {
+      "name": "VPS VI",
+      "price": "100",
+      "priceAnnual": "80",
+      "period": "/mo",
+      "popular": false,
+      "summary": "Maximum power for demanding apps.",
+      "cta": "Deploy Now",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=16",
+      "features": [
+        "8 vCPU Cores",
+        "32 GB RAM",
+        "150 GB SSD Storage",
+        "5 TB Bandwidth",
+        "1 Dedicated IPv4",
+        "Full Root Access",
+        "Free Setup"
+      ]
+    }
+  ],
+  "highlights": [
+    {
+      "icon": "cpu",
+      "title": "Guaranteed Resources",
+      "text": "KVM virtualization gives you dedicated CPU, RAM and SSD, never shared."
+    },
+    {
+      "icon": "bolt",
+      "title": "Instant Deployment",
+      "text": "Your server is provisioned and online within minutes of ordering."
+    },
+    {
+      "icon": "terminal",
+      "title": "Full Root Access",
+      "text": "Install any software, choose your OS and configure it exactly your way."
+    },
+    {
+      "icon": "shield",
+      "title": "Free DDoS Protection",
+      "text": "Built-in network filtering keeps your VPS online under attack."
+    }
+  ]
+}

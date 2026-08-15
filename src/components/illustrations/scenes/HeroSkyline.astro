@@ -1,0 +1,183 @@
+---
+/**
+ * HeroSkyline - the brand's signature centerpiece: an isometric "Royal Cloud
+ * City" of server towers with a glowing cloud-core, neon spectrum arc, drifting
+ * clouds and gold stars. Composed entirely from the primitive kit.
+ *
+ * Elevation pass: elements are grouped into `.sky-depth` layers with a
+ * `data-depth` weight so the cursor-reactive parallax in SmoothScroll.astro can
+ * translate each layer at a different speed (true 3D depth). The per-element
+ * drift/pulse/twinkle keyframes live on the CHILDREN (different element than the
+ * JS-driven layer translate, so they compose without fighting). Reduced-motion
+ * keeps everything static.
+ */
+import IsoBlock from "../primitives/IsoBlock.astro";
+import Cloud from "../primitives/Cloud.astro";
+import CoreGlow from "../primitives/CoreGlow.astro";
+import SpectrumArc from "../primitives/SpectrumArc.astro";
+import Star from "../primitives/Star.astro";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  class:list={["rc-skyline", className]}
+  viewBox="0 0 460 420"
+  fill="none"
+  role="img"
+  aria-label="Illustration of an isometric cloud-city of server towers"
+>
+  <!-- back: arc + far cloud (slow parallax) -->
+  <g class="sky-depth" data-depth="0.035">
+    <SpectrumArc
+      x={36}
+      y={150}
+      w={388}
+      thickness={5}
+      grad="neon"
+      class="sky-arc"
+    />
+    <Cloud
+      x={262}
+      y={36}
+      scale={0.72}
+      tone="white"
+      class="sky-cloud sky-cloud--a"
+    />
+  </g>
+
+  <!-- glowing cloud-core -->
+  <g class="sky-depth" data-depth="0.055">
+    <CoreGlow x={304} y={128} r={26} class="sky-core" />
+  </g>
+
+  <!-- the city: island + towers + window lights (anchor layer) -->
+  <g class="sky-depth" data-depth="0.014">
+    <IsoBlock x={230} y={252} w={140} h={22} tone="#2a1370" />
+    <IsoBlock x={190} y={150} w={28} h={120} tone="#7a3bff" />
+    <IsoBlock x={235} y={118} w={24} h={152} tone="#00a7f5" />
+    <IsoBlock x={285} y={180} w={30} h={86} tone="#9e73ff" />
+    <g class="sky-lights" fill="#ffd98a">
+      <circle cx="232" cy="172" r="2.6"></circle>
+      <circle cx="232" cy="196" r="2.6"></circle>
+      <circle cx="232" cy="220" r="2.6"></circle>
+      <circle cx="188" cy="206" r="2.4" fill="#4dc3ff"></circle>
+      <circle cx="188" cy="228" r="2.4" fill="#4dc3ff"></circle>
+      <circle cx="284" cy="222" r="2.4" fill="#ffd98a"></circle>
+    </g>
+  </g>
+
+  <!-- front clouds (fast parallax) -->
+  <g class="sky-depth" data-depth="0.08">
+    <Cloud
+      x={48}
+      y={176}
+      scale={0.82}
+      tone="white"
+      class="sky-cloud sky-cloud--b"
+    />
+    <Cloud
+      x={332}
+      y={244}
+      scale={0.58}
+      tone="white"
+      class="sky-cloud sky-cloud--c"
+    />
+  </g>
+
+  <!-- stars (fastest parallax) -->
+  <g class="sky-depth" data-depth="0.11">
+    <Star x={108} y={112} size={7} tone="gold" class="sky-star sky-star--a" />
+    <Star x={384} y={172} size={6} tone="gold" class="sky-star sky-star--b" />
+    <Star x={150} y={332} size={5} tone="white" class="sky-star sky-star--c" />
+    <Star x={336} y={92} size={5} tone="gold" class="sky-star sky-star--d" />
+  </g>
+</svg>
+
+<style>
+  .rc-skyline {
+    width: 100%;
+    height: auto;
+    max-width: 520px;
+    overflow: visible;
+    filter: drop-shadow(0 24px 60px rgba(10, 6, 40, 0.5));
+  }
+  .sky-depth {
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sky-cloud {
+      animation: sky-drift 9s ease-in-out infinite;
+    }
+    .sky-cloud--b {
+      animation-duration: 11s;
+      animation-delay: -2s;
+    }
+    .sky-cloud--c {
+      animation-duration: 8s;
+      animation-delay: -4s;
+    }
+    .sky-core {
+      animation: sky-pulse 5s ease-in-out infinite;
+    }
+    .sky-lights circle {
+      animation: sky-blink 3.4s ease-in-out infinite;
+    }
+    .sky-lights circle:nth-child(2n) {
+      animation-delay: -1.2s;
+    }
+    .sky-lights circle:nth-child(3n) {
+      animation-delay: -2.1s;
+    }
+    .sky-star {
+      animation: sky-twinkle 4s ease-in-out infinite;
+    }
+    .sky-star--b {
+      animation-delay: -1.5s;
+    }
+    .sky-star--c {
+      animation-delay: -2.6s;
+    }
+  }
+  @keyframes sky-drift {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -8px;
+    }
+  }
+  @keyframes sky-pulse {
+    0%,
+    100% {
+      scale: 1;
+    }
+    50% {
+      scale: 1.07;
+    }
+  }
+  @keyframes sky-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  @keyframes sky-twinkle {
+    0%,
+    100% {
+      opacity: 1;
+      scale: 1;
+    }
+    50% {
+      opacity: 0.5;
+      scale: 0.8;
+    }
+  }
+</style>

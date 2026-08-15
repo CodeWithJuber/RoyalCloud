@@ -1,0 +1,42 @@
+---
+/**
+ * Cloud - the brand's soft signature shape, drawn as ONE path so any fill
+ * (solid pastel or brand gradient) renders cleanly with no internal seams.
+ * Flat tone + a single top-left highlight ellipse = two-tone, light source
+ * locked top-left. Soft shapes carry no contour by design.
+ *
+ * Animatable wrapper class `.rc-il__cloud` (drift). Origin (x,y) = top-left of
+ * a ~140 x 64 box at scale 1; `scale` resizes proportionally.
+ */
+interface Props {
+  x?: number;
+  y?: number;
+  scale?: number;
+  tone?: 'white' | 'lavender' | 'sky' | 'mint' | 'butter' | 'peach' | 'gradient' | 'neon';
+  highlight?: boolean;
+  class?: string;
+}
+const { x = 0, y = 0, scale = 1, tone = 'white', highlight = true, class: className = '' } = Astro.props;
+
+const TONE: Record<string, string> = {
+  white: '#ffffff',
+  lavender: 'var(--pastel-lavender)',
+  sky: 'var(--pastel-sky)',
+  mint: 'var(--pastel-mint)',
+  butter: 'var(--pastel-butter)',
+  peach: 'var(--pastel-peach)',
+  gradient: 'url(#rcgEnergy)',
+  neon: 'url(#rcgNeon)',
+};
+const fill = TONE[tone] ?? TONE.white;
+// one puffy cloud, flat bottom at y=60
+const path =
+  'M24 60 a18 18 0 0 1 -2 -34 a22 22 0 0 1 30 -14 a26 26 0 0 1 46 2 a20 20 0 0 1 24 16 a16 16 0 0 1 -6 30 Z';
+---
+
+<g transform={`translate(${x} ${y}) scale(${scale})`} class:list={['rc-il__cloud', className]}>
+  <path d={path} fill={fill}></path>
+  {highlight && tone !== 'white' && (
+    <ellipse cx="48" cy="24" rx="16" ry="7" fill="#ffffff" opacity="0.45"></ellipse>
+  )}
+</g>

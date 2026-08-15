@@ -1,0 +1,100 @@
+---
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Cta {
+  text: string;
+  href: string;
+  external?: boolean;
+}
+interface Props {
+  title?: string;
+  subtitle?: string;
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+}
+const {
+  title = "Ready to get started?",
+  subtitle,
+  primaryCta = {
+    text: "Get Started Now",
+    href: "https://my.royalclouds.net/cart.php",
+    external: true,
+  },
+  secondaryCta,
+} = Astro.props;
+const target = (cta?: Cta) =>
+  cta?.external || /^https?:\/\//.test(cta?.href ?? "") ? "_blank" : undefined;
+---
+
+<section class="rc-cta-band">
+  <div class="wrap">
+    <div class="section-title">
+      <h2 set:html={title} />
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+    <div class="rc-cta-actions">
+      {primaryCta && (
+        <a
+          class="default-btn rc-cta-primary"
+          href={primaryCta.href}
+          target={target(primaryCta)}
+          rel={target(primaryCta) && "noopener"}
+        >
+          {primaryCta.text}
+        </a>
+      )}
+      {secondaryCta && (
+        <a
+          class="rc-cta-secondary"
+          href={secondaryCta.href}
+          target={target(secondaryCta)}
+          rel={target(secondaryCta) && "noopener"}
+        >
+          {secondaryCta.text}
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rc-cta-band {
+    background: var(--grad-royal);
+    padding: var(--space-section-sm) 0;
+    color: #fff;
+    text-align: center;
+  }
+  .rc-cta-band .section-title h2 {
+    color: #fff;
+  }
+  .rc-cta-band .section-title p {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .rc-cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .rc-cta-primary {
+    font-size: 16px;
+    padding: 14px 40px;
+  }
+  .rc-cta-secondary {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    padding: 14px 30px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .rc-cta-secondary:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,0.1);
+  }
+</style>

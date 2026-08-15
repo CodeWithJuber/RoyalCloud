@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow:
+
+Sitemap: https://royalclouds.net/sitemap-index.xml

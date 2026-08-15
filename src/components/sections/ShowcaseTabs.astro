@@ -1,0 +1,461 @@
+---
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Tab {
+  label: string;
+  panel: "files" | "ssl" | "backups" | "stats";
+  text?: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  tabs?: Tab[];
+}
+const {
+  eyebrow,
+  title,
+  subtitle,
+  tabs = [
+    { label: "File Manager", panel: "files", text: "Upload, edit and organize your site files right in the browser." },
+    { label: "Free SSL", panel: "ssl", text: "One click installs and auto-renews your certificate forever." },
+    { label: "Backups", panel: "backups", text: "Daily snapshots, restore your whole site in one click." },
+    { label: "Live Stats", panel: "stats", text: "Visitors, bandwidth and resource usage at a glance." },
+  ],
+} = Astro.props;
+---
+
+<section class="rc-showcase">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="section-title">
+          {eyebrow && <span class="sc-eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+
+    <div class="sc-stage" data-showcase>
+      <div class="sc-tabs" role="tablist" aria-label="Control panel features">
+        {
+          tabs.map((t, i) => (
+            <button
+              class={`sc-tab ${i === 0 ? "active" : ""}`}
+              role="tab"
+              id={`sc-tab-${t.panel}`}
+              aria-controls={`sc-panel-${t.panel}`}
+              aria-selected={i === 0 ? "true" : "false"}
+              tabindex={i === 0 ? "0" : "-1"}
+              data-panel={t.panel}
+            >
+              {t.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="sc-body">
+        <div
+          class="sc-panel on"
+          data-sc="files"
+          role="tabpanel"
+          id="sc-panel-files"
+          aria-labelledby="sc-tab-files"
+          tabindex="0"
+          aria-hidden="false"
+        >
+          {
+            [
+              ["public_html", "folder", "-"],
+              ["index.php", "file", "12 KB"],
+              ["wp-content", "folder", "-"],
+              ["backup-2026.zip", "zip", "184 MB"],
+            ].map(([name, kind, size]) => (
+              <div class="f-row">
+                <span class={`f-ic ${kind}`} />
+                <b>{name}</b>
+                <small>{size}</small>
+              </div>
+            ))
+          }
+        </div>
+
+        <div
+          class="sc-panel"
+          data-sc="ssl"
+          role="tabpanel"
+          id="sc-panel-ssl"
+          aria-labelledby="sc-tab-ssl"
+          tabindex="0"
+          aria-hidden="true"
+        >
+          <div class="ssl-card">
+            <span class="ssl-lock">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+              </svg>
+            </span>
+            <div>
+              <b>yoursite.com</b>
+              <small>Let's Encrypt, valid, auto-renews</small>
+            </div>
+            <em class="ssl-state">ACTIVE</em>
+          </div>
+          <div class="ssl-meta">
+            <span>Wildcard included</span><span>Renewed 12 days ago</span>
+          </div>
+        </div>
+
+        <div
+          class="sc-panel"
+          data-sc="backups"
+          role="tabpanel"
+          id="sc-panel-backups"
+          aria-labelledby="sc-tab-backups"
+          tabindex="0"
+          aria-hidden="true"
+        >
+          {
+            ["Today 04:00", "Yesterday 04:00", "Jun 8 04:00"].map((d, i) => (
+              <div class="bk-row">
+                <span class="bk-dot" />
+                <b>{d}</b>
+                <small>Full snapshot</small>
+                <em class={i === 0 ? "hot" : ""}>{i === 0 ? "Restore" : "✓"}</em>
+              </div>
+            ))
+          }
+        </div>
+
+        <div
+          class="sc-panel"
+          data-sc="stats"
+          role="tabpanel"
+          id="sc-panel-stats"
+          aria-labelledby="sc-tab-stats"
+          tabindex="0"
+          aria-hidden="true"
+        >
+          <div class="st-cards">
+            <div class="st"><small>Visitors</small><b>12,408</b></div>
+            <div class="st"><small>Bandwidth</small><b>96 GB</b></div>
+            <div class="st"><small>Uptime</small><b>99.99%</b></div>
+          </div>
+          <div class="st-bars">
+            {
+              [42, 68, 55, 80, 62, 90, 74].map((h) => (
+                <i style={`--h: ${h}%`} />
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      {
+        tabs.map((t, i) => (
+          <p
+            class={`sc-caption ${i === 0 ? "on" : ""}`}
+            data-sc-cap={t.panel}
+          >
+            {t.text}
+          </p>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  function rcShowcaseInit() {
+    document.querySelectorAll<HTMLElement>("[data-showcase]").forEach((root) => {
+      const tabs = Array.from(
+        root.querySelectorAll<HTMLButtonElement>(".sc-tab"),
+      );
+      const select = (tab: HTMLButtonElement, focus = false) => {
+        const id = tab.dataset.panel;
+        tabs.forEach((t) => {
+          const on = t === tab;
+          t.classList.toggle("active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.tabIndex = on ? 0 : -1;
+        });
+        root.querySelectorAll<HTMLElement>(".sc-panel").forEach((p) => {
+          const on = p.dataset.sc === id;
+          p.classList.toggle("on", on);
+          p.setAttribute("aria-hidden", on ? "false" : "true");
+        });
+        root.querySelectorAll<HTMLElement>("[data-sc-cap]").forEach((c) => {
+          c.classList.toggle("on", c.dataset.scCap === id);
+        });
+        if (focus) tab.focus();
+      };
+      tabs.forEach((tab, i) => {
+        tab.addEventListener("click", () => select(tab));
+        tab.addEventListener("keydown", (e) => {
+          let next = -1;
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (i + 1) % tabs.length;
+          else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (i - 1 + tabs.length) % tabs.length;
+          else if (e.key === "Home") next = 0;
+          else if (e.key === "End") next = tabs.length - 1;
+          if (next >= 0) {
+            e.preventDefault();
+            select(tabs[next], true);
+          }
+        });
+      });
+    });
+  }
+  rcShowcaseInit();
+  document.addEventListener("astro:after-swap", rcShowcaseInit);
+</script>
+
+<style>
+  .rc-showcase {
+    background: #22105f;
+    padding: var(--space-section) 0;
+    color: #fff;
+  }
+  .rc-showcase .section-title h2 {
+    color: #fff;
+  }
+  .rc-showcase .section-title p {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .sc-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .sc-stage {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .sc-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 30px;
+  }
+  .sc-tab {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .sc-tab:hover {
+    border-color: rgba(255,255,255,0.4);
+    color: #fff;
+  }
+  .sc-tab.active {
+    background: #7652f2;
+    border-color: #7652f2;
+    color: #fff;
+  }
+
+  .sc-body {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+
+  .sc-panel {
+    display: none;
+    padding: 30px;
+    min-height: 240px;
+  }
+  .sc-panel.on {
+    display: block;
+  }
+
+  .f-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 6px;
+  }
+  .f-row + .f-row {
+    border-top: 1px solid #eee;
+  }
+  .f-ic {
+    width: 30px;
+    height: 24px;
+    border-radius: 6px;
+    background: rgba(38,159,216,0.1);
+  }
+  .f-ic.folder { background: #fff3cd; }
+  .f-ic.zip { background: #fde2e2; }
+  .f-row b {
+    flex: 1;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    color: #22105f;
+  }
+  .f-row small {
+    font-size: 12px;
+    color: #999;
+  }
+
+  .ssl-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .ssl-lock {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: #e6f9f0;
+    color: #1fa463;
+  }
+  .ssl-lock svg { width: 22px; height: 22px; }
+  .ssl-card b {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    color: #22105f;
+  }
+  .ssl-card small { font-size: 12px; color: #999; }
+  .ssl-card > div { flex: 1; }
+  .ssl-state {
+    font-style: normal;
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #1fa463;
+    background: #e6f9f0;
+    border-radius: 50px;
+    padding: 6px 14px;
+  }
+  .ssl-meta {
+    display: flex;
+    gap: 18px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #999;
+  }
+
+  .bk-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 6px;
+  }
+  .bk-row + .bk-row { border-top: 1px solid #eee; }
+  .bk-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #1fa463;
+  }
+  .bk-row b {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    color: #22105f;
+    width: 150px;
+  }
+  .bk-row small { flex: 1; font-size: 12px; color: #999; }
+  .bk-row em { font-style: normal; font-size: 12px; color: #1fa463; }
+  .bk-row em.hot {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 11px;
+    color: #fff;
+    background: var(--heading-blue);
+    border-radius: 50px;
+    padding: 6px 14px;
+  }
+
+  .st-cards {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .st {
+    flex: 1;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .st small {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #999;
+  }
+  .st b {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    color: #22105f;
+  }
+  .st-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    height: 110px;
+    padding: 0 6px;
+  }
+  .st-bars i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(180deg, var(--heading-blue), var(--royal-purple));
+    opacity: 0.85;
+  }
+
+  .sc-caption {
+    display: none;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 20px;
+  }
+  .sc-caption.on { display: block; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sc-panel[data-sc="stats"].on .st-bars i {
+      animation: scBar 0.7s cubic-bezier(0.25, 0.1, 0.2, 1) backwards;
+    }
+    .sc-panel[data-sc="stats"].on .st-bars i:nth-child(2n) { animation-delay: 0.12s; }
+    .sc-panel[data-sc="stats"].on .st-bars i:nth-child(3n) { animation-delay: 0.2s; }
+    @keyframes scBar {
+      from { transform: scaleY(0); transform-origin: bottom; }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sc-panel { padding: 18px 16px; }
+    .bk-row b { width: auto; }
+    .st-cards { flex-direction: column; }
+    .st-bars { height: 80px; }
+    .sc-tab { padding: 8px 16px; font-size: 13px; }
+  }
+</style>

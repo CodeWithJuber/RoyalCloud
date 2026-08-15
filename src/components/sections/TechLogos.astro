@@ -1,0 +1,102 @@
+---
+import { Image } from "astro:assets";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+const partnerImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/live/partners/*.{png,svg}",
+  { eager: true }
+);
+const partners = Object.values(partnerImages).map((m) => m.default);
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  logos?: string[];
+}
+const {
+  eyebrow,
+  title = "Built on Trusted Technology",
+  subtitle,
+} = Astro.props;
+---
+
+<section class="rc-techlogos">
+  <div class="wrap">
+    <div class="section-title">
+      {eyebrow && <span class="tl-eyebrow">{eyebrow}</span>}
+      <h2 set:html={title} />
+      <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+      {subtitle && <p set:html={subtitle} />}
+    </div>
+    <div class="tl-row">
+      {partners.map((img) => (
+        <span class="tl-logo">
+          <img
+            src={img.src}
+            alt=""
+            width={img.width}
+            height={img.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rc-techlogos {
+    background: var(--grad-royal);
+    padding: var(--space-section-sm) 0;
+    color: #fff;
+  }
+
+  .rc-techlogos .section-title h2 {
+    color: #fff;
+  }
+  .rc-techlogos .section-title p {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .tl-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .tl-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .tl-logo {
+    display: block;
+  }
+  .tl-logo img {
+    height: 40px;
+    width: auto;
+    filter: grayscale(100%) brightness(2);
+    opacity: 0.7;
+    transition: opacity 0.2s, filter 0.2s;
+  }
+  .tl-logo:hover img {
+    opacity: 1;
+    filter: none;
+  }
+
+  @media (max-width: 600px) {
+    .tl-row { gap: 25px; }
+    .tl-logo img { height: 30px; }
+  }
+</style>

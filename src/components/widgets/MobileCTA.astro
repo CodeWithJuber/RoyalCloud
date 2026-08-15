@@ -1,0 +1,101 @@
+---
+/**
+ * Sticky mobile action bar, keeps the primary conversion action in the
+ * thumb zone on phones (Fitts's Law + thumb-friendly placement, uxpilot).
+ * Appears after the hero, hides itself when the footer/final CTA is in view
+ * so it never covers them. Mobile only; respects reduced-motion.
+ */
+import site from "~/data/site.json";
+---
+
+<div class="mcta" id="rcMobileCta" hidden aria-hidden="true">
+  <a class="btn btn-ghost-dark mcta-plans" href="#pricing">View Plans</a>
+  <a
+    class="btn btn-primary mcta-go"
+    href={site.portal.cart}
+    target="_blank"
+    rel="noopener">Get Started</a
+  >
+</div>
+
+<style>
+  .mcta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    display: none;
+    gap: 10px;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: #ffffff;
+    border-top: 1px solid var(--line, #ece8fa);
+    box-shadow: 0 -10px 30px -16px rgba(34, 16, 95, 0.32);
+  }
+  .mcta .btn {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0 14px;
+    font-size: 15px;
+    /* keep these calm, no pulse/halo inside the bar */
+    animation: none !important;
+    box-shadow: none;
+  }
+  .mcta .mcta-plans {
+    flex: 0 0 38%;
+    background: #fff;
+    border: 1.5px solid var(--line, #ece8fa);
+    color: var(--rc-ink);
+  }
+  .mcta .mcta-go {
+    box-shadow: 0 8px 20px -8px rgba(253, 215, 0, 0.7);
+  }
+  /* show only on phones, and only once revealed by JS */
+  @media (max-width: 860px) {
+    .mcta.is-on {
+      display: flex;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mcta.is-on {
+      animation: mcta-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+  @keyframes mcta-rise {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+</style>
+
+<script>
+  function rcMobileCtaInit() {
+    const bar = document.getElementById("rcMobileCta");
+    if (!bar || bar.dataset.ready) return;
+    bar.dataset.ready = "1";
+
+    let on = false;
+    const show = (next: boolean) => {
+      if (next === on) return;
+      on = next;
+      bar.classList.toggle("is-on", next);
+      bar.hidden = !next;
+      bar.setAttribute("aria-hidden", String(!next));
+    };
+
+    // Show once the visitor scrolls past the first screen. (We deliberately
+    // avoid footer/position math here: sections use content-visibility:auto,
+    // which makes element positions unstable. Body gets bottom padding in CSS
+    // so the bar never permanently covers the footer.)
+    const evaluate = () => {
+      show(window.scrollY > window.innerHeight * 0.7);
+    };
+    window.addEventListener("scroll", evaluate, { passive: true });
+    window.addEventListener("resize", evaluate, { passive: true });
+    evaluate();
+  }
+  rcMobileCtaInit();
+  document.addEventListener("astro:after-swap", rcMobileCtaInit);
+</script>

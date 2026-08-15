@@ -1,0 +1,22 @@
+---
+// CMS-driven live chat widget. Driven by src/data/integrations.json → chat:
+//   provider: "tawk"   → loads the Tawk.to widget from the property/widget IDs
+//   provider: "custom" → injects a raw embed snippet (Crisp, WhatsApp, Intercom…)
+//   provider: "none"   → renders nothing
+// Built as one HTML string and emitted via a single <Fragment set:html>.
+import { integrations } from "~/utils/integrations";
+
+const { provider, tawkPropertyId, tawkWidgetId, customEmbed } =
+  integrations.chat;
+
+let html = "";
+
+if (provider === "tawk" && tawkPropertyId) {
+  const src = `https://embed.tawk.to/${encodeURIComponent(tawkPropertyId)}/${encodeURIComponent(tawkWidgetId)}`;
+  html = `<script>var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src=${JSON.stringify(src)};s1.charset="UTF-8";s1.setAttribute("crossorigin","*");s0.parentNode.insertBefore(s1,s0);})();</script>`;
+} else if (provider === "custom" && customEmbed) {
+  html = customEmbed;
+}
+---
+
+{html && <Fragment set:html={html} />}

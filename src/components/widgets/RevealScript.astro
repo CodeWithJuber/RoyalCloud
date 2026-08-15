@@ -1,0 +1,56 @@
+---
+/** Scroll-reveal behavior ported from the design handoff (rc-home.js),
+    including its IntersectionObserver fail-safe + last-resort timer. */
+---
+
+<script>
+  function rcSetupReveal() {
+    const els = Array.prototype.slice.call(
+      document.querySelectorAll(".reveal"),
+    );
+    if (!els.length) return;
+
+    const reveal = (el: Element) => el.classList.add("in");
+    function revealInView() {
+      for (const el of els) {
+        if (
+          !el.classList.contains("in") &&
+          el.getBoundingClientRect().top < window.innerHeight - 20
+        ) {
+          reveal(el);
+        }
+      }
+    }
+
+    // 1) reveal whatever is already on screen immediately, never a blank
+    //    first paint while waiting for the observer.
+    revealInView();
+
+    // 2) IntersectionObserver for the nice on-scroll reveal.
+    if (typeof IntersectionObserver !== "undefined") {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      );
+      els.forEach((el) => io.observe(el));
+    }
+
+    // 3) Always-on scroll/resize fallback (works with native + Lenis scroll),
+    //    so reveals never depend on the observer alone.
+    window.addEventListener("scroll", revealInView, { passive: true });
+    window.addEventListener("resize", revealInView, { passive: true });
+
+    // 4) Last resort: guarantee everything is visible, content must never
+    //    stay hidden (no white pages) even if the observer/scroll misbehave.
+    setTimeout(() => els.forEach(reveal), 2500);
+  }
+  rcSetupReveal();
+  document.addEventListener("astro:after-swap", rcSetupReveal);
+</script>

@@ -1,0 +1,66 @@
+---
+/**
+ * SvgDefs - shared gradient definitions for the Royal Clouds "Royal Cloud
+ * Skyline" illustration system. Rendered ONCE per page (in PageLayout) as a
+ * zero-size SVG. Every illustration references these by id
+ * (fill="url(#rcgEnergy)") so brand gradients are defined once, not per
+ * instance.
+ *
+ * Ids are namespaced `rcg*` to avoid colliding with the legacy AltitudeScene /
+ * ArtShield local gradients (`rcSpec` / `rcCore`), since SVG ids are
+ * document-global. Parts of an illustration that follow the per-page theme
+ * accent use stroke/fill="currentColor" instead of these gradients.
+ */
+---
+
+<svg aria-hidden="true" focusable="false" width="0" height="0" class="rc-svg-defs">
+  <defs>
+    <!-- spectrum: the signature violet -> azure -> gold sweep -->
+    <linearGradient id="rcgSpec" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7652f2"></stop>
+      <stop offset="52%" stop-color="#00a7f5"></stop>
+      <stop offset="100%" stop-color="#fdd700"></stop>
+    </linearGradient>
+    <!-- energy: violet -> azure field (no gold) -->
+    <linearGradient id="rcgEnergy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7a3bff"></stop>
+      <stop offset="100%" stop-color="#00a7f5"></stop>
+    </linearGradient>
+    <!-- cta: brighter violet -> azure for focal elements -->
+    <linearGradient id="rcgCta" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5a1ee6"></stop>
+      <stop offset="55%" stop-color="#7a3bff"></stop>
+      <stop offset="100%" stop-color="#00a7f5"></stop>
+    </linearGradient>
+    <!-- gold spark: punctuation only -->
+    <linearGradient id="rcgGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fdd700"></stop>
+      <stop offset="100%" stop-color="#ffcb57"></stop>
+    </linearGradient>
+    <!-- neon-on-dark variant for .section--dark illustrations -->
+    <linearGradient id="rcgNeon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9e73ff"></stop>
+      <stop offset="100%" stop-color="#4dc3ff"></stop>
+    </linearGradient>
+    <!-- core glow: the radial cloud-core focal -->
+    <radialGradient id="rcgCore" cx="50%" cy="44%" r="58%">
+      <stop offset="0%" stop-color="#fff6dc"></stop>
+      <stop offset="40%" stop-color="#ffd98a"></stop>
+      <stop offset="100%" stop-color="#fdd700" stop-opacity="0"></stop>
+    </radialGradient>
+    <!-- soft sky wash for scene backdrops -->
+    <linearGradient id="rcgSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eaf3ff"></stop>
+      <stop offset="100%" stop-color="#f6f1ff"></stop>
+    </linearGradient>
+  </defs>
+</svg>
+
+<style>
+  .rc-svg-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+</style>

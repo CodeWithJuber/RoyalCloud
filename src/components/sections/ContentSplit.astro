@@ -1,0 +1,255 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import { marked } from "marked";
+import { tablerIcon } from "~/utils/plans";
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+import companySvg from "~/assets/images/live/company_4.svg";
+import rocketSvg from "~/assets/images/live/rocket-bg.svg";
+import digitalSvg from "~/assets/images/live/digitalpresence_img-1.svg";
+import ssdHost from "~/assets/images/live/ssd-host.png";
+import supportShape from "~/assets/images/live/support-shape.png";
+
+const IMAGE_MAP: Record<string, { src: string; width: number; height: number }> = {
+  company: { src: companySvg.src, width: 500, height: 400 },
+  speed: { src: rocketSvg.src, width: 500, height: 400 },
+  support: { src: digitalSvg.src, width: 500, height: 400 },
+};
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  image?: string;
+  reverse?: boolean;
+  layout?: "chips" | "list";
+  body?: string;
+  items?: { icon?: string; title?: string; text?: string }[];
+}
+const {
+  eyebrow,
+  title,
+  subtitle,
+  image,
+  reverse = false,
+  layout = "list",
+  body,
+  items,
+} = Astro.props;
+
+const artEntry = image ? IMAGE_MAP[image] : undefined;
+const html = body ? await marked.parse(body) : undefined;
+---
+
+<section class="rc-split-section">
+  <div class={`wrap rc-split ${reverse ? "rc-split--rev" : ""}`}>
+    {artEntry && (
+      <div class="rc-split-media">
+        <img
+          src={artEntry.src}
+          alt={title ?? ""}
+          width={artEntry.width}
+          height={artEntry.height}
+          loading="lazy"
+          decoding="async"
+          class="rc-split-img"
+        />
+      </div>
+    )}
+    <div class="rc-split-body">
+      {eyebrow && <span class="rc-split-eyebrow">{eyebrow}</span>}
+      {title && <h2 set:html={title} />}
+      <img src={separatorSvg.src} alt="" class="separator-rc rc-split-sep" width="250" height="30" />
+      {html && <div class="rc-split-prose" set:html={html} />}
+      {items && items.length > 0 && layout === "chips" && (
+        <div class="rc-split-chips">
+          {items.map((p) => (
+            <div class="rc-chip">
+              <span class="rc-chip-icon">
+                <Icon name={tablerIcon(p.icon ?? "bolt")} />
+              </span>
+              <span class="rc-chip-text">{p.title}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {items && items.length > 0 && layout !== "chips" && (
+        <div class="rc-split-list">
+          {items.map((p) => (
+            <div class="rc-list-item">
+              <span class="rc-list-icon">
+                <Icon name={tablerIcon(p.icon ?? "bolt")} />
+              </span>
+              <div>
+                <h3>{p.title}</h3>
+                {p.text && <p>{p.text}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rc-split-section {
+    padding: var(--space-section) 0;
+  }
+  .rc-split {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+  .rc-split--rev {
+    flex-direction: row-reverse;
+  }
+
+  .rc-split-media {
+    flex: 0 0 45%;
+    text-align: center;
+  }
+  .rc-split-img {
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+  }
+
+  .rc-split-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .rc-split-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .rc-split-body h2 {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--heading-blue);
+    margin: 0 0 5px;
+    line-height: 1.2;
+  }
+
+  .rc-split-sep {
+    margin: 0 0 15px;
+  }
+
+  .rc-split-prose {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .rc-split-prose :global(p) {
+    margin-bottom: 14px;
+  }
+
+  /* ── Chips (horizontal tag row) ── */
+  .rc-split-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .rc-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0f7ff;
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+  }
+  .rc-chip-icon {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    color: var(--heading-blue);
+  }
+  .rc-chip-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ── List (vertical icon rows with check-style) ── */
+  .rc-split-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .rc-list-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .rc-list-icon {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(38,159,216,0.1), rgba(123,31,162,0.08));
+    color: var(--heading-blue);
+  }
+  .rc-list-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .rc-list-item h3 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    color: #22105f;
+    margin: 0 0 4px;
+  }
+  .rc-list-item p {
+    font-size: 14px;
+    color: var(--body-color);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .rc-split, .rc-split--rev {
+      flex-direction: column;
+      gap: 40px;
+      text-align: center;
+    }
+    .rc-split-media {
+      flex: none;
+    }
+    .rc-split-img {
+      max-width: 320px;
+    }
+    .rc-split-sep {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .rc-split-chips {
+      justify-content: center;
+    }
+    .rc-split-list {
+      align-items: center;
+    }
+    .rc-list-item {
+      text-align: left;
+    }
+  }
+</style>

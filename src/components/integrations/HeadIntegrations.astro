@@ -1,0 +1,63 @@
+---
+// CMS-driven <head> integrations: GA4, Google Tag Manager, search-engine
+// verification, Facebook/Meta Pixel, and arbitrary custom <head> HTML.
+// Driven by src/data/integrations.json (edited at /admin).
+//
+// Each enabled block is appended to a single HTML string and emitted via one
+// <Fragment set:html>. Building the markup here (rather than as literal
+// <script>/<noscript> tags inside {cond && ...}) keeps the component valid for
+// both the Astro compiler and the linter, and emits nothing when all blank.
+import { integrations } from "~/utils/integrations";
+
+const {
+  ga4Id,
+  gtmId,
+  verifyGoogle,
+  verifyBing,
+  facebookPixelId,
+  customHeadHtml,
+} = integrations;
+
+// Escape a value destined for an HTML attribute (verification tokens, etc.).
+const attr = (v: string) =>
+  v
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+const parts: string[] = [];
+
+if (verifyGoogle) {
+  parts.push(
+    `<meta name="google-site-verification" content="${attr(verifyGoogle)}">`,
+  );
+}
+if (verifyBing) {
+  parts.push(`<meta name="msvalidate.01" content="${attr(verifyBing)}">`);
+}
+if (ga4Id) {
+  parts.push(
+    `<script async src="https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(ga4Id)}"></script>`,
+    `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',${JSON.stringify(ga4Id)});</script>`,
+  );
+}
+if (gtmId) {
+  parts.push(
+    `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',${JSON.stringify(gtmId)});</script>`,
+  );
+}
+if (facebookPixelId) {
+  parts.push(
+    `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',${JSON.stringify(facebookPixelId)});fbq('track','PageView');</script>`,
+    `<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=${encodeURIComponent(facebookPixelId)}&ev=PageView&noscript=1"></noscript>`,
+  );
+}
+if (customHeadHtml) {
+  parts.push(customHeadHtml);
+}
+
+const html = parts.join("\n");
+---
+
+{html && <Fragment set:html={html} />}

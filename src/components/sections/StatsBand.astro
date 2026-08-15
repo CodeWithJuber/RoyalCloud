@@ -1,0 +1,81 @@
+---
+interface Props {
+  items: { value: string; label: string }[];
+}
+const { items } = Astro.props;
+
+const parse = (v: string) => {
+  const m = v.match(/^(\d+(?:\.\d+)?)([^\d].*)?$/);
+  if (!m || v.includes("/")) return null;
+  return { target: m[1], suffix: m[2] ?? "" };
+};
+---
+
+<section class="rc-stats">
+  <div class="wrap">
+    <div class="stat-grid">
+      {
+        items.map((s) => {
+          const c = parse(s.value);
+          return (
+            <div class="stat-item">
+              <div
+                class="stat-value"
+                {...(c
+                  ? {
+                      "data-count": c.target,
+                      "data-suffix": c.suffix,
+                    }
+                  : {})}
+              >
+                {s.value}
+              </div>
+              <div class="stat-label">{s.label}</div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .rc-stats {
+    background: var(--grad-royal);
+    padding: var(--space-section-sm) 0;
+  }
+
+  .stat-grid {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+    color: #fff;
+  }
+
+  .stat-value {
+    font-family: var(--font-heading);
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .stat-grid {
+      gap: 30px;
+    }
+    .stat-value {
+      font-size: 32px;
+    }
+  }
+</style>

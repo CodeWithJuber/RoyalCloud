@@ -1,0 +1,296 @@
+---
+import separatorSvg from "~/assets/images/live/separator-rc.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  note?: string;
+  items: { label: string; value: number; display: string; highlight?: boolean }[];
+}
+const { eyebrow, title, subtitle, note, items } = Astro.props;
+const SCALE = 1.1;
+const winDur = (
+  (items.find((i) => i.highlight)?.value ?? 1) * SCALE
+).toFixed(2);
+---
+
+<section class="rc-race">
+  <div class="wrap">
+    {
+      (eyebrow || title) && (
+        <div class="section-title">
+          {eyebrow && <span class="race-eyebrow">{eyebrow}</span>}
+          {title && <h2 set:html={title} />}
+          <img src={separatorSvg.src} alt="" class="separator-rc" width="250" height="30" />
+          {subtitle && <p set:html={subtitle} />}
+        </div>
+      )
+    }
+    <div class="race-card" data-race style={`--windur: ${winDur}s`}>
+      <div class="race-track">
+        {
+          items.map((r) => (
+            <div
+              class={`lane ${r.highlight ? "hl" : ""}`}
+              style={`--dur: ${(r.value * SCALE).toFixed(2)}s`}
+            >
+              <span class="lane-label">{r.label}</span>
+              <div class="lane-road">
+                <span class="racer" aria-hidden="true">
+                  {r.highlight ? (
+                    <svg viewBox="0 0 64 84" fill="none">
+                      <path
+                        d="M32 4c10 8 14 20 14 32 0 8-2 15-5 21H23c-3-6-5-13-5-21C18 24 22 12 32 4Z"
+                        fill="url(#race-rkt)"
+                      />
+                      <circle cx="32" cy="30" r="7" fill="#fff" stroke="#22105f" stroke-width="2.5" />
+                      <path d="M18 44 8 58l12-2" fill="#ff416c" />
+                      <path d="M46 44l10 14-12-2" fill="#ff416c" />
+                      <path d="M27 60c0 6 2 11 5 16 3-5 5-10 5-16h-10Z" fill="#fdd700" />
+                      <defs>
+                        <linearGradient id="race-rkt" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0" stop-color="#7652f2" />
+                          <stop offset="1" stop-color="#00a7f5" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  ) : (
+                    <i class="slow-dot" />
+                  )}
+                </span>
+                <b class="lane-time">{r.display}</b>
+              </div>
+            </div>
+          ))
+        }
+        <span class="finish" aria-hidden="true"></span>
+      </div>
+      <div class="race-foot">
+        <span class="race-win" data-race-win>
+          {items.find((i) => i.highlight)?.display}, {items.find((i) => i.highlight)?.label}
+        </span>
+        <button type="button" class="default-btn race-again" data-race-again>
+          Race again
+        </button>
+      </div>
+      {note && <p class="race-note">{note}</p>}
+    </div>
+  </div>
+</section>
+
+<script>
+  function rcRaceInit() {
+    document.querySelectorAll<HTMLElement>("[data-race]").forEach((race) => {
+      const run = () => {
+        race.classList.remove("go");
+        void race.offsetWidth;
+        race.classList.add("go");
+      };
+      race
+        .querySelector("[data-race-again]")
+        ?.addEventListener("click", run);
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        race.classList.add("go", "instant");
+        return;
+      }
+      if (typeof IntersectionObserver === "undefined") {
+        run();
+        return;
+      }
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              run();
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.45 },
+      );
+      io.observe(race);
+    });
+  }
+  rcRaceInit();
+  document.addEventListener("astro:after-swap", rcRaceInit);
+</script>
+
+<style>
+  .rc-race {
+    padding: var(--space-section) 0;
+    background: #fafafa;
+  }
+
+  .race-eyebrow {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-hot);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .race-card {
+    max-width: 880px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 40px;
+  }
+
+  .race-track {
+    position: relative;
+    padding-right: 76px;
+  }
+  .finish {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    right: 58px;
+    width: 10px;
+    background: repeating-conic-gradient(#22105f 0% 25%, #fff 0% 50%) 0 0 / 10px 10px;
+    border-radius: 3px;
+    opacity: 0.85;
+  }
+
+  .lane + .lane { border-top: 1px dashed #eee; }
+  .lane { padding: 14px 0 16px; }
+  .lane-label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    color: #999;
+    margin-bottom: 8px;
+  }
+  .lane.hl .lane-label { color: #22105f; }
+  .lane-road {
+    position: relative;
+    height: 40px;
+  }
+  .lane-road::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: #eee;
+    border-radius: 2px;
+  }
+
+  .racer {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    translate: 0 -50%;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+  }
+  .racer svg {
+    width: 30px;
+    height: auto;
+    rotate: 90deg;
+    filter: drop-shadow(0 6px 10px rgba(34, 16, 95, 0.25));
+  }
+  .slow-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ccc;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .lane-time {
+    position: absolute;
+    right: -68px;
+    top: 50%;
+    translate: 0 -50%;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    color: #999;
+    opacity: 0;
+  }
+  .lane.hl .lane-time {
+    color: var(--heading-blue);
+    font-size: 17px;
+  }
+
+  .race-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #eee;
+  }
+  .race-win {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    color: #22105f;
+    opacity: 0;
+    scale: 0.8;
+  }
+  .race-again {
+    padding: 10px 22px;
+    font-size: 13px;
+  }
+  .race-note {
+    margin: 16px 4px 0;
+    font-size: 13px;
+    color: #999;
+  }
+
+  .race-card.go .racer {
+    animation: raceRun var(--dur) cubic-bezier(0.45, 0.05, 0.55, 0.95) 0.3s forwards;
+  }
+  .race-card.go .lane-time {
+    animation: raceTime 0.4s ease calc(var(--dur) + 0.3s) forwards;
+  }
+  .race-card.go .race-win {
+    animation: raceWin 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--windur, 1s) + 0.45s) forwards;
+  }
+  .race-card.go .lane.hl .racer {
+    animation:
+      raceRun var(--dur) cubic-bezier(0.45, 0.05, 0.55, 0.95) 0.3s forwards,
+      raceShake 0.16s linear 0.3s 7;
+  }
+  .race-card.instant .racer {
+    animation-duration: 0.01s !important;
+    animation-delay: 0s !important;
+  }
+  .race-card.instant .lane-time,
+  .race-card.instant .race-win {
+    animation-duration: 0.01s !important;
+    animation-delay: 0.05s !important;
+  }
+
+  @keyframes raceRun { to { left: calc(100% - 34px); } }
+  @keyframes raceTime { to { opacity: 1; } }
+  @keyframes raceWin { to { opacity: 1; scale: 1; } }
+  @keyframes raceShake {
+    25% { translate: 0 calc(-50% - 1.5px); }
+    75% { translate: 0 calc(-50% + 1.5px); }
+  }
+
+  @media (max-width: 640px) {
+    .race-card { padding: 25px 20px; }
+    .race-track { padding-right: 56px; }
+    .finish { right: 40px; }
+    .lane-time { right: -52px; font-size: 13px; }
+    .lane.hl .lane-time { font-size: 14px; }
+    .lane-road { height: 34px; }
+  }
+</style>

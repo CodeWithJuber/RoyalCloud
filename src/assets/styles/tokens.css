@@ -1,0 +1,229 @@
+/* ============================================================
+   ROYAL CLOUDS — the one design-token system
+   Faithful to the live royalclouds.net brand: sky blue, royal
+   purple, gold CTA, deep-navy section bands, Open Sans, light-first.
+   Three layers: primitive → semantic → component.
+   Components consume semantic/component names only.
+   ============================================================ */
+:root {
+  /* ── Primitives — live-site palette ─────────────────────── */
+  --sky: #00a7f5; /* primary brand blue */
+  --sky-deep: #0086cf; /* hover / pressed */
+  --sky-tint: #e5f6fe; /* wash */
+  --purple: #7652f2; /* secondary brand */
+  --purple-deep: #5b3bd6; /* pressed */
+  --purple-tint: #efeafe; /* wash */
+  --gold: #fdd700; /* THE conversion accent (CTA pill) */
+  --gold-deep: #e5c300;
+  --navy: #22105f; /* dark section bands */
+  --navy-2: #2c1a6e; /* elevated surface on navy */
+  --ink: #181b22; /* footer / darkest chrome */
+  --orange: #fa4612; /* rare alert accent */
+  --magenta: #a5215e; /* rare accent */
+
+  /* ── Clone primitives — exact live royalclouds.net values ── */
+  --royal-purple: #7b1fa2;
+  --royal-indigo: #2e1acc;
+  --heading-blue: #269fd9; /* all h1-h6 on live */
+  --accent-hot: #ff5e3a; /* accent span in section titles */
+  --pink: #a5215e; /* PROMO badge, testimonials CTA */
+  --sticky-nav: #673ab7;
+  --sticky-nav-mobile: #5e35b1;
+  --totop: #4aaede;
+  --body-color: #4d4d4d; /* live body text */
+  --footer-bottom-bg: #00051e;
+  --footer-line: #0d1d46;
+
+  /* ── Clone gradients ────────────────────────────────────── */
+  --grad-royal: linear-gradient(225deg, #7b1fa2, #2e1acc);
+  --grad-btn-hot: linear-gradient(to bottom right, #ff416c, #fa4612);
+  --grad-footer: linear-gradient(to bottom right, #04183c, #00031e);
+  --paper: #ffffff;
+  --mist: #f6f8fc; /* tinted section background */
+  --heading-ink: #269fd9;
+  --gray-700: #4d4d4d;
+  --gray-500: #5f6673;
+  --green: #1fa463; /* status ok */
+  --amber: #ffc107; /* status warn */
+  --red: #dc3545; /* status down */
+
+  /* ── Semantic — surfaces ────────────────────────────────── */
+  --bg-page: var(--paper);
+  --bg-tint: var(--mist);
+  --bg-tint-strong: #edf1f9;
+  --bg-sky: #e9f5fd;
+  --surface-band: var(--navy);
+  --surface-footer: var(--ink);
+  /* light tile family (one temperature, hairline-edged) */
+  --pastel-lavender: var(--purple-tint);
+  --pastel-sky: var(--sky-tint);
+  --pastel-mint: #e8f6f0;
+  --pastel-butter: #fdf7da;
+  --pastel-peach: #fdeae3;
+  --tile-border: rgb(27 32 51 / 0.08);
+
+  /* ── Semantic — text ────────────────────────────────────── */
+  --text-heading: var(--heading-ink);
+  --text-default: var(--gray-700);
+  --text-muted: var(--gray-500);
+
+  /* ── Semantic — brand roles ─────────────────────────────── */
+  --brand-primary: var(--sky);
+  --brand-secondary: var(--purple);
+  --accent-cta: var(--gold);
+  --link: var(--sky-deep);
+  --focus-ring: var(--sky);
+
+  /* per-page theme hooks (main[data-theme=…] remaps to sky or purple) */
+  --theme-accent: var(--sky);
+  --theme-soft: var(--sky-tint);
+  --theme-art-a: var(--sky);
+  --theme-art-b: var(--purple);
+
+  /* ── Semantic — lines & status ──────────────────────────── */
+  --line: rgb(27 32 51 / 0.1);
+  --line-strong: rgb(27 32 51 / 0.2);
+  --ok: var(--green);
+  --ok-soft: rgb(31 164 99 / 0.13);
+  --save-bg: rgb(253 215 0 / 0.16);
+
+  /* ── Type — Dosis headings, Open Sans body (self-hosted) ── */
+  --font-heading:
+    "Dosis Variable", "Dosis", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:
+    "Open Sans Variable", "Open Sans", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+
+  /* ── Radius ─────────────────────────────────────────────── */
+  --radius-panel: 24px;
+  --radius-card: 16px;
+  --radius-btn: 999px; /* live site uses pill buttons */
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --r-sm: 8px;
+
+  /* ── Elevation (ink-based, one scale) ───────────────────── */
+  --shadow-xs:
+    0 1px 2px rgba(24, 27, 34, 0.05), 0 4px 14px -6px rgba(24, 27, 34, 0.1);
+  --shadow-sm:
+    0 1px 3px rgba(24, 27, 34, 0.06), 0 10px 26px -12px rgba(24, 27, 34, 0.16);
+  --shadow-md:
+    0 2px 6px rgba(24, 27, 34, 0.07), 0 18px 42px -16px rgba(24, 27, 34, 0.2);
+  --shadow-lg:
+    0 4px 10px rgba(24, 27, 34, 0.08), 0 30px 64px -20px rgba(24, 27, 34, 0.26);
+  --shadow-card: var(--shadow-sm);
+  --shadow-card-hover: var(--shadow-md);
+  --shadow-cta: 0 10px 22px -10px rgba(200, 170, 0, 0.55); /* gold pill lift */
+
+  /* ── Motion (restrained) ────────────────────────────────── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 0.15s;
+  --dur-2: 0.22s;
+  --dur-3: 0.32s;
+
+  /* ── Layout & spacing ───────────────────────────────────── */
+  --space-section: 100px;
+  --space-section-sm: 60px;
+  --maxw: 1140px;
+  --wrap-pad: 15px;
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --fs-display: clamp(42px, 5.8vw, 76px);
+
+  /* ── Dark band (flat navy, live-site style) ─────────────── */
+  --dk-bg: var(--navy);
+  --dk-bg-2: var(--navy-2);
+  --dk-line: rgb(255 255 255 / 0.14);
+  --dk-text: #ffffff;
+  --dk-muted: #cdc6ea;
+  --dk-neon-violet: var(--sky);
+  --dk-neon-azure: var(--sky);
+  --dk-cta: var(--gold);
+  --dk-glow-violet: none;
+  --dk-glow-azure: none;
+
+  /* ── Component layer ────────────────────────────────────── */
+  --btn-primary-bg: var(--accent-cta);
+  --btn-primary-bg-hover: var(--gold-deep);
+  --btn-primary-fg: var(--navy);
+  --btn-secondary-fg: var(--navy);
+  --btn-secondary-border: #d9d2f1;
+  --plan-featured: var(--brand-secondary);
+  --plan-featured-fg: #ffffff;
+  --header-bg: var(--paper);
+  --footer-bg: var(--surface-footer);
+
+  /* ── Legacy-name bridge ─────────────────────────────────── */
+  /* Old primitive/gradient names still referenced by rc-premium.css,
+     page.css and a few components. Re-pointed at the live brand so
+     everything recolors at once; trimmed as consumers migrate to the
+     semantic names above. */
+  --rc-ink: var(--ink);
+  --rc-ink-deep: var(--ink);
+  --rc-violet: var(--purple);
+  --rc-violet-dark: var(--purple-deep);
+  --rc-blue: var(--sky);
+  --rc-yellow: var(--gold);
+  --rc-orange: var(--orange);
+  --rc-orange-dark: var(--orange);
+  --rc-orange-deep: var(--orange);
+  --rc-plum: var(--navy);
+  --rc-coral: var(--orange);
+  --rc-purple: var(--purple);
+  --rc-indigo: var(--navy);
+  --rc-indigo-deep: var(--ink);
+  --night: var(--ink);
+  --midnight: var(--navy);
+  --abyss: var(--navy-2);
+  --cobalt: var(--purple);
+  --cobalt-bright: var(--sky);
+  --cobalt-dim: var(--purple-deep);
+  --signal: var(--gold);
+  --signal-hot: var(--gold-deep);
+  --ice: var(--mist);
+  --chrome: #cad1e5;
+  --smoke: #9099b2;
+  --graphite: var(--gray-700);
+  --pulse-ok: var(--green);
+  --pulse-warn: var(--amber);
+  --pulse-down: var(--red);
+  --line-chrome-10: rgb(202 209 229 / 0.1);
+  --line-chrome-16: rgb(202 209 229 / 0.16);
+  --line-chrome-24: rgb(202 209 229 / 0.24);
+  --inner-highlight: inset 0 1px 0 rgb(255 255 255 / 0.07);
+  --line-hairline: var(--line);
+  --line-hairline-dark: var(--dk-line);
+  --interactive: var(--sky);
+  --interactive-pressed: var(--sky-deep);
+  --wash-cobalt-06: rgb(118 82 242 / 0.06);
+  --wash-cobalt-10: rgb(118 82 242 / 0.1);
+  --wash-signal-10: rgb(253 215 0 / 0.14);
+  --font-display: var(--font-heading);
+  --spectrum: linear-gradient(100deg, var(--sky) 0%, var(--purple) 100%);
+  --rc-gradient: linear-gradient(110deg, var(--navy) 0%, var(--navy-2) 100%);
+  --grad-cta: var(--rc-gradient);
+  --grad-energy: linear-gradient(135deg, var(--sky) 0%, var(--purple) 100%);
+  --grad-gold-spark: linear-gradient(
+    120deg,
+    var(--gold) 0%,
+    var(--gold-deep) 100%
+  );
+  --grad-hot: var(--grad-energy);
+  --grad-gold-cta: var(--grad-gold-spark);
+  --grad-text: linear-gradient(
+    96deg,
+    var(--navy) 0%,
+    var(--purple) 64%,
+    var(--sky) 100%
+  );
+  --grad-violet-azure: var(--grad-energy);
+  --rc-grad-vivid: linear-gradient(122deg, var(--navy) 0%, var(--navy-2) 100%);
+  --shadow-violet: 0 18px 50px -14px rgba(118, 82, 242, 0.35);
+}

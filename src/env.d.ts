@@ -1,22 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
+/// <reference types="vite/client" />
+/// <reference types="../vendor/integration/types.d.ts" />
 
-interface ImportMetaEnv {
-  readonly PUBLIC_STORYBLOK_ACCESS_TOKEN?: string;
-  readonly STORYBLOK_REGION?: string;
-  readonly STORYBLOK_PREVIEW_SECRET?: string;
-  readonly STORYBLOK_WEBHOOK_SECRET?: string;
-  readonly INDEXNOW_KEY?: string;
-  readonly INDEXNOW_KEY_LOCATION?: string;
-  readonly PUBLIC_SITE_URL?: string;
-  readonly PUBLIC_WHMCS_URL?: string;
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
-}
-
-interface Window {
-  zaraz?: {
-    track: (name: string, properties?: Record<string, unknown>) => void;
-  };
-}
+// Fontsource packages ship CSS only (no type declarations); declare them so
+// side-effect imports type-check under TypeScript 6 strict (ts2882).
+declare module "@fontsource-variable/*";
+declare module "@fontsource/*";
