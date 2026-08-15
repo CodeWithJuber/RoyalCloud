@@ -1,0 +1,61 @@
+---
+import type { PartnerBlock } from "../../types/content";
+
+interface Props { block: PartnerBlock }
+const { block } = Astro.props;
+---
+
+<section class="section section-light partners" aria-labelledby="partners-title">
+  <div class="shell">
+    <header class="section-header" data-reveal>
+      {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+      <h2 id="partners-title">{block.title}</h2>
+    </header>
+
+    <ul class="logo-shelf" data-reveal>
+      {block.partners.map((partner) => (
+        <li>
+          <img src={partner.logo} alt={partner.name} loading="lazy" width="120" height="40" />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .partners { padding-block: clamp(2.5rem, 5vw, 4rem); }
+
+  .logo-shelf {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    min-width: 9rem;
+    min-height: 4.5rem;
+    place-items: center;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-inner);
+    background: var(--paper);
+  }
+
+  /* height:auto on an SVG with no intrinsic size collapses the box — pin the
+     height and let object-fit letterbox each mark inside it. */
+  img {
+    width: 100%;
+    max-width: 7.5rem;
+    height: 2.25rem;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 200ms var(--ease);
+  }
+  li:hover img { opacity: 1; }
+</style>

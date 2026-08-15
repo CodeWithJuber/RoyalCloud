@@ -1,0 +1,227 @@
+---
+import type { ConfiguratorBlock } from "../../types/content";
+
+interface Props { block: ConfiguratorBlock }
+const { block } = Astro.props;
+const external = block.action.external ?? block.action.href.startsWith("http");
+
+/* Every axis is normalised to its own supplied steps: the base index is the step
+   the CMS marked default, and the largest supplied step is the top of its bar.
+   No money is computed here. Only three preset machines are sold, so any quote for
+   a mixed selection would need a per-unit rate we do not have — and DESIGN.md 11
+   says a number that cannot be real does not ship. The sliders size the machine;
+   the price is the one stated at checkout. */
+const axes = block.axes
+  .filter((axis) => axis.steps.length > 0)
+  .map((axis) => {
+    const baseIndex = Math.max(0, axis.steps.indexOf(axis.default));
+    const max = Math.max(...axis.steps);
+    const baseValue = axis.steps[baseIndex] ?? 0;
+    return { ...axis, baseIndex, baseValue, max: max > 0 ? max : 1 };
+  });
+
+/* A GET form replaces the action URL's query string, so any params the checkout
+   link carries (WHMCS needs a=add) have to travel as fields, not in the action. */
+const actionUrl = new URL(block.action.href, "https://royalclouds.net");
+const action = external ? `${actionUrl.origin}${actionUrl.pathname}` : actionUrl.pathname;
+const carriedParams = [...actionUrl.searchParams.entries()];
+
+/* Read by the vanilla script below. Astro escapes the attribute; nothing is
+   interpolated into markup or script source. */
+const config = JSON.stringify({
+  axes: axes.map((axis) => ({ id: axis.id, unit: axis.unit, steps: axis.steps, baseIndex: axis.baseIndex, max: axis.max })),
+});
+---
+
+<section class="section section-dark" aria-labelledby="configurator-title">
+  <div class="shell">
+    <header class="section-header" data-reveal>
+      {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+      <h2 id="configurator-title">{block.title}</h2>
+      <p class="lede">{block.summary}</p>
+    </header>
+
+    {axes.length > 0 && (
+      <form
+        class="configurator"
+        method="get"
+        action={action}
+        target={external ? "_blank" : undefined}
+        data-configurator
+        data-config={config}
+        data-reveal
+      >
+        {carriedParams.map(([name, value]) => <input type="hidden" name={name} value={value} />)}
+
+        <div class="controls bezel">
+          {axes.map((axis) => (
+            <div class="axis">
+              <label class="axis-label" for={`axis-${axis.id}`}>{axis.label}</label>
+              <output class="axis-value mono" for={`axis-${axis.id}`} data-out={axis.id}>
+                {axis.baseValue} {axis.unit}
+              </output>
+              {/* The range is pure UI — it holds a step index. The submitted value is
+                  the real vCPU/GB figure, which the script keeps in sync; with no JS
+                  the base configuration is submitted, which is correct. */}
+              <input type="hidden" name={axis.id} value={String(axis.baseValue)} data-axis-value={axis.id} />
+              <input
+                type="range"
+                id={`axis-${axis.id}`}
+                min={0}
+                max={axis.steps.length - 1}
+                step={1}
+                value={axis.baseIndex}
+                aria-valuetext={`${axis.baseValue} ${axis.unit}`}
+                list={`axis-${axis.id}-steps`}
+                data-axis={axis.id}
+              />
+              <datalist id={`axis-${axis.id}-steps`}>
+                {axis.steps.map((step, index) => <option value={index} label={`${step} ${axis.unit}`}></option>)}
+              </datalist>
+              <p class="axis-range fine">
+                <span>{axis.steps[0]} {axis.unit}</span>
+                <span>{axis.steps[axis.steps.length - 1]} {axis.unit}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <aside class="mirror bezel">
+          <p class="mirror-title">Plan telemetry</p>
+          <div class="telemetry">
+            {axes.map((axis) => (
+              <div class="telemetry-row">
+                <span class="telemetry-label">{axis.label}</span>
+                <span class="telemetry-value" data-bar-value={axis.id}>{axis.baseValue} {axis.unit}</span>
+                <span class="telemetry-track">
+                  <span
+                    class="telemetry-fill"
+                    data-bar={axis.id}
+                    style={`--fill:${(axis.baseValue / axis.max).toFixed(3)}`}
+                  ></span>
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <p class="ledger-line">
+            This configuration is priced at checkout — we do not publish a per-unit rate
+            we cannot stand behind. Term and renewal are stated before you pay.
+          </p>
+
+          <button class="button button-primary button-block" type="submit">{block.action.label}</button>
+        </aside>
+      </form>
+    )}
+  </div>
+</section>
+
+<style>
+  .configurator {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  /* Anchor 2: config dominant left, telemetry mirror right (DESIGN.md 6.1, 12.3). */
+  @media (min-width: 64rem) {
+    .configurator { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 2rem; }
+  }
+
+  .controls,
+  .mirror {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--surface-card);
+  }
+  .controls { display: grid; gap: 1.75rem; }
+  .mirror { display: grid; gap: 1.25rem; align-content: start; }
+
+  .axis {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 1rem;
+    align-items: baseline;
+  }
+  .axis-label {
+    color: var(--heading);
+    font-weight: 700;
+    font-size: 0.9375rem;
+  }
+  .axis-value {
+    color: var(--heading);
+    font-size: 1rem;
+    font-weight: 550;
+  }
+  .axis input[type="range"],
+  .axis-range { grid-column: 1 / -1; }
+
+  input[type="range"] {
+    width: 100%;
+    min-height: 44px;
+    margin: 0;
+    accent-color: var(--interactive);
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type="range"]:focus-visible {
+    outline: 2px solid var(--interactive);
+    outline-offset: 3px;
+    border-radius: var(--r-pill);
+  }
+
+  .axis-range {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .mirror-title {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .telemetry-fill { transition: none; }
+  }
+</style>
+
+<script>
+  type AxisConfig = { id: string; unit: string; steps: number[]; baseIndex: number; max: number };
+  type Config = { axes: AxisConfig[] };
+
+  /* Display + submitted value only. No price is derived from the sliders. */
+  const setup = (form: HTMLFormElement) => {
+    let config: Config;
+    try {
+      config = JSON.parse(form.dataset.config ?? "");
+    } catch {
+      return; // markup already renders the base configuration; leave it be
+    }
+
+    config.axes.forEach((axis) => {
+      const input = form.querySelector<HTMLInputElement>(`[data-axis="${axis.id}"]`);
+      const field = form.querySelector<HTMLInputElement>(`[data-axis-value="${axis.id}"]`);
+      const out = form.querySelector<HTMLElement>(`[data-out="${axis.id}"]`);
+      const bar = form.querySelector<HTMLElement>(`[data-bar="${axis.id}"]`);
+      const barValue = form.querySelector<HTMLElement>(`[data-bar-value="${axis.id}"]`);
+      if (!input) return;
+
+      input.addEventListener("input", () => {
+        const step = axis.steps[Number(input.value)];
+        if (step === undefined) return;
+        const text = `${step} ${axis.unit}`;
+        input.setAttribute("aria-valuetext", text);
+        if (field) field.value = String(step);
+        if (out) out.textContent = text;
+        if (barValue) barValue.textContent = text;
+        if (bar) bar.style.setProperty("--fill", (step / axis.max).toFixed(3));
+      });
+    });
+  };
+
+  document.querySelectorAll<HTMLFormElement>("form[data-configurator]").forEach(setup);
+</script>

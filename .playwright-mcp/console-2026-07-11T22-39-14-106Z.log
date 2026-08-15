@@ -1,0 +1,7 @@
+[   33509ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:4321/@vite/client:1726
+[   41948ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/ui-library-a07AMWdn.js?v=0f90a70b:0
+[   41948ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=0f90a70b:0
+[   41954ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/ui-library-a07AMWdn.js?v=0f90a70b
+[   51475ms] [ERROR] WebSocket connection to 'ws://localhost:4321/?token=1leSlfFBTuKH' failed:  @ http://localhost:4321/@vite/client:1598
+[   51476ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:4321/@vite/client:1726
+[   87344ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:4321/@vite/client:1726

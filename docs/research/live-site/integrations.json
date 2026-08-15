@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-07-11T19:50:23.976Z",
+  "externalDomains": [
+    {
+      "hostname": "my.royalclouds.net",
+      "pageCount": 58
+    },
+    {
+      "hostname": "facebook.com",
+      "pageCount": 58
+    },
+    {
+      "hostname": "twitter.com",
+      "pageCount": 58
+    },
+    {
+      "hostname": "instagram.com",
+      "pageCount": 58
+    },
+    {
+      "hostname": "www.linkedin.com",
+      "pageCount": 58
+    },
+    {
+      "hostname": "www.youtube.com",
+      "pageCount": 58
+    },
+    {
+      "hostname": "blog.royalclouds.net",
+      "pageCount": 58
+    },
+    {
+      "hostname": "i.imgur.com",
+      "pageCount": 1
+    },
+    {
+      "hostname": "www.google.com",
+      "pageCount": 1
+    },
+    {
+      "hostname": "cyberpanel.net",
+      "pageCount": 1
+    },
+    {
+      "hostname": "fonts.googleapis.com",
+      "pageCount": 1
+    },
+    {
+      "hostname": "use.fontawesome.com",
+      "pageCount": 1
+    }
+  ],
+  "forms": [
+    {
+      "page": "https://royalclouds.net/",
+      "action": "https://my.royalclouds.net/cart.php?a=add&domain=register",
+      "method": "POST",
+      "fields": [
+        {
+          "name": "query",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "",
+          "type": "",
+          "required": false
+        }
+      ]
+    },
+    {
+      "page": "https://royalclouds.net/",
+      "action": "https://royalclouds.us11.list-manage.com/subscribe/post?u=78aa2ac66f8706eb3d4e378cc&amp;id=eadb8a29c9",
+      "method": "POST",
+      "fields": [
+        {
+          "name": "EMAIL",
+          "type": "email",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "scripts": [
+    "https://royalclouds.net/assets/js/jquery-3.3.1.min.js",
+    "https://royalclouds.net/assets/js/bootstrap.min.js",
+    "https://royalclouds.net/assets/js/Chart.min.js",
+    "https://royalclouds.net/assets/js/comparison.js?i=001",
+    "https://royalclouds.net/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+    "https://royalclouds.net/assets/js/jquery.min.js",
+    "https://royalclouds.net/assets/js/popper.min.js",
+    "https://royalclouds.net/assets/js/jquery.meanmenu.js",
+    "https://royalclouds.net/assets/js/wow.min.js",
+    "https://royalclouds.net/assets/js/owl.carousel.js?i=1",
+    "https://royalclouds.net/assets/js/jquery.nice-select.min.js",
+    "https://royalclouds.net/assets/js/form-validator.min.js",
+    "https://royalclouds.net/assets/js/contact-form-script.js",
+    "https://royalclouds.net/assets/js/map.js",
+    "https://royalclouds.net/assets/js/custom.js?i=1",
+    "https://cdn.onesignal.com/sdks/OneSignalSDK.js",
+    "https://www.googletagmanager.com/gtag/js?id=G-P5KQ0VPEG6",
+    "https://royalclouds.net/assets/js/flying-pages.min.js",
+    "https://royalclouds.net/https://cdn.jsdelivr.net/npm/typed.js@2.0.11",
+    "https://cdn.jsdelivr.net/npm/typed.js@2.0.11",
+    "https://royalclouds.net/assets/extended/js/jquery.min.js",
+    "https://royalclouds.net/assets/extended/js/bootstrap.min.js",
+    "https://royalclouds.net/assets/extended/js/jquery.countdown.js",
+    "https://royalclouds.net/assets/extended/js/jquery.magnific-popup.min.js",
+    "https://royalclouds.net/assets/extended/js/slick.min.js",
+    "https://royalclouds.net/assets/extended/js/owl.carousel.min.js",
+    "https://royalclouds.net/assets/extended/js/swiper.min.js",
+    "https://royalclouds.net/assets/extended/js/scripts.min.js",
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
+    "https://ajax.cloudflare.com/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "context": {
+    "fileName": [
+      "AGENTS.md"
+    ]
+  },
+  "_forge": "forge:sync:40f4859555f9",
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@3.2.2"
+      ]
+    },
+    "forge-cortex": {
+      "command": "forge",
+      "args": [
+        "cortex-mcp"
+      ]
+    }
+  }
+}

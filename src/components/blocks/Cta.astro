@@ -1,0 +1,45 @@
+---
+import RouteSignal from "@/components/visuals/RouteSignal.astro";
+import type { CtaBlock } from "../../types/content";
+
+interface Props { block: CtaBlock }
+const { block } = Astro.props;
+const external = block.action.external ?? block.action.href.startsWith("http");
+---
+
+<section class="section section-dark cta" aria-labelledby="cta-title" data-reveal>
+  <div class="cta__graphic" aria-hidden="true"><RouteSignal /></div>
+
+  <div class="shell section-header cta__copy">
+    {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+    <h2 id="cta-title">{block.title}</h2>
+    <p class="lede">{block.summary}</p>
+
+    <div class="button-row">
+      <a
+        class="button button-invert"
+        href={block.action.href}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noopener noreferrer" : undefined}
+      >{block.action.label}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { position: relative; isolation: isolate; overflow: hidden; }
+
+  .cta__graphic {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .cta__graphic > :global(*) { width: min(70rem, 130%); height: auto; }
+
+  .cta__copy { margin-bottom: 0; }
+  .cta__copy .button-row { margin-top: 1.75rem; }
+</style>

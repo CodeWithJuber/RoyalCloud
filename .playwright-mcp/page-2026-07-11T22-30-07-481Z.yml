@@ -1,0 +1,398 @@
+- generic [active] [ref=f3e1]:
+  - link "Skip to content" [ref=f3e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - complementary "Announcement" [ref=f3e3]:
+    - paragraph [ref=f3e4]:
+      - generic [ref=f3e5]: Built for fast launches, deliberate scaling, and human support.
+      - link "Explore hosting" [ref=f3e6] [cursor=pointer]:
+        - /url: /shared-hosting
+        - text: Explore hosting
+        - generic [ref=f3e7]: ↗
+    - button "Dismiss announcement" [ref=f3e8] [cursor=pointer]
+  - banner [ref=f3e12]:
+    - link "Royal Clouds home" [ref=f3e13] [cursor=pointer]:
+      - /url: /
+      - img "Royal Clouds" [ref=f3e14]
+    - navigation "Primary" [ref=f3e15]:
+      - group [ref=f3e16]:
+        - generic "Hosting" [ref=f3e17] [cursor=pointer]
+      - group [ref=f3e21]:
+        - generic "VPS" [ref=f3e22] [cursor=pointer]
+      - group [ref=f3e26]:
+        - generic "Why Royal Clouds" [ref=f3e27] [cursor=pointer]
+    - generic [ref=f3e31]:
+      - group "Display currency" [ref=f3e32]:
+        - button "Display prices in Indian rupees" [ref=f3e33] [cursor=pointer]: ₹ INR
+        - button "Display prices in US dollars" [pressed] [ref=f3e34] [cursor=pointer]: $ USD
+      - link "Sign in" [ref=f3e35] [cursor=pointer]:
+        - /url: https://my.royalclouds.net/login
+      - link "Open console ↗" [ref=f3e36] [cursor=pointer]:
+        - /url: https://my.royalclouds.net
+    - text: ↗ ↗
+  - main [ref=f3e37]:
+    - region [ref=f3e38]:
+      - generic [ref=f3e39]:
+        - generic [ref=f3e40]:
+          - paragraph [ref=f3e41]: Royal Clouds
+          - heading "Hosting that shows its work." [level=1] [ref=f3e42]
+          - paragraph [ref=f3e43]: Isolated compute, visible limits, and a renewal price printed next to every plan. Infrastructure you can reason about.
+          - generic [ref=f3e44]:
+            - link "See plans ↗" [ref=f3e45] [cursor=pointer]:
+              - /url: "#plans"
+            - link "Compare KVM VPS ↗" [ref=f3e46] [cursor=pointer]:
+              - /url: /kvm-vps-hosting
+          - list [ref=f3e47]:
+            - listitem [ref=f3e48]: SSD across every plan
+            - listitem [ref=f3e51]: Root access on KVM
+            - listitem [ref=f3e54]: Renewal rate shown up front
+        - figure [ref=f3e58]
+    - region [ref=f3e110]:
+      - generic [ref=f3e111]:
+        - generic [ref=f3e112]:
+          - paragraph [ref=f3e113]: Domain router
+          - heading "Name your next system." [level=2] [ref=f3e114]
+          - paragraph [ref=f3e115]: Search once, then continue securely in your Royal Clouds client area.
+        - generic [ref=f3e117]:
+          - generic [ref=f3e118]: REGISTRY LINK ACTIVE
+          - generic [ref=f3e124]:
+            - generic [ref=f3e125]: Domain name
+            - generic [ref=f3e126]:
+              - textbox "Domain name" [ref=f3e127]:
+                - /placeholder: your-next-idea.com
+              - button "Search domains ↗" [ref=f3e128] [cursor=pointer]
+            - generic [ref=f3e129]:
+              - paragraph [ref=f3e130]: Enter a complete name including its extension.
+              - list "Popular domain extensions" [ref=f3e131]:
+                - listitem [ref=f3e132]:
+                  - generic [ref=f3e133]: .com
+                  - generic [ref=f3e134]: most popular
+                - listitem [ref=f3e135]:
+                  - generic [ref=f3e136]: .in
+                  - generic [ref=f3e137]: India
+                - listitem [ref=f3e138]:
+                  - generic [ref=f3e139]: .net
+                  - generic [ref=f3e140]: technical
+                - listitem [ref=f3e141]:
+                  - generic [ref=f3e142]: .org
+                  - generic [ref=f3e143]: non-profit
+                - listitem [ref=f3e144]:
+                  - generic [ref=f3e145]: .dev
+                  - generic [ref=f3e146]: developers
+    - region "Royal Clouds service facts" [ref=f3e147]:
+      - list [ref=f3e148]:
+        - listitem [ref=f3e149]:
+          - strong [ref=f3e150]: "01"
+          - generic [ref=f3e151]: Pick the workload, not the marketing tier
+        - listitem [ref=f3e152]:
+          - strong [ref=f3e153]: "02"
+          - generic [ref=f3e154]: Read the exact limits before you pay
+        - listitem [ref=f3e155]:
+          - strong [ref=f3e156]: "03"
+          - generic [ref=f3e157]: Deploy and manage from the client area
+    - region "Move up a layer without relearning the platform." [ref=f3e158]:
+      - generic [ref=f3e159]:
+        - generic [ref=f3e160]:
+          - paragraph [ref=f3e161]: One stack, four altitudes
+          - heading "Move up a layer without relearning the platform." [level=2] [ref=f3e162]
+          - paragraph [ref=f3e163]: Shared, managed WordPress, KVM VPS, and dedicated hardware are the same operation seen from different heights. The panel, the billing, and the people do not change when you climb.
+        - generic [ref=f3e164]:
+          - figure [ref=f3e166]:
+            - img "Royal Clouds core systems schematic An exploded core infrastructure stack connecting edge, runtime, storage, protection, and support systems." [ref=f3e167]:
+              - generic [ref=f3e201]:
+                - generic [ref=f3e202]: 01 / EDGE CONTROL
+                - generic [ref=f3e206]: 03 / STORAGE FABRIC
+                - generic [ref=f3e210]: 05 / ROYAL SUPPORT
+          - list [ref=f3e213]:
+            - listitem [ref=f3e214]:
+              - heading "Shared hosting" [level=3] [ref=f3e215]
+              - paragraph [ref=f3e216]: A managed foundation for sites that do not need server-level control.
+            - listitem [ref=f3e217]:
+              - heading "Managed WordPress" [level=3] [ref=f3e218]
+              - paragraph [ref=f3e219]: WordPress with the updates, caching, and backups handled as part of the service.
+            - listitem [ref=f3e220]:
+              - heading "KVM VPS" [level=3] [ref=f3e221]
+              - paragraph [ref=f3e222]: Dedicated virtual cores, guaranteed memory, and root on the box.
+            - listitem [ref=f3e223]:
+              - heading "Dedicated servers" [level=3] [ref=f3e224]
+              - paragraph [ref=f3e225]: Single-tenant hardware, specified with an engineer before it is quoted.
+    - region [ref=f3e226]:
+      - generic [ref=f3e227]:
+        - generic [ref=f3e228]:
+          - paragraph [ref=f3e229]: Operator tools
+          - heading "It is a real machine. Treat it like one." [level=2] [ref=f3e230]
+          - paragraph [ref=f3e231]: KVM plans hand you the root account. These are the commands you would actually run on the first day.
+        - generic [ref=f3e232]:
+          - generic [ref=f3e233]:
+            - tablist "Deployment method" [ref=f3e234]:
+              - tab "SSH" [selected] [ref=f3e235] [cursor=pointer]
+              - tab "Deploy" [ref=f3e236] [cursor=pointer]
+            - button "Copy" [ref=f3e237] [cursor=pointer]
+            - status
+          - tabpanel "SSH" [ref=f3e239]:
+            - generic [ref=f3e240]:
+              - generic [ref=f3e241]: first-login.sh
+              - generic [ref=f3e246]:
+                - code [ref=f3e247]: $ ssh root@your-vps
+                - code [ref=f3e248]: The authenticity of host 'your-vps' can't be established.
+                - code [ref=f3e249]: ✓ Connection established.
+                - code [ref=f3e250]: $ adduser deploy && usermod -aG sudo deploy
+    - region [ref=f3e251]:
+      - generic [ref=f3e252]:
+        - generic [ref=f3e253]:
+          - paragraph [ref=f3e254]: The route your traffic takes
+          - heading "Nothing between you and the origin that you cannot name." [level=2] [ref=f3e255]
+          - paragraph [ref=f3e256]: DNS, edge, compute, storage. Four hops, each one legible, each one somebody's responsibility.
+        - figure [ref=f3e258]:
+          - img "Royal Clouds global network atlas A technical route map connecting infrastructure nodes across Europe, the Middle East, Asia, and North America through a central Royal Clouds control plane." [ref=f3e259]:
+            - generic [ref=f3e336]:
+              - generic [ref=f3e337]:
+                - generic [ref=f3e338]: NORTH AMERICA
+                - generic [ref=f3e339]: 37.0902 / -95.7129
+              - generic [ref=f3e340]:
+                - generic [ref=f3e341]: EUROPE
+                - generic [ref=f3e342]: 50.1109 / 8.6821
+              - generic [ref=f3e343]:
+                - generic [ref=f3e344]: ROYAL CONTROL
+                - generic [ref=f3e345]: 25.2048 / 55.2708
+              - generic [ref=f3e346]:
+                - generic [ref=f3e347]: ASIA PACIFIC
+                - generic [ref=f3e348]: 1.3521 / 103.8198
+              - generic [ref=f3e349]:
+                - generic [ref=f3e350]: OCEANIA
+                - generic [ref=f3e351]: "-33.8688 / 151.2093"
+            - generic [ref=f3e352]:
+              - generic [ref=f3e353]: LIVE ROUTE ATLAS / UTC +04
+              - generic [ref=f3e356]:
+                - generic [ref=f3e357]: CONTROL PLANE
+                - generic [ref=f3e358]: NOMINAL
+              - generic [ref=f3e359]:
+                - generic [ref=f3e360]: EDGE
+                - generic [ref=f3e361]: COMPUTE
+                - generic [ref=f3e362]: STORAGE
+                - generic [ref=f3e363]: PROTECTION
+                - generic [ref=f3e364]: SUPPORT
+        - list [ref=f3e366]:
+          - listitem [ref=f3e367]:
+            - heading "Client" [level=3] [ref=f3e368]
+            - paragraph [ref=f3e369]: Global
+            - paragraph [ref=f3e370]: DNS resolution, browser, and client-area entry points
+          - listitem [ref=f3e371]:
+            - heading "Edge" [level=3] [ref=f3e372]
+            - paragraph [ref=f3e373]: Global
+            - paragraph [ref=f3e374]: Caching, filtering, and static delivery ahead of the origin
+          - listitem [ref=f3e375]:
+            - heading "Origin" [level=3] [ref=f3e376]
+            - paragraph [ref=f3e377]: Your plan
+            - paragraph [ref=f3e378]: Shared, managed, virtual, or single-tenant compute
+    - region [ref=f3e379]:
+      - generic [ref=f3e380]:
+        - generic [ref=f3e381]:
+          - paragraph [ref=f3e382]: Plan deck
+          - heading "Start where the workload is." [level=2] [ref=f3e383]
+          - paragraph [ref=f3e384]: USD prices are the audited live rates. Monthly plans renew at the price you paid — the ledger line on each plane says so.
+        - generic [ref=f3e385]:
+          - group "Billing term" [ref=f3e387]:
+            - button "1 month" [pressed] [ref=f3e388] [cursor=pointer]
+          - generic [ref=f3e389]:
+            - article [ref=f3e390]:
+              - heading "VPS I" [level=3] [ref=f3e391]
+              - paragraph [ref=f3e392]: Development and small services
+              - generic [ref=f3e393]:
+                - paragraph [ref=f3e395]:
+                  - text: $4
+                  - generic [ref=f3e396]: /mo
+                - paragraph [ref=f3e397]: Billed monthly · Renews $4/mo
+              - link "Choose VPS I ↗" [ref=f3e398] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/cart.php?a=add
+              - generic [ref=f3e399]:
+                - generic [ref=f3e400]:
+                  - generic [ref=f3e401]: vCPU
+                  - generic [ref=f3e402]: 1 core
+                - generic [ref=f3e404]:
+                  - generic [ref=f3e405]: RAM
+                  - generic [ref=f3e406]: 1 GB
+                - generic [ref=f3e408]:
+                  - generic [ref=f3e409]: SSD
+                  - generic [ref=f3e410]: 10 GB
+              - list [ref=f3e412]:
+                - listitem [ref=f3e413]: 1 GB RAM
+                - listitem [ref=f3e416]: 10 GB SSD storage
+                - listitem [ref=f3e419]: 500 GB bandwidth
+                - listitem [ref=f3e422]: 1 vCPU core
+              - paragraph [ref=f3e425]: Pricing pending approval
+            - article [ref=f3e426]:
+              - paragraph [ref=f3e427]: MOST DEPLOYED
+              - heading "VPS II" [level=3] [ref=f3e428]
+              - paragraph [ref=f3e429]: Production web workloads
+              - generic [ref=f3e430]:
+                - paragraph [ref=f3e432]:
+                  - text: $8
+                  - generic [ref=f3e433]: /mo
+                - paragraph [ref=f3e434]: Billed monthly · Renews $8/mo
+              - link "Choose VPS II ↗" [ref=f3e435] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/cart.php?a=add
+              - generic [ref=f3e436]:
+                - generic [ref=f3e437]:
+                  - generic [ref=f3e438]: vCPU
+                  - generic [ref=f3e439]: 2 cores
+                - generic [ref=f3e441]:
+                  - generic [ref=f3e442]: RAM
+                  - generic [ref=f3e443]: 2 GB
+                - generic [ref=f3e445]:
+                  - generic [ref=f3e446]: SSD
+                  - generic [ref=f3e447]: 20 GB
+              - list [ref=f3e449]:
+                - listitem [ref=f3e450]: 2 GB RAM
+                - listitem [ref=f3e453]: 20 GB SSD storage
+                - listitem [ref=f3e456]: 1 TB bandwidth
+                - listitem [ref=f3e459]: 2 vCPU cores
+              - paragraph [ref=f3e462]: Pricing pending approval
+            - article [ref=f3e463]:
+              - heading "VPS III" [level=3] [ref=f3e464]
+              - paragraph [ref=f3e465]: Higher-traffic applications
+              - generic [ref=f3e466]:
+                - paragraph [ref=f3e468]:
+                  - text: $16
+                  - generic [ref=f3e469]: /mo
+                - paragraph [ref=f3e470]: Billed monthly · Renews $16/mo
+              - link "Choose VPS III ↗" [ref=f3e471] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/cart.php?a=add
+              - generic [ref=f3e472]:
+                - generic [ref=f3e473]:
+                  - generic [ref=f3e474]: vCPU
+                  - generic [ref=f3e475]: 4 cores
+                - generic [ref=f3e477]:
+                  - generic [ref=f3e478]: RAM
+                  - generic [ref=f3e479]: 4 GB
+                - generic [ref=f3e481]:
+                  - generic [ref=f3e482]: SSD
+                  - generic [ref=f3e483]: 40 GB
+              - list [ref=f3e485]:
+                - listitem [ref=f3e486]: 4 GB RAM
+                - listitem [ref=f3e489]: 40 GB SSD storage
+                - listitem [ref=f3e492]: 2 TB bandwidth
+                - listitem [ref=f3e495]: 4 vCPU cores
+              - paragraph [ref=f3e498]: Pricing pending approval
+    - region [ref=f3e499]:
+      - generic [ref=f3e500]:
+        - generic [ref=f3e501]:
+          - generic [ref=f3e502]:
+            - paragraph [ref=f3e503]: Royal Console
+            - heading "The panel is the product." [level=2] [ref=f3e504]
+            - paragraph [ref=f3e505]: Billing, services, and tickets in one place. If you cannot see it in the console, we have not done our job.
+          - generic [ref=f3e506]:
+            - button "Services" [pressed] [ref=f3e507] [cursor=pointer]
+            - button "Billing" [ref=f3e508] [cursor=pointer]
+            - button "Tickets" [ref=f3e509] [cursor=pointer]
+          - link "Open the client area ↗" [ref=f3e511] [cursor=pointer]:
+            - /url: https://my.royalclouds.net
+        - generic [ref=f3e515]:
+          - generic [ref=f3e516]: Services
+          - generic [ref=f3e522]:
+            - paragraph [ref=f3e523]: Every active service, its plan, and its renewal date on one row.
+            - paragraph [ref=f3e524]: No readings published for this panel.
+    - region [ref=f3e525]:
+      - generic [ref=f3e526]:
+        - generic [ref=f3e527]:
+          - paragraph [ref=f3e528]: Straight answers
+          - heading "What to know about royal clouds hosting" [level=2] [ref=f3e529]
+        - generic [ref=f3e530]:
+          - group [ref=f3e531]:
+            - heading "Who is royal clouds hosting built for?" [level=3] [ref=f3e533] [cursor=pointer]
+            - paragraph [ref=f3e535]: People who want a clearly scoped hosting service, visible limits, and an upgrade path that does not require rebuilding the site.
+          - group [ref=f3e536]:
+            - heading "What happens when the term ends?" [level=3] [ref=f3e538] [cursor=pointer]
+          - group [ref=f3e540]:
+            - heading "Can you move an existing site across?" [level=3] [ref=f3e542] [cursor=pointer]
+          - group [ref=f3e544]:
+            - heading "Where do billing and account changes happen?" [level=3] [ref=f3e546] [cursor=pointer]
+    - region [ref=f3e548]:
+      - generic:
+        - figure:
+          - img:
+            - generic:
+              - generic: ORIGIN / 01
+              - generic: ROUTE / ACTIVE
+              - generic: EDGE CONTROL
+      - generic [ref=f3e549]:
+        - paragraph [ref=f3e550]: Next step
+        - heading "Bring the workload. We will map the control plane." [level=2] [ref=f3e551]
+        - paragraph [ref=f3e552]: Tell us the platform, the traffic, the storage, and how much of it you want to run yourself. An engineer answers, not a form.
+        - link "Talk to an engineer ↗" [ref=f3e554] [cursor=pointer]:
+          - /url: https://my.royalclouds.net/submitticket.php
+  - contentinfo [ref=f3e555]:
+    - generic [ref=f3e556]:
+      - generic [ref=f3e557]:
+        - img "Royal Clouds" [ref=f3e558]
+        - paragraph [ref=f3e559]: SSD hosting, KVM virtual servers, managed WordPress, and dedicated infrastructure — with a direct path to a human.
+        - generic [ref=f3e560]:
+          - generic [ref=f3e561]: Newsletter
+          - generic [ref=f3e562]: Hosting tips and offers
+          - generic [ref=f3e563]:
+            - textbox "Hosting tips and offers" [ref=f3e564]:
+              - /placeholder: you@company.com
+            - button "Subscribe ↗" [ref=f3e565] [cursor=pointer]
+          - generic [ref=f3e566]:
+            - checkbox "I agree to receive marketing email and can unsubscribe at any time." [ref=f3e567]
+            - generic [ref=f3e568]: I agree to receive marketing email and can unsubscribe at any time.
+      - generic [ref=f3e569]:
+        - navigation "Hosting links" [ref=f3e570]:
+          - heading "Hosting" [level=2] [ref=f3e571]
+          - list [ref=f3e572]:
+            - listitem [ref=f3e573]:
+              - link "Shared hosting" [ref=f3e574] [cursor=pointer]:
+                - /url: /shared-hosting
+            - listitem [ref=f3e575]:
+              - link "KVM VPS" [ref=f3e576] [cursor=pointer]:
+                - /url: /kvm-vps-hosting
+            - listitem [ref=f3e577]:
+              - link "WordPress hosting" [ref=f3e578] [cursor=pointer]:
+                - /url: /managed-wordpress-hosting
+            - listitem [ref=f3e579]:
+              - link "Dedicated servers" [ref=f3e580] [cursor=pointer]:
+                - /url: /dedicated-servers
+        - navigation "Company links" [ref=f3e581]:
+          - heading "Company" [level=2] [ref=f3e582]
+          - list [ref=f3e583]:
+            - listitem [ref=f3e584]:
+              - link "About" [ref=f3e585] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f3e586]:
+              - link "Partners" [ref=f3e587] [cursor=pointer]:
+                - /url: /partners
+            - listitem [ref=f3e588]:
+              - link "Affiliate" [ref=f3e589] [cursor=pointer]:
+                - /url: /affiliate
+            - listitem [ref=f3e590]:
+              - link "Testimonials" [ref=f3e591] [cursor=pointer]:
+                - /url: /testimonials
+        - navigation "Legal links" [ref=f3e592]:
+          - heading "Legal" [level=2] [ref=f3e593]
+          - list [ref=f3e594]:
+            - listitem [ref=f3e595]:
+              - link "Terms" [ref=f3e596] [cursor=pointer]:
+                - /url: /terms-of-service
+            - listitem [ref=f3e597]:
+              - link "Privacy" [ref=f3e598] [cursor=pointer]:
+                - /url: /privacy-policy
+            - listitem [ref=f3e599]:
+              - link "Cookies" [ref=f3e600] [cursor=pointer]:
+                - /url: /cookie-policy
+        - navigation "Support links" [ref=f3e601]:
+          - heading "Support" [level=2] [ref=f3e602]
+          - list [ref=f3e603]:
+            - listitem [ref=f3e604]:
+              - link "Knowledge base" [ref=f3e605] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/knowledgebase
+            - listitem [ref=f3e606]:
+              - link "Open a ticket" [ref=f3e607] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/submitticket.php
+            - listitem [ref=f3e608]:
+              - link "Client login" [ref=f3e609] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/login
+            - listitem [ref=f3e610]:
+              - link "Blog" [ref=f3e611] [cursor=pointer]:
+                - /url: https://blog.royalclouds.net
+    - generic [ref=f3e612]:
+      - paragraph [ref=f3e613]: © 2014–2026 Royal Clouds. All rights reserved.
+      - paragraph [ref=f3e614]: Pricing shown is introductory. Renewal rates are listed on every plan.

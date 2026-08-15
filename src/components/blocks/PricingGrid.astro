@@ -1,0 +1,411 @@
+---
+import type {
+  CurrencyCode,
+  HostingPlan,
+  PlanTerm,
+  PriceValue,
+  PricingGridBlock
+} from "../../types/content";
+
+interface Props { block: PricingGridBlock }
+
+const { block } = Astro.props;
+const CURRENCIES: CurrencyCode[] = ["INR", "USD"];
+const PERIOD_LABEL: Record<HostingPlan["billingPeriod"], string> = { month: "/mo", year: "/yr" };
+
+const findPrice = (prices: PriceValue[], currency: CurrencyCode) =>
+  prices.find((price) => price.currency === currency);
+
+/* The amount without its period suffix — the suffix is rendered separately so it
+   can be styled down, and appending it here would double the "/mo" the data carries. */
+const formatAmount = (price: PriceValue | undefined, override?: number) => {
+  if (!price) return null;
+  const value = override ?? price.amount;
+  if (value === null || value === undefined) return null;
+  const locale = price.currency === "INR" ? "en-IN" : "en-US";
+  const digits = new Intl.NumberFormat(locale, { maximumFractionDigits: 2 }).format(value);
+  return `${price.prefix ?? ""}${digits}`;
+};
+
+const periodOf = (price: PriceValue | undefined, plan: HostingPlan) =>
+  price?.suffix ?? PERIOD_LABEL[plan.billingPeriod];
+
+/* Discount and savings are derived from the data, never authored. A plan with no
+   renewal delta shows no chip, so the claim cannot drift from the price. */
+const deriveView = (
+  intro: PriceValue | undefined,
+  renewal: PriceValue | undefined,
+  period: string
+) => {
+  const introAmount = intro?.amount ?? null;
+  const renewalAmount = renewal?.amount ?? null;
+  const hasDelta =
+    introAmount !== null && renewalAmount !== null && renewalAmount > introAmount && renewalAmount > 0;
+
+  return {
+    price: formatAmount(intro) ?? "Pending",
+    period: intro?.amount === null ? "" : period,
+    anchor: hasDelta ? formatAmount(renewal) : null,
+    discount: hasDelta ? Math.round((1 - introAmount / renewalAmount) * 100) : null,
+    savings: hasDelta ? formatAmount(renewal, renewalAmount - introAmount) : null
+  };
+};
+
+const planView = (plan: HostingPlan, currency: CurrencyCode) => {
+  const intro = findPrice(plan.introductory, currency);
+  const renewal = findPrice(plan.renewal, currency);
+  return {
+    ...deriveView(intro, renewal, periodOf(intro, plan)),
+    renewalNote:
+      (renewal?.amount ?? null) === null
+        ? "Renewal price confirmed at checkout"
+        : `Renews at ${formatAmount(renewal)}${periodOf(renewal, plan)}`
+  };
+};
+
+/* Honest Ledger (DESIGN.md 10.5): term, up-front total and renewal in one line,
+   all three read off the term itself. When billing cannot state a figure the line
+   says so rather than inventing one (DESIGN.md 11). */
+const termView = (term: PlanTerm, currency: CurrencyCode) => {
+  const monthly = findPrice(term.monthly, currency);
+  const renewal = findPrice(term.renewal, currency);
+  const total = findPrice(term.billedTotal, currency);
+  const renewalText = formatAmount(renewal);
+  const totalText = formatAmount(total);
+
+  const billed =
+    term.months === 1
+      ? "Billed monthly"
+      : totalText
+        ? `Billed ${totalText} for ${term.months} months`
+        : `Billed for ${term.months} months · total confirmed at checkout`;
+  const renews = renewalText
+    ? `Renews ${renewalText}${renewal?.suffix ?? "/mo"}`
+    : "Renewal price confirmed at checkout";
+
+  return {
+    ...deriveView(monthly, renewal, monthly?.suffix ?? "/mo"),
+    ledger: `${billed} · ${renews}`
+  };
+};
+
+/* The switch offers exactly the terms the deck can actually sell. Default is the
+   longest offered term — the ledger line under every price states what that costs
+   up front, so the default cannot mislead. */
+const termMonths = [
+  ...new Set(block.plans.flatMap((plan) => plan.terms?.map((term) => term.months) ?? []))
+].sort((a, b) => a - b);
+const defaultTerm = termMonths.at(-1);
+const hasTerms = defaultTerm !== undefined;
+---
+
+<section class="section section-tint" id="plans" aria-labelledby="pricing-title">
+  <div class="shell">
+    <header class="section-header" data-reveal>
+      {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+      <h2 id="pricing-title">{block.title}</h2>
+      {block.summary && <p class="lede">{block.summary}</p>}
+    </header>
+
+    <div class="deck-wrap" data-plan-deck data-term={hasTerms ? String(defaultTerm) : undefined}>
+      {hasTerms && (
+        <div class="term-switch" data-reveal>
+          <div class="segment" role="group" aria-label="Billing term">
+            {termMonths.map((months) => (
+              <button
+                type="button"
+                data-term-option={String(months)}
+                aria-pressed={months === defaultTerm ? "true" : "false"}
+              >
+                {months === 1 ? "1 month" : `${months} months`}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="plan-deck" data-reveal>
+        {block.plans.map((plan) => (
+          <article class={`plan${plan.featured ? " section-royal" : ""}`} data-featured={plan.featured ? "true" : undefined}>
+            {/* The ribbon states only what the content layer supplies. A popularity
+                claim ("most deployed") needs deployment data we do not have (DESIGN.md 11),
+                so `featured` buys the cobalt plane and nothing more. */}
+            {plan.badge && <p class="ribbon">{plan.badge}</p>}
+
+            <h3>{plan.name}</h3>
+            <p class="audience">{plan.audience}</p>
+
+            {hasTerms && plan.terms?.length
+              ? termMonths.map((months) => {
+                  const term = plan.terms?.find((candidate) => candidate.months === months);
+                  return CURRENCIES.map((currency) => {
+                    const view = term ? termView(term, currency) : null;
+                    return (
+                      <div
+                        class="price-block"
+                        data-price-term={String(months)}
+                        data-price-currency={currency}
+                        data-active={months === defaultTerm ? "" : undefined}
+                      >
+                        {view ? (
+                          <Fragment>
+                            <div class="price-meta">
+                              {view.discount !== null && <span class="chip chip-discount">−{view.discount}%</span>}
+                              {view.anchor && (
+                                <s class="anchor tabular">
+                                  <span class="visually-hidden">Regular price </span>{view.anchor}
+                                </s>
+                              )}
+                            </div>
+
+                            <p class="amount tabular">
+                              {view.price}
+                              {view.period && <span class="per">{view.period}</span>}
+                            </p>
+
+                            {view.savings && <span class="chip chip-save">Save {view.savings}</span>}
+                            <p class="ledger-line">{view.ledger}</p>
+                          </Fragment>
+                        ) : (
+                          <p class="ledger-line">Not offered on a {months}-month term.</p>
+                        )}
+                      </div>
+                    );
+                  });
+                })
+              : CURRENCIES.map((currency) => {
+                  const view = planView(plan, currency);
+                  return (
+                    <div class="price-block" data-price-currency={currency}>
+                      <div class="price-meta">
+                        {view.discount !== null && <span class="chip chip-discount">−{view.discount}%</span>}
+                        {view.anchor && (
+                          <s class="anchor tabular">
+                            <span class="visually-hidden">Regular price </span>{view.anchor}
+                          </s>
+                        )}
+                      </div>
+
+                      <p class="amount tabular">
+                        {view.price}
+                        {view.period && <span class="per">{view.period}</span>}
+                      </p>
+
+                      {view.savings && <span class="chip chip-save">Save {view.savings}</span>}
+                    </div>
+                  );
+                })}
+
+            <a
+              class={`button button-block ${plan.featured ? "button-primary" : "button-ghost"}`}
+              href={plan.checkoutUrl}
+            >
+              Choose {plan.name}
+            </a>
+
+            {!hasTerms || !plan.terms?.length
+              ? CURRENCIES.map((currency) => (
+                  <p class="renewal fine" data-price-currency={currency}>{planView(plan, currency).renewalNote}</p>
+                ))
+              : null}
+
+            {plan.telemetry?.length ? (
+              <div class="telemetry plan-telemetry">
+                {plan.telemetry.map((row) => (
+                  <div class="telemetry-row">
+                    <span class="telemetry-label">{row.label}</span>
+                    <span class="telemetry-value">{row.value}</span>
+                    <span class="telemetry-track">
+                      <span
+                        class="telemetry-fill"
+                        style={`--fill:${Math.min(Math.max(row.fill, 0), 1)}`}
+                      />
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
+            <ul class="features">
+              {plan.features.map((feature) => (
+                <li>
+                  <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false">
+                    <path d="M3 8.5l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            {plan.approvalState === "needs-review" && <p class="approval-note">Pricing pending approval</p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Term switching is display-only: every term's price and ledger line is already
+     in the DOM, so no math happens in the browser and no-JS shows the default term. */
+  document.querySelectorAll<HTMLElement>("[data-plan-deck]").forEach((deck) => {
+    const options = deck.querySelectorAll<HTMLButtonElement>("[data-term-option]");
+    if (!options.length) return;
+
+    const applyTerm = (term: string) => {
+      deck.dataset.term = term;
+      options.forEach((option) => {
+        option.setAttribute("aria-pressed", String(option.dataset.termOption === term));
+      });
+      deck.querySelectorAll<HTMLElement>("[data-price-term]").forEach((block) => {
+        block.toggleAttribute("data-active", block.dataset.priceTerm === term);
+      });
+    };
+
+    options.forEach((option) => {
+      option.addEventListener("click", () => {
+        const requested = option.dataset.termOption;
+        if (requested) applyTerm(requested);
+      });
+    });
+  });
+</script>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .term-switch {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 1.75rem;
+  }
+  .term-switch .segment button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .plan-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    align-items: start;
+    gap: 1.25rem;
+  }
+
+  .plan {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-inner);
+    transition: transform 200ms var(--ease), box-shadow 200ms var(--ease);
+  }
+  /* The featured plane must keep .section-royal's cobalt background: a scoped
+     .plan rule out-specifies the section class, so only unfeatured planes paint. */
+  .plan:not([data-featured]) { background: var(--surface-card); }
+  .plan:hover { transform: translateY(-2px); box-shadow: var(--sh-2); }
+
+  /* Featured plane is a cobalt field (10.5): it carries .section-royal, so every
+     token below it re-points and the same markup reads correctly on the dark plane. */
+  .plan[data-featured] {
+    box-shadow: var(--sh-3);
+    transform: scale(1.04);
+  }
+  .plan[data-featured]:hover { transform: scale(1.04) translateY(-2px); }
+
+  .ribbon {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    max-width: none;
+    margin: 0;
+    padding: 0.3rem 0.875rem;
+    border-radius: 999px;
+    color: var(--night);
+    background: var(--ice);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+  }
+
+  h3 { margin: 0 0 0.25rem; color: var(--heading); }
+  .audience { margin: 0 0 1.25rem; color: var(--muted); font-size: 0.875rem; }
+
+  .price-block { margin-bottom: 1.25rem; }
+  /* Only the selected term is shown. The currency rule in global.css is !important,
+     so currency and term compose instead of fighting. */
+  [data-price-term] { display: none; }
+  [data-price-term][data-active] { display: block; }
+
+  .price-meta { display: flex; align-items: center; gap: 0.5rem; min-height: 1.5rem; }
+  .anchor { color: var(--muted); font-size: 0.9375rem; font-weight: 600; }
+
+  .amount {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin: 0.25rem 0 0.5rem;
+    color: var(--heading);
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .per { color: var(--muted); font-size: 1rem; font-weight: 700; }
+
+  .renewal { margin: 0.625rem 0 0; text-align: center; }
+
+  .plan-telemetry {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .features {
+    display: grid;
+    gap: 0.625rem;
+    margin: 1.5rem 0 0;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid var(--line);
+    list-style: none;
+  }
+  .features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--body);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .features svg { flex-shrink: 0; margin-top: 0.3rem; color: var(--interactive); }
+
+  .approval-note { align-self: flex-start; margin-top: 1rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .plan, .plan:hover, .plan[data-featured]:hover { transition: none; }
+    .plan:hover { transform: none; }
+    .plan[data-featured]:hover { transform: scale(1.04); }
+  }
+
+  @media (max-width: 900px) {
+    .plan[data-featured],
+    .plan[data-featured]:hover { transform: none; }
+  }
+
+  @media (max-width: 760px) {
+    .plan-deck { grid-template-columns: 1fr; }
+    .plan[data-featured] { order: -1; }
+    .ribbon { left: 1.75rem; transform: translate(0, -50%); }
+    .term-switch { justify-content: stretch; }
+    .term-switch .segment { flex-wrap: wrap; justify-content: center; width: 100%; }
+  }
+</style>

@@ -1,0 +1,188 @@
+---
+import type { LiveAnswerBlock } from "../../types/content";
+
+interface Props { block: LiveAnswerBlock }
+const { block } = Astro.props;
+
+type Turn = LiveAnswerBlock["transcript"][number];
+
+/* DESIGN.md 11 — no transcript, no component. Never a placeholder conversation. */
+const turns: Turn[] = (block.transcript ?? []).slice(0, 3);
+
+const speakerName = (turn: Turn) =>
+  turn.name ?? (turn.role === "agent" ? "Support" : "Customer");
+
+/* Avatar is an initial, never a stock photo (10.8). */
+const initial = (name: string) => (name.trim()[0] ?? "?").toUpperCase();
+
+/* The agent who heads the thread — the response-time chip belongs to them. */
+const firstAgent = turns.find((turn) => turn.role === "agent");
+const agentName = firstAgent ? speakerName(firstAgent) : "Support";
+---
+
+{turns.length > 0 && (
+  <section class="section section-tint" aria-labelledby="live-answer-title">
+    <div class="shell live-shell">
+      <header class="section-header" data-reveal>
+        {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+        <h2 id="live-answer-title">{block.title}</h2>
+        {block.summary && <p class="lede">{block.summary}</p>}
+      </header>
+
+      <div class="bezel frame" data-reveal>
+        <div class="frame-inner">
+          <div class="thread-bar">
+            <span class="avatar" aria-hidden="true">{initial(agentName)}</span>
+            <span class="thread-who">{agentName}</span>
+            {block.responseTime && (
+              <span class="chip chip-latency mono">
+                <span class="status-dot"></span>
+                <span>Response {block.responseTime}</span>
+              </span>
+            )}
+          </div>
+
+          <ol class="thread">
+            {turns.map((turn) => (
+              <li class:list={["turn", `turn--${turn.role}`]}>
+                <p class="who">
+                  {turn.role === "agent" && (
+                    <span class="avatar avatar-sm" aria-hidden="true">
+                      {initial(speakerName(turn))}
+                    </span>
+                  )}
+                  <span>{speakerName(turn)}</span>
+                </p>
+                <p class="said">{turn.text}</p>
+              </li>
+            ))}
+          </ol>
+
+          {block.resolution && (
+            <p class="resolved">
+              <span class="chip chip-resolved">
+                <span class="status-dot"></span>
+                <span>{block.resolution}</span>
+              </span>
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .live-shell { max-width: 48rem; }
+
+  /* Double bezel: .bezel is the outer shell, .frame-inner the seated pane. */
+  .frame-inner {
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-inner);
+    background: var(--surface-card);
+  }
+
+  .thread-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .thread-who {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--heading);
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--cobalt);
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .avatar-sm {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.7rem;
+  }
+
+  /* Pulse dot lives only inside these telemetry chips, at <=16px (4.1). */
+  .chip-latency {
+    margin-left: auto;
+    color: var(--body);
+    border: 1px solid var(--line);
+    background: transparent;
+    font-size: 0.75rem;
+  }
+
+  .thread {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 1.25rem 0 0;
+  }
+
+  .turn {
+    max-width: 42ch;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-inner);
+  }
+  /* Customer speaks from the outside in; the agent answers from the house side. */
+  .turn--customer {
+    justify-self: end;
+    border-bottom-right-radius: var(--r-input);
+    background: color-mix(in srgb, var(--line) 22%, transparent);
+  }
+  .turn--agent {
+    justify-self: start;
+    border-bottom-left-radius: var(--r-input);
+    border-color: color-mix(in srgb, var(--cobalt) 28%, transparent);
+    background: color-mix(in srgb, var(--cobalt) 6%, transparent);
+  }
+
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.35rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .said {
+    margin: 0;
+    color: var(--body);
+  }
+
+  .resolved {
+    margin: 1.25rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .chip-resolved {
+    color: var(--heading);
+    border: 1px solid var(--line);
+    background: transparent;
+  }
+
+  @media (max-width: 34rem) {
+    .frame-inner { padding: 1rem; }
+    .turn { max-width: none; }
+    .chip-latency { margin-left: 0; }
+  }
+</style>

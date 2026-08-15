@@ -1,0 +1,28 @@
+---
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import DomainSearch from "@/components/DomainSearch.astro";
+import type { SitePage } from "@/types/content";
+
+interface Props {
+  page: SitePage;
+  preview?: boolean;
+}
+
+const { page, preview = false } = Astro.props;
+---
+
+<Breadcrumbs items={page.breadcrumbs} />
+<main id="main-content">
+  {preview && <p class="preview-banner" role="status">Storyblok draft preview · caching disabled</p>}
+  {page.blocks.map((block, index) => (
+    <>
+      <BlockRenderer block={block} preview={preview} />
+      {page.route === "/" && index === 0 && <DomainSearch />}
+    </>
+  ))}
+</main>
+
+<style>
+  .preview-banner { position: sticky; z-index: 40; top: 4.5rem; margin: 0; padding: 0.65rem 1rem; max-width: none; color: var(--paper); background: var(--cobalt); font-size: 0.75rem; font-weight: 800; text-align: center; }
+</style>

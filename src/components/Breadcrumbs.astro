@@ -1,0 +1,37 @@
+---
+interface Props {
+  items: Array<{ label: string; href: string }>;
+}
+
+const { items } = Astro.props;
+---
+
+{items.length > 0 && (
+  <nav class="breadcrumbs shell" aria-label="Breadcrumb">
+    <ol>
+      {items.map((item, index) => (
+        <li>
+          {index === items.length - 1 ? <span aria-current="page">{item.label}</span> : <a href={item.href}>{item.label}</a>}
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+<style>
+  .breadcrumbs { padding-top: 1.5rem; }
+  ol { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+  li { color: var(--muted); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  li + li::before { margin-right: 0.5rem; color: color-mix(in srgb, currentcolor 55%, transparent); content: "/"; }
+  /* WCAG 2.2 (2.5.8): the link box itself must clear 24px, not just its text. */
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  a:hover { color: var(--heading); text-decoration: underline; }
+  /* Wayfinding text is not a conversion action — signal orange stays on buttons. */
+  span[aria-current="page"] { color: var(--heading); }
+</style>

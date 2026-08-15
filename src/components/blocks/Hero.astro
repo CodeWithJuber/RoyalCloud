@@ -1,0 +1,105 @@
+---
+import RoyalCloudscape from "@/components/visuals/RoyalCloudscape.astro";
+import type { HeroBlock } from "../../types/content";
+
+interface Props { block: HeroBlock }
+
+const { block } = Astro.props;
+const isExternal = (href: string, flag?: boolean) => flag ?? href.startsWith("http");
+const primaryExternal = isExternal(block.primaryAction.href, block.primaryAction.external);
+const secondaryExternal = block.secondaryAction
+  ? isExternal(block.secondaryAction.href, block.secondaryAction.external)
+  : false;
+---
+
+<section class="section-dark hero" aria-labelledby="hero-title">
+  <div class="shell hero__grid">
+    <div class="hero__copy" data-reveal>
+      {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+      <h1 id="hero-title">{block.title}</h1>
+      <p class="lede">{block.summary}</p>
+
+      <div class="button-row">
+        <a
+          class="button button-primary"
+          href={block.primaryAction.href}
+          target={primaryExternal ? "_blank" : undefined}
+          rel={primaryExternal ? "noopener noreferrer" : undefined}
+        >{block.primaryAction.label}</a>
+
+        {block.secondaryAction && (
+          <a
+            class="button button-ghost"
+            href={block.secondaryAction.href}
+            target={secondaryExternal ? "_blank" : undefined}
+            rel={secondaryExternal ? "noopener noreferrer" : undefined}
+          >{block.secondaryAction.label}</a>
+        )}
+      </div>
+
+      {block.proof && block.proof.length > 0 && (
+        <ul class="proof">
+          {block.proof.map((item) => (
+            <li>
+              <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false">
+                <path d="M3 8.5l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <div class="hero__visual" aria-hidden="true" data-reveal>
+      <RoyalCloudscape label={block.eyebrow} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3.5rem, 7vw, 6rem) clamp(3rem, 6vw, 5rem);
+  }
+
+  /* Editorial offset: copy upper-left, the system spans lower-right and bleeds. */
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .hero__copy { min-width: 0; }
+  h1 { margin: 0 0 1.25rem; }
+  .lede { margin: 0; }
+  .button-row { margin-top: 2rem; }
+
+  .hero__visual { min-width: 0; align-self: end; }
+  .hero__visual > :global(*) { width: 100%; height: auto; }
+
+  .proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .proof li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--chrome);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .proof svg { flex-shrink: 0; color: var(--interactive); }
+
+  @media (max-width: 900px) {
+    .hero__grid { grid-template-columns: 1fr; }
+    .hero__visual { margin-inline: -1rem; }
+  }
+</style>

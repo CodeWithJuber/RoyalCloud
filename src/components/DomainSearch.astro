@@ -1,0 +1,149 @@
+---
+const tlds = [
+  { name: ".com", note: "most popular" },
+  { name: ".in", note: "India" },
+  { name: ".net", note: "technical" },
+  { name: ".org", note: "non-profit" },
+  { name: ".dev", note: "developers" }
+];
+---
+
+<section class="section section-dark domain-search" aria-labelledby="domain-search-title" data-reveal>
+  <div class="shell domain-shell">
+    <header>
+      <p class="eyebrow">Domain router</p>
+      <h2 id="domain-search-title">Name your next system.</h2>
+      <p class="lede">Search once, then continue securely in your Royal Clouds client area.</p>
+    </header>
+
+    <div class="bezel">
+      <div class="console">
+        <div class="console-bar" aria-hidden="true">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span>DOMAIN REGISTRATION</span>
+        </div>
+
+        <form method="post" action="https://my.royalclouds.net/cart.php?a=add&amp;domain=register">
+          <label for="domain-query">Domain name</label>
+          <div class="field-row">
+            <input
+              id="domain-query"
+              name="query"
+              type="text"
+              inputmode="url"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="your-next-idea.com"
+              aria-describedby="domain-search-help"
+              required
+            />
+            <button class="button button-primary" type="submit">Search domains</button>
+          </div>
+
+          <div class="console-foot">
+            <p id="domain-search-help" class="fine">Enter a complete name including its extension.</p>
+            <ul aria-label="Popular domain extensions">
+              {tlds.map((tld) => (
+                <li><span class="tld-name">{tld.name}</span> <span class="tld-note">{tld.note}</span></li>
+              ))}
+            </ul>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .domain-shell {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.6fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+  }
+  header { min-width: 0; }
+  h2 { margin: 0 0 1rem; }
+  header .lede { margin: 0; }
+
+  .console { overflow: hidden; background: var(--midnight); }
+
+  .console-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--line-dark);
+    color: var(--smoke);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+  .dots { display: flex; gap: 0.35rem; }
+  .dots i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--line-dark); }
+
+  form { min-width: 0; padding: clamp(1.25rem, 3vw, 2rem); }
+  label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--chrome);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .field-row { display: flex; min-width: 0; gap: 0.75rem; }
+
+  input {
+    min-width: 0;
+    flex: 1;
+    min-height: 4rem;
+    padding: 0.75rem 1.15rem;
+    border: 1px solid var(--line-dark);
+    border-radius: var(--r-input);
+    color: var(--ice);
+    background: var(--night);
+    font-size: 1.125rem;
+    font-weight: 560;
+  }
+  input::placeholder { color: var(--smoke); opacity: 1; }
+  /* DESIGN.md 14: a visible 2px ring everywhere — this is the hero's primary input. */
+  input:focus-visible {
+    border-color: var(--interactive);
+    outline: 2px solid var(--interactive);
+    outline-offset: 2px;
+  }
+
+  .field-row .button { flex-shrink: 0; min-height: 4rem; }
+
+  .console-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin-top: 1rem;
+  }
+  .console-foot p { margin: 0; }
+  .console-foot ul { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+  .console-foot li {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--line-dark);
+    border-radius: var(--r-pill);
+  }
+  .tld-name { color: var(--chrome); font-size: 0.75rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .tld-note { color: var(--smoke); font-size: 0.6875rem; }
+
+  @media (max-width: 900px) {
+    .domain-shell { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 620px) {
+    .field-row { flex-direction: column; }
+    .field-row .button { width: 100%; justify-content: space-between; }
+  }
+</style>

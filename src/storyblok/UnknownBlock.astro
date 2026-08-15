@@ -1,0 +1,18 @@
+---
+interface Props {
+  blok?: { component?: string };
+}
+
+const { blok } = Astro.props;
+const isPreview = Astro.url.searchParams.has("preview");
+---
+
+{isPreview && (
+  <aside class="unknown-block" role="status">
+    Unknown Storyblok component: <code>{blok?.component ?? "unnamed"}</code>
+  </aside>
+)}
+
+<style>
+  .unknown-block { margin: 1rem; padding: 1rem; border: 1px dashed #ff866b; color: #ff866b; background: #0e1330; }
+</style>

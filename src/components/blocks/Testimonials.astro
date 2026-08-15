@@ -1,0 +1,60 @@
+---
+import type { TestimonialBlock } from "../../types/content";
+
+interface Props { block: TestimonialBlock }
+const { block } = Astro.props;
+const approved = block.testimonials.filter((testimonial) => testimonial.approvalState === "approved");
+---
+
+<section class="section section-light" aria-labelledby="testimonials-title">
+  <div class="shell">
+    <header class="section-header" data-reveal>
+      {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+      <h2 id="testimonials-title">{block.title}</h2>
+    </header>
+
+    {approved.length > 0 ? (
+      <div class="quotes">
+        {approved.map((testimonial) => (
+          <figure class="card" data-reveal>
+            <blockquote><p>“{testimonial.quote}”</p></blockquote>
+            <figcaption>
+              <strong>{testimonial.name}</strong>
+              <span>{testimonial.context}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <p class="empty" role="status">
+        Verified customer stories appear here once they are approved. We don't publish reviews we can't attribute.
+      </p>
+    )}
+  </div>
+</section>
+
+<style>
+  .quotes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  figure { display: flex; flex-direction: column; margin: 0; }
+  blockquote { flex: 1; margin: 0 0 1.25rem; }
+  blockquote p { margin: 0; color: var(--midnight); font-size: 1.0625rem; font-weight: 600; line-height: 1.6; }
+
+  figcaption { display: flex; flex-direction: column; gap: 0.1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+  strong { color: var(--midnight); font-size: 0.9375rem; font-weight: 800; }
+  figcaption span { color: var(--muted); font-size: 0.8125rem; }
+
+  .empty {
+    max-width: 40rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+    border: 1px dashed var(--line);
+    border-radius: var(--r-inner);
+    color: var(--muted);
+    text-align: center;
+  }
+</style>

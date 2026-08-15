@@ -1,0 +1,162 @@
+---
+import type { UptimeStripBlock } from "../../types/content";
+
+interface Props { block: UptimeStripBlock }
+const { block } = Astro.props;
+
+/* No days means no status history to show. Per DESIGN.md §11 the block renders
+   nothing rather than an invented streak of green. */
+const days = block.days ?? [];
+
+const LABEL: Record<UptimeStripBlock["days"][number]["state"], string> = {
+  ok: "Operational",
+  warn: "Degraded",
+  down: "Outage",
+};
+
+/* Dates come in as ISO strings; an unparseable one is shown verbatim rather
+   than guessed at. */
+function readableDate(iso: string): string {
+  const parsed = new Date(iso);
+  return Number.isNaN(parsed.valueOf())
+    ? iso
+    : parsed.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+---
+
+{days.length > 0 && (
+  <section class="section section-light" aria-labelledby="uptime-strip-title">
+    <div class="shell uptime" data-reveal>
+      <h2 id="uptime-strip-title">{block.title}</h2>
+
+      <ol class="days" aria-label={`Daily service status, last ${days.length} days, oldest first`}>
+        {days.map((day) => (
+          <li>
+            <button
+              type="button"
+              class="day"
+              data-state={day.state}
+              aria-label={`${readableDate(day.date)} — ${LABEL[day.state]}`}
+            >
+              <span class="tick" aria-hidden="true"></span>
+              <span class="tip" aria-hidden="true">
+                <span class="tip-date">{readableDate(day.date)}</span>
+                <span class="tip-state">{LABEL[day.state]}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ol>
+
+      <p class="uptime-foot fine">
+        <span class="tabular">{block.summary}</span>
+        <a href={block.href}>Status page</a>
+      </p>
+    </div>
+  </section>
+)}
+
+<style>
+  .uptime { display: grid; gap: 0.75rem; }
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--heading);
+  }
+
+  /* An overflow-x box also clips on y, so the tooltip has to live inside the
+     top padding — that is what the 2.75rem is buying. */
+  .days {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 2.75rem 0 0.25rem;
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .day {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* WCAG 2.2 SC 2.5.8: 24px pitch with no gap, so the targets never overlap.
+       The visible tick stays 5x28px and centred inside it. */
+    width: 24px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    background: none;
+    cursor: pointer;
+  }
+
+  .tick {
+    width: 5px;
+    height: 28px;
+    border-radius: 2px;
+    background: var(--pulse-ok);
+    transition: transform 160ms ease, opacity 160ms ease;
+  }
+  .day[data-state="warn"] .tick { background: var(--pulse-warn); }
+  .day[data-state="down"] .tick { background: var(--pulse-down); }
+
+  .day:hover .tick,
+  .day:focus-visible .tick { transform: scaleY(1.15); opacity: 0.85; }
+
+  .day:focus-visible { outline: 2px solid var(--interactive); outline-offset: 2px; }
+
+  .tip {
+    position: absolute;
+    bottom: calc(100% - 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    flex-direction: column;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-inner);
+    background: var(--surface-card);
+    box-shadow: var(--sh-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.35;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .day:hover .tip,
+  .day:focus-visible .tip { display: flex; }
+
+  /* Keep the tip inside the strip at either end. */
+  li:first-child .tip { left: 0; transform: none; }
+  li:last-child .tip { left: auto; right: 0; transform: none; }
+
+  .tip-date { color: var(--heading); font-weight: 700; }
+  .tip-state { color: var(--muted); }
+
+  .uptime-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin: 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line);
+  }
+  .uptime-foot a {
+    color: var(--interactive);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tick { transition: none; }
+    .day:hover .tick,
+    .day:focus-visible .tick { transform: none; }
+  }
+</style>

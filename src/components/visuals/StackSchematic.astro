@@ -1,0 +1,258 @@
+---
+interface Props {
+  variant?: "shared" | "vps" | "wordpress" | "dedicated" | "core";
+}
+
+type Variant = NonNullable<Props["variant"]>;
+
+const variants: Record<Variant, { title: string; description: string; code: string; layers: readonly string[] }> = {
+  shared: {
+    title: "Shared hosting stack schematic",
+    description: "An exploded hosting stack with protected traffic, isolated shared runtime, NVMe storage, and managed support layers.",
+    code: "SHR / 04",
+    layers: ["EDGE CACHE", "ISOLATED POOLS", "NVME FABRIC", "ACTIVE DEFENCE", "HUMAN SUPPORT"],
+  },
+  vps: {
+    title: "Virtual private server stack schematic",
+    description: "An exploded VPS stack with routed traffic, reserved compute, NVMe storage, network protection, and engineering support.",
+    code: "VPS / 08",
+    layers: ["GLOBAL EDGE", "RESERVED COMPUTE", "NVME FABRIC", "L3 / L4 SHIELD", "ENGINEER SUPPORT"],
+  },
+  wordpress: {
+    title: "Managed WordPress stack schematic",
+    description: "An exploded WordPress stack with edge delivery, managed runtime, content storage, application protection, and expert support.",
+    code: "WP / 03",
+    layers: ["PAGE EDGE", "MANAGED RUNTIME", "CONTENT STORE", "WAF + MALWARE", "WORDPRESS EXPERTS"],
+  },
+  dedicated: {
+    title: "Dedicated server stack schematic",
+    description: "An exploded dedicated server stack with routed edge traffic, bare-metal compute, direct storage, network defence, and hardware support.",
+    code: "DED / 01",
+    layers: ["ROUTED EDGE", "BARE METAL", "DIRECT NVME", "NETWORK SHIELD", "HARDWARE SUPPORT"],
+  },
+  core: {
+    title: "Royal Clouds core systems schematic",
+    description: "An exploded core infrastructure stack connecting edge, runtime, storage, protection, and support systems.",
+    code: "CORE / RC",
+    layers: ["EDGE CONTROL", "COMPUTE PLANE", "STORAGE FABRIC", "THREAT CONTROL", "ROYAL SUPPORT"],
+  },
+};
+
+const requestedVariant = Astro.props.variant ?? "core";
+const variant: Variant = requestedVariant in variants ? requestedVariant : "core";
+const content = variants[variant];
+const instanceId = `stack-${variant}-${Math.random().toString(36).slice(2, 10)}`;
+const titleId = `${instanceId}-title`;
+const descriptionId = `${instanceId}-description`;
+---
+
+<figure class:list={["stack-schematic", `stack-schematic--${variant}`]}>
+  <svg viewBox="0 0 760 640" role="img" aria-labelledby={`${titleId} ${descriptionId}`}>
+    <title id={titleId}>{content.title}</title>
+    <desc id={descriptionId}>{content.description}</desc>
+
+    <g class="frame" aria-hidden="true">
+      <path d="M72 80h120M72 80v80M688 80H568M688 80v80M72 560h120M72 560v-80M688 560H568M688 560v-80" />
+      <path class="axis" d="M380 70v500" />
+      <circle cx="380" cy="70" r="4" />
+      <circle cx="380" cy="570" r="4" />
+      <text x="72" y="62">ROYAL SYSTEMS / {content.code}</text>
+      <text x="516" y="588">EXPLODED CONTROL PLANE</text>
+    </g>
+
+    <g class="stack" aria-hidden="true">
+      <g class="layer layer--edge">
+        <path class="slab-top" d="m206 164 174-101 176 102-175 102Z" />
+        <path class="slab-left" d="m206 164 175 103v29L206 193Z" />
+        <path class="slab-right" d="m556 165-175 102v29l175-102Z" />
+        <path class="layer-trace" d="m265 165 115-67 117 68-116 67Z" />
+        <path class="layer-route" d="m296 164 84-48 86 49-85 49Z" />
+        <circle class="status-node" cx="380" cy="116" r="6" />
+      </g>
+
+      <g class="layer layer--runtime">
+        <path class="slab-top" d="m229 250 151-88 153 89-152 89Z" />
+        <path class="slab-left" d="m229 250 152 90v34l-152-90Z" />
+        <path class="slab-right" d="m533 251-152 89v34l152-89Z" />
+        <g class="compute-cells">
+          <path d="m300 247 35-20 36 21-35 20Z" />
+          <path d="m389 247 35-20 36 21-35 20Z" />
+          <path d="m345 276 35-20 36 21-35 20Z" />
+        </g>
+      </g>
+
+      <g class="layer layer--storage">
+        <path class="slab-top" d="m253 346 127-74 129 75-128 74Z" />
+        <path class="slab-left" d="m253 346 128 75v39l-128-75Z" />
+        <path class="slab-right" d="m509 347-128 74v39l128-74Z" />
+        <path class="storage-track" d="m300 346 80-46 82 47-81 47Z" />
+        <path class="storage-track" d="m323 347 57-33 59 34-58 33Z" />
+      </g>
+
+      <g class="layer layer--shield">
+        <path class="shield-outline" d="M290 426 381 374l92 53v72l-92 53-91-53Z" />
+        <path class="shield-core" d="m328 428 53-31 55 32v45l-55 31-53-31Z" />
+        <path class="shield-mark" d="m381 409 27 16v30l-27 28-27-28v-30Z" />
+      </g>
+
+      <g class="support-rail">
+        <path d="M214 516h332" />
+        <path d="M265 504v24M331 504v24M397 504v24M463 504v24" />
+        <circle cx="546" cy="516" r="7" />
+      </g>
+    </g>
+
+    <g class="labels" aria-hidden="true">
+      <g transform="translate(55 176)">
+        <path d="M0 0h136l36-21" />
+        <circle cx="0" cy="0" r="4" />
+        <text x="0" y="-13">01 / {content.layers[0]}</text>
+      </g>
+      <g transform="translate(532 276)">
+        <path d="M0 0h151" />
+        <circle cx="151" cy="0" r="4" />
+        <text x="28" y="-13">02 / {content.layers[1]}</text>
+      </g>
+      <g transform="translate(55 374)">
+        <path d="M0 0h164l34-19" />
+        <circle cx="0" cy="0" r="4" />
+        <text x="0" y="-13">03 / {content.layers[2]}</text>
+      </g>
+      <g transform="translate(473 452)">
+        <path d="M0 0h210" />
+        <circle cx="210" cy="0" r="4" />
+        <text x="34" y="-13">04 / {content.layers[3]}</text>
+      </g>
+      <g transform="translate(55 516)">
+        <path d="M0 0h159" />
+        <circle cx="0" cy="0" r="4" />
+        <text x="0" y="-13">05 / {content.layers[4]}</text>
+      </g>
+    </g>
+  </svg>
+</figure>
+
+<style>
+  .stack-schematic {
+    width: 100%;
+    margin: 0;
+    color: var(--viz-face-top);
+    container-type: inline-size;
+    overflow: clip;
+  }
+
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .frame path,
+  .labels path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    opacity: 0.42;
+  }
+
+  .frame .axis { stroke-dasharray: 3 10; opacity: 0.2; }
+  .frame circle,
+  .labels circle { fill: var(--viz-accent); }
+
+  .frame text,
+  .labels text {
+    fill: var(--viz-label);
+    font-family: var(--font-body, "Manrope Variable", sans-serif);
+    font-size: 10px;
+    font-weight: 720;
+    letter-spacing: 0.15em;
+  }
+
+  .labels text { fill: var(--viz-recess); }
+
+  .layer {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .slab-top { fill: var(--viz-face-top); stroke: var(--viz-line-soft); stroke-width: 1.1; }
+  .slab-left { fill: var(--viz-face-left); stroke: var(--viz-line-soft); stroke-width: 1; }
+  .slab-right { fill: var(--viz-face-right); stroke: var(--viz-line); stroke-width: 1; }
+  .layer--edge .slab-top { fill: var(--viz-face-right); }
+  .layer--storage .slab-top { fill: var(--viz-recess); }
+
+  .layer-trace,
+  .layer-route,
+  .storage-track {
+    fill: none;
+    stroke: var(--viz-face-top);
+    stroke-width: 1;
+    opacity: 0.65;
+  }
+
+  .layer-route { stroke: var(--viz-accent); opacity: 0.9; }
+
+  .status-node {
+    fill: var(--viz-accent);
+    stroke: rgba(255, 107, 61, 0.27);
+    stroke-width: 9;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .compute-cells path {
+    fill: var(--viz-recess);
+    stroke: var(--viz-line);
+    stroke-width: 1.2;
+  }
+
+  .storage-track:nth-child(5) { stroke: var(--viz-line-soft); }
+
+  .shield-outline {
+    fill: var(--viz-recess);
+    stroke: var(--viz-line-soft);
+    stroke-width: 1.3;
+  }
+
+  .shield-core { fill: var(--viz-face-right); stroke: var(--viz-line); stroke-width: 1; }
+  .shield-mark { fill: var(--viz-accent); }
+
+  .support-rail path {
+    fill: none;
+    stroke: var(--viz-face-top);
+    stroke-width: 1.2;
+    opacity: 0.75;
+  }
+
+  .support-rail circle {
+    fill: var(--viz-accent);
+    stroke: rgba(255, 107, 61, 0.25);
+    stroke-width: 9;
+  }
+
+  .stack-schematic--shared .compute-cells path { fill: var(--viz-recess); }
+  .stack-schematic--vps .layer--runtime .slab-top { fill: var(--viz-face-right); }
+  .stack-schematic--wordpress .layer--edge .slab-top { fill: var(--viz-face-right); }
+  .stack-schematic--dedicated .compute-cells path { fill: var(--viz-face-top); stroke: var(--viz-line-soft); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .layer--edge { animation: float-layer 5.2s ease-in-out infinite alternate; }
+    .layer--runtime { animation: float-layer 6.1s 0.4s ease-in-out infinite alternate-reverse; }
+    .layer--storage { animation: float-layer 7s 0.8s ease-in-out infinite alternate; }
+    .status-node { animation: node-pulse 2.6s ease-in-out infinite; }
+  }
+
+  @keyframes float-layer {
+    from { transform: translateY(0); }
+    to { transform: translateY(-7px); }
+  }
+
+  @keyframes node-pulse {
+    0%, 100% { opacity: 0.55; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  @container (max-width: 520px) {
+    svg { transform: scale(1.12); transform-origin: center; }
+    .frame text,
+    .frame .axis,
+    .labels g:nth-child(even) { display: none; }
+    .labels text { font-size: 11px; }
+  }
+</style>

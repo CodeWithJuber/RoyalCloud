@@ -1,0 +1,2095 @@
+{
+  "generatedAt": "2026-07-11T19:50:23.976Z",
+  "total": 218,
+  "successful": 187,
+  "failed": 31,
+  "assets": [
+    {
+      "url": "https://royalclouds.net/assets/img/royalclouds_w_logo.png?w=200",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 13390,
+      "contentType": "image/png",
+      "sha256": "78441fe14ac735fa97efec16a233c1a32c625ff29b800d020dc64d516f9f460e",
+      "localPath": "public/legacy-assets/assets/img/royalclouds_w_logo.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/025-cloud-server.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 3047,
+      "contentType": "image/svg+xml",
+      "sha256": "912e852f84e1c5a62c2101869ce607d3ea282f13552f9802d646be9902f234a4",
+      "localPath": "public/legacy-assets/assets/img/025-cloud-server.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/002-cloud.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 7611,
+      "contentType": "image/svg+xml",
+      "sha256": "9f6180b158adca2fa4f675fe5934269328c1a57c8c3ca9a94385958140aec039",
+      "localPath": "public/legacy-assets/assets/img/icons/002-cloud.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/wordpress.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 3973,
+      "contentType": "image/svg+xml",
+      "sha256": "87c84db263333e57ae9008fd01ef23aae9dae0e3a5724d4b7a9dfaa698cba49d",
+      "localPath": "public/legacy-assets/assets/img/wordpress.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/001-database.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2538,
+      "contentType": "image/svg+xml",
+      "sha256": "a905aa694db72bf75af4bf52c2a379ada124d55486e6ce4b9e7a0897291000c8",
+      "localPath": "public/legacy-assets/assets/img/001-database.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/gradient/bandwidth.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 3782,
+      "contentType": "image/svg+xml",
+      "sha256": "86ffd5dc4b0c0331bfd12d6df466d44201b9d20ff0ce7227f5952ea3105dbdf5",
+      "localPath": "public/legacy-assets/assets/img/icons/gradient/bandwidth.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/gradient/development.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 3147,
+      "contentType": "image/svg+xml",
+      "sha256": "0b192a7101b19df01ffefff37f270d06a2cb04726e5c7f7d951ac35c4efc2f8c",
+      "localPath": "public/legacy-assets/assets/img/icons/gradient/development.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/gradient/data-center.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2532,
+      "contentType": "image/svg+xml",
+      "sha256": "f2009de822c679dc62a433253cf0613acd8c85468773c5b6d86ca746bd90783e",
+      "localPath": "public/legacy-assets/assets/img/icons/gradient/data-center.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-one/banner-one-shape-one.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 9102,
+      "contentType": "image/png",
+      "sha256": "b6015182d64a6fb485e699714183fb12926107bdc520845dd01a9db895c6a656",
+      "localPath": "public/legacy-assets/assets/img/banner-one/banner-one-shape-one.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-one/banner-one-shape-two.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 9961,
+      "contentType": "image/png",
+      "sha256": "4cddd3cd8b681643e11ed00eb5371074ae6ea73c5c6bfbdd131887ef97d1dfa7",
+      "localPath": "public/legacy-assets/assets/img/banner-one/banner-one-shape-two.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/rcboy/cloud.png?1",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 29697,
+      "contentType": "image/png",
+      "sha256": "d928752befea8064a8b0d53c84aff0cfef7221b5d5be6e4c9171cebfc6576a33",
+      "localPath": "public/legacy-assets/assets/img/rcboy/cloud.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-one/banner-one-shape-five.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 4428,
+      "contentType": "image/png",
+      "sha256": "06b34cc3f9aca305b363f5cb861729a2bebd65b9ca2f9ee18378ab21052ab810",
+      "localPath": "public/legacy-assets/assets/img/banner-one/banner-one-shape-five.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-one/banner-one-shape-six.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 4518,
+      "contentType": "image/png",
+      "sha256": "e625e7b4a1c2096834c09de9a6911fbd5e525a79ff04b3f9dec9f1bb4b8d6c6d",
+      "localPath": "public/legacy-assets/assets/img/banner-one/banner-one-shape-six.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-one/banner-one-shape-seven.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 4673,
+      "contentType": "image/png",
+      "sha256": "04d82d8eba20b662e82b5049d12d1ae399527f24f98aa5c042021bbc2ed1b69f",
+      "localPath": "public/legacy-assets/assets/img/banner-one/banner-one-shape-seven.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-one/banner-one-shape-eight.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 3028,
+      "contentType": "image/png",
+      "sha256": "ce8f4de80ab3cfca532993f0b31b5ca77e431dc1edd6b1f43c30384ce6461e2a",
+      "localPath": "public/legacy-assets/assets/img/banner-one/banner-one-shape-eight.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-shape/banner-shape-one.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 146,
+      "contentType": "image/png",
+      "sha256": "ae762ec9471f1a19f092a2cfce64b3b13620dd27528b58d1018fbe49e3fb6880",
+      "localPath": "public/legacy-assets/assets/img/banner-shape/banner-shape-one.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-shape/banner-shape-two.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2694,
+      "contentType": "image/png",
+      "sha256": "d2836aae8fad78a8046ea3310522c9bb624e2eb5575e2a3472f45795790aa9e3",
+      "localPath": "public/legacy-assets/assets/img/banner-shape/banner-shape-two.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-shape/banner-shape-three.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1343,
+      "contentType": "image/png",
+      "sha256": "bcf802883b4eaecea834b17e39cf40c1b8e982479cc5e7e97844115b5f913d4c",
+      "localPath": "public/legacy-assets/assets/img/banner-shape/banner-shape-three.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/shape/technology-icon-bg.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1053,
+      "contentType": "image/png",
+      "sha256": "927ff827d9bcd415fc7898cad02d84e1675f42d63aa0b68efe7ed0edf434703f",
+      "localPath": "public/legacy-assets/assets/img/shape/technology-icon-bg.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/separator-rc.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2458,
+      "contentType": "image/svg+xml",
+      "sha256": "8b9d731058bea69a73b0ae97f28f5052af93b1b34a96e431506fbd9aa40fb91d",
+      "localPath": "public/legacy-assets/assets/img/separator-rc.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/company_4.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 264776,
+      "contentType": "image/svg+xml",
+      "sha256": "01374b8e43ac607eed52ce7e8bded0a6253cd7f56934699e1440d9fa72a28405",
+      "localPath": "public/legacy-assets/assets/img/company_4.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/rocket-bg.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 203625,
+      "contentType": "image/svg+xml",
+      "sha256": "5bc8fb073fff0f7dc4ba4b4e83affbac5a95acc43bbdf99da319ebf243eefa6b",
+      "localPath": "public/legacy-assets/assets/img/rocket-bg.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/digitalpresence_img-1.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 518400,
+      "contentType": "image/svg+xml",
+      "sha256": "88c8085dbdab92617cd4a6324a71276c9ef5e33eb76f9ac11b2f5e743dff759e",
+      "localPath": "public/legacy-assets/assets/img/digitalpresence_img-1.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/clients/120717091_975814292926420_5001470254901018291_n.jpg?w=70",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 5359,
+      "contentType": "image/jpeg",
+      "sha256": "fbd0bf9efac076afc0fd7af09977b070cff97594e2d0f9dbf031c23d00adf8a4",
+      "localPath": "public/legacy-assets/assets/img/clients/120717091_975814292926420_5001470254901018291_n.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/clients/Q0taDXa.jpg?w=70",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 6734,
+      "contentType": "image/jpeg",
+      "sha256": "f00a76d47e1bde2f8d45176a3bdbd326b02059bf87c6693e3e2c772b46747650",
+      "localPath": "public/legacy-assets/assets/img/clients/Q0taDXa.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/clients/nkAvxeF.jpg?w=70",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 6059,
+      "contentType": "image/jpeg",
+      "sha256": "8dac2103dd1ca396c2e74a692bbe6c755681bb40dd8e177f92a7459cbfb82be8",
+      "localPath": "public/legacy-assets/assets/img/clients/nkAvxeF.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/shape/client.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 7865,
+      "contentType": "image/png",
+      "sha256": "1e3a858ec1ae7e922e4033a6340b0a1221193c57c3e3a3f604d5a40919254194",
+      "localPath": "public/legacy-assets/assets/img/shape/client.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/brands/7FSwZPn.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2548,
+      "contentType": "image/png",
+      "sha256": "b6766fa9349b01e5406c73898ddea44a96f131143600d5009d8b8f7425274720",
+      "localPath": "public/legacy-assets/assets/img/brands/7FSwZPn.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/brands/Ekia6p9.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1650,
+      "contentType": "image/png",
+      "sha256": "94c677ea88d66a02725beaf690d1a6aa997260d4353f5fb30ed4b54db7ac48d4",
+      "localPath": "public/legacy-assets/assets/img/brands/Ekia6p9.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/brands/K9ZRrPW.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2395,
+      "contentType": "image/jpeg",
+      "sha256": "d7991dfdc1e3da94e9fc7cd5ae4b6907ca6328fd1aaf2d5ba0e66b2f6f50c9f9",
+      "localPath": "public/legacy-assets/assets/img/brands/K9ZRrPW.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/brands/LKtpcnm.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2763,
+      "contentType": "image/jpeg",
+      "sha256": "1db30cd8b9ef6c6eaa3ae36e9d1d5b7bc4d762d22dd76ee9a6efd810660b87f8",
+      "localPath": "public/legacy-assets/assets/img/brands/LKtpcnm.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/brands/m37ozr2.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1596,
+      "contentType": "image/png",
+      "sha256": "d394ec9d7a75c4aef60b552409202abb1d48c20c03150aa0ca5faa5d764c1588",
+      "localPath": "public/legacy-assets/assets/img/brands/m37ozr2.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/brands/vZWL99H.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 3309,
+      "contentType": "image/png",
+      "sha256": "0883c4544a9b299f27bc26cc6d36ae43415a90d3f8896c09df062cb02317b145",
+      "localPath": "public/legacy-assets/assets/img/brands/vZWL99H.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/brands/yb8flga.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2290,
+      "contentType": "image/png",
+      "sha256": "493a8b904735e6bc3c8df973b57a73d9e380bb2e2da82d1d83f8c69396a8adcb",
+      "localPath": "public/legacy-assets/assets/img/brands/yb8flga.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/brands/YcJVh8x.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1287,
+      "contentType": "image/png",
+      "sha256": "3afe6baf50e154bec6001b4c547d3b9b95fd052245a69ca5465d32bb4fcfdc2f",
+      "localPath": "public/legacy-assets/assets/img/brands/YcJVh8x.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/svg/livechat.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 2181,
+      "contentType": "image/svg+xml",
+      "sha256": "21cc9ec44c70fc12c5d1753bfea9bbfd845d5cdc4022200b302fd1a7a5836fc1",
+      "localPath": "public/legacy-assets/assets/extended/fonts/svg/livechat.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/svg/email.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1666,
+      "contentType": "image/svg+xml",
+      "sha256": "ad18eb0f81abe02f8f24ad7e04b8c093b8c6c6046c67127eae3f80bdf4e197da",
+      "localPath": "public/legacy-assets/assets/extended/fonts/svg/email.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/svg/ticket.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1832,
+      "contentType": "image/svg+xml",
+      "sha256": "d702a946584669e245b6ee58e28a085b54780a56e700f48014f8e6188ca20217",
+      "localPath": "public/legacy-assets/assets/extended/fonts/svg/ticket.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/royalclouds_w_logo.png?w=250",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 13390,
+      "contentType": "image/png",
+      "sha256": "78441fe14ac735fa97efec16a233c1a32c625ff29b800d020dc64d516f9f460e",
+      "localPath": "public/legacy-assets/assets/img/royalclouds_w_logo.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/favi.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 249,
+      "contentType": "image/png",
+      "sha256": "e479e2726d9e4c6c61c12ff28a77dccf32f9ab7a7e914956f151d001715abb88",
+      "localPath": "public/legacy-assets/assets/img/favi.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/cloudicon/Cloudicon.ttf?h7rmut",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 131172,
+      "contentType": "font/ttf",
+      "sha256": "9e921a5966b7bf53ef43222b2d63c09316c7aa3b94fd759731d2331f86409ba3",
+      "localPath": "public/legacy-assets/assets/extended/fonts/cloudicon/Cloudicon.ttf"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.woff2",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 74288,
+      "contentType": "font/woff2",
+      "sha256": "eed474a49bdbf745c19e463f070e67977c1ab27835603eb749d9e5c249cf81f8",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.woff2"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.woff2",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 79100,
+      "contentType": "font/woff2",
+      "sha256": "f419ad7a4477f36ce73c74a23dce784150ca38fa5075a8e06109709cbb716903",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.woff2"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/boxicons.woff2",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 81388,
+      "contentType": "font/woff2",
+      "sha256": "366843886488797c37eed1566f4df94fba023b250aa50a081cfb6c329e516b8b",
+      "localPath": "public/legacy-assets/assets/fonts/boxicons.woff2"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/cloudicon/cloudicon.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 13659,
+      "contentType": "text/css",
+      "sha256": "da9dc93f36f32d0c53bf5d74ce4b544bbdda57415f231eef4ad9d18d23be928f",
+      "localPath": "public/legacy-assets/assets/extended/fonts/cloudicon/cloudicon.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/css/all.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 67199,
+      "contentType": "text/css",
+      "sha256": "3fa5d4565d54968ccd78226b2aca37458d3206ef6978d277d5a0472d5760e13f",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/css/all.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/css/bootstrap.min.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 160403,
+      "contentType": "text/css",
+      "sha256": "680af6669abc319f9803f0fa26d443df1b6bc29133d88a8e4bea560ffed7288c",
+      "localPath": "public/legacy-assets/assets/extended/css/bootstrap.min.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/css/colors/royal-color.css?a=5",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 5643,
+      "contentType": "text/css",
+      "sha256": "f7078ae0ebf883047aa68b73663c243c4732a0883e4cb02d0c7bfe9e11914ede",
+      "localPath": "public/legacy-assets/assets/extended/css/colors/royal-color.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/owl.theme.default.min.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1013,
+      "contentType": "text/css",
+      "sha256": "924b0dc630d1c5dff9fa31aead9509775b1d476bfe0a5ac2977b2f11205a26ac",
+      "localPath": "public/legacy-assets/assets/css/owl.theme.default.min.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/owl.carousel.min.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 3351,
+      "contentType": "text/css",
+      "sha256": "521410e1fc44780061e09adc980275fb5ea277fd5d9e538454214ec4379ff4bc",
+      "localPath": "public/legacy-assets/assets/css/owl.carousel.min.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/animate.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 77757,
+      "contentType": "text/css",
+      "sha256": "1f9b501a71a8daeb7ddb18b62a98de056642bef60a02d054ae90eae540ed1d34",
+      "localPath": "public/legacy-assets/assets/css/animate.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/boxicons.min.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 53246,
+      "contentType": "text/css",
+      "sha256": "81bb18174a27963c9b9127e7c805925c909811f89778a8e1a0a63c6d577636fa",
+      "localPath": "public/legacy-assets/assets/css/boxicons.min.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/flaticon.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 1966,
+      "contentType": "text/css",
+      "sha256": "8ee1bc61755a2ee53a7e3c3c1bcc53b214bcee0565b7e5a29129840575b70a3e",
+      "localPath": "public/legacy-assets/assets/css/flaticon.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/meanmenu.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 7229,
+      "contentType": "text/css",
+      "sha256": "288ef6f015eadc7dad130224429141df8d5b8b97effbd4f79b1b41c9eaaf385e",
+      "localPath": "public/legacy-assets/assets/css/meanmenu.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/nice-select.css",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 4007,
+      "contentType": "text/css",
+      "sha256": "c13280e79f74109c5e3854822c0f0c972d0a57245c95b0b3762f9788bd918f8d",
+      "localPath": "public/legacy-assets/assets/css/nice-select.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/style.css?c=8",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 134564,
+      "contentType": "text/css",
+      "sha256": "336ac3649ab2e0c9ba2feb37b551392da773d3660cd078a45fc331bd1e5a87ea",
+      "localPath": "public/legacy-assets/assets/css/style.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/css/style.min.css?c=3",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 100047,
+      "contentType": "text/css",
+      "sha256": "1f07bd05662400da15b9eadcfc9ec6d5055d48aa3e4c6dec708c06099a66de5a",
+      "localPath": "public/legacy-assets/assets/extended/css/style.min.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/responsive.css?k=4",
+      "kind": "stylesheet",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 29532,
+      "contentType": "text/css",
+      "sha256": "4491182716750831b9ca6b7adbd140ba2090ac677c2933d31e2c2b069bf1512b",
+      "localPath": "public/legacy-assets/assets/css/responsive.css"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/cloudicon/Cloudicon.eot?h7rmut",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 131344,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "a3343e0f5c823f2bb893c3de84701a306e0dc6645fd639082dcd77a39e83d2b1",
+      "localPath": "public/legacy-assets/assets/extended/fonts/cloudicon/Cloudicon.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/cloudicon/Cloudicon.woff?h7rmut",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 131248,
+      "contentType": "font/woff",
+      "sha256": "aa9fb2193e57954cb43631a3ed29dadfc47a6c4a698c9438d82824fcce3dc13c",
+      "localPath": "public/legacy-assets/assets/extended/fonts/cloudicon/Cloudicon.woff"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/cloudicon/Cloudicon.svg?h7rmut",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 552439,
+      "contentType": "image/svg+xml",
+      "sha256": "48eae7e6c0119e8d3b4ca7110287ce9dcd4ee60e81739b816a1a3b25da32c2a7",
+      "localPath": "public/legacy-assets/assets/extended/fonts/cloudicon/Cloudicon.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.eot",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 134396,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "fbe588bb10c5efb4f18033085939a8a24804e60f3eabeb0bedc8d773b2111b19",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.eot?",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 134396,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "fbe588bb10c5efb4f18033085939a8a24804e60f3eabeb0bedc8d773b2111b19",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.woff",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 87048,
+      "contentType": "font/woff",
+      "sha256": "eb098ff1725c8819ea67b54d857b6574d20ccfbb2cc451c1fab85fb4d968a62d",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.woff"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.ttf",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 134160,
+      "contentType": "font/ttf",
+      "sha256": "b52e41923dfdc250e4f7914afab339390b49f6834e158e0294cddf71c8f6248b",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-brands-400.ttf"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.eot",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 40308,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "c6df1ff9cbe02ea678f5313b35bd7e6e5297277609ca2c32454b618418ce7cea",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.eot?",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 40308,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "c6df1ff9cbe02ea678f5313b35bd7e6e5297277609ca2c32454b618418ce7cea",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.woff2",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 14872,
+      "contentType": "font/woff2",
+      "sha256": "0ecdc6188a4b2ec48e2ebf84a2a6584e78473f1216d7119832b5dc109bec7492",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.woff2"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.woff",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 18164,
+      "contentType": "font/woff",
+      "sha256": "9f982c59382f0b1a0f9f53ce2024a1504b9b51e4c371d2bfcca4b5090eb021fe",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.woff"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.ttf",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 40080,
+      "contentType": "font/ttf",
+      "sha256": "8f7bc93b0c9bcfe653e9ca309126481221a74f15ffe19be6f7cff40a011c769d",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-regular-400.ttf"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.eot",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 209012,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "80b515c5dde09d7b33f75dc382b4c91b9db20fdb1a9978b671e425c98e42b2cd",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.eot?",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 209012,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "80b515c5dde09d7b33f75dc382b4c91b9db20fdb1a9978b671e425c98e42b2cd",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.woff",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 102224,
+      "contentType": "font/woff",
+      "sha256": "e14bf8513c6848f983ed24852e9700dec95589b748e26bacd6b2ca7dc9bb2aee",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.woff"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.ttf",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 208792,
+      "contentType": "font/ttf",
+      "sha256": "2e9112db77640346bf93bc6031a2e2ede793324533273de02c61345d39b70d26",
+      "localPath": "public/legacy-assets/assets/extended/fonts/fontawesome/webfonts/fa-solid-900.ttf"
+    },
+    {
+      "url": "https://royalclouds.net/owl.video.play.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/boxicons.eot",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 229712,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "59a19b09902af8e8cd90676c04b5ec59403800afc000ee7a138bce1c870ae7e2",
+      "localPath": "public/legacy-assets/assets/fonts/boxicons.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/boxicons.woff",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 229620,
+      "contentType": "font/woff",
+      "sha256": "a73a434917a00dac3263e78d16deb3bc1f6d8b96b3ff09b32b2d378d0b254a7b",
+      "localPath": "public/legacy-assets/assets/fonts/boxicons.woff"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/boxicons.ttf",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 229544,
+      "contentType": "font/ttf",
+      "sha256": "d4f26eb95cb1ccfdc09e842d3da7b46577bd114633fa19df1a16cea992192568",
+      "localPath": "public/legacy-assets/assets/fonts/boxicons.ttf"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/boxicons.svg?",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 816268,
+      "contentType": "image/svg+xml",
+      "sha256": "682859f4aa366682f10e6715bef2bdd4e9c1b9aaa8cd4cb5133abef35bea0d44",
+      "localPath": "public/legacy-assets/assets/fonts/boxicons.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/Flaticon.eot",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 14202,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "bc7620dd08ba4486d79cb03bb08772ce2b13ac714c9ffef0e01fb1d1c5e50363",
+      "localPath": "public/legacy-assets/assets/fonts/Flaticon.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/Flaticon.eot?",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 14202,
+      "contentType": "application/vnd.ms-fontobject",
+      "sha256": "bc7620dd08ba4486d79cb03bb08772ce2b13ac714c9ffef0e01fb1d1c5e50363",
+      "localPath": "public/legacy-assets/assets/fonts/Flaticon.eot"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/Flaticon.woff2",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 6872,
+      "contentType": "font/woff2",
+      "sha256": "c16a062d47c479805a424f4f7a979bc5867aec9d624fdd52f1942c5f8beaec4e",
+      "localPath": "public/legacy-assets/assets/fonts/Flaticon.woff2"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/Flaticon.woff",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 8356,
+      "contentType": "font/woff",
+      "sha256": "f2237270c2977420d78129935acbfca249e002e60ac3a881c42af98254c517f8",
+      "localPath": "public/legacy-assets/assets/fonts/Flaticon.woff"
+    },
+    {
+      "url": "https://royalclouds.net/assets/fonts/Flaticon.ttf",
+      "kind": "font",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 14024,
+      "contentType": "font/ttf",
+      "sha256": "7383266543c7b1dc1c2eaa1a847143ae65735a3ef963cbc7b8a4d38bd32b8f88",
+      "localPath": "public/legacy-assets/assets/fonts/Flaticon.ttf"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/shape/card-bg.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 12803,
+      "contentType": "image/png",
+      "sha256": "4a8969f485fba854359c4416c83f514e86bdae4da7a20058105075f8b79a66af",
+      "localPath": "public/legacy-assets/assets/img/shape/card-bg.png"
+    },
+    {
+      "url": "https://royalclouds.net/img/banner-two/banner-two-bg.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/img/sign-up-bg.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/img/coming-soon-bg.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/img/page-bg.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/img/news-details/news-img-four.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/img/news-details/news-img-five.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/img/news-details/news-img-six.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/img/news-details/news-img-seven.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/exapath.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 67122,
+      "contentType": "image/svg+xml",
+      "sha256": "8ea2d3c9b7cfb7aa2fd8bda5e490ff7c66e6b54385b8203f895709f344fea61c",
+      "localPath": "public/legacy-assets/assets/extended/patterns/exapath.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/cpupath.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 315494,
+      "contentType": "image/svg+xml",
+      "sha256": "699e0efaf7157c656b7f529d7e040ac24862b7f2fa3808b75f839fedebb3832a",
+      "localPath": "public/legacy-assets/assets/extended/patterns/cpupath.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/motpath.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 26341,
+      "contentType": "image/svg+xml",
+      "sha256": "18d886748b3d5544d8117305a5b86e0fbfa797860118a63a4bccc91f45f9dc28",
+      "localPath": "public/legacy-assets/assets/extended/patterns/motpath.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/promopath.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 75100,
+      "contentType": "image/svg+xml",
+      "sha256": "b1b5a610daf5c6e2bf9d035d4f97d7622ef9529dd0fd9763eeed86d36d3bf257",
+      "localPath": "public/legacy-assets/assets/extended/patterns/promopath.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/exapath-w.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 67141,
+      "contentType": "image/svg+xml",
+      "sha256": "1126e584efc31f477c250528d896b582e40ec516b1c89260c5de6efb0c54d32e",
+      "localPath": "public/legacy-assets/assets/extended/patterns/exapath-w.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/cpupath-w.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 315476,
+      "contentType": "image/svg+xml",
+      "sha256": "3687cdbfc1909e2225ea70a885bba6aae251256812bf1eb57f784c5bcde17a82",
+      "localPath": "public/legacy-assets/assets/extended/patterns/cpupath-w.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/motpath-w.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 26673,
+      "contentType": "image/svg+xml",
+      "sha256": "b763f16e443a8ae7ea2f9cc27be029da3ed2b91b032f5070d1dcd295ddd7e854",
+      "localPath": "public/legacy-assets/assets/extended/patterns/motpath-w.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/promo-w.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": true,
+      "bytes": 78208,
+      "contentType": "image/svg+xml",
+      "sha256": "ad06ea2eec0c096a40474ad030341b1b1292084d53066f9c749af74ddff5e8b9",
+      "localPath": "public/legacy-assets/assets/extended/patterns/promo-w.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner01.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner02.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner03.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner04.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner05.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner06.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner07.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner08.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner09.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner10.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner11.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner12.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner13.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner14.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner15.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/topbanner16.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/AjaxLoader.gif",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/arrow-left-2.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/arrow-left-2-act.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/img/arrow-right-2.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/cpanel.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 5285,
+      "contentType": "image/svg+xml",
+      "sha256": "0678292a2a15201801a901d6ee941dce9f385e4cf1b770e56f25061357421c15",
+      "localPath": "public/legacy-assets/assets/img/icons/cpanel.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/006-database-1.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 4571,
+      "contentType": "image/svg+xml",
+      "sha256": "b1b5120faad32886cab9d2ce4c77ec121be537ae517e480f6f814a79b175c0f3",
+      "localPath": "public/legacy-assets/assets/img/icons/006-database-1.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/014-firewall.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 3634,
+      "contentType": "image/svg+xml",
+      "sha256": "27b5a78541daa942757c5fa8c3c5c6ed077c068abf9bd9abcfc2a57b8f4e40a8",
+      "localPath": "public/legacy-assets/assets/img/icons/014-firewall.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/004-backup.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 4444,
+      "contentType": "image/svg+xml",
+      "sha256": "b13d622a70b5362ef08cd399643d50d82a5a63afb984d592cd2a3d62749ea040",
+      "localPath": "public/legacy-assets/assets/img/icons/004-backup.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/001-database.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 4044,
+      "contentType": "image/svg+xml",
+      "sha256": "136400046891c2aa45151e3d7955651f0f54d023ef335fe93d5d7ecde2013fc6",
+      "localPath": "public/legacy-assets/assets/img/icons/001-database.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/026-tech-support.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 7127,
+      "contentType": "image/svg+xml",
+      "sha256": "079fef8e3b8e73a68dda3198dbce46c11e5e87746764c80a545b5388c96bab28",
+      "localPath": "public/legacy-assets/assets/img/icons/026-tech-support.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/ssd-host.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 73116,
+      "contentType": "image/png",
+      "sha256": "098a09530e7723c6a770db7bb7d479fbcc2b9416fdc367e09bb0b4a4f9919334",
+      "localPath": "public/legacy-assets/assets/img/ssd-host.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/plans/mountain-bike.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 4892,
+      "contentType": "image/svg+xml",
+      "sha256": "c5c8ac2166cd5a58d710d764eb8fdd88ed1e0c21afacca87d09981464e6aaa15",
+      "localPath": "public/legacy-assets/assets/img/icons/plans/mountain-bike.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/plans/motorcycle.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 4924,
+      "contentType": "image/svg+xml",
+      "sha256": "575dcdf9ecfe2a105a95f085636163f13e877fe380c47c555c1d7425980229c9",
+      "localPath": "public/legacy-assets/assets/img/icons/plans/motorcycle.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/plans/car.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 4138,
+      "contentType": "image/svg+xml",
+      "sha256": "83dc0b5da71754fc025ff6259822a934028c68d08dd169cfa47ff2f3d7ba6eb1",
+      "localPath": "public/legacy-assets/assets/img/icons/plans/car.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/plans/train-station.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 2952,
+      "contentType": "image/svg+xml",
+      "sha256": "8e0e65b16a57da6ad0384d4d4887471f0ba3dcac934b766cd12864f7c5ea1655",
+      "localPath": "public/legacy-assets/assets/img/icons/plans/train-station.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/plans/plane.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/shared-hosting",
+      "ok": true,
+      "bytes": 2241,
+      "contentType": "image/svg+xml",
+      "sha256": "03ca5910f6901cfe256728a14e925e1f9dcfa756aaf6e746d5faea0499afc4de",
+      "localPath": "public/legacy-assets/assets/img/icons/plans/plane.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/020-raid.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/kvm-vps-hosting",
+      "ok": true,
+      "bytes": 6247,
+      "contentType": "image/svg+xml",
+      "sha256": "db9f72c79d6533423870089e88582772aede37406a637e7a57a14e6c7ad75590",
+      "localPath": "public/legacy-assets/assets/img/icons/020-raid.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/019-maintenance.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/kvm-vps-hosting",
+      "ok": true,
+      "bytes": 5131,
+      "contentType": "image/svg+xml",
+      "sha256": "1ed0ddc2c1563f7a41c34040ee12aa0d90d7a0e5ea8b20afb462e30e26a98c84",
+      "localPath": "public/legacy-assets/assets/img/icons/019-maintenance.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/010-dns.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/kvm-vps-hosting",
+      "ok": true,
+      "bytes": 7069,
+      "contentType": "image/svg+xml",
+      "sha256": "d266ea4fd040c80cd8528c0e572f3f95d13aaa9317de2765e6db4f693475b3f8",
+      "localPath": "public/legacy-assets/assets/img/icons/010-dns.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/vps_hosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/kvm-vps-hosting",
+      "ok": true,
+      "bytes": 56518,
+      "contentType": "image/png",
+      "sha256": "f78cdfcf586ea27aa978d11f9d87d5d3ded012184324cbbcf9474ddeced4f812",
+      "localPath": "public/legacy-assets/assets/img/vps_hosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/vps-img-1.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/kvm-vps-hosting",
+      "ok": true,
+      "bytes": 64276,
+      "contentType": "image/png",
+      "sha256": "efc26fba8062808ac31f1226536512cfce12a3f4698017b347a3e4e77813f209",
+      "localPath": "public/legacy-assets/assets/img/vps-img-1.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/performance.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/kvm-vps-hosting",
+      "ok": true,
+      "bytes": 10621,
+      "contentType": "image/svg+xml",
+      "sha256": "122b3b70d927d52754d7f1b098cdc1573011f96630ff3bfbd8c892bb2d066dcc",
+      "localPath": "public/legacy-assets/assets/extended/patterns/performance.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/ssl.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/kvm-vps-hosting",
+      "ok": true,
+      "bytes": 3555,
+      "contentType": "image/svg+xml",
+      "sha256": "b215580713a606a04135ee353e1ad8a5c0922f742f5f5057f92ed3f97120618c",
+      "localPath": "public/legacy-assets/assets/extended/patterns/ssl.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/wp-hosting.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-wordpress-hosting",
+      "ok": true,
+      "bytes": 88210,
+      "contentType": "image/svg+xml",
+      "sha256": "dde22a34cb269d14b50f0a7dd13f4aa4753807bf659bff04b4e73f8b417c523a",
+      "localPath": "public/legacy-assets/assets/img/wp-hosting.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/Dedicated.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/dedicated-servers",
+      "ok": true,
+      "bytes": 35150,
+      "contentType": "image/png",
+      "sha256": "e981df224f5ecf8d43069c24acec4fa5543d85d34dcc2a5c7ff4f3e7f7f38d4c",
+      "localPath": "public/legacy-assets/assets/img/Dedicated.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/ssd.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/speed",
+      "ok": true,
+      "bytes": 7668,
+      "contentType": "image/svg+xml",
+      "sha256": "159f60ed6066162df459ee0e7990382b3dac9236f9ae649ae4dfbdcffcc5202f",
+      "localPath": "public/legacy-assets/assets/extended/patterns/ssd.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/provisioning.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/speed",
+      "ok": true,
+      "bytes": 27226,
+      "contentType": "image/svg+xml",
+      "sha256": "1b22cf5c354cacf5e6bc8689fb771452b3d8c4707cb3405bcfba27e3407772c9",
+      "localPath": "public/legacy-assets/assets/extended/patterns/provisioning.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/maxsecurity.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/speed",
+      "ok": true,
+      "bytes": 2266,
+      "contentType": "image/svg+xml",
+      "sha256": "e93c6427f443ab90df9c1640dc99857432e3f1b7fa578a502aa4c6eda8e2e74a",
+      "localPath": "public/legacy-assets/assets/extended/patterns/maxsecurity.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/efficiency.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/speed",
+      "ok": true,
+      "bytes": 72487,
+      "contentType": "image/svg+xml",
+      "sha256": "6bfd5401576131435e84b60cbad730cc4fa6aa5303f6dfaf2382d737348b4c43",
+      "localPath": "public/legacy-assets/assets/extended/patterns/efficiency.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/patterns/balancing.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/speed",
+      "ok": true,
+      "bytes": 7097,
+      "contentType": "image/svg+xml",
+      "sha256": "a7e6c7b8b2887d260f0913ac2ec0869b2841e6743149c16f23ca535cc87a632d",
+      "localPath": "public/legacy-assets/assets/extended/patterns/balancing.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/uptime/update.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/uptime",
+      "ok": true,
+      "bytes": 2457,
+      "contentType": "image/svg+xml",
+      "sha256": "56ffcd4e44cc56d640f0bf3c697c6a317e520624c89f33e09129e73f4b6b8e76",
+      "localPath": "public/legacy-assets/assets/img/uptime/update.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/uptime/firewall.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/uptime",
+      "ok": true,
+      "bytes": 2128,
+      "contentType": "image/svg+xml",
+      "sha256": "7c867619319ed9afaea7cc9144fa64818551fa5a8ca4ebf4b4e3cd9778f56684",
+      "localPath": "public/legacy-assets/assets/img/uptime/firewall.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/uptime/malware.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/uptime",
+      "ok": true,
+      "bytes": 2533,
+      "contentType": "image/svg+xml",
+      "sha256": "2ce030e7d63735fd89f0c9d7e66c12c2083bdf91025bfc73b8564055f92aa75d",
+      "localPath": "public/legacy-assets/assets/img/uptime/malware.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/uptime/ddos.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/uptime",
+      "ok": true,
+      "bytes": 2856,
+      "contentType": "image/svg+xml",
+      "sha256": "317ab016324d5dfda03580bbe5224390aff1dbca09ace51513a4caf3c6f68c64",
+      "localPath": "public/legacy-assets/assets/img/uptime/ddos.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/uptime/backup.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/uptime",
+      "ok": true,
+      "bytes": 2940,
+      "contentType": "image/svg+xml",
+      "sha256": "b773f29a819b7537534621463d31e9a5ec902fcece60b90bb82ac814a8682902",
+      "localPath": "public/legacy-assets/assets/img/uptime/backup.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/map.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/datacenter",
+      "ok": true,
+      "bytes": 176744,
+      "contentType": "image/svg+xml",
+      "sha256": "82f444370eb27db203596c0fedb4d34e421020d53aa9379dc022f13e91e627fb",
+      "localPath": "public/legacy-assets/assets/img/map.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/kindpng_7150690.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/about",
+      "ok": true,
+      "bytes": 90130,
+      "contentType": "image/png",
+      "sha256": "fdf334831c245e2da83b5825ca639edd6297a10782a3aaec91d72d92f998b977",
+      "localPath": "public/legacy-assets/assets/img/kindpng_7150690.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/support-shape.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/about",
+      "ok": true,
+      "bytes": 17838,
+      "contentType": "image/png",
+      "sha256": "2fe240f30889e33df8bd267504ff7e9cef315f7906e6b509dbcfa3339356fd9b",
+      "localPath": "public/legacy-assets/assets/img/support-shape.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/cpanel-hosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cpanel-hosting",
+      "ok": true,
+      "bytes": 53080,
+      "contentType": "image/png",
+      "sha256": "c305aa14da9fd1ade15220e71bc984072e367e335241a6e5e3a9c0ad9289b651",
+      "localPath": "public/legacy-assets/assets/images/cpanel-hosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/best-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/best-vps",
+      "ok": true,
+      "bytes": 230650,
+      "contentType": "image/png",
+      "sha256": "87d756d62a9748d29f626c6bed4b32c0c501310797d548f738bc06f860865c48",
+      "localPath": "public/legacy-assets/assets/images/best-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/centos-web-hosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/centos-vps",
+      "ok": true,
+      "bytes": 124056,
+      "contentType": "image/png",
+      "sha256": "9332db11276d5c17f0bae0a426e13fc49703b8e90ece267a29ba1e1b2ea049d8",
+      "localPath": "public/legacy-assets/assets/images/centos-web-hosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/web-hosting-ssd.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-dedicated-servers",
+      "ok": true,
+      "bytes": 46640,
+      "contentType": "image/png",
+      "sha256": "1d31be9adfe965ac7d76a46d49e3efcd89b36b0c50486252ce211a33ff561487",
+      "localPath": "public/legacy-assets/assets/images/web-hosting-ssd.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/web-hosting-india.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-hosting-plans",
+      "ok": true,
+      "bytes": 37349,
+      "contentType": "image/png",
+      "sha256": "8cabd9f92c1d4fdc0f4ae22ef26f1b92ae4359c5944d40b9099e71598c728a2d",
+      "localPath": "public/legacy-assets/assets/images/web-hosting-india.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/cheap-kvm-vps.png?i=01",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-kvm-vps",
+      "ok": true,
+      "bytes": 225996,
+      "contentType": "image/png",
+      "sha256": "3441423c90e5e3b8757d891c79ab2e8ea7f305e5be346b05628af2c0cfce4fcc",
+      "localPath": "public/legacy-assets/assets/images/cheap-kvm-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/cheapvps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-linux-vps",
+      "ok": true,
+      "bytes": 109434,
+      "contentType": "image/png",
+      "sha256": "1853908245d1c78da31fc56e35c0ad8c4f57b3c2e25d91574c20e3808d197111",
+      "localPath": "public/legacy-assets/assets/images/cheapvps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/managed-vps-hosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-managed-vps-hosting",
+      "ok": true,
+      "bytes": 306020,
+      "contentType": "image/png",
+      "sha256": "c71d8d912219cefdeb8d6399d4d3256c7ac28704e464c3f25e4f2c4ac5b17d70",
+      "localPath": "public/legacy-assets/assets/images/managed-vps-hosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/cheaphosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-shared-hosting",
+      "ok": true,
+      "bytes": 27451,
+      "contentType": "image/png",
+      "sha256": "3b85c5c70bdae3155f50614bcf4cdb7f27defe5c98ed6257b43c85775508b296",
+      "localPath": "public/legacy-assets/assets/images/cheaphosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/web-hosting-services.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-ssd-hosting",
+      "ok": true,
+      "bytes": 238238,
+      "contentType": "image/png",
+      "sha256": "3a8d6bcd3335573c6bf1d5574bfe9722c2c160e2e8d72c7210500cfbb664209b",
+      "localPath": "public/legacy-assets/assets/images/web-hosting-services.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/cheap-ssd-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-ssd-vps",
+      "ok": true,
+      "bytes": 227143,
+      "contentType": "image/png",
+      "sha256": "63892e9b1fb330b000b8dc467cc78cc25e8dc372fe93ddb65741eafdf9d56101",
+      "localPath": "public/legacy-assets/assets/images/cheap-ssd-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/ubuntu-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cheap-ubuntu-vps",
+      "ok": true,
+      "bytes": 175097,
+      "contentType": "image/png",
+      "sha256": "ba19eadf07159bf524492c2ed638625c365a7894e597db9d97d2c9ff894c0448",
+      "localPath": "public/legacy-assets/assets/images/ubuntu-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/cloudhost.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cloud-ssd-hosting",
+      "ok": true,
+      "bytes": 25739,
+      "contentType": "image/png",
+      "sha256": "7eb6f278eedf66be83c48f55b7ae077bcdc3d26544634cfb767e2926bf08be10",
+      "localPath": "public/legacy-assets/assets/images/cloudhost.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/debian-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/debian-vps",
+      "ok": true,
+      "bytes": 177319,
+      "contentType": "image/png",
+      "sha256": "9068256057d0d8528ed5b7446c450712485b0c6d5080cc7c6a52d6a29310a70e",
+      "localPath": "public/legacy-assets/assets/images/debian-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/dedicated-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/dedicated-vps",
+      "ok": true,
+      "bytes": 449820,
+      "contentType": "image/png",
+      "sha256": "b3e922061c42a5e249520d46902d936c7a86edcd5f65936b4aeaae67ff7c2496",
+      "localPath": "public/legacy-assets/assets/images/dedicated-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/fast-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/fast-vps",
+      "ok": true,
+      "bytes": 288606,
+      "contentType": "image/png",
+      "sha256": "cb13b002377d692b70ce698225286fbe3d76358b81bb9f630b2ced60bbbaa161",
+      "localPath": "public/legacy-assets/assets/images/fast-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/fedora-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/fedora-vps",
+      "ok": true,
+      "bytes": 468941,
+      "contentType": "image/png",
+      "sha256": "5b79c29f44ef83f9c7535ed3799a7936f88d579010056b0315f820698970718c",
+      "localPath": "public/legacy-assets/assets/images/fedora-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/kvm-ssd-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/kvm-ssd-vps",
+      "ok": true,
+      "bytes": 305814,
+      "contentType": "image/png",
+      "sha256": "d609e9b2ef2385799cf27e4a48d2e41657a64d768437e61f64b2a701f093b51e",
+      "localPath": "public/legacy-assets/assets/images/kvm-ssd-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/managed-vps-web-hosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-vps-hosting",
+      "ok": true,
+      "bytes": 505353,
+      "contentType": "image/png",
+      "sha256": "4960ae548ac2bfb152b6c01e59a74564ba6acfebced7e13e8909d0271ddb7b63",
+      "localPath": "public/legacy-assets/assets/images/managed-vps-web-hosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/vps-hosting.png?id=1",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-vps-with-cpanel",
+      "ok": true,
+      "bytes": 304230,
+      "contentType": "image/png",
+      "sha256": "40ea0cdac327f5426a0c18a6b6d3155ded71e8aa06a6d9ffd28ff2ff067647eb",
+      "localPath": "public/legacy-assets/assets/images/vps-hosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/opensuse-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/opensuse-vps",
+      "ok": true,
+      "bytes": 490315,
+      "contentType": "image/png",
+      "sha256": "17b09c58259289de2d7e84311a4a17c2f936909d4d06c2962fa55c7eb8a2200f",
+      "localPath": "public/legacy-assets/assets/images/opensuse-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/scientific-vps.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/scientific-vps",
+      "ok": true,
+      "bytes": 500101,
+      "contentType": "image/png",
+      "sha256": "4c592ffe92b2d4812d62e23234c8c8c49999371a8b916afbac23cfbd8010a21a",
+      "localPath": "public/legacy-assets/assets/images/scientific-vps.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/shared-ssd-hosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/ssd-hosting",
+      "ok": true,
+      "bytes": 369769,
+      "contentType": "image/png",
+      "sha256": "d56dfd851cb27d1d55792ab971d3468876a00ba5ee9366729a25b8663e9d4203",
+      "localPath": "public/legacy-assets/assets/images/shared-ssd-hosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/ssdwebhosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/ssd-web-hosting",
+      "ok": true,
+      "bytes": 258665,
+      "contentType": "image/png",
+      "sha256": "2522afa067153a7d2aa15e46c99fc5824d12989444c12a1d674ec6cea535dd1c",
+      "localPath": "public/legacy-assets/assets/images/ssdwebhosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/svg/man.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/affiliate",
+      "ok": true,
+      "bytes": 1588,
+      "contentType": "image/svg+xml",
+      "sha256": "b5edfc4e7146a3c4ae8f11669785b70b7a023c9d677500aa660291b4fc0b2ed2",
+      "localPath": "public/legacy-assets/assets/extended/fonts/svg/man.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/svg/browser.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/affiliate",
+      "ok": true,
+      "bytes": 1341,
+      "contentType": "image/svg+xml",
+      "sha256": "1ec479c55e2470df52bbe2dc1b7a8b279579d1f067349d180e5f24aecec263a1",
+      "localPath": "public/legacy-assets/assets/extended/fonts/svg/browser.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/fonts/svg/money.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/affiliate",
+      "ok": true,
+      "bytes": 2428,
+      "contentType": "image/svg+xml",
+      "sha256": "25e89fef6bf5c3dbafc22cc3f0f915f3e267c27dc37da0f9b58eb8b280d5bf47",
+      "localPath": "public/legacy-assets/assets/extended/fonts/svg/money.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/partners/intel-logo.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/partners",
+      "ok": true,
+      "bytes": 3862,
+      "contentType": "image/png",
+      "sha256": "f3c3a7169921ec1739cd3d86488de900251ef909021a7902056b192a640ca260",
+      "localPath": "public/legacy-assets/assets/img/partners/intel-logo.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/partners/cpanel-logo.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/partners",
+      "ok": true,
+      "bytes": 5481,
+      "contentType": "image/png",
+      "sha256": "d29064568bd231f21dd3b8b145604491772459ceac49cc2fcacf70f9fb08ffbd",
+      "localPath": "public/legacy-assets/assets/img/partners/cpanel-logo.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/partners/cloudlinux-logo.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/partners",
+      "ok": true,
+      "bytes": 5611,
+      "contentType": "image/png",
+      "sha256": "37fa8148d5b44f60458f64126ea7afb8b1e666e558395be850db8a788d357d46",
+      "localPath": "public/legacy-assets/assets/img/partners/cloudlinux-logo.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/partners/cloudflare-logo.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/partners",
+      "ok": true,
+      "bytes": 4109,
+      "contentType": "image/png",
+      "sha256": "e0b81a4cc34a6447188b4fbba4ea10ff8a50b9533908e41a6b1c1b16b3037ea7",
+      "localPath": "public/legacy-assets/assets/img/partners/cloudflare-logo.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/partners/lets-encrypt-logo.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/partners",
+      "ok": true,
+      "bytes": 3656,
+      "contentType": "image/png",
+      "sha256": "8ed972ad3ed7ea4ce4df2ba4f265771b9def39116609c8e74f57189324808d78",
+      "localPath": "public/legacy-assets/assets/img/partners/lets-encrypt-logo.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/partners/softaculous-logo.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/partners",
+      "ok": true,
+      "bytes": 3464,
+      "contentType": "image/png",
+      "sha256": "05312e18a261b85e99a4010e9e5f4f05734ec206162b91c92592842d2bfc07c5",
+      "localPath": "public/legacy-assets/assets/img/partners/softaculous-logo.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/partners/LiteSpeed.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/partners",
+      "ok": true,
+      "bytes": 7325,
+      "contentType": "image/svg+xml",
+      "sha256": "b492f65c44061f2138d62f1fc011346a4d1802827795e1e4b7c3071b903b3d0d",
+      "localPath": "public/legacy-assets/assets/img/partners/LiteSpeed.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/partners/twak.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/partners",
+      "ok": true,
+      "bytes": 7079,
+      "contentType": "image/png",
+      "sha256": "833a722be35748b335e5a388ea8f49f3459f67fb6b167a2ef5a4e9077581b4a1",
+      "localPath": "public/legacy-assets/assets/img/partners/twak.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/compare/rc.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/compare-royalclouds-vps-plans",
+      "ok": true,
+      "bytes": 5347,
+      "contentType": "image/png",
+      "sha256": "c06bc877b605a991e27c2c8e343033fdbf3d34d3fb7d72655bcc33113f05c775",
+      "localPath": "public/legacy-assets/assets/images/compare/rc.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/compare/aws.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/compare-royalclouds-vps-plans",
+      "ok": true,
+      "bytes": 19878,
+      "contentType": "image/png",
+      "sha256": "5a489d6041bfed0d3c4bc83253617891eeaa51d778e82df9ec4c38a5013694ca",
+      "localPath": "public/legacy-assets/assets/images/compare/aws.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/compare/do.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/compare-royalclouds-vps-plans",
+      "ok": true,
+      "bytes": 3376,
+      "contentType": "image/png",
+      "sha256": "d085fcf11df6d70a9ccc0ad76c38a69330def23943f7c08c5eafc03ad973f5e9",
+      "localPath": "public/legacy-assets/assets/images/compare/do.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/compare/linode.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/compare-royalclouds-vps-plans",
+      "ok": true,
+      "bytes": 14841,
+      "contentType": "image/png",
+      "sha256": "90651f64f803536258ef334c2e199eab2f92b0817d7d8d120e84c71d4081ee63",
+      "localPath": "public/legacy-assets/assets/images/compare/linode.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/compare/vultr.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/compare-royalclouds-vps-plans",
+      "ok": true,
+      "bytes": 6411,
+      "contentType": "image/png",
+      "sha256": "70c65b991cf925b933657c68c10e76086b07e918c54086656593f311e386a240",
+      "localPath": "public/legacy-assets/assets/images/compare/vultr.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/cyberpanel-vps-hosting.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cyberpanel-vps-hosting",
+      "ok": true,
+      "bytes": 45371,
+      "contentType": "image/png",
+      "sha256": "68d33acff83b34914f10707c0cb869b77847457cf60729214830e1d20e8b43a4",
+      "localPath": "public/legacy-assets/assets/images/cyberpanel-vps-hosting.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/wpmanager-cyberpanel.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/cyberpanel-vps-hosting",
+      "ok": true,
+      "bytes": 143748,
+      "contentType": "image/png",
+      "sha256": "bbceefb39c2b5295d325d4228f82af54f0152b6f643485e1013ef53858685ae8",
+      "localPath": "public/legacy-assets/assets/images/wpmanager-cyberpanel.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/royalclouds-blues.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 18118,
+      "contentType": "image/png",
+      "sha256": "886c7267ef216db19ff594715cb814088bde2417925a443582e5b4c1b06203d4",
+      "localPath": "public/legacy-assets/assets/img/royalclouds-blues.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/raid-color.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 4804,
+      "contentType": "image/svg+xml",
+      "sha256": "41a9f1743517beddd2391e27f8e1b1f077a60cce0e41a61a5fc4bea7b7f1e621",
+      "localPath": "public/legacy-assets/assets/img/icons/raid-color.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/maintenance-color.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 3662,
+      "contentType": "image/svg+xml",
+      "sha256": "f48c32efb24bc06ab056fa08defa14d261fa3f1842305cdc1991c62cc972c97e",
+      "localPath": "public/legacy-assets/assets/img/icons/maintenance-color.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/firewall-color.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 2158,
+      "contentType": "image/svg+xml",
+      "sha256": "01c6e0acf4846acabb60163d229cec07970154e2e3054643396c3ca097934608",
+      "localPath": "public/legacy-assets/assets/img/icons/firewall-color.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/dns-color.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 5562,
+      "contentType": "image/svg+xml",
+      "sha256": "c2d2d4137dd7daabf6cc17fdcc379d247681aa2e72d25b5e15c988e79e278d67",
+      "localPath": "public/legacy-assets/assets/img/icons/dns-color.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/database-color.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 2578,
+      "contentType": "image/svg+xml",
+      "sha256": "d482f89146eabcb6637fc482725177c8e646cc211d09a1b7972b54e813598263",
+      "localPath": "public/legacy-assets/assets/img/icons/database-color.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/icons/tech-support-color.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 5641,
+      "contentType": "image/svg+xml",
+      "sha256": "4f9762a458e15439f6b91de2eb4217f6dbc8471de6e823c5ce5731e470f78885",
+      "localPath": "public/legacy-assets/assets/img/icons/tech-support-color.svg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/images/managed-do-hosting.svg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 43913,
+      "contentType": "image/svg+xml",
+      "sha256": "8cd3188d896d43bc4310714c3517505fc511c8ec95d0c3d4f898ef09bc283914",
+      "localPath": "public/legacy-assets/assets/images/managed-do-hosting.svg"
+    },
+    {
+      "url": "https://royalclouds.net/doprice/vps-locations.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 32477,
+      "contentType": "image/jpeg",
+      "sha256": "0caed386a581feaaff3cdbbe6595dfb7826497f730fff34a04c2774d4f8b598c",
+      "localPath": "public/legacy-assets/doprice/vps-locations.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/doprice/dedcicated-server-locations.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 35981,
+      "contentType": "image/jpeg",
+      "sha256": "4da7f2898de24e2cc9a95a81b88719fdbe7f0d66ee3688fb39a433ca623a0039",
+      "localPath": "public/legacy-assets/doprice/dedcicated-server-locations.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/doprice/windows-vps-location-flags.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/managed-digitalocean-cloud-hosting",
+      "ok": true,
+      "bytes": 26838,
+      "contentType": "image/jpeg",
+      "sha256": "d8804190447951b4d2e2d9565142e145e45ef944817bcbb4f8f91eaebc35fa8c",
+      "localPath": "public/legacy-assets/doprice/windows-vps-location-flags.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/css/owl.video.play.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/owl.carousel.min.css",
+      "ok": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/banner-two/banner-two-bg.jpg",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/style.css?c=8",
+      "ok": true,
+      "bytes": 10954,
+      "contentType": "image/jpeg",
+      "sha256": "74004b57dcd782a573eee50a43759bef91740038f94225d9112bffd0f3662327",
+      "localPath": "public/legacy-assets/assets/img/banner-two/banner-two-bg.jpg"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/page-bg.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/style.css?c=8",
+      "ok": true,
+      "bytes": 6184,
+      "contentType": "image/png",
+      "sha256": "8a9af61ecaf73ad0adeb4507f4d4b5a3346367aab479f364a2e91589f454ad7c",
+      "localPath": "public/legacy-assets/assets/img/page-bg.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/sign-up-bg.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/style.css?c=8",
+      "ok": true,
+      "bytes": 9639,
+      "contentType": "image/png",
+      "sha256": "36ee701656048016429598176541338554711ddb22ebbda5b730cfc9714a9fd4",
+      "localPath": "public/legacy-assets/assets/img/sign-up-bg.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/coming-soon-bg.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/style.css?c=8",
+      "ok": true,
+      "bytes": 18094,
+      "contentType": "image/png",
+      "sha256": "2baf536ae3f179321e78b96554d8b7b31b9b6927d5097dabb988773bdfb6fd0d",
+      "localPath": "public/legacy-assets/assets/img/coming-soon-bg.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/news-details/news-img-four.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/style.css?c=8",
+      "ok": true,
+      "bytes": 707,
+      "contentType": "image/png",
+      "sha256": "1fcc1f2c8c964f3fe641be8d59a1d80605b32edf90192bf1f6a5de9e33484ef9",
+      "localPath": "public/legacy-assets/assets/img/news-details/news-img-four.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/news-details/news-img-five.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/style.css?c=8",
+      "ok": true,
+      "bytes": 707,
+      "contentType": "image/png",
+      "sha256": "1fcc1f2c8c964f3fe641be8d59a1d80605b32edf90192bf1f6a5de9e33484ef9",
+      "localPath": "public/legacy-assets/assets/img/news-details/news-img-five.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/news-details/news-img-six.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/style.css?c=8",
+      "ok": true,
+      "bytes": 707,
+      "contentType": "image/png",
+      "sha256": "1fcc1f2c8c964f3fe641be8d59a1d80605b32edf90192bf1f6a5de9e33484ef9",
+      "localPath": "public/legacy-assets/assets/img/news-details/news-img-six.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/img/news-details/news-img-seven.png",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/css/style.css?c=8",
+      "ok": true,
+      "bytes": 707,
+      "contentType": "image/png",
+      "sha256": "1fcc1f2c8c964f3fe641be8d59a1d80605b32edf90192bf1f6a5de9e33484ef9",
+      "localPath": "public/legacy-assets/assets/img/news-details/news-img-seven.png"
+    },
+    {
+      "url": "https://royalclouds.net/assets/extended/css/AjaxLoader.gif",
+      "kind": "image",
+      "source": "https://royalclouds.net/assets/extended/css/style.min.css?c=3",
+      "ok": false,
+      "error": "HTTP 404"
+    }
+  ]
+}

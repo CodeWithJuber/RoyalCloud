@@ -1,0 +1,172 @@
+---
+const instanceId = `network-atlas-${Math.random().toString(36).slice(2, 10)}`;
+const titleId = `${instanceId}-title`;
+const descriptionId = `${instanceId}-description`;
+---
+
+<figure class="network-atlas">
+  <svg viewBox="0 0 1180 640" role="img" aria-labelledby={`${titleId} ${descriptionId}`}>
+    <title id={titleId}>Schematic of the request path</title>
+    {/* Abstract by design: the business has published no audited region list, so the
+        diagram names no locations and asserts no fleet health (DESIGN.md 11). */}
+    <desc id={descriptionId}>
+      A stylised diagram of the request path — client edges linked by route corridors to a
+      central control plane. It is illustrative and shows no live status.
+    </desc>
+
+    <g class="atlas-grid" aria-hidden="true">
+      <path d="M72 80h1036v480H72Z" />
+      <path d="M72 176h1036M72 272h1036M72 368h1036M72 464h1036" />
+      <path d="M244 80v480M416 80v480M588 80v480M760 80v480M932 80v480" />
+      <path class="grid-minor" d="M158 80v480M330 80v480M502 80v480M674 80v480M846 80v480M1018 80v480" />
+    </g>
+
+    <g class="land-mass" aria-hidden="true">
+      <path d="M128 237 179 194l61 5 29 32 74 18 34 53-33 40-77-8-48 37-70-20-32-61Z" />
+      <path d="m285 380 53 17 27 56-20 79-36 24-18-66-31-43Z" />
+      <path d="m466 202 56-56 93-7 63 26 90 4 98 50 86 14 57 54-17 59-95 5-69 52-86-15-39 41-77-22-30-69-65-13-68-50Z" />
+      <path d="m561 358 65 3 54 48-8 72-44 70-58-26-32-91Z" />
+      <path d="m956 430 57-24 64 40-9 53-77 15-50-36Z" />
+      <path d="m876 123 70-29 54 27-19 40-73 15Z" />
+    </g>
+
+    <g class="traffic-bands" aria-hidden="true">
+      <path class="traffic-band traffic-band--wide" d="M207 276C373 148 478 181 589 295S840 393 1001 465" />
+      <path class="traffic-band" d="M207 276C363 375 447 381 589 295S826 171 922 199" />
+      <path class="traffic-band" d="M510 256C574 219 642 210 721 269S869 364 1001 465" />
+      <path class="traffic-band traffic-band--signal" d="M589 295C675 318 748 335 827 331" />
+      <path class="traffic-band" d="M589 295C558 367 578 428 615 468" />
+    </g>
+
+    <g class="route-corridors" aria-hidden="true">
+      <path d="M207 276 309 244 416 281 510 256 589 295 721 269 827 331 1001 465" />
+      <path d="M207 276 338 359 471 350 589 295 708 392 829 407 1001 465" />
+      <path d="M589 295 628 207 744 190 922 199" />
+      <path d="M589 295 615 468" />
+    </g>
+
+    <g class="nodes" aria-hidden="true">
+      <g class="node" transform="translate(207 276)"><circle class="node-halo" r="14" /><circle r="5" /></g>
+      <g class="node node--minor" transform="translate(309 244)"><circle class="node-halo" r="10" /><circle r="4" /></g>
+      <g class="node node--minor" transform="translate(416 281)"><circle class="node-halo" r="10" /><circle r="4" /></g>
+      <g class="node" transform="translate(510 256)"><circle class="node-halo" r="14" /><circle r="5" /></g>
+      <g class="node node--core" transform="translate(589 295)"><circle class="node-halo" r="24" /><circle r="8" /></g>
+      <g class="node" transform="translate(721 269)"><circle class="node-halo" r="14" /><circle r="5" /></g>
+      <g class="node node--signal" transform="translate(827 331)"><circle class="node-halo" r="18" /><circle r="6" /></g>
+      <g class="node node--minor" transform="translate(338 359)"><circle class="node-halo" r="10" /><circle r="4" /></g>
+      <g class="node node--minor" transform="translate(471 350)"><circle class="node-halo" r="10" /><circle r="4" /></g>
+      <g class="node" transform="translate(708 392)"><circle class="node-halo" r="14" /><circle r="5" /></g>
+      <g class="node node--minor" transform="translate(829 407)"><circle class="node-halo" r="10" /><circle r="4" /></g>
+      <g class="node" transform="translate(1001 465)"><circle class="node-halo" r="14" /><circle r="5" /></g>
+      <g class="node node--minor" transform="translate(628 207)"><circle class="node-halo" r="10" /><circle r="4" /></g>
+      <g class="node" transform="translate(744 190)"><circle class="node-halo" r="14" /><circle r="5" /></g>
+      <g class="node node--minor" transform="translate(922 199)"><circle class="node-halo" r="10" /><circle r="4" /></g>
+      <g class="node" transform="translate(615 468)"><circle class="node-halo" r="14" /><circle r="5" /></g>
+    </g>
+
+    <g class="core-marker" aria-hidden="true" transform="translate(589 295)">
+      <path d="m0-43 37 21v44L0 43l-37-21v-44Z" />
+      <path d="m0-43 37 21L0 0l-37-22Z" />
+      <path d="M0 0v43M0 0l37-22M0 0l-37-22" />
+    </g>
+
+  </svg>
+</figure>
+
+<style>
+  .network-atlas {
+    width: 100%;
+    margin: 0;
+    color: var(--viz-face-top);
+    container-type: inline-size;
+    overflow: clip;
+  }
+
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .atlas-grid path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.8;
+    opacity: 0.14;
+  }
+
+  .atlas-grid .grid-minor { stroke-dasharray: 2 8; opacity: 0.08; }
+
+  .land-mass path {
+    fill: var(--viz-face-right);
+    stroke: var(--viz-line);
+    stroke-width: 1;
+    opacity: 0.72;
+  }
+
+  .traffic-band {
+    fill: none;
+    stroke: var(--viz-line-soft);
+    stroke-width: 6;
+    opacity: 0.13;
+  }
+
+  .traffic-band--wide { stroke-width: 16; opacity: 0.08; }
+  .traffic-band--signal { stroke: var(--viz-accent); stroke-width: 10; opacity: 0.17; }
+
+  .route-corridors path {
+    fill: none;
+    stroke: var(--viz-face-top);
+    stroke-width: 1.2;
+    opacity: 0.7;
+  }
+
+  .route-corridors path:nth-child(2),
+  .route-corridors path:nth-child(4) { stroke-dasharray: 3 7; opacity: 0.42; }
+
+  .node {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .node circle:last-child { fill: var(--viz-recess); }
+  .node-halo { fill: var(--viz-line-soft); opacity: 0.25; }
+  .node--minor .node-halo { opacity: 0.14; }
+  .node--core .node-halo { fill: var(--viz-line-soft); opacity: 0.38; }
+  .node--core circle:last-child,
+  .node--signal circle:last-child { fill: var(--viz-accent); }
+  .node--signal .node-halo { fill: var(--viz-accent); opacity: 0.26; }
+
+  .core-marker path {
+    fill: var(--viz-face-left);
+    stroke: var(--viz-face-top);
+    stroke-width: 1;
+  }
+
+  .core-marker path:nth-child(2) { fill: var(--viz-face-right); }
+  .core-marker path:nth-child(3) { fill: none; opacity: 0.65; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .node--core { animation: atlas-pulse 2.8s ease-in-out infinite; }
+    .node--signal { animation: atlas-pulse 2.8s 0.7s ease-in-out infinite; }
+    .core-marker { animation: core-hover 5.5s ease-in-out infinite alternate; }
+    .land-mass { animation: map-drift 11s ease-in-out infinite alternate; }
+  }
+
+  @keyframes atlas-pulse {
+    0%, 100% { opacity: 0.65; transform: scale(0.88); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  @keyframes core-hover {
+    from { transform: translate(589px, 295px); }
+    to { transform: translate(589px, 287px); }
+  }
+
+  @keyframes map-drift {
+    from { transform: translateX(-2px); }
+    to { transform: translateX(3px); }
+  }
+
+  @container (max-width: 640px) {
+    svg { transform: scale(1.22); transform-origin: center; }
+    .grid-minor { display: none; }
+    .traffic-band:not(.traffic-band--signal):not(.traffic-band--wide) { opacity: 0.08; }
+  }
+</style>

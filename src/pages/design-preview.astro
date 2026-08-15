@@ -1,0 +1,174 @@
+---
+/**
+ * Component gallery — every block in the system, on one page.
+ *
+ * WHY THIS ROUTE EXISTS
+ * Three blocks (uptime-strip, live-answer, ledger-table) are deliberately ABSENT from the
+ * real site: there is no uptime history, no publishable support transcript and no dated
+ * competitor pricing, and DESIGN.md 11 says a component whose numbers cannot be real does
+ * not ship. That is correct — but it also means nobody can SEE them.
+ *
+ * This page renders them with openly-labelled sample data so the design can be reviewed.
+ * It is noindex and linked from nowhere. The values below are FIXTURES, not claims: they
+ * must never be copied into src/data/pages.ts.
+ *
+ * Blocks fed from src/data/catalog.ts use the REAL catalogue — what you see there ships.
+ */
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { sharedHostingPlans, vpsConfiguratorAxes } from "@/data/catalog";
+import type { PageBlock } from "@/types/content";
+
+const SAMPLE = "SAMPLE";
+
+/* Ships today. Real catalogue, real prices. */
+const realBlocks: PageBlock[] = [
+  {
+    component: "pricing-grid",
+    eyebrow: "Real data",
+    title: "Plan deck with the Honest Ledger",
+    summary:
+      "Prices, INR values and capacity bars are read from the live billing system. Every plan renews at the price it advertises, because Royal Clouds only sells monthly.",
+    plans: sharedHostingPlans()
+  },
+  {
+    component: "configurator",
+    eyebrow: "Real data",
+    title: "Build a VPS",
+    summary:
+      "The sliders size the machine; the price is stated at checkout, never derived from a per-unit rate we do not publish.",
+    axes: vpsConfiguratorAxes(),
+    action: {
+      label: "Configure and order",
+      href: "https://my.royalclouds.net/cart.php?a=add",
+      external: true
+    }
+  }
+];
+
+/* CANNOT ship until real data exists. Everything below is invented for layout review
+   only — which is what the SAMPLE prefixes are there to make unmissable. */
+const sampleOnlyBlocks: PageBlock[] = [
+  {
+    component: "uptime-strip",
+    title: `${SAMPLE} — 90-day availability`,
+    summary:
+      "Sample data. The real strip renders only from a status provider; none is connected, so this block is absent from every live route.",
+    href: "https://my.royalclouds.net/serverstatus.php",
+    /* Deterministic, never random: a fixture that changes between builds is a bug. */
+    days: Array.from({ length: 90 }, (_, index) => ({
+      date: `2026-04-${String((index % 28) + 1).padStart(2, "0")}`,
+      state: index === 37 ? ("down" as const) : index % 23 === 0 ? ("warn" as const) : ("ok" as const)
+    }))
+  },
+  {
+    component: "live-answer",
+    eyebrow: `${SAMPLE} content`,
+    title: "Support, as it actually reads",
+    summary:
+      "Sample exchange written for layout review. Not a real customer. The live block requires a genuine anonymised transcript.",
+    transcript: [
+      {
+        role: "customer",
+        text: "My site is throwing a 500 after I moved it across. Can you see anything?"
+      },
+      {
+        role: "agent",
+        name: "Anil",
+        text: "Your .htaccess references a PHP handler that does not exist on this stack. I have corrected it and the site is responding again — can you confirm on your end?"
+      },
+      { role: "customer", text: "That fixed it. Thank you." }
+    ],
+    responseTime: `${SAMPLE} · 46s first response`,
+    resolution: `${SAMPLE} · Resolved in 4m 12s`
+  },
+  {
+    component: "ledger-table",
+    eyebrow: `${SAMPLE} content`,
+    title: "How monthly-only compares",
+    summary:
+      "Sample figures. The live table requires competitor pricing that is genuinely sourced and dated, per DESIGN.md 10.6.",
+    source:
+      "SAMPLE DATA — not sourced. Real competitor figures must be dated and cited before this ships.",
+    columns: ["", "Royal Clouds", "Typical budget host"],
+    ownColumnIndex: 1,
+    rows: [
+      { label: "Advertised price", cells: ["Advertised price", "$4.99/mo", "$2.99/mo"] },
+      { label: "Renews at", cells: ["Renews at", "$4.99/mo", "$11.99/mo"] },
+      { label: "Lock-in required", cells: ["Lock-in required", "no", "yes"] },
+      { label: "Term", cells: ["Term", "Monthly, cancel anytime", "48 months upfront"] }
+    ]
+  }
+];
+
+const seo = {
+  title: "Component preview — Royal Clouds (internal)",
+  description: "Internal component gallery. Not a public page.",
+  canonicalPath: "/design-preview",
+  image: "/legacy-assets/assets/img/og/main.png",
+  noindex: true,
+  updatedAt: "2026-07-12"
+};
+---
+
+<SiteLayout seo={seo}>
+  <main id="main-content">
+    <section class="section section-tint">
+      <div class="shell">
+        <p class="eyebrow">Internal</p>
+        <h1>Component preview</h1>
+        <p class="lede">Every block in the system on one page. Not indexed, not linked, not public.</p>
+      </div>
+    </section>
+
+    <section class="section section-light">
+      <div class="shell">
+        <p class="eyebrow">Ships today</p>
+        <h2>Fed from the real catalogue</h2>
+        <p class="lede">
+          These read <code>src/data/catalog.ts</code>, which mirrors the live billing system. What you
+          see here is what a customer sees.
+        </p>
+      </div>
+    </section>
+
+    {realBlocks.map((block) => <BlockRenderer block={block} />)}
+
+    <section class="section section-dark">
+      <div class="shell">
+        <p class="warn-flag">Sample data — does not ship</p>
+        <h2>Blocks waiting on real data</h2>
+        <p class="lede">
+          The three blocks below are <strong>absent from every live route</strong>. They are rendered
+          here with invented values purely so the design can be reviewed. Each ships the moment real
+          data exists: a status endpoint, a genuine anonymised transcript, and dated competitor
+          pricing. Do not copy these fixtures into <code>src/data/pages.ts</code>.
+        </p>
+      </div>
+    </section>
+
+    {sampleOnlyBlocks.map((block) => <BlockRenderer block={block} />)}
+  </main>
+</SiteLayout>
+
+<style>
+  /* Deliberately loud. A sample-data warning that reads as chrome has failed at its
+     only job. */
+  .warn-flag {
+    display: inline-block;
+    margin: 0 0 1.25rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--pulse-warn);
+    border-radius: var(--r-pill);
+    color: var(--pulse-warn);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+</style>

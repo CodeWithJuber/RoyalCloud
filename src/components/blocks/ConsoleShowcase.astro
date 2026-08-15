@@ -1,0 +1,114 @@
+---
+/* DESIGN.md 8.6 — the Royal Console as the product hero. The console is chrome:
+   every word inside it comes from the block. No fabricated screenshot, no metric
+   the product cannot actually show (DESIGN.md 11). */
+import type { ConsoleShowcaseBlock } from "../../types/content";
+import RoyalConsole from "../visuals/RoyalConsole.astro";
+
+interface Props { block: ConsoleShowcaseBlock }
+const { block } = Astro.props;
+
+const screens = block.screens ?? [];
+const action = block.action;
+const external = action ? (action.external ?? action.href.startsWith("http")) : false;
+const uid = Math.random().toString(36).slice(2, 8);
+---
+
+{screens.length > 0 && (
+<section class="section section-dark" aria-labelledby={`console-showcase-${uid}`}>
+  <div class="shell console-showcase" data-console-showcase>
+    <div class="rail">
+      <header class="section-header" data-reveal>
+        {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+        <h2 id={`console-showcase-${uid}`}>{block.title}</h2>
+        <p class="lede">{block.summary}</p>
+      </header>
+
+      {screens.length > 1 && (
+        <div class="segment console-switch" data-console-switch hidden>
+          {screens.map((screen, index) => (
+            <button
+              type="button"
+              aria-pressed={index === 0 ? "true" : "false"}
+              aria-controls={`console-frame-${uid}-${index}`}
+              data-console-tab={index}
+            >{screen.label}</button>
+          ))}
+        </div>
+      )}
+
+      {action && (
+        <div class="button-row" data-reveal>
+          <a
+            class="button button-primary"
+            href={action.href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+          >{action.label}</a>
+        </div>
+      )}
+    </div>
+
+    {/* Without JS every frame stays in the flow and stays readable; the script
+        only collapses them into a switcher once it can actually drive one. */}
+    <div class="frames" data-reveal>
+      {screens.map((screen, index) => (
+        <div class="frame" id={`console-frame-${uid}-${index}`} data-console-frame={index}>
+          <RoyalConsole label={screen.label} caption={screen.caption} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-console-showcase]")) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>("[data-console-tab]")];
+    const frames = [...root.querySelectorAll<HTMLElement>("[data-console-frame]")];
+    const control = root.querySelector<HTMLElement>("[data-console-switch]");
+    if (!control || tabs.length < 2) continue;
+
+    const select = (index: number) => {
+      tabs.forEach((tab, i) => tab.setAttribute("aria-pressed", String(i === index)));
+      frames.forEach((frame, i) => { frame.hidden = i !== index; });
+    };
+
+    control.hidden = false;
+    tabs.forEach((tab, index) => tab.addEventListener("click", () => select(index)));
+    select(0);
+  }
+</script>
+
+<style>
+  .console-showcase {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+  }
+  @media (min-width: 64rem) {
+    .console-showcase { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  }
+
+  .rail {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+  .rail .section-header { margin: 0; }
+
+  /* Real control: 44px targets, wraps rather than overflowing at 390px. */
+  .console-switch {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  .console-switch button { min-height: 44px; }
+  /* Tabs are navigation, not conversion: the ring is --interactive like everywhere else. */
+  .console-switch button:focus-visible {
+    outline: 2px solid var(--interactive);
+    outline-offset: 3px;
+  }
+
+  .frames { display: grid; gap: 1.5rem; }
+  .frames [hidden] { display: none; }
+</style>

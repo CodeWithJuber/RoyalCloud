@@ -1,0 +1,80 @@
+---
+import type { AnswerBlock } from "../../types/content";
+
+interface Props { block: AnswerBlock }
+const { block } = Astro.props;
+---
+
+<section class="section section-tint" aria-labelledby="answers-title">
+  <div class="shell answers-shell">
+    <header class="section-header" data-reveal>
+      {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+      <h2 id="answers-title">{block.title}</h2>
+    </header>
+
+    <div class="answer-list" data-reveal>
+      {block.answers.map((answer, index) => (
+        <details open={index === 0}>
+          <summary>
+            <h3>{answer.question}</h3>
+            <span class="marker" aria-hidden="true"></span>
+          </summary>
+          <p>{answer.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .answers-shell { max-width: 48rem; }
+  .answer-list { display: grid; gap: 0.75rem; }
+
+  details {
+    border: 1px solid var(--line);
+    border-radius: var(--r-inner);
+    background: var(--paper);
+  }
+  details[open] { border-color: var(--chrome); }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.5rem;
+    padding: 1rem 1.25rem;
+    list-style: none;
+    cursor: pointer;
+  }
+  summary::-webkit-details-marker { display: none; }
+
+  h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+
+  /* Plus sign that becomes a minus when open — CSS only, no JS. */
+  .marker {
+    position: relative;
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+  }
+  .marker::before,
+  .marker::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 2px;
+    background: var(--cobalt);
+    content: "";
+    transition: transform 200ms var(--ease);
+  }
+  .marker::before { width: 1rem; height: 2px; transform: translate(-50%, -50%); }
+  .marker::after { width: 2px; height: 1rem; transform: translate(-50%, -50%); }
+  details[open] .marker::after { transform: translate(-50%, -50%) scaleY(0); }
+
+  details p {
+    margin: 0;
+    padding: 0 1.25rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+</style>

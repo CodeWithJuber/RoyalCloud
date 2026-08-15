@@ -1,0 +1,214 @@
+---
+import { siteSettings } from "@/data/settings";
+import { integrations } from "@/data/integrations";
+import type { LinkField } from "@/types/content";
+
+/* Data gives exactly four groups: three footerGroups + support. That is the
+   §10.18 four-column system — no group is invented to fill a slot. */
+const groups = [...siteSettings.footerGroups, { label: "Support", items: siteSettings.support }];
+
+/* §11: settings carry no live status state, so the badge may not assert one.
+   Link to a status destination only if the data actually names one. */
+const allLinks: LinkField[] = groups.flatMap((group) => group.items);
+const statusLink = allLinks.find((link) => /status/i.test(link.label));
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer section-dark">
+  <div class="shell footer-top">
+    <section class="footer-brand">
+      <img
+        src={siteSettings.logoLight}
+        width="176"
+        height="46"
+        alt={siteSettings.organizationName}
+        loading="lazy"
+      />
+      <p class="fine brand-note">
+        SSD hosting, KVM virtual servers, managed WordPress, and dedicated infrastructure —
+        with a direct path to a human.
+      </p>
+
+      {integrations.newsletter.enabled && (
+        <form class="console" method="post" action={integrations.newsletter.action} target="_blank">
+          <span class="eyebrow">Newsletter</span>
+          <label for="footer-newsletter">Hosting tips and offers</label>
+          <div class="console-row">
+            <input
+              id="footer-newsletter"
+              name="EMAIL"
+              type="email"
+              autocomplete="email"
+              placeholder="you@company.com"
+              required
+            />
+            <button class="button button-primary" type="submit">Subscribe</button>
+          </div>
+          <label class="consent">
+            <input type="checkbox" required />
+            <span class="fine">I agree to receive marketing email and can unsubscribe at any time.</span>
+          </label>
+        </form>
+      )}
+
+      {siteSettings.socials.length > 0 && (
+        <ul class="socials">
+          {siteSettings.socials.map((social) => (
+            <li>
+              <a href={social.href} rel="noreferrer" target="_blank">{social.label}</a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+
+    <div class="link-system">
+      {groups.map((group) => (
+        <nav aria-label={`${group.label} links`}>
+          <h2>{group.label}</h2>
+          <ul>
+            {group.items.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noreferrer" : undefined}
+                >{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+  </div>
+
+  <div class="shell footer-bar">
+    <p class="fine">© 2014–{year} {siteSettings.organizationName}. All rights reserved.</p>
+    <p class="fine">Pricing shown is introductory. Renewal rates are listed on every plan.</p>
+    {statusLink && (
+      <a
+        class="status-link"
+        href={statusLink.href}
+        target={statusLink.external ? "_blank" : undefined}
+        rel={statusLink.external ? "noreferrer" : undefined}
+      >{statusLink.label}</a>
+    )}
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: clamp(3.5rem, 7vw, 5.5rem) 0 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--body);
+    background: var(--night);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: minmax(18rem, 1fr) minmax(0, 1.9fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .footer-brand img { width: 10rem; height: auto; }
+  .brand-note { max-width: 34ch; margin: 1.25rem 0 0; }
+
+  /* §10.14 input spec: label above, 56px field, chrome hairline → interactive on focus. */
+  .console { display: grid; gap: 0.5rem; max-width: 26rem; margin-top: 2rem; }
+  .console > label { color: var(--heading); font-size: 0.8125rem; font-weight: 700; }
+  .console-row { display: flex; gap: 0.5rem; }
+
+  .console input[type="email"] {
+    min-width: 0;
+    flex: 1;
+    height: 3.5rem;
+    padding: 0 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-input);
+    color: var(--ice);
+    background: var(--abyss);
+    font: inherit;
+    outline: none;
+  }
+  .console input::placeholder { color: var(--muted); opacity: 1; }
+  .console input[type="email"]:focus-visible {
+    border-color: var(--interactive);
+    box-shadow: inset 0 0 0 1px var(--interactive);
+  }
+  .console .button { flex-shrink: 0; min-height: 3.5rem; }
+
+  .consent { display: flex; align-items: flex-start; gap: 0.5rem; margin-top: 0.25rem; }
+  /* WCAG 2.2 (2.5.8): 24px target, not the 14px browser default. */
+  .consent input { width: 24px; height: 24px; flex-shrink: 0; accent-color: var(--cobalt-bright); }
+  .consent .fine { line-height: 1.5; }
+
+  .socials { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
+  .socials a {
+    display: block;
+    padding: 0.6875rem 0;
+    color: var(--muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .socials a:hover { color: var(--heading); text-decoration: underline; }
+
+  .link-system { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+  .link-system nav { align-content: start; }
+  .link-system h2 {
+    max-width: none;
+    margin: 0 0 0.75rem;
+    color: var(--heading);
+    font-size: 0.9375rem;
+    font-weight: 800;
+    letter-spacing: 0;
+  }
+  .link-system ul { margin: 0; padding: 0; list-style: none; }
+  .link-system a {
+    display: block;
+    /* 44px touch target from padding + line box, without inflating the rhythm. */
+    padding: 0.6875rem 0;
+    color: var(--muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.375;
+    text-decoration: none;
+    transition: color 200ms var(--ease);
+  }
+  .link-system a:hover { color: var(--heading); text-decoration: underline; }
+
+  .footer-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .footer-bar p { max-width: none; margin: 0; }
+
+  .status-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .status-link:hover { color: var(--ice); border-bottom-color: var(--interactive); }
+
+  @media (max-width: 960px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .link-system { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .console-row { flex-direction: column; }
+    .console .button { width: 100%; }
+  }
+</style>

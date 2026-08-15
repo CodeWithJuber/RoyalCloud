@@ -1,0 +1,116 @@
+<figure class="route-signal" aria-hidden="true">
+  <svg viewBox="0 0 420 190" focusable="false">
+    <g class="signal-grid">
+      <path d="M18 30h384M18 80h384M18 130h384M18 180h384" />
+      <path d="M54 14v166M126 14v166M198 14v166M270 14v166M342 14v166" />
+    </g>
+
+    <g class="route-band">
+      <path class="route-band__wide" d="M36 144c71 0 79-97 153-97 79 0 73 83 149 83h49" />
+      <path class="route-band__line" d="M36 144c71 0 79-97 153-97 79 0 73 83 149 83h49" />
+      <path class="route-band__return" d="M36 158c90 0 107-50 172-50 62 0 76 36 179 36" />
+    </g>
+
+    <g class="route-nodes">
+      <g transform="translate(36 144)"><circle class="node-halo" r="13" /><circle r="5" /></g>
+      <g transform="translate(189 47)"><circle class="node-halo" r="13" /><circle r="5" /></g>
+      <g class="node--signal" transform="translate(338 130)"><circle class="node-halo" r="17" /><circle r="6" /></g>
+      <g transform="translate(387 130)"><circle class="node-halo" r="13" /><circle r="5" /></g>
+    </g>
+
+    <g class="route-core" transform="translate(189 47)">
+      <path d="m0-22 19 11v22L0 22l-19-11v-22Z" />
+      <path class="route-core__top" d="m0-22 19 11L0 0l-19-11Z" />
+      <path d="M0 0v22M0 0l19-11M0 0l-19-11" />
+    </g>
+
+    <g class="route-scan">
+      <rect x="-34" y="18" width="34" height="154" rx="17" />
+      <path d="M0 28v134" />
+    </g>
+
+    <g class="route-labels">
+      <text x="18" y="20">ORIGIN / 01</text>
+      <text x="307" y="20">ROUTE / ACTIVE</text>
+      <text x="18" y="177">EDGE CONTROL</text>
+      <circle cx="399" cy="17" r="4" />
+    </g>
+  </svg>
+</figure>
+
+<style>
+  .route-signal {
+    width: min(100%, 420px);
+    margin: 0;
+    color: var(--viz-face-top);
+  }
+
+  svg { display: block; width: 100%; height: auto; overflow: hidden; }
+
+  .signal-grid path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.8;
+    opacity: 0.13;
+  }
+
+  .route-band path { fill: none; }
+  .route-band__wide { stroke: var(--viz-line-soft); stroke-width: 16; opacity: 0.12; }
+  .route-band__line { stroke: var(--viz-recess); stroke-width: 1.4; opacity: 0.86; }
+  .route-band__return { stroke: var(--viz-line-soft); stroke-width: 1; stroke-dasharray: 3 6; opacity: 0.6; }
+
+  .route-nodes g {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .route-nodes circle:last-child { fill: var(--viz-recess); }
+  .route-nodes .node-halo { fill: var(--viz-line-soft); opacity: 0.22; }
+  .route-nodes .node--signal circle:last-child { fill: var(--viz-accent); }
+  .route-nodes .node--signal .node-halo { fill: var(--viz-accent); opacity: 0.28; }
+
+  .route-core path {
+    fill: var(--viz-face-left);
+    stroke: var(--viz-face-top);
+    stroke-width: 1;
+  }
+
+  .route-core .route-core__top { fill: var(--viz-face-right); }
+  .route-core path:last-child { fill: none; opacity: 0.68; }
+
+  .route-scan rect { fill: var(--viz-accent); opacity: 0.1; }
+  .route-scan path { stroke: var(--viz-accent); stroke-width: 1; opacity: 0.72; }
+
+  .route-labels text {
+    fill: var(--viz-label);
+    font-family: var(--font-body, "Manrope Variable", sans-serif);
+    font-size: 9px;
+    font-weight: 720;
+    letter-spacing: 0.16em;
+  }
+
+  .route-labels circle { fill: var(--viz-accent); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .route-scan { animation: route-scan 6.5s cubic-bezier(0.32, 0.72, 0, 1) infinite; }
+    .node--signal { animation: signal-pulse 2.5s ease-in-out infinite; }
+    .route-core { animation: core-float 4.8s ease-in-out infinite alternate; }
+  }
+
+  @keyframes route-scan {
+    0%, 12% { opacity: 0; transform: translateX(0); }
+    20% { opacity: 1; }
+    76% { opacity: 1; transform: translateX(420px); }
+    77%, 100% { opacity: 0; transform: translateX(420px); }
+  }
+
+  @keyframes signal-pulse {
+    0%, 100% { opacity: 0.6; transform: scale(0.86); }
+    50% { opacity: 1; transform: scale(1.12); }
+  }
+
+  @keyframes core-float {
+    from { transform: translate(189px, 47px); }
+    to { transform: translate(189px, 41px); }
+  }
+</style>

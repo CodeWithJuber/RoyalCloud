@@ -1,0 +1,283 @@
+---
+/* Operator strip (DESIGN.md 10.10) — full-bleed --night band: copy block +
+   Deploy Log terminal, with the Git / CLI / API transcripts behind a tablist.
+   Every line shown is passed in from content; nothing is invented here. */
+import DeployLog from "@/components/visuals/DeployLog.astro";
+import type { OperatorStripBlock } from "../../types/content";
+
+interface Props {
+  block: OperatorStripBlock;
+}
+
+const { block } = Astro.props;
+
+/* No tabs means no transcript — and an empty terminal would be a claim we
+   cannot back, so the section simply does not render (DESIGN.md 11). */
+const tabs = block.tabs ?? [];
+
+const ID = "operator-strip";
+const tabId = (index: number) => `${ID}-tab-${index}`;
+const panelId = (index: number) => `${ID}-panel-${index}`;
+
+/* Copy hands over exactly the commands the visitor can see — the cmd lines, in
+   order, with nothing appended. */
+const commandsOf = (lines: OperatorStripBlock["tabs"][number]["lines"]) =>
+  lines
+    .filter((line) => line.kind === "cmd")
+    .map((line) => line.text)
+    .join("\n");
+---
+
+{
+  tabs.length > 0 && (
+    <section class="section section-dark" aria-labelledby={`${ID}-title`}>
+      <div class="shell strip">
+        <header class="section-header copy" data-reveal>
+          {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+          <h2 id={`${ID}-title`}>{block.title}</h2>
+          <p class="lede">{block.summary}</p>
+        </header>
+
+        <div class="console" data-reveal data-operator-strip>
+          <div class="console-bar">
+            <div
+              class="segment tabbar"
+              role="tablist"
+              aria-label="Deployment method"
+            >
+              {tabs.map((tab, index) => (
+                <button
+                  type="button"
+                  role="tab"
+                  id={tabId(index)}
+                  aria-controls={panelId(index)}
+                  aria-selected={index === 0 ? "true" : "false"}
+                  tabindex={index === 0 ? 0 : -1}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            <button type="button" class="copy-button" data-copy>
+              <span data-copy-label>Copy</span>
+            </button>
+            <span class="fine copy-status" role="status" data-copy-status />
+          </div>
+
+          {tabs.map((tab, index) => (
+            <div
+              role="tabpanel"
+              id={panelId(index)}
+              aria-labelledby={tabId(index)}
+              tabindex="0"
+              class="panel"
+              data-commands={commandsOf(tab.lines)}
+            >
+              <h3 class="panel-label">{tab.label}</h3>
+              <DeployLog title={tab.title} lines={tab.lines} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .strip {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .copy {
+    max-width: 34ch;
+    text-align: left;
+  }
+
+  .console {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  .console-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Tabs and the clipboard button do nothing without JS, so they only exist
+     once the script has taken ownership of the console. */
+  .tabbar,
+  .copy-button {
+    display: none;
+  }
+  [data-ready="true"] .tabbar,
+  [data-ready="true"] .copy-button {
+    display: inline-flex;
+  }
+
+  .tabbar button {
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
+  }
+  /* .segment styles the pressed state via aria-pressed; a tablist uses
+     aria-selected, so the active segment is re-stated here. */
+  .tabbar button[aria-selected="true"] {
+    color: var(--night);
+    background: var(--ice);
+  }
+  .tabbar button:focus-visible,
+  .copy-button:focus-visible,
+  .panel:focus-visible {
+    outline: 2px solid var(--cobalt-bright);
+    outline-offset: 2px;
+  }
+
+  .copy-button {
+    justify-content: center;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    color: var(--body);
+    background: none;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      border-color 240ms var(--ease),
+      color 240ms var(--ease);
+  }
+  .copy-button:hover {
+    color: var(--heading);
+    border-color: var(--heading);
+  }
+
+  .copy-status {
+    color: var(--muted);
+  }
+
+  .panel {
+    min-width: 0;
+  }
+  .panel[hidden] {
+    display: none;
+  }
+  /* Air between the stacked transcripts in the no-JS case only. */
+  .panel + .panel {
+    margin-top: 1.5rem;
+  }
+  [data-ready="true"] .panel + .panel {
+    margin-top: 0;
+  }
+
+  /* Without JS each transcript carries its own heading; with JS the tab is the
+     heading, so the label would be a duplicate. */
+  .panel-label {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  [data-ready="true"] .panel-label {
+    display: none;
+  }
+
+  @media (min-width: 60rem) {
+    .strip {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 4rem;
+    }
+  }
+</style>
+
+<script>
+  const setup = (root: HTMLElement) => {
+    const tabs = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
+    );
+    const panels = Array.from(
+      root.querySelectorAll<HTMLElement>('[role="tabpanel"]'),
+    );
+    if (tabs.length === 0 || tabs.length !== panels.length) return;
+
+    const copyButton = root.querySelector<HTMLButtonElement>("[data-copy]");
+    const copyLabel = root.querySelector<HTMLElement>("[data-copy-label]");
+    const copyStatus = root.querySelector<HTMLElement>("[data-copy-status]");
+    let active = 0;
+    let resetTimer = 0;
+
+    const resetCopy = () => {
+      if (copyLabel) copyLabel.textContent = "Copy";
+      if (copyStatus) copyStatus.textContent = "";
+    };
+
+    const select = (next: number, focus: boolean) => {
+      active = (next + tabs.length) % tabs.length;
+      tabs.forEach((tab, index) => {
+        const on = index === active;
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+        tab.tabIndex = on ? 0 : -1;
+        panels[index]?.toggleAttribute("hidden", !on);
+      });
+      if (focus) tabs[active]?.focus();
+      window.clearTimeout(resetTimer);
+      resetCopy();
+    };
+
+    const STEP: Record<string, number> = {
+      ArrowRight: 1,
+      ArrowDown: 1,
+      ArrowLeft: -1,
+      ArrowUp: -1,
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => select(index, false));
+      tab.addEventListener("keydown", (event) => {
+        const step = STEP[event.key];
+        if (step !== undefined) select(index + step, true);
+        else if (event.key === "Home") select(0, true);
+        else if (event.key === "End") select(tabs.length - 1, true);
+        else return;
+        event.preventDefault();
+      });
+    });
+
+    copyButton?.addEventListener("click", async () => {
+      const commands = panels[active]?.dataset.commands ?? "";
+      if (!commands) return;
+      try {
+        await navigator.clipboard.writeText(commands);
+      } catch {
+        /* Clipboard can be denied (insecure context, permission). Say so — a
+           success state we cannot back would be a lie. */
+        if (copyStatus) {
+          copyStatus.textContent = "Copy blocked — select the commands to copy them manually";
+        }
+        return;
+      }
+      if (copyLabel) copyLabel.textContent = "Copied";
+      if (copyStatus) copyStatus.textContent = "Commands copied to clipboard";
+      window.clearTimeout(resetTimer);
+      resetTimer = window.setTimeout(resetCopy, 4000);
+    });
+
+    root.dataset.ready = "true";
+    select(0, false);
+  };
+
+  document
+    .querySelectorAll<HTMLElement>("[data-operator-strip]")
+    .forEach(setup);
+</script>

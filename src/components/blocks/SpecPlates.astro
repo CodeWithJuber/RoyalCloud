@@ -1,0 +1,68 @@
+---
+import type { SpecPlatesBlock } from "../../types/content";
+
+interface Props { block: SpecPlatesBlock }
+const { block } = Astro.props;
+
+/* DESIGN.md 11: no data, no component. Never a placeholder plate. */
+const plates = block.plates ?? [];
+---
+
+{plates.length > 0 && (
+  <section class="section section-dark" aria-labelledby="spec-plates-title">
+    <div class="shell">
+      <header class="section-header" data-reveal>
+        {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+        <h2 id="spec-plates-title">{block.title}</h2>
+        {block.summary && <p class="lede">{block.summary}</p>}
+      </header>
+
+      <dl class="plates spec-plates" data-reveal>
+        {plates.map((plate) => (
+          <div class="plate spec-plate">
+            <dt class="plate-label">{plate.label}</dt>
+            <dd class="plate-value tabular">{plate.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+)}
+
+<style>
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  /* Gapless grid (DESIGN.md 10.7). Global .plates auto-fits by width; here the
+     column count is fixed at 2 so the rows read as one milled panel. */
+  .spec-plates {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .spec-plate {
+    min-height: 6rem; /* 96px machined plate */
+    padding: 1.25rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .spec-plate .plate-value {
+    overflow-wrap: anywhere;
+  }
+
+  @media (min-width: 48rem) {
+    .spec-plates {
+      grid-template-columns: 1fr 1fr;
+    }
+    /* Interior vertical hairline only; the panel's outer edges stay open. */
+    .spec-plate:nth-child(odd) {
+      padding-left: 0;
+    }
+    .spec-plate:nth-child(even) {
+      padding-right: 0;
+      border-left: 1px solid var(--line);
+    }
+  }
+</style>

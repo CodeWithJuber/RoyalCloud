@@ -1,0 +1,51 @@
+---
+import type { TrustStripBlock } from "../../types/content";
+
+interface Props { block: TrustStripBlock }
+const { block } = Astro.props;
+---
+
+<section class="section-dark trust" aria-label="Royal Clouds service facts">
+  <ul class="shell trust__rail" data-reveal>
+    {block.items.map((item) => (
+      <li>
+        <strong>{item.label}</strong>
+        <span>{item.detail}</span>
+        {item.approvalState === "needs-review" && <em class="approval-note">Pending approval</em>}
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .trust {
+    padding-block: clamp(1.75rem, 3vw, 2.5rem);
+    border-block: 1px solid var(--line-dark);
+  }
+
+  .trust__rail {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 1.5rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--line-dark);
+  }
+  strong {
+    color: var(--ice);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 620;
+    font-variant-numeric: tabular-nums;
+  }
+  span { color: var(--smoke); font-size: 0.875rem; }
+  em { align-self: flex-start; margin-top: 0.5rem; font-style: normal; }
+</style>

@@ -1,0 +1,97 @@
+---
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/manrope";
+import "@/styles/global.css";
+import displayFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
+import bodyFont from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
+import SeoHead from "@/components/SeoHead.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import type { SeoFields } from "@/types/content";
+
+interface Props {
+  seo: SeoFields;
+  structuredData?: Record<string, unknown>[];
+}
+
+const { seo, structuredData = [] } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-currency="USD">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#050712" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/legacy-assets/assets/img/favi.png" type="image/png" />
+    <SeoHead seo={seo} structuredData={structuredData} />
+    <script is:inline>
+      (() => {
+        document.documentElement.dataset.js = "true";
+        try {
+          const saved = localStorage.getItem("royalclouds-currency");
+          const localeCurrency = /^en-IN\b/i.test(navigator.language) ? "INR" : "USD";
+          document.documentElement.dataset.currency = saved === "INR" || saved === "USD" ? saved : localeCurrency;
+        } catch {
+          document.documentElement.dataset.currency = "USD";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <SiteHeader />
+    <slot />
+    <SiteFooter />
+    <script>
+      const applyCurrency = (currency: "INR" | "USD") => {
+        document.documentElement.dataset.currency = currency;
+        document.querySelectorAll<HTMLElement>("[data-currency-option]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.currencyOption === currency));
+        });
+      };
+
+      const initializeSite = () => {
+        const current = document.documentElement.dataset.currency === "INR" ? "INR" : "USD";
+        applyCurrency(current);
+
+        document.querySelectorAll<HTMLButtonElement>("[data-currency-option]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const requested = button.dataset.currencyOption;
+            if (requested !== "INR" && requested !== "USD") return;
+            applyCurrency(requested);
+            try { localStorage.setItem("royalclouds-currency", requested); } catch {}
+            window.zaraz?.track("currency_changed", { currency: requested });
+          });
+        });
+
+        const reveals = document.querySelectorAll<HTMLElement>("[data-reveal]");
+        /* Reduced motion drops the animation, not the content: mark everything
+           revealed so telemetry bars, console rows and log lines still show their
+           real values instead of staying at their pre-reveal zero state. */
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          reveals.forEach((element) => element.dataset.visible = "true");
+          return;
+        }
+        if (!("IntersectionObserver" in window)) {
+          reveals.forEach((element) => element.dataset.visible = "true");
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            (entry.target as HTMLElement).dataset.visible = "true";
+            observer.unobserve(entry.target);
+          });
+        }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+        reveals.forEach((element) => observer.observe(element));
+      };
+
+      initializeSite();
+    </script>
+  </body>
+</html>

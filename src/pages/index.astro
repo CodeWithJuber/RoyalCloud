@@ -1,0 +1,13 @@
+---
+import PageView from "@/components/PageView.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { buildStructuredData } from "@/lib/structured-data";
+import { getPageContent, isPreviewRequest } from "@/lib/storyblok";
+
+const preview = isPreviewRequest(Astro.url);
+const page = await getPageContent("/", preview);
+if (!page) throw new Error("Home content is unavailable.");
+const structuredData = buildStructuredData(page);
+---
+
+<SiteLayout seo={page.seo} structuredData={structuredData}><PageView page={page} preview={preview} /></SiteLayout>

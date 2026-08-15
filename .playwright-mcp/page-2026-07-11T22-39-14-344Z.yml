@@ -1,0 +1,399 @@
+- generic [active] [ref=f23e1]:
+  - link "Skip to content" [ref=f23e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - complementary "Announcement" [ref=f23e3]:
+    - paragraph [ref=f23e4]:
+      - generic [ref=f23e5]: Built for fast launches, deliberate scaling, and human support.
+      - link "Explore hosting" [ref=f23e6] [cursor=pointer]:
+        - /url: /shared-hosting
+        - text: Explore hosting
+        - generic [ref=f23e7]: ↗
+    - button "Dismiss announcement" [ref=f23e8] [cursor=pointer]
+  - banner [ref=f23e12]:
+    - link "Royal Clouds home" [ref=f23e13] [cursor=pointer]:
+      - /url: /
+      - img "Royal Clouds" [ref=f23e14]
+    - navigation "Primary" [ref=f23e15]:
+      - group [ref=f23e16]:
+        - generic "Hosting" [ref=f23e17] [cursor=pointer]
+      - group [ref=f23e21]:
+        - generic "VPS" [ref=f23e22] [cursor=pointer]
+      - group [ref=f23e26]:
+        - generic "Why Royal Clouds" [ref=f23e27] [cursor=pointer]
+    - generic [ref=f23e31]:
+      - group "Display currency" [ref=f23e32]:
+        - button "Display prices in Indian rupees" [ref=f23e33] [cursor=pointer]: ₹ INR
+        - button "Display prices in US dollars" [pressed] [ref=f23e34] [cursor=pointer]: $ USD
+      - link "Sign in" [ref=f23e35] [cursor=pointer]:
+        - /url: https://my.royalclouds.net/login
+      - link "Open console ↗" [ref=f23e36] [cursor=pointer]:
+        - /url: https://my.royalclouds.net
+    - text: ↗ ↗
+  - navigation "Breadcrumb" [ref=f23e37]:
+    - list [ref=f23e38]:
+      - listitem [ref=f23e39]:
+        - link "Home" [ref=f23e40] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=f23e41]: /KVM VPS Hosting
+  - main [ref=f23e42]:
+    - region [ref=f23e43]:
+      - generic [ref=f23e44]:
+        - generic [ref=f23e45]:
+          - paragraph [ref=f23e46]: KVM cloud compute
+          - heading "KVM VPS Hosting" [level=1] [ref=f23e47]
+          - paragraph [ref=f23e48]: Root access on the Royal backbone. Dedicated cores, guaranteed memory, and a machine that behaves the same at 3am as it did at noon.
+          - generic [ref=f23e49]:
+            - link "Configure a server ↗" [ref=f23e50] [cursor=pointer]:
+              - /url: "#configurator"
+            - link "See plans ↗" [ref=f23e51] [cursor=pointer]:
+              - /url: "#plans"
+          - list [ref=f23e52]:
+            - listitem [ref=f23e53]: KVM virtualisation
+            - listitem [ref=f23e56]: Root access
+            - listitem [ref=f23e59]: SSD storage
+        - figure [ref=f23e63]:
+          - img [ref=f23e64]:
+            - generic [ref=f23e128]:
+              - generic [ref=f23e129]:
+                - generic [ref=f23e131]: EDGE / 03
+                - generic [ref=f23e132]: ROUTING ACTIVE
+              - generic [ref=f23e133]:
+                - generic [ref=f23e135]: CORE / RC-01
+                - generic [ref=f23e136]: SYSTEM NOMINAL
+              - generic [ref=f23e137]: X / 25.2048
+              - generic [ref=f23e138]: Y / 55.2708
+    - region [ref=f23e139]:
+      - generic [ref=f23e140]:
+        - generic [ref=f23e141]:
+          - paragraph [ref=f23e142]: Operator tools
+          - heading "Push. Provision. Roll back." [level=2] [ref=f23e143]
+          - paragraph [ref=f23e144]: Real commands against a real machine. Nothing here is a mock-up of a workflow you cannot run.
+        - generic [ref=f23e145]:
+          - generic [ref=f23e146]:
+            - tablist "Deployment method" [ref=f23e147]:
+              - tab "SSH" [selected] [ref=f23e148] [cursor=pointer]
+              - tab "Docker" [ref=f23e149] [cursor=pointer]
+              - tab "Rollback" [ref=f23e150] [cursor=pointer]
+            - button "Copy" [ref=f23e151] [cursor=pointer]
+            - status
+          - tabpanel "SSH" [ref=f23e153]:
+            - generic [ref=f23e154]:
+              - generic [ref=f23e155]: provision.sh
+              - generic [ref=f23e160]:
+                - code [ref=f23e161]: $ ssh root@your-vps
+                - code [ref=f23e162]: ✓ Connection established.
+                - code [ref=f23e163]: $ apt update && apt install -y nginx
+                - code [ref=f23e164]: $ systemctl enable --now nginx
+    - region [ref=f23e165]:
+      - generic [ref=f23e166]:
+        - generic [ref=f23e167]:
+          - paragraph [ref=f23e168]: Size the machine
+          - heading "Move the sliders. Watch the price move with them." [level=2] [ref=f23e169]
+          - paragraph [ref=f23e170]: The base configuration is VPS I at its audited price. Scaling the axes scales the quote proportionally — the arithmetic is shown, not hidden. Final pricing is confirmed at checkout.
+        - generic [ref=f23e171]:
+          - generic [ref=f23e172]:
+            - generic [ref=f23e173]:
+              - generic [ref=f23e174]: vCPU cores
+              - status [ref=f23e175]: 1 vCPU
+              - slider "vCPU cores" [ref=f23e176] [cursor=pointer]: "0"
+              - paragraph [ref=f23e177]:
+                - generic [ref=f23e178]: 1 vCPU
+                - generic [ref=f23e179]: 4 vCPU
+            - generic [ref=f23e180]:
+              - generic [ref=f23e181]: Memory
+              - status [ref=f23e182]: 1 GB RAM
+              - slider "Memory" [ref=f23e183] [cursor=pointer]: "0"
+              - paragraph [ref=f23e184]:
+                - generic [ref=f23e185]: 1 GB RAM
+                - generic [ref=f23e186]: 4 GB RAM
+            - generic [ref=f23e187]:
+              - generic [ref=f23e188]: SSD storage
+              - status [ref=f23e189]: 10 GB SSD
+              - slider "SSD storage" [ref=f23e190] [cursor=pointer]: "0"
+              - paragraph [ref=f23e191]:
+                - generic [ref=f23e192]: 10 GB SSD
+                - generic [ref=f23e193]: 40 GB SSD
+          - complementary [ref=f23e194]:
+            - paragraph [ref=f23e195]: Plan telemetry
+            - generic [ref=f23e196]:
+              - generic [ref=f23e197]:
+                - generic [ref=f23e198]: vCPU cores
+                - generic [ref=f23e199]: 1 vCPU
+              - generic [ref=f23e201]:
+                - generic [ref=f23e202]: Memory
+                - generic [ref=f23e203]: 1 GB RAM
+              - generic [ref=f23e205]:
+                - generic [ref=f23e206]: SSD storage
+                - generic [ref=f23e207]: 10 GB SSD
+            - generic [ref=f23e209]:
+              - paragraph [ref=f23e210]: $$4/mo
+              - paragraph [ref=f23e211]: Base configuration (1 vCPU · 1 GB RAM · 10 GB SSD) at the price above · scaled ×1.00 · term and renewal are stated at checkout before you pay.
+            - button "Take this configuration to checkout ↗" [ref=f23e212] [cursor=pointer]
+    - region [ref=f23e213]:
+      - generic [ref=f23e214]:
+        - generic [ref=f23e215]:
+          - paragraph [ref=f23e216]: Machine specification
+          - heading "Hardware, stated plainly." [level=2] [ref=f23e217]
+          - paragraph [ref=f23e218]: Three preset planes. Every number below is sold on a plan you can order today.
+        - generic [ref=f23e219]:
+          - generic [ref=f23e220]:
+            - term [ref=f23e221]: Virtualisation
+            - definition [ref=f23e222]: KVM · dedicated cores
+          - generic [ref=f23e223]:
+            - term [ref=f23e224]: vCPU
+            - definition [ref=f23e225]: 1 – 4 cores
+          - generic [ref=f23e226]:
+            - term [ref=f23e227]: Memory
+            - definition [ref=f23e228]: 1 – 4 GB RAM
+          - generic [ref=f23e229]:
+            - term [ref=f23e230]: Storage
+            - definition [ref=f23e231]: 10 – 40 GB SSD
+          - generic [ref=f23e232]:
+            - term [ref=f23e233]: Transfer
+            - definition [ref=f23e234]: 500 GB – 2 TB / mo
+          - generic [ref=f23e235]:
+            - term [ref=f23e236]: Access
+            - definition [ref=f23e237]: Full root · your choice of Linux
+    - region [ref=f23e238]:
+      - generic [ref=f23e239]:
+        - figure [ref=f23e241]:
+          - 'img "The Royal Clouds protection stack Concentric protection layers around a workload, outermost first: Edge filtering, DDoS mitigation, Account isolation, Access control, Backups." [ref=f23e242]':
+            - generic [ref=f23e243]: EDGE FILTERING
+            - generic [ref=f23e246]: DDOS MITIGATION
+            - generic [ref=f23e249]: ACCOUNT ISOLATION
+            - generic [ref=f23e252]: ACCESS CONTROL
+            - generic [ref=f23e255]: BACKUPS
+            - generic [ref=f23e259]: WORKLOAD
+        - generic [ref=f23e260]:
+          - generic [ref=f23e261]:
+            - paragraph [ref=f23e262]: Protection layers
+            - heading "Every request passes five gates." [level=2] [ref=f23e263]
+            - paragraph [ref=f23e264]: Root access means you own the box. It does not mean you face the internet alone.
+          - list [ref=f23e265]:
+            - listitem [ref=f23e266]:
+              - generic [ref=f23e267]: "01"
+              - generic [ref=f23e268]:
+                - generic [ref=f23e269]: Edge filtering
+                - generic [ref=f23e270]: Traffic is screened before it reaches your origin, so volumetric noise never becomes your CPU load.
+            - listitem [ref=f23e271]:
+              - generic [ref=f23e272]: "02"
+              - generic [ref=f23e273]:
+                - generic [ref=f23e274]: DDoS mitigation
+                - generic [ref=f23e275]: Network-level scrubbing sits in front of the fleet. It is part of the platform, not a paid add-on.
+            - listitem [ref=f23e276]:
+              - generic [ref=f23e277]: "03"
+              - generic [ref=f23e278]:
+                - generic [ref=f23e279]: Account isolation
+                - generic [ref=f23e280]: "Accounts are contained: one tenant's runaway process is not another tenant's outage."
+            - listitem [ref=f23e281]:
+              - generic [ref=f23e282]: "04"
+              - generic [ref=f23e283]:
+                - generic [ref=f23e284]: Access control
+                - generic [ref=f23e285]: Panel, SSH, and client-area access are separately credentialed and separately revocable.
+            - listitem [ref=f23e286]:
+              - generic [ref=f23e287]: "05"
+              - generic [ref=f23e288]:
+                - generic [ref=f23e289]: Backups
+                - generic [ref=f23e290]: Restore points are configurable per plan. Support will tell you exactly what is covered before you rely on it.
+    - region [ref=f23e291]:
+      - generic [ref=f23e292]:
+        - generic [ref=f23e293]:
+          - paragraph [ref=f23e294]: Plan deck
+          - heading "Three preset machines." [level=2] [ref=f23e295]
+          - paragraph [ref=f23e296]: The capacity bars compare the planes against each other. The ledger line states the renewal on each.
+        - generic [ref=f23e297]:
+          - group "Billing term" [ref=f23e299]:
+            - button "1 month" [pressed] [ref=f23e300] [cursor=pointer]
+          - generic [ref=f23e301]:
+            - article [ref=f23e302]:
+              - heading "VPS I" [level=3] [ref=f23e303]
+              - paragraph [ref=f23e304]: Development and small services
+              - generic [ref=f23e305]:
+                - paragraph [ref=f23e307]:
+                  - text: $4
+                  - generic [ref=f23e308]: /mo
+                - paragraph [ref=f23e309]: Billed monthly · Renews $4/mo
+              - link "Choose VPS I ↗" [ref=f23e310] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/cart.php?a=add
+              - generic [ref=f23e311]:
+                - generic [ref=f23e312]:
+                  - generic [ref=f23e313]: vCPU
+                  - generic [ref=f23e314]: 1 core
+                - generic [ref=f23e316]:
+                  - generic [ref=f23e317]: RAM
+                  - generic [ref=f23e318]: 1 GB
+                - generic [ref=f23e320]:
+                  - generic [ref=f23e321]: SSD
+                  - generic [ref=f23e322]: 10 GB
+              - list [ref=f23e324]:
+                - listitem [ref=f23e325]: 1 GB RAM
+                - listitem [ref=f23e328]: 10 GB SSD storage
+                - listitem [ref=f23e331]: 500 GB bandwidth
+                - listitem [ref=f23e334]: 1 vCPU core
+              - paragraph [ref=f23e337]: Pricing pending approval
+            - article [ref=f23e338]:
+              - paragraph [ref=f23e339]: MOST DEPLOYED
+              - heading "VPS II" [level=3] [ref=f23e340]
+              - paragraph [ref=f23e341]: Production web workloads
+              - generic [ref=f23e342]:
+                - paragraph [ref=f23e344]:
+                  - text: $8
+                  - generic [ref=f23e345]: /mo
+                - paragraph [ref=f23e346]: Billed monthly · Renews $8/mo
+              - link "Choose VPS II ↗" [ref=f23e347] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/cart.php?a=add
+              - generic [ref=f23e348]:
+                - generic [ref=f23e349]:
+                  - generic [ref=f23e350]: vCPU
+                  - generic [ref=f23e351]: 2 cores
+                - generic [ref=f23e353]:
+                  - generic [ref=f23e354]: RAM
+                  - generic [ref=f23e355]: 2 GB
+                - generic [ref=f23e357]:
+                  - generic [ref=f23e358]: SSD
+                  - generic [ref=f23e359]: 20 GB
+              - list [ref=f23e361]:
+                - listitem [ref=f23e362]: 2 GB RAM
+                - listitem [ref=f23e365]: 20 GB SSD storage
+                - listitem [ref=f23e368]: 1 TB bandwidth
+                - listitem [ref=f23e371]: 2 vCPU cores
+              - paragraph [ref=f23e374]: Pricing pending approval
+            - article [ref=f23e375]:
+              - heading "VPS III" [level=3] [ref=f23e376]
+              - paragraph [ref=f23e377]: Higher-traffic applications
+              - generic [ref=f23e378]:
+                - paragraph [ref=f23e380]:
+                  - text: $16
+                  - generic [ref=f23e381]: /mo
+                - paragraph [ref=f23e382]: Billed monthly · Renews $16/mo
+              - link "Choose VPS III ↗" [ref=f23e383] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/cart.php?a=add
+              - generic [ref=f23e384]:
+                - generic [ref=f23e385]:
+                  - generic [ref=f23e386]: vCPU
+                  - generic [ref=f23e387]: 4 cores
+                - generic [ref=f23e389]:
+                  - generic [ref=f23e390]: RAM
+                  - generic [ref=f23e391]: 4 GB
+                - generic [ref=f23e393]:
+                  - generic [ref=f23e394]: SSD
+                  - generic [ref=f23e395]: 40 GB
+              - list [ref=f23e397]:
+                - listitem [ref=f23e398]: 4 GB RAM
+                - listitem [ref=f23e401]: 40 GB SSD storage
+                - listitem [ref=f23e404]: 2 TB bandwidth
+                - listitem [ref=f23e407]: 4 vCPU cores
+              - paragraph [ref=f23e410]: Pricing pending approval
+    - region [ref=f23e411]:
+      - generic [ref=f23e412]:
+        - generic [ref=f23e413]:
+          - paragraph [ref=f23e414]: Straight answers
+          - heading "What to know about kvm vps hosting" [level=2] [ref=f23e415]
+        - generic [ref=f23e416]:
+          - group [ref=f23e417]:
+            - heading "Who is kvm vps hosting built for?" [level=3] [ref=f23e419] [cursor=pointer]
+            - paragraph [ref=f23e421]: Teams that want isolated resources, operating-system access, and room to run their own stack rather than fit inside someone else's.
+          - group [ref=f23e422]:
+            - heading "What happens when the term ends?" [level=3] [ref=f23e424] [cursor=pointer]
+          - group [ref=f23e426]:
+            - heading "Can you move an existing site across?" [level=3] [ref=f23e428] [cursor=pointer]
+          - group [ref=f23e430]:
+            - heading "Where do billing and account changes happen?" [level=3] [ref=f23e432] [cursor=pointer]
+    - region [ref=f23e434]:
+      - generic:
+        - figure:
+          - img:
+            - generic:
+              - generic: ORIGIN / 01
+              - generic: ROUTE / ACTIVE
+              - generic: EDGE CONTROL
+      - generic [ref=f23e435]:
+        - paragraph [ref=f23e436]: Next step
+        - heading "Tell us what it has to run." [level=2] [ref=f23e437]
+        - paragraph [ref=f23e438]: Give an engineer the stack, the traffic shape, and the storage. We will size the machine — and say so if a smaller one is enough.
+        - link "Talk to an engineer ↗" [ref=f23e440] [cursor=pointer]:
+          - /url: https://my.royalclouds.net/submitticket.php
+  - contentinfo [ref=f23e441]:
+    - generic [ref=f23e442]:
+      - generic [ref=f23e443]:
+        - img "Royal Clouds" [ref=f23e444]
+        - paragraph [ref=f23e445]: SSD hosting, KVM virtual servers, managed WordPress, and dedicated infrastructure — with a direct path to a human.
+        - generic [ref=f23e446]:
+          - generic [ref=f23e447]: Newsletter
+          - generic [ref=f23e448]: Hosting tips and offers
+          - generic [ref=f23e449]:
+            - textbox "Hosting tips and offers" [ref=f23e450]:
+              - /placeholder: you@company.com
+            - button "Subscribe ↗" [ref=f23e451] [cursor=pointer]
+          - generic [ref=f23e452]:
+            - checkbox "I agree to receive marketing email and can unsubscribe at any time." [ref=f23e453]
+            - generic [ref=f23e454]: I agree to receive marketing email and can unsubscribe at any time.
+      - generic [ref=f23e455]:
+        - navigation "Hosting links" [ref=f23e456]:
+          - heading "Hosting" [level=2] [ref=f23e457]
+          - list [ref=f23e458]:
+            - listitem [ref=f23e459]:
+              - link "Shared hosting" [ref=f23e460] [cursor=pointer]:
+                - /url: /shared-hosting
+            - listitem [ref=f23e461]:
+              - link "KVM VPS" [ref=f23e462] [cursor=pointer]:
+                - /url: /kvm-vps-hosting
+            - listitem [ref=f23e463]:
+              - link "WordPress hosting" [ref=f23e464] [cursor=pointer]:
+                - /url: /managed-wordpress-hosting
+            - listitem [ref=f23e465]:
+              - link "Dedicated servers" [ref=f23e466] [cursor=pointer]:
+                - /url: /dedicated-servers
+        - navigation "Company links" [ref=f23e467]:
+          - heading "Company" [level=2] [ref=f23e468]
+          - list [ref=f23e469]:
+            - listitem [ref=f23e470]:
+              - link "About" [ref=f23e471] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f23e472]:
+              - link "Partners" [ref=f23e473] [cursor=pointer]:
+                - /url: /partners
+            - listitem [ref=f23e474]:
+              - link "Affiliate" [ref=f23e475] [cursor=pointer]:
+                - /url: /affiliate
+            - listitem [ref=f23e476]:
+              - link "Testimonials" [ref=f23e477] [cursor=pointer]:
+                - /url: /testimonials
+        - navigation "Legal links" [ref=f23e478]:
+          - heading "Legal" [level=2] [ref=f23e479]
+          - list [ref=f23e480]:
+            - listitem [ref=f23e481]:
+              - link "Terms" [ref=f23e482] [cursor=pointer]:
+                - /url: /terms-of-service
+            - listitem [ref=f23e483]:
+              - link "Privacy" [ref=f23e484] [cursor=pointer]:
+                - /url: /privacy-policy
+            - listitem [ref=f23e485]:
+              - link "Cookies" [ref=f23e486] [cursor=pointer]:
+                - /url: /cookie-policy
+        - navigation "Support links" [ref=f23e487]:
+          - heading "Support" [level=2] [ref=f23e488]
+          - list [ref=f23e489]:
+            - listitem [ref=f23e490]:
+              - link "Knowledge base" [ref=f23e491] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/knowledgebase
+            - listitem [ref=f23e492]:
+              - link "Open a ticket" [ref=f23e493] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/submitticket.php
+            - listitem [ref=f23e494]:
+              - link "Client login" [ref=f23e495] [cursor=pointer]:
+                - /url: https://my.royalclouds.net/login
+            - listitem [ref=f23e496]:
+              - link "Blog" [ref=f23e497] [cursor=pointer]:
+                - /url: https://blog.royalclouds.net
+    - generic [ref=f23e498]:
+      - paragraph [ref=f23e499]: © 2014–2026 Royal Clouds. All rights reserved.
+      - paragraph [ref=f23e500]: Pricing shown is introductory. Renewal rates are listed on every plan.
+  - generic [ref=f23e503]:
+    - button [ref=f23e504]
+    - button [ref=f23e510]
+    - button [ref=f23e514]
+    - button [ref=f23e519]:
+      - img "Storyblok Official Logo" [ref=f23e521]
+      - generic: Storyblok
+    - button [ref=f23e525]

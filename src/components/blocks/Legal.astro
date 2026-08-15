@@ -1,0 +1,74 @@
+---
+import type { LegalBlock } from "../../types/content";
+import { sanitizeCmsHtml } from "./_sanitize";
+
+interface Props { block: LegalBlock }
+const { block } = Astro.props;
+---
+
+<section class="section section-light">
+  <div class="shell legal">
+    <aside aria-label="Legal document navigation">
+      <p class="fine">Last updated <time datetime={block.updatedAt}>{block.updatedAt}</time></p>
+      <nav>
+        <ol>
+          {block.sections.map((section) => (
+            <li><a href={`#${section.id}`}>{section.title}</a></li>
+          ))}
+        </ol>
+      </nav>
+    </aside>
+
+    <div class="legal__content">
+      {block.sections.map((section) => (
+        <section id={section.id} aria-labelledby={`${section.id}-title`}>
+          <h2 id={`${section.id}-title`}>{section.title}</h2>
+          <div class="prose" set:html={sanitizeCmsHtml(section.html)} />
+        </section>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .legal {
+    display: grid;
+    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  aside {
+    position: sticky;
+    top: 6rem;
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-inner);
+    background: var(--paper);
+  }
+  aside .fine { margin: 0 0 0.875rem; }
+
+  ol { display: grid; gap: 0.125rem; margin: 0; padding: 0; list-style: none; counter-reset: legal; }
+  ol a {
+    display: block;
+    padding: 0.4rem 0;
+    color: var(--body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  ol a:hover { color: var(--cobalt); text-decoration: underline; }
+
+  .legal__content > section { scroll-margin-top: 6rem; }
+  .legal__content > section + section { margin-top: 2.5rem; }
+  .legal__content h2 { margin: 0 0 1rem; font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+
+  .prose { line-height: 1.75; }
+  .prose :global(p), .prose :global(ul), .prose :global(ol) { margin: 0 0 1.125rem; }
+  .prose :global(a) { color: var(--cobalt); font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .legal { grid-template-columns: 1fr; }
+    aside { position: static; }
+  }
+</style>

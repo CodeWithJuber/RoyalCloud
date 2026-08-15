@@ -1,0 +1,18 @@
+---
+import NotFound from "@/components/NotFound.astro";
+import PageView from "@/components/PageView.astro";
+import { getNotFoundSeo } from "@/data/not-found";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { isContentRoute, slugToRoute } from "@/lib/routes";
+import { getPageContent, isPreviewRequest } from "@/lib/storyblok";
+import { buildStructuredData } from "@/lib/structured-data";
+
+const route = slugToRoute(Astro.params.slug);
+const preview = isPreviewRequest(Astro.url);
+const page = isContentRoute(route) ? await getPageContent(route, preview) : null;
+if (!page) Astro.response.status = 404;
+const seo = page?.seo ?? getNotFoundSeo(route);
+const structuredData = page ? buildStructuredData(page) : [];
+---
+
+<SiteLayout seo={seo} structuredData={structuredData}>{page ? <PageView page={page} preview={preview} /> : <NotFound />}</SiteLayout>

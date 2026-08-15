@@ -1,0 +1,303 @@
+---
+import type { ContactFormBlock } from "../../types/content";
+import { siteSettings } from "../../data/settings";
+
+interface Props { block: ContactFormBlock }
+const { block } = Astro.props;
+
+const external = block.action.external ?? block.action.href.startsWith("http");
+// Channels are the real support links from settings — never invented here.
+const channels = siteSettings.support;
+---
+
+<section class="section section-light" aria-labelledby="contact-form-title">
+  <div class="shell">
+    <header class="section-header" data-reveal>
+      {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
+      <h2 id="contact-form-title">{block.title}</h2>
+      <p class="lede">{block.summary}</p>
+    </header>
+
+    <div class="contact-split" data-reveal>
+      <form
+        class="card contact-form"
+        method="post"
+        action={block.action.href}
+        target={external ? "_blank" : undefined}
+        data-contact-form=""
+      >
+        <div class="field">
+          <label for="contact-name">Full name</label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            required
+            autocomplete="name"
+            aria-describedby="contact-name-error"
+            data-error-empty="Enter the name we should address the reply to."
+          />
+          <p class="field-error" id="contact-name-error" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="contact-email">Work email</label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            required
+            inputmode="email"
+            autocomplete="email"
+            spellcheck="false"
+            aria-describedby="contact-email-error"
+            data-error-empty="Enter the email address we should reply to."
+            data-error-format="This email is missing an @ or a domain — write it like you@company.com."
+          />
+          <p class="field-error" id="contact-email-error" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="contact-company">Company <span class="optional">optional</span></label>
+          <input
+            id="contact-company"
+            name="company"
+            type="text"
+            autocomplete="organization"
+            aria-describedby="contact-company-error"
+          />
+          <p class="field-error" id="contact-company-error" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="contact-need">What do you need?</label>
+          <select
+            id="contact-need"
+            name="need"
+            required
+            aria-describedby="contact-need-error"
+            data-error-empty="Pick the option closest to your need so it reaches the right engineer."
+          >
+            <option value="">Select one</option>
+            {block.needs.map((need) => <option value={need}>{need}</option>)}
+          </select>
+          <p class="field-error" id="contact-need-error" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="contact-message">What are you running today?</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows="5"
+            required
+            minlength="20"
+            aria-describedby="contact-message-error"
+            data-error-empty="Describe your stack or workload — one or two lines is enough."
+            data-error-short="Add a little more: at least 20 characters, so we can route this without a follow-up."
+          ></textarea>
+          <p class="field-error" id="contact-message-error" role="alert"></p>
+        </div>
+
+        <div class="button-row">
+          <button class="button button-primary button-block" type="submit">
+            {block.action.label}
+          </button>
+        </div>
+      </form>
+
+      <aside class="rail" aria-label="Direct channels">
+        {block.responseTime && (
+          <p class="chip response-chip">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span class="mono">First response {block.responseTime}</span>
+          </p>
+        )}
+
+        <h3 class="rail-title">Reach us directly</h3>
+        <ul class="channels">
+          {channels.map((channel) => (
+            <li class="ledger-line">
+              <a
+                href={channel.href}
+                target={channel.external ? "_blank" : undefined}
+                rel={channel.external ? "noopener noreferrer" : undefined}
+              >{channel.label}</a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-split {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 64rem) {
+    .contact-split {
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  .field { display: grid; gap: 0.5rem; }
+
+  label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--heading);
+  }
+
+  .optional {
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    min-height: 56px;
+    padding: 0 1rem;
+    border: 1px solid var(--field-line);
+    border-radius: var(--r-input);
+    background: var(--surface-card);
+    color: var(--body);
+    font: inherit;
+    font-size: 1rem;
+  }
+
+  textarea {
+    padding: 1rem;
+    min-height: 8.5rem;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  select {
+    appearance: none;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    border-width: 2px;
+    border-color: var(--interactive);
+    /* keep the 56px box and text position stable when the border thickens */
+    padding-inline: calc(1rem - 1px);
+  }
+
+  textarea:focus-visible { padding-block: calc(1rem - 1px); }
+
+  input[aria-invalid="true"],
+  select[aria-invalid="true"],
+  textarea[aria-invalid="true"] { border-color: var(--error); }
+
+  .field-error {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--error);
+  }
+
+  .field-error:empty { display: none; }
+
+  .rail {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .response-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    justify-self: start;
+  }
+
+  .response-chip .mono { font-size: 0.75rem; }
+
+  .rail-title {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .channels {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+
+  .channels a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--heading);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .channels a:hover { color: var(--interactive); }
+</style>
+
+<script>
+  type FormField = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+  function messageFor(field: FormField): string {
+    const { valueMissing, typeMismatch, tooShort } = field.validity;
+    if (valueMissing) return field.dataset.errorEmpty ?? "";
+    if (typeMismatch) return field.dataset.errorFormat ?? "";
+    if (tooShort) return field.dataset.errorShort ?? "";
+    return "";
+  }
+
+  /** Renders the field's specific error (if any) and returns true when valid. */
+  function validate(field: FormField): boolean {
+    const message = field.checkValidity() ? "" : messageFor(field);
+    const target = document.getElementById(`${field.id}-error`);
+    if (target) target.textContent = message;
+    field.setAttribute("aria-invalid", message ? "true" : "false");
+    return message === "";
+  }
+
+  document.querySelectorAll<HTMLFormElement>("[data-contact-form]").forEach((form) => {
+    const fields = Array.from(form.querySelectorAll<FormField>("input, select, textarea"));
+    // Native validation is the no-JS fallback; with JS we own the wording.
+    form.noValidate = true;
+
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => validate(field));
+      field.addEventListener("input", () => {
+        if (field.getAttribute("aria-invalid") === "true") validate(field);
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      const invalid = fields.filter((field) => !validate(field));
+      if (invalid.length === 0) return;
+      event.preventDefault();
+      invalid[0]?.focus();
+    });
+  });
+</script>

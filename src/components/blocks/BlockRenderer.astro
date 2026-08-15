@@ -1,0 +1,63 @@
+---
+import type { PageBlock } from "../../types/content";
+import Answers from "./Answers.astro";
+import Configurator from "./Configurator.astro";
+import ConsoleShowcase from "./ConsoleShowcase.astro";
+import ContactForm from "./ContactForm.astro";
+import Cta from "./Cta.astro";
+import FeatureNarrative from "./FeatureNarrative.astro";
+import Hero from "./Hero.astro";
+import Infrastructure from "./Infrastructure.astro";
+import LaunchSequence from "./LaunchSequence.astro";
+import LedgerTable from "./LedgerTable.astro";
+import Legal from "./Legal.astro";
+import LiveAnswer from "./LiveAnswer.astro";
+import OperatorStrip from "./OperatorStrip.astro";
+import Partners from "./Partners.astro";
+import PricingGrid from "./PricingGrid.astro";
+import RichText from "./RichText.astro";
+import ShieldStackBlock from "./ShieldStackBlock.astro";
+import SpecPlates from "./SpecPlates.astro";
+import Testimonials from "./Testimonials.astro";
+import TrustStrip from "./TrustStrip.astro";
+import UptimeStrip from "./UptimeStrip.astro";
+
+interface Props {
+  block: PageBlock;
+  preview?: boolean;
+}
+
+const { block, preview = false } = Astro.props;
+const component = typeof block === "object" && block !== null && "component" in block && typeof block.component === "string"
+  ? block.component
+  : null;
+---
+
+{component === "hero" && <Hero block={block as Extract<PageBlock, { component: "hero" }>} />}
+{component === "trust-strip" && <TrustStrip block={block as Extract<PageBlock, { component: "trust-strip" }>} />}
+{component === "pricing-grid" && <PricingGrid block={block as Extract<PageBlock, { component: "pricing-grid" }>} />}
+{component === "feature-narrative" && <FeatureNarrative block={block as Extract<PageBlock, { component: "feature-narrative" }>} />}
+{component === "infrastructure" && <Infrastructure block={block as Extract<PageBlock, { component: "infrastructure" }>} />}
+{component === "testimonials" && <Testimonials block={block as Extract<PageBlock, { component: "testimonials" }>} />}
+{component === "partners" && <Partners block={block as Extract<PageBlock, { component: "partners" }>} />}
+{component === "answers" && <Answers block={block as Extract<PageBlock, { component: "answers" }>} />}
+{component === "cta" && <Cta block={block as Extract<PageBlock, { component: "cta" }>} />}
+{component === "rich-text" && <RichText block={block as Extract<PageBlock, { component: "rich-text" }>} />}
+{component === "legal" && <Legal block={block as Extract<PageBlock, { component: "legal" }>} />}
+{component === "spec-plates" && <SpecPlates block={block as Extract<PageBlock, { component: "spec-plates" }>} />}
+{component === "operator-strip" && <OperatorStrip block={block as Extract<PageBlock, { component: "operator-strip" }>} />}
+{component === "shield-stack" && <ShieldStackBlock block={block as Extract<PageBlock, { component: "shield-stack" }>} />}
+{component === "live-answer" && <LiveAnswer block={block as Extract<PageBlock, { component: "live-answer" }>} />}
+{component === "ledger-table" && <LedgerTable block={block as Extract<PageBlock, { component: "ledger-table" }>} />}
+{component === "launch-sequence" && <LaunchSequence block={block as Extract<PageBlock, { component: "launch-sequence" }>} />}
+{component === "uptime-strip" && <UptimeStrip block={block as Extract<PageBlock, { component: "uptime-strip" }>} />}
+{component === "console-showcase" && <ConsoleShowcase block={block as Extract<PageBlock, { component: "console-showcase" }>} />}
+{component === "configurator" && <Configurator block={block as Extract<PageBlock, { component: "configurator" }>} />}
+{component === "contact-form" && <ContactForm block={block as Extract<PageBlock, { component: "contact-form" }>} />}
+{preview && !["hero","trust-strip","pricing-grid","feature-narrative","infrastructure","testimonials","partners","answers","cta","rich-text","legal","spec-plates","operator-strip","shield-stack","live-answer","ledger-table","launch-sequence","uptime-strip","console-showcase","configurator","contact-form"].includes(component ?? "") && (
+  <aside class="unknown-block" role="status">Unknown CMS block: <code>{component ?? "invalid block data"}</code></aside>
+)}
+
+<style>
+  .unknown-block { width:min(75rem,calc(100% - 2rem)); margin:1rem auto; padding:1rem; border:1px dashed var(--cobalt); border-radius:var(--r-inner); background:var(--ice); color:var(--midnight); font-size:.875rem; font-weight:600; }
+</style>

@@ -1,0 +1,50 @@
+<div class="currency-switch" role="group" aria-label="Display currency" data-currency-switch>
+  <button type="button" data-currency-option="INR" aria-pressed="false" aria-label="Display prices in Indian rupees">₹ INR</button>
+  <button type="button" data-currency-option="USD" aria-pressed="false" aria-label="Display prices in US dollars">$ USD</button>
+</div>
+
+<style>
+  .currency-switch {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0.125rem;
+    border: 1px solid var(--line-dark);
+    border-radius: var(--r-pill);
+    background: color-mix(in srgb, var(--night) 55%, transparent);
+  }
+
+  .currency-switch::before {
+    position: absolute;
+    inset: 0.125rem auto 0.125rem 0.125rem;
+    width: calc(50% - 0.125rem);
+    border-radius: var(--r-pill);
+    background: var(--cobalt);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--paper) 14%, transparent);
+    content: "";
+    pointer-events: none;
+    transition: transform 320ms var(--ease);
+  }
+
+  :global([data-currency="USD"]) .currency-switch::before { transform: translateX(100%); }
+
+  button {
+    position: relative;
+    z-index: 1;
+    min-height: 44px;
+    padding: 0 0.65rem;
+    border: 0;
+    border-radius: var(--r-pill);
+    color: var(--smoke);
+    background: transparent;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 240ms var(--ease);
+  }
+
+  button[aria-pressed="true"] { color: var(--ice); }
+  button:hover { color: var(--ice); }
+</style>

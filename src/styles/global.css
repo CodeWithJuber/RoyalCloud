@@ -1,0 +1,748 @@
+/* Royal Systems v2 — see DESIGN.md.
+   Layers: primitive -> semantic -> component. Components never reach past semantic. */
+:root {
+  /* ---- Primitive: color ---- */
+  --night: #050712;
+  --midnight: #0a0e24;
+  --abyss: #0e1330;
+  --cobalt: #2f36d4;
+  --cobalt-bright: #5660ff;
+  --cobalt-dim: #1e2494;
+  --signal: #ff6b3d;
+  --signal-hot: #ff8a66;
+  --ice: #f4f6fb;
+  --paper: #fff;
+  --chrome: #cad1e5;
+  --smoke: #9099b2;
+  --graphite: #20263b;
+  --slate: #5d667e;
+  --cloud-100: #e9edf6;
+  --pulse-ok: #3ddc97;
+  --pulse-warn: #ffc24b;
+  --pulse-down: #ff5c5c;
+  /* Error ink for prose on a light field. --pulse-down is a telemetry colour and
+     only clears 3.03:1 on white, below the 4.5:1 body-text floor. */
+  --alert: #c62828;
+
+  /* ---- Primitive: space / radius / depth ---- */
+  --r-input: 0.875rem;
+  --r-inner: 1.4375rem;
+  --r-shell: 1.875rem;
+  --r-pill: 999px;
+  --sh-1: 0 2px 8px rgb(47 54 212 / 8%);
+  --sh-2: 0 8px 28px rgb(47 54 212 / 12%);
+  --sh-3: 0 20px 60px rgb(10 14 36 / 28%);
+
+  /* ---- Semantic ----
+     Dark is the ground state (--night canvas). Section classes re-point these,
+     so a block inherits the right ink/rules from whatever field it sits on. */
+  --canvas: var(--night);
+  --tint: var(--ice);
+  --heading: var(--ice);
+  --body: var(--smoke);
+  --muted: var(--smoke);
+  --surface-card: color-mix(in srgb, var(--paper) 4%, transparent);
+  --interactive: var(--cobalt-bright);
+  --error: var(--pulse-down);
+  --line-light: #dce1ee;
+  --line-dark: color-mix(in srgb, var(--chrome) 14%, transparent);
+  --line: var(--line-dark);
+  /* Form-control boundary. A field's border is its only visual affordance, so it is
+     held to SC 1.4.11 (>=3:1) on every field — unlike --line, which is decorative.
+     Dark ground: --chrome on --night is ~15:1. */
+  --field-line: var(--chrome);
+
+  --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  --font-body: "Manrope Variable", system-ui, sans-serif;
+  /* Data/terminal register (DESIGN.md 5). Terminals, code, telemetry readouts and
+     route/IP labels only — never prose. */
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", monospace;
+
+  --section-space: clamp(4rem, 8vw, 7rem);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ---- Visual contract ----
+     The four SVG diagrams read only these. Light is the ground state;
+     .section-dark / .section-royal re-point them, so one stroke language
+     renders correctly on every field. */
+  --viz-face-top: var(--chrome);
+  --viz-face-left: var(--cloud-100);
+  --viz-face-right: var(--cobalt);
+  --viz-recess: var(--ice);
+  --viz-shadow: color-mix(in srgb, var(--cobalt) 18%, transparent);
+  --viz-line: var(--cobalt);
+  --viz-line-soft: color-mix(in srgb, var(--cobalt) 40%, transparent);
+  --viz-accent: var(--signal);
+  --viz-label: var(--slate);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  background: var(--canvas);
+}
+body {
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--body);
+  background: var(--canvas);
+  font: 470 1rem/1.6 var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/* Component display rules (.segment is inline-flex, .frames is grid...) outrank the
+   UA [hidden] rule, so hidden elements stayed visible. hidden always wins. */
+[hidden] {
+  display: none !important;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--interactive);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+::selection {
+  color: var(--paper);
+  background: var(--cobalt);
+}
+
+/* ---------- Layout ---------- */
+.shell {
+  width: min(82.5rem, calc(100% - clamp(2rem, 6vw, 4rem)));
+  margin-inline: auto;
+}
+.section {
+  padding-block: var(--section-space);
+}
+/* Light editorial fields re-point the ink tokens; everything nested inside
+   (headings, rules, cards, diagrams) follows without knowing where it lives. */
+.section-light,
+.section-tint {
+  color: var(--graphite);
+
+  --heading: var(--midnight);
+  --body: var(--graphite);
+  --muted: var(--slate);
+  --surface-card: var(--paper);
+  --error: var(--alert);
+  --line: var(--line-light);
+  /* --chrome is 1.53:1 on paper — invisible as a field border. --slate is 5.73:1
+     on --paper and 5.35:1 on --ice, so a control's edge stays locatable (SC 1.4.11). */
+  --field-line: var(--slate);
+  /* Telemetry pulses are tuned for --night. On a light field the tick is the sole
+     carrier of daily state, so it needs >=3:1: #1a8f5f is 3.94:1 and #8a5a00 is
+     5.29:1 on --paper. The dark-field values stay untouched. */
+  --pulse-ok: #1a8f5f;
+  --pulse-warn: #8a5a00;
+  --viz-face-top: var(--chrome);
+  --viz-face-left: var(--cloud-100);
+  --viz-face-right: var(--cobalt);
+  --viz-recess: var(--ice);
+  --viz-shadow: color-mix(in srgb, var(--cobalt) 18%, transparent);
+  --viz-line: var(--cobalt);
+  --viz-line-soft: color-mix(in srgb, var(--cobalt) 40%, transparent);
+  --viz-accent: var(--signal);
+  --viz-label: var(--slate);
+}
+.section-light {
+  background: var(--paper);
+}
+.section-tint {
+  background: var(--ice);
+}
+
+.section-dark {
+  color: var(--smoke);
+  background: var(--night);
+
+  --heading: var(--ice);
+  --body: var(--smoke);
+  --muted: var(--smoke);
+  --surface-card: color-mix(in srgb, var(--paper) 4%, transparent);
+
+  --viz-face-top: var(--chrome);
+  --viz-face-left: var(--midnight);
+  --viz-face-right: var(--cobalt);
+  --viz-recess: var(--abyss);
+  --viz-shadow: #02030a;
+  --viz-line: var(--cobalt-bright);
+  --viz-line-soft: color-mix(in srgb, var(--chrome) 40%, transparent);
+  --viz-accent: var(--signal);
+  --viz-label: var(--smoke);
+  --line: var(--line-dark);
+  --field-line: var(--chrome);
+}
+
+.section-royal {
+  color: var(--ice);
+  background: var(--cobalt);
+
+  --heading: var(--paper);
+  --body: var(--chrome);
+  --muted: var(--chrome);
+  --surface-card: color-mix(in srgb, var(--night) 18%, transparent);
+  /* cobalt-bright on cobalt is 1.74:1 — below the 3:1 focus-indicator floor
+     (WCAG 2.2 SC 1.4.11), so the royal field re-points the ring to ice (7.47:1). */
+  --interactive: var(--ice);
+  --viz-face-top: var(--ice);
+  --viz-face-left: var(--cobalt-dim);
+  --viz-face-right: var(--cobalt-bright);
+  --viz-recess: var(--cobalt-dim);
+  --viz-shadow: rgb(5 7 18 / 30%);
+  --viz-line: var(--ice);
+  --viz-line-soft: color-mix(in srgb, var(--ice) 45%, transparent);
+  --viz-accent: var(--signal);
+  --viz-label: var(--chrome);
+  --line: color-mix(in srgb, var(--ice) 22%, transparent);
+  /* --chrome on --cobalt is 5.30:1; --slate would be 1.41:1, so royal re-points it
+     explicitly rather than inheriting a light field's value when nested. */
+  --field-line: var(--chrome);
+}
+
+.section-header {
+  max-width: 54rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* ---------- Type ---------- */
+h1,
+h2,
+h3,
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  color: var(--heading);
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+h1 {
+  max-width: 15ch;
+  font-size: clamp(3rem, 6.4vw, 5.6rem);
+  font-weight: 680;
+}
+h2 {
+  max-width: 20ch;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 640;
+}
+h3 {
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+p {
+  max-width: 68ch;
+}
+.lede {
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: clamp(1.125rem, 1.4vw, 1.3rem);
+  line-height: 1.55;
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+.fine {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 1.25rem;
+  color: var(--cobalt);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.section-dark .eyebrow {
+  color: var(--signal);
+}
+/* Signal on cobalt is 2.86:1, and an eyebrow is not a conversion action —
+   the royal field's only signal element is the primary button. */
+.section-royal .eyebrow {
+  color: var(--paper);
+}
+
+/* ---------- Buttons ---------- */
+/* Primary is a signal pill with a nested arrow island (DESIGN.md 10.3).
+   Signal orange is the only conversion color in the system. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.4rem 0.5rem 0.4rem 1.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 320ms var(--ease),
+    border-color 320ms var(--ease),
+    color 320ms var(--ease),
+    transform 160ms var(--ease);
+}
+.button::after {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  content: "↗";
+  font-size: 0.9rem;
+  transition: transform 320ms var(--ease);
+}
+.button:hover::after {
+  transform: translate(0.15rem, -0.12rem);
+}
+.button:active {
+  transform: scale(0.985);
+}
+
+.button-primary {
+  color: var(--night);
+  background: var(--signal);
+}
+.button-primary::after {
+  background: color-mix(in srgb, var(--night) 12%, transparent);
+}
+.button-primary:hover {
+  background: var(--signal-hot);
+}
+
+.button-ghost {
+  color: var(--midnight);
+  border-color: var(--line);
+  background: var(--paper);
+}
+.button-ghost::after {
+  background: var(--ice);
+}
+.button-ghost:hover {
+  border-color: var(--cobalt);
+  color: var(--cobalt);
+}
+
+.button-invert {
+  color: var(--midnight);
+  background: var(--ice);
+}
+.button-invert::after {
+  background: color-mix(in srgb, var(--midnight) 10%, transparent);
+}
+.button-invert:hover {
+  background: var(--paper);
+}
+
+.section-dark .button-ghost,
+.section-royal .button-ghost {
+  color: var(--ice);
+  border-color: var(--line-dark);
+  background: color-mix(in srgb, var(--paper) 4%, transparent);
+}
+.section-dark .button-ghost::after,
+.section-royal .button-ghost::after {
+  background: color-mix(in srgb, var(--paper) 8%, transparent);
+}
+.section-dark .button-ghost:hover,
+.section-royal .button-ghost:hover {
+  color: var(--ice);
+  border-color: var(--signal);
+}
+
+.button-block {
+  width: 100%;
+  justify-content: space-between;
+}
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* ---------- Surfaces ---------- */
+.card {
+  padding: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-inner);
+  background: var(--surface-card);
+  transition:
+    transform 320ms var(--ease),
+    box-shadow 320ms var(--ease);
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sh-2);
+}
+
+/* Double bezel: outer 30px shell, 7px reveal, inner 23px face. */
+.bezel {
+  padding: 0.4375rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-shell);
+  background: var(--surface-card);
+  box-shadow: var(--sh-2);
+}
+.bezel > * {
+  border-radius: var(--r-inner);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: var(--r-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.chip-discount {
+  color: var(--night);
+  background: var(--signal);
+}
+.chip-save {
+  color: var(--cobalt);
+  border: 1px solid color-mix(in srgb, var(--cobalt) 30%, transparent);
+  background: color-mix(in srgb, var(--cobalt) 6%, transparent);
+}
+.section-dark .chip-save,
+.section-royal .chip-save {
+  color: var(--chrome);
+  border-color: var(--line-dark);
+  background: color-mix(in srgb, var(--paper) 5%, transparent);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 300;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--r-pill);
+  color: var(--night);
+  background: var(--signal-hot);
+  font-weight: 800;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+
+.approval-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--signal) 45%, transparent);
+  border-radius: var(--r-pill);
+  color: var(--signal);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* ---------- Data register (DESIGN.md 5) ---------- */
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Telemetry (DESIGN.md 8.4) ----------
+   Pulse colours are confined here, at <=16px, per the token rules in 4.1.
+   Bars fill via scaleX from a registered origin — never width, never layout. */
+.telemetry {
+  display: grid;
+  gap: 0.5rem;
+}
+.telemetry-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 0.75rem;
+  align-items: baseline;
+}
+.telemetry-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.telemetry-value {
+  color: var(--heading);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+}
+.telemetry-track {
+  grid-column: 1 / -1;
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--chrome) 22%, transparent);
+  overflow: hidden;
+}
+.telemetry-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--interactive);
+  transform: scaleX(var(--fill, 0));
+  transform-origin: left center;
+  transition: transform 900ms var(--ease);
+}
+[data-js="true"] [data-reveal] .telemetry-fill {
+  transform: scaleX(0);
+}
+[data-reveal][data-visible="true"] .telemetry-fill {
+  transform: scaleX(var(--fill, 0));
+}
+
+/* Status dot — the only place pulse colours appear (4.1). */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--pulse-ok);
+}
+.status-dot[data-state="warn"] {
+  background: var(--pulse-warn);
+}
+.status-dot[data-state="down"] {
+  background: var(--pulse-down);
+}
+
+/* ---------- Honest Ledger (DESIGN.md 10.5) ----------
+   Mandatory under every price: term, renewal, total. Absent only when the data
+   is absent — never faked (11). */
+.ledger-line {
+  margin: 0.5rem 0 0;
+  max-width: none;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+/* ---------- Spec Plate (DESIGN.md 10.7) ---------- */
+.plates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  border-top: 1px solid var(--line);
+}
+.plate {
+  display: flex;
+  min-height: 6rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.plates > .plate + .plate {
+  padding-left: 0;
+}
+.plate-label {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.plate-value {
+  color: var(--heading);
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ---------- Terminal / Console (DESIGN.md 7, 8.7) ---------- */
+.terminal {
+  border-radius: var(--r-inner);
+  background: var(--midnight);
+  box-shadow: inset 0 1px 0 rgb(202 209 229 / 7%);
+  overflow: hidden;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--chrome) 12%, transparent);
+}
+.terminal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--chrome) 30%, transparent);
+}
+.terminal-title {
+  margin-left: 0.5rem;
+  color: var(--smoke);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.terminal-body {
+  margin: 0;
+  padding: 1rem 1.25rem 1.25rem;
+  color: var(--chrome);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.terminal-body .tok-cmd {
+  color: var(--ice);
+}
+.terminal-body .tok-ok {
+  color: var(--pulse-ok);
+}
+.terminal-body .tok-dim {
+  color: var(--smoke);
+}
+
+/* ---------- Ledger table (DESIGN.md 10.6) ---------- */
+.ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.ledger-table th,
+.ledger-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.ledger-table thead th {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ledger-table tbody th {
+  color: var(--heading);
+  font-weight: 650;
+}
+.ledger-table td {
+  color: var(--body);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+/* The Royal Clouds column is tinted, not shouted (10.6). */
+.ledger-table [data-own] {
+  background: color-mix(in srgb, var(--cobalt) 6%, transparent);
+  box-shadow:
+    inset 1px 0 0 color-mix(in srgb, var(--cobalt) 35%, transparent),
+    inset -1px 0 0 color-mix(in srgb, var(--cobalt) 35%, transparent);
+}
+
+/* ---------- Segmented switch (billing term / currency) ---------- */
+.segment {
+  display: inline-flex;
+  padding: 0.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface-card);
+}
+.segment button {
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: var(--r-pill);
+  color: var(--muted);
+  background: none;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition:
+    background-color 240ms var(--ease),
+    color 240ms var(--ease);
+}
+.segment button[aria-pressed="true"] {
+  color: var(--ice);
+  background: var(--midnight);
+}
+.section-dark .segment button[aria-pressed="true"],
+.section-royal .segment button[aria-pressed="true"] {
+  color: var(--night);
+  background: var(--ice);
+}
+
+/* ---------- Behaviour hooks ---------- */
+/* Transform-only. Content must never depend on a script to become visible —
+   if the observer never fires, the copy is still there. */
+[data-reveal] {
+  transform: none;
+}
+[data-js="true"] [data-reveal] {
+  transform: translateY(1.25rem);
+  transition: transform 720ms var(--ease);
+}
+[data-reveal][data-visible="true"] {
+  transform: none;
+}
+[data-currency="INR"] [data-price-currency="USD"],
+[data-currency="USD"] [data-price-currency="INR"] {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --section-space: 4.5rem;
+  }
+  .shell {
+    width: min(100% - 2rem, 82.5rem);
+  }
+  .button-row .button {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  [data-js="true"] [data-reveal] {
+    transform: none;
+  }
+}

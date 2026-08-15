@@ -1,0 +1,327 @@
+- generic [active] [ref=f27e1]:
+  - banner [ref=f27e2]:
+    - generic [ref=f27e3]:
+      - link "Voltra home" [ref=f27e4] [cursor=pointer]:
+        - /url: "#"
+        - text: Voltra
+      - navigation "Primary" [ref=f27e8]:
+        - link "Hosting" [ref=f27e9] [cursor=pointer]:
+          - /url: "#features"
+        - link "VPS & Cloud" [ref=f27e10] [cursor=pointer]:
+          - /url: "#types"
+        - link "Domains" [ref=f27e11] [cursor=pointer]:
+          - /url: "#domain"
+        - link "Pricing" [ref=f27e12] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "Support" [ref=f27e13] [cursor=pointer]:
+          - /url: "#support"
+      - generic [ref=f27e14]:
+        - link "Log in" [ref=f27e15] [cursor=pointer]:
+          - /url: "#"
+        - link "Get started" [ref=f27e16] [cursor=pointer]:
+          - /url: "#pricing"
+  - generic [ref=f27e18]:
+    - generic [ref=f27e19]:
+      - text: 99.99% uptime · NVMe SSD · Free migration
+      - heading "Hosting that keeps up with your ambition ." [level=1] [ref=f27e20]
+      - paragraph [ref=f27e21]: Blazing-fast managed hosting on pure-NVMe servers, free site migrations, and real engineers who answer in under two minutes. Launch in seconds — scale without limits.
+      - search "Domain search" [ref=f27e22]:
+        - generic [ref=f27e23]:
+          - generic [ref=f27e27]: Search for a domain
+          - textbox "Search for a domain" [ref=f27e28]:
+            - /placeholder: Find your perfect domain…
+        - combobox "Top-level domain" [ref=f27e29] [cursor=pointer]:
+          - option ".com" [selected]
+          - option ".io"
+          - option ".dev"
+          - option ".co"
+          - option ".net"
+        - button "Search" [ref=f27e30] [cursor=pointer]
+      - generic [ref=f27e31]:
+        - generic [ref=f27e32]: .com $8.99
+        - generic [ref=f27e33]: .io $32.00
+        - generic [ref=f27e34]: .dev $14.00
+        - generic [ref=f27e35]: .co $11.99
+        - generic [ref=f27e36]: .net $10.99
+      - generic [ref=f27e37]:
+        - link "See plans" [ref=f27e38] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "Talk to a human" [ref=f27e39] [cursor=pointer]:
+          - /url: "#support"
+      - generic [ref=f27e40]:
+        - generic [ref=f27e41]:
+          - generic [ref=f27e42]: 14,077+
+          - generic [ref=f27e43]: Websites hosted
+        - generic [ref=f27e44]:
+          - generic [ref=f27e45]: 99.99%
+          - generic [ref=f27e46]: Uptime SLA
+        - generic [ref=f27e47]:
+          - generic [ref=f27e48]: <7s
+          - generic [ref=f27e49]: Support response
+        - generic [ref=f27e50]:
+          - generic [ref=f27e51]: 4.8/5
+          - generic [ref=f27e52]: 12,400 reviews
+    - generic [ref=f27e53]:
+      - img "Live server dashboard showing 99.99% uptime, 178 millisecond load time, and healthy resource usage" [ref=f27e54]:
+        - generic [ref=f27e55]:
+          - generic [ref=f27e56]: voltra · app-server-01
+          - generic [ref=f27e58]: ● OPERATIONAL
+        - generic [ref=f27e59]:
+          - generic [ref=f27e60]:
+            - generic [ref=f27e61]: UPTIME (30d)
+            - generic [ref=f27e62]: 99.99%
+          - generic [ref=f27e63]:
+            - generic [ref=f27e64]: AVG LOAD
+            - generic [ref=f27e65]: 178ms
+        - generic [ref=f27e66]: TRAFFIC · LAST 24H
+        - generic [ref=f27e72]:
+          - generic [ref=f27e73]: CPU 12% · RAM 41%
+          - generic [ref=f27e74]: SSL ✓ · CDN ✓ · Backup ✓
+      - generic [ref=f27e75]: Free SSL & DDoS shield
+  - generic [ref=f27e81]:
+    - generic [ref=f27e82]: Trusted by 212,000+ websites & growing teams
+    - generic "Customer logos" [ref=f27e83]:
+      - generic [ref=f27e84]: Northwind
+      - generic [ref=f27e85]: Lumen
+      - generic [ref=f27e86]: Padd&Co
+      - generic [ref=f27e87]: Fernweh
+      - generic [ref=f27e88]: Kettle
+    - generic [ref=f27e89]:
+      - generic [ref=f27e90]: ★★★★★
+      - generic [ref=f27e91]: 4.8 on Trustpilot · 12,400 reviews
+  - generic [ref=f27e93]:
+    - generic [ref=f27e94]:
+      - text: Why Voltra
+      - heading "Everything your site needs to be fast, safe, and always on." [level=2] [ref=f27e95]
+      - paragraph [ref=f27e96]: No upsells for the essentials. SSL, backups, migration, and a CDN are included on every single plan — from day one.
+    - generic [ref=f27e97]:
+      - article [ref=f27e98]:
+        - heading "NVMe + LiteSpeed" [level=3] [ref=f27e102]
+        - paragraph [ref=f27e103]: Pure-NVMe storage and LiteSpeed caching deliver page loads up to 10× faster than legacy shared hosts.
+      - article [ref=f27e104]:
+        - heading "Free SSL & DDoS shield" [level=3] [ref=f27e108]
+        - paragraph [ref=f27e109]: Automatic SSL certificates and an always-on DDoS mitigation layer keep every visitor — and your data — protected.
+      - article [ref=f27e110]:
+        - heading "99.99% uptime SLA" [level=3] [ref=f27e115]
+        - paragraph [ref=f27e116]: Backed in writing. If we miss it, you get credited automatically — no support tickets, no arguing.
+      - article [ref=f27e117]:
+        - heading "Automated daily backups" [level=3] [ref=f27e122]
+        - paragraph [ref=f27e123]: Every site is backed up daily with 30-day retention and one-click restore. Roll back a bad deploy in seconds.
+      - article [ref=f27e124]:
+        - heading "Free managed migration" [level=3] [ref=f27e130]
+        - paragraph [ref=f27e131]: Already hosted elsewhere? Our team moves your site — files, database, email — in hours, with zero downtime.
+      - article [ref=f27e132]:
+        - heading "24/7 human support" [level=3] [ref=f27e136]
+        - paragraph [ref=f27e137]: Real engineers, not scripts, available around the clock by chat and ticket — with a median first reply under 2 minutes.
+  - generic [ref=f27e139]:
+    - generic [ref=f27e140]:
+      - text: Performance
+      - heading "Speed you can feel. Numbers you can prove." [level=2] [ref=f27e141]
+      - paragraph [ref=f27e142]: Google ranks faster sites higher and shoppers abandon slow ones. Voltra's edge caching and NVMe stack cut time-to-first-byte to a fraction of a typical shared host.
+      - generic [ref=f27e143]:
+        - generic [ref=f27e144]:
+          - generic [ref=f27e145]: 178ms
+          - generic [ref=f27e146]: Avg. server response
+        - generic [ref=f27e147]:
+          - generic [ref=f27e148]: 10×
+          - generic [ref=f27e149]: Faster than legacy hosts
+        - generic [ref=f27e150]:
+          - generic [ref=f27e151]: 40+
+          - generic [ref=f27e152]: Global edge locations
+    - generic [ref=f27e153]:
+      - generic [ref=f27e155]:
+        - generic [ref=f27e156]: Voltra NVMe + LiteSpeed
+        - generic [ref=f27e157]: 0.18s
+      - generic [ref=f27e160]:
+        - generic [ref=f27e161]: Premium cloud host
+        - generic [ref=f27e162]: 0.74s
+      - generic [ref=f27e165]:
+        - generic [ref=f27e166]: Typical shared host
+        - generic [ref=f27e167]: 1.9s
+      - paragraph [ref=f27e169]: "* Median TTFB, WordPress + WooCommerce, same dataset, Apr 2026."
+  - generic [ref=f27e171]:
+    - generic [ref=f27e172]:
+      - text: One platform, every workload
+      - heading "From your first blog to a fleet of production apps." [level=2] [ref=f27e173]
+    - tablist "Hosting types" [ref=f27e174]:
+      - tab "Shared" [selected] [ref=f27e175] [cursor=pointer]
+      - tab "WordPress" [ref=f27e176] [cursor=pointer]
+      - tab "VPS" [ref=f27e177] [cursor=pointer]
+      - tab "Cloud" [ref=f27e178] [cursor=pointer]
+    - generic [ref=f27e179]:
+      - generic [ref=f27e180]:
+        - heading "Shared hosting" [level=3] [ref=f27e181]
+        - paragraph [ref=f27e182]: The easiest way to get online. Managed, secure, and fast enough for real traffic — perfect for portfolios, blogs, and small business sites.
+        - list [ref=f27e183]:
+          - listitem [ref=f27e184]: One-click installer for 400+ apps
+          - listitem [ref=f27e187]: Free domain & email for the first year
+          - listitem [ref=f27e190]: Intuitive control panel, no jargon
+      - generic [ref=f27e193]:
+        - generic [ref=f27e194]:
+          - generic [ref=f27e195]: Storage
+          - generic [ref=f27e196]: 10–100 GB NVMe
+        - generic [ref=f27e197]:
+          - generic [ref=f27e198]: Websites
+          - generic [ref=f27e199]: 1 – unlimited
+        - generic [ref=f27e200]:
+          - generic [ref=f27e201]: Free domain
+          - generic [ref=f27e202]: Yes (1 yr)
+        - generic [ref=f27e203]:
+          - generic [ref=f27e204]: Starts at
+          - generic [ref=f27e205]: $2.99/mo
+  - generic [ref=f27e207]:
+    - generic [ref=f27e208]:
+      - text: Simple pricing
+      - heading "Pick a plan. Grow into it, not out of it." [level=2] [ref=f27e209]
+      - paragraph [ref=f27e210]: Every plan includes free SSL, daily backups, a global CDN, and a 30-day money-back guarantee.
+    - group "Billing period" [ref=f27e212]:
+      - button "Monthly" [ref=f27e213] [cursor=pointer]
+      - button "Yearly" [pressed] [ref=f27e214] [cursor=pointer]
+      - generic [ref=f27e215]: Save 25%
+    - generic [ref=f27e216]:
+      - article [ref=f27e217]:
+        - generic [ref=f27e218]: Starter
+        - generic [ref=f27e219]: For a first site, portfolio, or landing page.
+        - generic [ref=f27e220]:
+          - generic [ref=f27e221]: $
+          - generic [ref=f27e222]: "2.99"
+          - generic [ref=f27e223]: /mo
+        - generic [ref=f27e224]: Billed yearly. Renews at $6.99/mo.
+        - link "Choose Starter" [ref=f27e225] [cursor=pointer]:
+          - /url: "#"
+        - list [ref=f27e226]:
+          - listitem [ref=f27e227]: 1 website
+          - listitem [ref=f27e230]: 10 GB NVMe storage
+          - listitem [ref=f27e233]: Free SSL & CDN
+          - listitem [ref=f27e236]: Weekly backups
+      - article [ref=f27e239]:
+        - generic [ref=f27e240]: Most popular
+        - generic [ref=f27e241]: Business
+        - generic [ref=f27e242]: For growing sites and small stores that need speed.
+        - generic [ref=f27e243]:
+          - generic [ref=f27e244]: $
+          - generic [ref=f27e245]: "5.99"
+          - generic [ref=f27e246]: /mo
+        - generic [ref=f27e247]: Billed yearly. Renews at $11.99/mo.
+        - link "Choose Business" [ref=f27e248] [cursor=pointer]:
+          - /url: "#"
+        - list [ref=f27e249]:
+          - listitem [ref=f27e250]: 25 websites
+          - listitem [ref=f27e253]: 100 GB NVMe storage
+          - listitem [ref=f27e256]: Free domain & email (1 yr)
+          - listitem [ref=f27e259]: Daily backups + staging
+          - listitem [ref=f27e262]: Priority chat support
+      - article [ref=f27e265]:
+        - generic [ref=f27e266]: Pro
+        - generic [ref=f27e267]: For high-traffic sites and agencies running many clients.
+        - generic [ref=f27e268]:
+          - generic [ref=f27e269]: $
+          - generic [ref=f27e270]: "11.99"
+          - generic [ref=f27e271]: /mo
+        - generic [ref=f27e272]: Billed yearly. Renews at $22.99/mo.
+        - link "Choose Pro" [ref=f27e273] [cursor=pointer]:
+          - /url: "#"
+        - list [ref=f27e274]:
+          - listitem [ref=f27e275]: Unlimited websites
+          - listitem [ref=f27e278]: 250 GB NVMe storage
+          - listitem [ref=f27e281]: Free domain & email (1 yr)
+          - listitem [ref=f27e284]: Hourly backups + staging
+          - listitem [ref=f27e287]: 24/7 priority support & SLA
+  - generic [ref=f27e291]:
+    - generic [ref=f27e292]:
+      - text: Loved by makers
+      - heading "The support you wish every host had." [level=2] [ref=f27e293]
+    - generic [ref=f27e294]:
+      - figure [ref=f27e295]:
+        - generic "5 out of 5 stars" [ref=f27e296]: ★★★★★
+        - blockquote [ref=f27e297]:
+          - paragraph [ref=f27e298]: “Migrated our store from a big-name host in an afternoon — the team did the whole thing. Checkout is noticeably snappier and cart abandonment dropped.”
+        - generic [ref=f27e299]:
+          - generic [ref=f27e300]: MA
+          - generic [ref=f27e301]: Maya AdeyemiFounder, Fernweh Goods
+      - figure [ref=f27e302]:
+        - generic "5 out of 5 stars" [ref=f27e303]: ★★★★★
+        - blockquote [ref=f27e304]:
+          - paragraph [ref=f27e305]: “I've opened tickets at 3am and gotten a real engineer in under two minutes. That's not marketing — it actually happens, consistently.”
+        - generic [ref=f27e306]:
+          - generic [ref=f27e307]: DR
+          - generic [ref=f27e308]: Diego RivasLead Dev, Kettle Studio
+      - figure [ref=f27e309]:
+        - generic "5 out of 5 stars" [ref=f27e310]: ★★★★★
+        - blockquote [ref=f27e311]:
+          - paragraph [ref=f27e312]: “We run 40+ client sites on Voltra. Staging, hourly backups, and one dashboard for everything. It replaced three tools we were paying for.”
+        - generic [ref=f27e313]:
+          - generic [ref=f27e314]: SK
+          - generic [ref=f27e315]: Sarah KimAgency Owner, Padd & Co
+  - generic [ref=f27e317]:
+    - heading "Start hosting in 60 seconds." [level=2] [ref=f27e318]
+    - paragraph [ref=f27e319]: Launch your site on the fastest managed platform around — and if it's not for you, get every cent back within 30 days.
+    - generic [ref=f27e320]:
+      - link "Get started free" [ref=f27e321] [cursor=pointer]:
+        - /url: "#pricing"
+      - link "Chat with sales" [ref=f27e322] [cursor=pointer]:
+        - /url: "#support"
+    - generic [ref=f27e323]: 30-day money-back guarantee · no setup fees · cancel anytime
+  - contentinfo [ref=f27e324]:
+    - generic [ref=f27e325]:
+      - generic [ref=f27e326]:
+        - generic [ref=f27e327]:
+          - link "Voltra home" [ref=f27e328] [cursor=pointer]:
+            - /url: "#"
+            - text: Voltra
+          - paragraph [ref=f27e332]: Fast, managed hosting for people who'd rather build than babysit servers.
+          - form "Newsletter signup" [ref=f27e333]:
+            - generic [ref=f27e334]: Email address
+            - textbox "Email address" [ref=f27e335]:
+              - /placeholder: you@example.com
+            - button "Join" [ref=f27e336] [cursor=pointer]
+        - generic [ref=f27e337]:
+          - heading "Hosting" [level=4] [ref=f27e338]
+          - link "Shared hosting" [ref=f27e339] [cursor=pointer]:
+            - /url: "#"
+          - link "WordPress" [ref=f27e340] [cursor=pointer]:
+            - /url: "#"
+          - link "Cloud VPS" [ref=f27e341] [cursor=pointer]:
+            - /url: "#"
+          - link "Managed Cloud" [ref=f27e342] [cursor=pointer]:
+            - /url: "#"
+          - link "Domains" [ref=f27e343] [cursor=pointer]:
+            - /url: "#"
+        - generic [ref=f27e344]:
+          - heading "Company" [level=4] [ref=f27e345]
+          - link "About" [ref=f27e346] [cursor=pointer]:
+            - /url: "#"
+          - link "Careers" [ref=f27e347] [cursor=pointer]:
+            - /url: "#"
+          - link "Blog" [ref=f27e348] [cursor=pointer]:
+            - /url: "#"
+          - link "Press" [ref=f27e349] [cursor=pointer]:
+            - /url: "#"
+        - generic [ref=f27e350]:
+          - heading "Resources" [level=4] [ref=f27e351]
+          - link "Knowledge base" [ref=f27e352] [cursor=pointer]:
+            - /url: "#"
+          - link "Status" [ref=f27e353] [cursor=pointer]:
+            - /url: "#"
+          - link "Migration guide" [ref=f27e354] [cursor=pointer]:
+            - /url: "#"
+          - link "API docs" [ref=f27e355] [cursor=pointer]:
+            - /url: "#"
+        - generic [ref=f27e356]:
+          - heading "Legal" [level=4] [ref=f27e357]
+          - link "Terms" [ref=f27e358] [cursor=pointer]:
+            - /url: "#"
+          - link "Privacy" [ref=f27e359] [cursor=pointer]:
+            - /url: "#"
+          - link "SLA" [ref=f27e360] [cursor=pointer]:
+            - /url: "#"
+          - link "Refunds" [ref=f27e361] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=f27e362]:
+        - generic [ref=f27e363]: © 2026 Voltra Hosting, Inc. All rights reserved.
+        - generic "Accepted payment methods" [ref=f27e364]:
+          - generic [ref=f27e365]: VISA
+          - generic [ref=f27e366]: MC
+          - generic [ref=f27e367]: AMEX
+          - generic [ref=f27e368]: PAYPAL
+          - generic [ref=f27e369]: UPI

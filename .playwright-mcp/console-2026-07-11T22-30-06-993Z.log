@@ -1,0 +1,32 @@
+[     394ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4:0
+[     394ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/ui-library-a07AMWdn.js?v=a17e05d4:0
+[     409ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4
+[   37285ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4:0
+[   37285ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/ui-library-a07AMWdn.js?v=a17e05d4:0
+[   37298ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4
+[  167827ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4:0
+[  167828ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/ui-library-a07AMWdn.js?v=a17e05d4:0
+[  167833ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4
+[  203515ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4:0
+[  203515ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/ui-library-a07AMWdn.js?v=a17e05d4:0
+[  203520ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4
+[  222299ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4:0
+[  222299ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/ui-library-a07AMWdn.js?v=a17e05d4:0
+[  222304ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4
+[  285892ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4:0
+[  285892ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/node_modules/.vite/deps/ui-library-a07AMWdn.js?v=a17e05d4:0
+[  285905ms] Failed to fetch dynamically imported module: http://localhost:4321/node_modules/.vite/deps/toolbar-BJ5M0JdJ.js?v=a17e05d4
+[  288471ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  288509ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/favicon.ico:0
+[  304842ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  304874ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/favicon.ico:0
+[  306642ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  306693ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/favicon.ico:0
+[  321015ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  321096ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/favicon.ico:0
+[  351464ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  351521ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/favicon.ico:0
+[  352521ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  352555ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/favicon.ico:0
+[  366468ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  366539ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/favicon.ico:0

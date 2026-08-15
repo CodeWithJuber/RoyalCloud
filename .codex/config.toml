@@ -1,0 +1,10 @@
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp@3.2.2"]
+
+# forge:managed:forge-cortex begin
+[mcp_servers.forge-cortex]
+command = "forge"
+args = ["cortex-mcp"]
+# forge:managed:forge-cortex end
