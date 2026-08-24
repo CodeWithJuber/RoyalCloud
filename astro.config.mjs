@@ -2,7 +2,8 @@ import cloudflare from "@astrojs/cloudflare";
 import { storyblok } from "@storyblok/astro";
 import { defineConfig } from "astro/config";
 
-const storyblokToken = process.env.PUBLIC_STORYBLOK_ACCESS_TOKEN ?? "not-configured";
+const storyblokToken =
+  process.env.PUBLIC_STORYBLOK_ACCESS_TOKEN ?? "not-configured";
 
 export default defineConfig({
   site: "https://royalclouds.net",
@@ -12,20 +13,20 @@ export default defineConfig({
     storyblok({
       accessToken: storyblokToken,
       apiOptions: {
-        region: process.env.STORYBLOK_REGION ?? "eu"
+        region: process.env.STORYBLOK_REGION ?? "eu",
       },
       bridge: true,
       livePreview: true,
       enableFallbackComponent: true,
-      customFallbackComponent: "storyblok/UnknownBlock"
-    })
+      customFallbackComponent: "storyblok/UnknownBlock",
+    }),
   ],
   security: {
-    checkOrigin: true
+    checkOrigin: true,
   },
   vite: {
     build: {
-      cssMinify: "lightningcss"
-    }
-  }
+      cssMinify: "lightningcss",
+    },
+  },
 });
