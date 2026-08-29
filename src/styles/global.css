@@ -158,7 +158,7 @@ select {
   --viz-line: var(--rc-primary-light);
   --viz-line-soft: color-mix(in srgb, var(--rc-muted) 40%, transparent);
   --viz-accent: var(--rc-gold);
-  --viz-label: var(--rc-muted);
+  --viz-label: var(--rc-muted-dark);
   --line: var(--line-dark);
   --field-line: var(--rc-muted);
 }
@@ -168,8 +168,12 @@ select {
   background: var(--rc-primary);
 
   --heading: var(--paper);
-  --body: var(--rc-muted);
-  --muted: var(--rc-muted);
+  /* rc-muted on rc-primary is 1.86:1 (was --chrome pre-migration, 9.44:1) —
+     the worst ratio in the system. rc-lavender is 5.85:1, clearing the 4.5:1
+     body floor while staying one step below --heading (--paper/white), same
+     hierarchy the old ice-on-cobalt pairing had. */
+  --body: var(--rc-lavender);
+  --muted: var(--rc-lavender);
   --surface-card: color-mix(in srgb, var(--rc-night) 18%, transparent);
   /* rc-primary-light on rc-primary is 1.27:1 — below the 3:1 focus-indicator
      floor (WCAG 2.2 SC 1.4.11), so the royal field re-points the ring to
@@ -183,7 +187,7 @@ select {
   --viz-line: var(--rc-lavender);
   --viz-line-soft: color-mix(in srgb, var(--rc-lavender) 45%, transparent);
   --viz-accent: var(--rc-gold);
-  --viz-label: var(--rc-muted);
+  --viz-label: var(--rc-lavender);
   --line: color-mix(in srgb, var(--rc-lavender) 22%, transparent);
   /* rc-muted on rc-primary is only 1.86:1 — below the 3:1 field-border floor,
      so royal re-points --field-line to rc-lavender (5.85:1) explicitly rather
@@ -415,7 +419,11 @@ p {
 }
 .section-dark .chip-save,
 .section-royal .chip-save {
-  color: var(--rc-muted);
+  /* Actual rendered ground is this rule's own background (5% paper mixed
+     over the field), not the raw field color: ~#392771 on night, ~#6f47e7
+     on primary. rc-muted was 3.71:1 / 1.69:1 there — rc-lavender clears both
+     (11.64:1 / 5.31:1). */
+  color: var(--rc-lavender);
   border-color: var(--line-dark);
   background: color-mix(in srgb, var(--paper) 5%, transparent);
 }
