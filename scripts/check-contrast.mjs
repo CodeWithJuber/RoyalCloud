@@ -169,6 +169,27 @@ export const PAIRS = [
     bg: "#2f1c6a",
     size: "large",
   },
+  {
+    // OperatorStrip's tab/copy-button/panel :focus-visible ring. The global
+    // default outline (--rc-primary) and this component's old choice
+    // (--rc-primary-light) are both under 3:1 on --rc-night — 1.00:1 and
+    // 2.88:1 respectively (2.59:1 against the tabbar's tinted --surface-card
+    // backing, an even worse case). Re-pointed to --rc-lavender, same fix
+    // Hero uses on gradient grounds.
+    label: "operator strip focus ring on night",
+    fg: "#faf7ff",
+    bg: "#2f1c6a",
+    size: "ui",
+  },
+  {
+    // OperatorStrip's .terminal-title: rgb(255 255 255 / 0.72) composited
+    // over --rc-night-deep, not opaque white — a distinct color from the
+    // already-tested "white on night-deep" pair.
+    label: "terminal title on night-deep",
+    fg: "#c1bdcf",
+    bg: "#231252",
+    size: "body",
+  },
 ];
 
 /* Verified while writing this plan — all 25 pairs pass:
@@ -179,7 +200,8 @@ export const PAIRS = [
    success/night-deep 4.85 · terminal-out/night-deep 6.97 · muted-dark/night 5.96
    muted-dark/night-deep 6.97 · lavender/primary 5.85 · chip-lavender/night-composite
    11.64 · chip-lavender/primary-composite 5.31 · amber/white 5.38 · red/white 4.98
-   gold/primary-dark 5.43 · gold/night 9.17 */
+   gold/primary-dark 5.43 · gold/night 9.17 · operator-focus-ring/night 13.25
+   · terminal-title/night-deep 8.95 */
 
 // Direct execution: report and exit non-zero on any failure.
 if (import.meta.url === `file://${process.argv[1]}`) {
