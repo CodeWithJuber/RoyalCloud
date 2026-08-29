@@ -1,5 +1,4 @@
 ---
-import NetworkAtlas from "@/components/visuals/NetworkAtlas.astro";
 import type { InfrastructureBlock } from "../../types/content";
 
 interface Props { block: InfrastructureBlock }
@@ -13,10 +12,6 @@ const { block } = Astro.props;
       <h2 id="infrastructure-title">{block.title}</h2>
       {block.summary && <p class="lede">{block.summary}</p>}
     </header>
-
-    <div class="atlas" data-reveal>
-      <NetworkAtlas />
-    </div>
 
     {block.locations.length > 0 && (
       <ul class="locations" data-reveal>
@@ -33,28 +28,36 @@ const { block } = Astro.props;
 </section>
 
 <style>
-  .atlas {
-    padding: clamp(1rem, 3vw, 2rem);
-    border: 1px solid color-mix(in srgb, var(--rc-muted) 20%, transparent);
-    border-radius: var(--r-shell);
-    background: color-mix(in srgb, var(--paper) 5%, transparent);
-  }
-
   .locations {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
-    gap: 1.25rem;
-    margin: 2rem 0 0;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0 0;
     padding: 0;
     list-style: none;
   }
   .locations li {
-    padding: 1.25rem;
-    border: 1px solid color-mix(in srgb, var(--rc-muted) 20%, transparent);
-    border-radius: var(--r-inner);
-    background: color-mix(in srgb, var(--paper) 4%, transparent);
+    padding: 1.5rem;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: var(--radius-card);
+    background: rgb(255 255 255 / 0.05);
   }
-  .locations h3 { margin: 0 0 0.15rem; font-size: 1.0625rem; }
-  .region { margin: 0 0 0.5rem; color: var(--rc-muted); font-size: 0.8125rem; font-weight: 700; }
-  .detail { margin: 0; color: var(--rc-muted); font-size: 0.875rem; }
+  .locations h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.0625rem;
+    color: #fff;
+  }
+  .region {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rc-gold);
+  }
+  .detail {
+    margin: 0;
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.72);
+  }
 </style>

@@ -190,9 +190,18 @@ export const PAIRS = [
     bg: "#231252",
     size: "body",
   },
+  {
+    // Infrastructure's .detail (location card copy, post-NetworkAtlas):
+    // rgb(255 255 255 / 0.72) composited over --rc-night — distinct from the
+    // night-deep composite above since the underlying field differs.
+    label: "infrastructure detail on night",
+    fg: "#c5bfd5",
+    bg: "#2f1c6a",
+    size: "body",
+  },
 ];
 
-/* Verified while writing this plan — all 25 pairs pass:
+/* Verified while writing this plan — all pairs pass:
    body/white 6.73 · body/lavender 6.35 · ink/white 14.05 · ink/lavender 13.25
    primary/white 6.20 · primary-dark/050 7.23 · white/primary 6.20
    white/primary-dark 8.31 · white/primary-light 4.88 · white/night 14.05
@@ -201,7 +210,7 @@ export const PAIRS = [
    muted-dark/night-deep 6.97 · lavender/primary 5.85 · chip-lavender/night-composite
    11.64 · chip-lavender/primary-composite 5.31 · amber/white 5.38 · red/white 4.98
    gold/primary-dark 5.43 · gold/night 9.17 · operator-focus-ring/night 13.25
-   · terminal-title/night-deep 8.95 */
+   · terminal-title/night-deep 8.94 · infrastructure-detail/night 7.88 */
 
 // Direct execution: report and exit non-zero on any failure.
 if (import.meta.url === `file://${process.argv[1]}`) {
