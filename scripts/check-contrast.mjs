@@ -99,6 +99,13 @@ export const PAIRS = [
     bg: "#231252",
     size: "body",
   },
+  { label: "muted-dark on night", fg: "#a8a8b3", bg: "#2f1c6a", size: "body" },
+  {
+    label: "muted-dark on night-deep",
+    fg: "#a8a8b3",
+    bg: "#231252",
+    size: "body",
+  },
   { label: "amber on white", fg: "#9a5c00", bg: "#ffffff", size: "body" },
   { label: "red on white", fg: "#d32f2f", bg: "#ffffff", size: "body" },
   {
@@ -115,13 +122,14 @@ export const PAIRS = [
   },
 ];
 
-/* Verified while writing this plan — all 20 pairs pass:
+/* Verified while writing this plan — all 22 pairs pass:
    body/white 6.73 · body/lavender 6.35 · ink/white 14.05 · ink/lavender 13.25
    primary/white 6.20 · primary-dark/050 7.23 · white/primary 6.20
    white/primary-dark 8.31 · white/primary-light 4.88 · white/night 14.05
    white/night-deep 16.41 · ink/gold 9.17 · muted/white 3.33 · success/white 3.38
-   success/night-deep 4.85 · terminal-out/night-deep 6.97 · amber/white 5.38
-   red/white 4.98 · gold/primary-dark 5.43 · gold/night 9.17 */
+   success/night-deep 4.85 · terminal-out/night-deep 6.97 · muted-dark/night 5.96
+   muted-dark/night-deep 6.97 · amber/white 5.38 · red/white 4.98
+   gold/primary-dark 5.43 · gold/night 9.17 */
 
 // Direct execution: report and exit non-zero on any failure.
 if (import.meta.url === `file://${process.argv[1]}`) {

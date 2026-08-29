@@ -19,8 +19,8 @@
   --canvas: var(--rc-night);
   --tint: var(--rc-lavender);
   --heading: var(--rc-lavender);
-  --body: var(--rc-muted);
-  --muted: var(--rc-muted);
+  --body: var(--rc-muted-dark);
+  --muted: var(--rc-muted-dark);
   --surface-card: color-mix(in srgb, var(--paper) 4%, transparent);
   --interactive: var(--rc-primary-light);
   --error: var(--red);
@@ -142,12 +142,12 @@ select {
 }
 
 .section-dark {
-  color: var(--rc-muted);
+  color: var(--rc-muted-dark);
   background: var(--rc-night);
 
   --heading: var(--rc-lavender);
-  --body: var(--rc-muted);
-  --muted: var(--rc-muted);
+  --body: var(--rc-muted-dark);
+  --muted: var(--rc-muted-dark);
   --surface-card: color-mix(in srgb, var(--paper) 4%, transparent);
 
   --viz-face-top: var(--rc-muted);
@@ -588,14 +588,14 @@ p {
 }
 .terminal-title {
   margin-left: 0.5rem;
-  color: var(--rc-muted);
+  color: var(--rc-muted-dark);
   font-family: var(--font-mono);
   font-size: 0.75rem;
 }
 .terminal-body {
   margin: 0;
   padding: 1rem 1.25rem 1.25rem;
-  color: var(--rc-muted);
+  color: var(--rc-muted-dark);
   font-family: var(--font-mono);
   font-size: 0.875rem;
   line-height: 1.7;
@@ -608,7 +608,7 @@ p {
   color: var(--green);
 }
 .terminal-body .tok-dim {
-  color: var(--rc-muted);
+  color: var(--rc-muted-dark);
 }
 
 /* ---------- Ledger table (DESIGN.md 10.6) ---------- */

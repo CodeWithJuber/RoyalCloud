@@ -17,6 +17,7 @@
   --rc-night-deep: #231252;
   --rc-body: #595b68;
   --rc-muted: #8b8c99;
+  --rc-muted-dark: #a8a8b3; /* muted text on dark grounds (rc-night/-deep) — 5.96:1 / 6.97:1, clears the 4.5:1 body floor where --rc-muted (4.22:1 on rc-night) does not */
   --rc-success: #009e81; /* darkened from reference #00b090 — see Global Constraints */
   --rc-gold: #ffc94b;
   --rc-gold-light: #ffd97a;
@@ -35,7 +36,6 @@
   --bg-page: var(--paper);
   --bg-tint: var(--rc-lavender);
   --bg-tint-strong: var(--rc-primary-050);
-  --bg-sky: #e9f5fd;
   --surface-band: var(--rc-night);
   --surface-footer: var(--rc-night-deep);
   /* light tile family (one temperature, hairline-edged) */
