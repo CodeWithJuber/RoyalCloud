@@ -6,54 +6,38 @@
    Components consume semantic/component names only.
    ============================================================ */
 :root {
-  /* ── Primitives — live-site palette ─────────────────────── */
-  --sky: #00a7f5; /* primary brand blue */
-  --sky-deep: #0086cf; /* hover / pressed */
-  --sky-tint: #e5f6fe; /* wash */
-  --purple: #7652f2; /* secondary brand */
-  --purple-deep: #5b3bd6; /* pressed */
-  --purple-tint: #efeafe; /* wash */
-  --gold: #fdd700; /* THE conversion accent (CTA pill) */
-  --gold-deep: #e5c300;
-  --navy: #22105f; /* dark section bands */
-  --navy-2: #2c1a6e; /* elevated surface on navy */
-  --ink: #181b22; /* footer / darkest chrome */
-  --orange: #fa4612; /* rare alert accent */
-  --magenta: #a5215e; /* rare accent */
+  /* ── Primitives — violet system v3 ──────────────────────── */
+  --rc-primary: #673de6;
+  --rc-primary-dark: #5025d1;
+  --rc-primary-light: #7d59d9; /* darkened from reference #8a63f0 — see Global Constraints */
+  --rc-primary-050: #f0edff;
+  --rc-lavender: #faf7ff;
+  --rc-ink: #2f1c6a;
+  --rc-night: #2f1c6a;
+  --rc-night-deep: #231252;
+  --rc-body: #595b68;
+  --rc-muted: #8b8c99;
+  --rc-success: #009e81; /* darkened from reference #00b090 — see Global Constraints */
+  --rc-gold: #ffc94b;
+  --rc-gold-light: #ffd97a;
+  --rc-white: #ffffff;
+  --rc-border: #e9e4f7;
 
-  /* ── Clone primitives — exact live royalclouds.net values ── */
-  --royal-purple: #7b1fa2;
-  --royal-indigo: #2e1acc;
-  --heading-blue: #269fd9; /* all h1-h6 on live */
-  --accent-hot: #ff5e3a; /* accent span in section titles */
-  --pink: #a5215e; /* PROMO badge, testimonials CTA */
-  --sticky-nav: #673ab7;
-  --sticky-nav-mobile: #5e35b1;
-  --totop: #4aaede;
-  --body-color: #4d4d4d; /* live body text */
-  --footer-bottom-bg: #00051e;
-  --footer-line: #0d1d46;
+  /* Functional status — not brand. Amber/red darkened for AA on white (verified 5.38 / 4.98). */
+  --green: #009e81;
+  --amber: #9a5c00;
+  --red: #d32f2f;
 
-  /* ── Clone gradients ────────────────────────────────────── */
-  --grad-royal: linear-gradient(225deg, #7b1fa2, #2e1acc);
-  --grad-btn-hot: linear-gradient(to bottom right, #ff416c, #fa4612);
-  --grad-footer: linear-gradient(to bottom right, #04183c, #00031e);
   --paper: #ffffff;
-  --mist: #f6f8fc; /* tinted section background */
-  --heading-ink: #269fd9;
-  --gray-700: #4d4d4d;
-  --gray-500: #5f6673;
-  --green: #1fa463; /* status ok */
-  --amber: #ffc107; /* status warn */
-  --red: #dc3545; /* status down */
+  --mist: var(--rc-lavender);
 
   /* ── Semantic — surfaces ────────────────────────────────── */
   --bg-page: var(--paper);
-  --bg-tint: var(--mist);
-  --bg-tint-strong: #edf1f9;
+  --bg-tint: var(--rc-lavender);
+  --bg-tint-strong: var(--rc-primary-050);
   --bg-sky: #e9f5fd;
-  --surface-band: var(--navy);
-  --surface-footer: var(--ink);
+  --surface-band: var(--rc-night);
+  --surface-footer: var(--rc-night-deep);
   /* light tile family (one temperature, hairline-edged) */
   --pastel-lavender: var(--purple-tint);
   --pastel-sky: var(--sky-tint);
@@ -63,16 +47,16 @@
   --tile-border: rgb(27 32 51 / 0.08);
 
   /* ── Semantic — text ────────────────────────────────────── */
-  --text-heading: var(--heading-ink);
-  --text-default: var(--gray-700);
-  --text-muted: var(--gray-500);
+  --text-heading: var(--rc-ink);
+  --text-default: var(--rc-body);
+  --text-muted: var(--rc-muted);
 
   /* ── Semantic — brand roles ─────────────────────────────── */
-  --brand-primary: var(--sky);
-  --brand-secondary: var(--purple);
-  --accent-cta: var(--gold);
-  --link: var(--sky-deep);
-  --focus-ring: var(--sky);
+  --brand-primary: var(--rc-primary);
+  --brand-secondary: var(--rc-primary-light);
+  --accent-cta: var(--rc-gold);
+  --link: var(--rc-primary);
+  --focus-ring: var(--rc-primary);
 
   /* per-page theme hooks (main[data-theme=…] remaps to sky or purple) */
   --theme-accent: var(--sky);
@@ -81,18 +65,17 @@
   --theme-art-b: var(--purple);
 
   /* ── Semantic — lines & status ──────────────────────────── */
-  --line: rgb(27 32 51 / 0.1);
-  --line-strong: rgb(27 32 51 / 0.2);
+  --line: var(--rc-border);
+  --line-strong: color-mix(in srgb, var(--rc-ink) 20%, transparent);
   --ok: var(--green);
   --ok-soft: rgb(31 164 99 / 0.13);
   --save-bg: rgb(253 215 0 / 0.16);
 
-  /* ── Type — Dosis headings, Open Sans body (self-hosted) ── */
+  /* ── Type — DM Sans, self-hosted ─────────────────────────── */
   --font-heading:
-    "Dosis Variable", "Dosis", system-ui, -apple-system, "Segoe UI", sans-serif;
+    "DM Sans Variable", "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-body:
-    "Open Sans Variable", "Open Sans", system-ui, -apple-system, "Segoe UI",
-    sans-serif;
+    "DM Sans Variable", "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
 
   /* ── Radius ─────────────────────────────────────────────── */

@@ -20,13 +20,16 @@
     "check:prettier": "prettier --check .",
     "fix": "npm run fix:eslint && npm run fix:prettier",
     "fix:eslint": "eslint --fix .",
-    "fix:prettier": "prettier -w ."
+    "fix:prettier": "prettier -w .",
+    "test": "vitest run",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "14.1.2",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/bricolage-grotesque": "5.2.10",
+    "@fontsource-variable/dm-sans": "^5.3.0",
     "@fontsource-variable/dosis": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "5.2.8",
     "@fontsource-variable/manrope": "5.2.8",
