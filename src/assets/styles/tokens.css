@@ -31,6 +31,23 @@
   --paper: #ffffff;
   --mist: var(--rc-lavender);
 
+  /* ── DEPRECATED — retained only so the Legacy-name bridge below resolves.
+     Task 2 migrates every consumer and deletes both this block and the
+     bridge. Do not add new references to these. ───────────────────────── */
+  --sky: #00a7f5;
+  --sky-deep: #0086cf;
+  --sky-tint: #e5f6fe;
+  --purple: #7652f2;
+  --purple-deep: #5b3bd6;
+  --purple-tint: #efeafe;
+  --gold: #fdd700;
+  --gold-deep: #e5c300;
+  --navy: #22105f;
+  --navy-2: #2c1a6e;
+  --ink: #181b22;
+  --orange: #fa4612;
+  --gray-700: #4d4d4d;
+
   /* ── Semantic — surfaces ────────────────────────────────── */
   --bg-page: var(--paper);
   --bg-tint: var(--rc-lavender);
