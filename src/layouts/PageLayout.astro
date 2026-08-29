@@ -2,7 +2,6 @@
 import Layout from "~/layouts/Layout.astro";
 import HeaderRC from "~/components/widgets/HeaderRC.astro";
 import FooterRC from "~/components/widgets/FooterRC.astro";
-import RevealScript from "~/components/widgets/RevealScript.astro";
 import CountUp from "~/components/widgets/CountUp.astro";
 import SvgDefs from "~/components/illustrations/SvgDefs.astro";
 
@@ -31,6 +30,5 @@ const { metadata, transparentHeader = false, theme, page, newsletter = false } =
   <slot name="footer">
     <FooterRC newsletter={newsletter} />
   </slot>
-  <RevealScript />
   <CountUp />
 </Layout>
