@@ -65,7 +65,7 @@ const tlds = [
   h2 { margin: 0 0 1rem; }
   header .lede { margin: 0; }
 
-  .console { overflow: hidden; background: var(--midnight); }
+  .console { overflow: hidden; background: var(--rc-night); }
 
   .console-bar {
     display: flex;
@@ -74,7 +74,7 @@ const tlds = [
     min-height: 3rem;
     padding: 0.75rem 1.25rem;
     border-bottom: 1px solid var(--line-dark);
-    color: var(--smoke);
+    color: var(--rc-muted);
     font-size: 0.6875rem;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -86,7 +86,7 @@ const tlds = [
   label {
     display: block;
     margin-bottom: 0.75rem;
-    color: var(--chrome);
+    color: var(--rc-muted);
     font-size: 0.8125rem;
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -102,16 +102,16 @@ const tlds = [
     padding: 0.75rem 1.15rem;
     border: 1px solid var(--line-dark);
     border-radius: var(--r-input);
-    color: var(--ice);
-    background: var(--night);
+    color: var(--rc-lavender);
+    background: var(--rc-night);
     font-size: 1.125rem;
     font-weight: 560;
   }
-  input::placeholder { color: var(--smoke); opacity: 1; }
+  input::placeholder { color: var(--rc-muted); opacity: 1; }
   /* DESIGN.md 14: a visible 2px ring everywhere — this is the hero's primary input. */
   input:focus-visible {
-    border-color: var(--interactive);
-    outline: 2px solid var(--interactive);
+    border-color: var(--rc-primary);
+    outline: 2px solid var(--rc-primary);
     outline-offset: 2px;
   }
 
@@ -135,8 +135,8 @@ const tlds = [
     border: 1px solid var(--line-dark);
     border-radius: var(--r-pill);
   }
-  .tld-name { color: var(--chrome); font-size: 0.75rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .tld-note { color: var(--smoke); font-size: 0.6875rem; }
+  .tld-name { color: var(--rc-muted); font-size: 0.75rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .tld-note { color: var(--rc-muted); font-size: 0.6875rem; }
 
   @media (max-width: 900px) {
     .domain-shell { grid-template-columns: 1fr; }

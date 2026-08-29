@@ -61,7 +61,7 @@ function readableDate(iso: string): string {
 
   h2 {
     margin: 0;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 1.25rem;
     color: var(--heading);
   }
@@ -100,16 +100,16 @@ function readableDate(iso: string): string {
     width: 5px;
     height: 28px;
     border-radius: 2px;
-    background: var(--pulse-ok);
+    background: var(--green);
     transition: transform 160ms ease, opacity 160ms ease;
   }
-  .day[data-state="warn"] .tick { background: var(--pulse-warn); }
-  .day[data-state="down"] .tick { background: var(--pulse-down); }
+  .day[data-state="warn"] .tick { background: var(--amber); }
+  .day[data-state="down"] .tick { background: var(--red); }
 
   .day:hover .tick,
   .day:focus-visible .tick { transform: scaleY(1.15); opacity: 0.85; }
 
-  .day:focus-visible { outline: 2px solid var(--interactive); outline-offset: 2px; }
+  .day:focus-visible { outline: 2px solid var(--rc-primary); outline-offset: 2px; }
 
   .tip {
     position: absolute;
@@ -149,7 +149,7 @@ function readableDate(iso: string): string {
     border-top: 1px solid var(--line);
   }
   .uptime-foot a {
-    color: var(--interactive);
+    color: var(--rc-primary);
     text-decoration: underline;
     text-underline-offset: 3px;
   }

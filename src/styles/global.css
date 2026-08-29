@@ -2,27 +2,7 @@
    Layers: primitive -> semantic -> component. Components never reach past semantic. */
 :root {
   /* ---- Primitive: color ---- */
-  --night: #050712;
-  --midnight: #0a0e24;
-  --abyss: #0e1330;
-  --cobalt: #2f36d4;
-  --cobalt-bright: #5660ff;
-  --cobalt-dim: #1e2494;
-  --signal: #ff6b3d;
-  --signal-hot: #ff8a66;
-  --ice: #f4f6fb;
   --paper: #fff;
-  --chrome: #cad1e5;
-  --smoke: #9099b2;
-  --graphite: #20263b;
-  --slate: #5d667e;
-  --cloud-100: #e9edf6;
-  --pulse-ok: #3ddc97;
-  --pulse-warn: #ffc24b;
-  --pulse-down: #ff5c5c;
-  /* Error ink for prose on a light field. --pulse-down is a telemetry colour and
-     only clears 3.03:1 on white, below the 4.5:1 body-text floor. */
-  --alert: #c62828;
 
   /* ---- Primitive: space / radius / depth ---- */
   --r-input: 0.875rem;
@@ -34,23 +14,23 @@
   --sh-3: 0 20px 60px rgb(10 14 36 / 28%);
 
   /* ---- Semantic ----
-     Dark is the ground state (--night canvas). Section classes re-point these,
+     Dark is the ground state (--rc-night canvas). Section classes re-point these,
      so a block inherits the right ink/rules from whatever field it sits on. */
-  --canvas: var(--night);
-  --tint: var(--ice);
-  --heading: var(--ice);
-  --body: var(--smoke);
-  --muted: var(--smoke);
+  --canvas: var(--rc-night);
+  --tint: var(--rc-lavender);
+  --heading: var(--rc-lavender);
+  --body: var(--rc-muted);
+  --muted: var(--rc-muted);
   --surface-card: color-mix(in srgb, var(--paper) 4%, transparent);
-  --interactive: var(--cobalt-bright);
-  --error: var(--pulse-down);
+  --interactive: var(--rc-primary-light);
+  --error: var(--red);
   --line-light: #dce1ee;
-  --line-dark: color-mix(in srgb, var(--chrome) 14%, transparent);
+  --line-dark: color-mix(in srgb, var(--rc-muted) 14%, transparent);
   --line: var(--line-dark);
   /* Form-control boundary. A field's border is its only visual affordance, so it is
      held to SC 1.4.11 (>=3:1) on every field — unlike --line, which is decorative.
-     Dark ground: --chrome on --night is ~15:1. */
-  --field-line: var(--chrome);
+     Dark ground: --rc-muted on --rc-night is 4.22:1. */
+  --field-line: var(--rc-muted);
 
   --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
   --font-body: "Manrope Variable", system-ui, sans-serif;
@@ -65,15 +45,15 @@
      The four SVG diagrams read only these. Light is the ground state;
      .section-dark / .section-royal re-point them, so one stroke language
      renders correctly on every field. */
-  --viz-face-top: var(--chrome);
-  --viz-face-left: var(--cloud-100);
-  --viz-face-right: var(--cobalt);
-  --viz-recess: var(--ice);
-  --viz-shadow: color-mix(in srgb, var(--cobalt) 18%, transparent);
-  --viz-line: var(--cobalt);
-  --viz-line-soft: color-mix(in srgb, var(--cobalt) 40%, transparent);
-  --viz-accent: var(--signal);
-  --viz-label: var(--slate);
+  --viz-face-top: var(--rc-muted);
+  --viz-face-left: var(--line);
+  --viz-face-right: var(--rc-primary);
+  --viz-recess: var(--rc-lavender);
+  --viz-shadow: color-mix(in srgb, var(--rc-primary) 18%, transparent);
+  --viz-line: var(--rc-primary);
+  --viz-line-soft: color-mix(in srgb, var(--rc-primary) 40%, transparent);
+  --viz-accent: var(--rc-gold);
+  --viz-label: var(--rc-body);
 }
 
 *,
@@ -111,13 +91,13 @@ select {
   font: inherit;
 }
 :focus-visible {
-  outline: 2px solid var(--interactive);
+  outline: 2px solid var(--rc-primary);
   outline-offset: 3px;
   border-radius: 2px;
 }
 ::selection {
   color: var(--paper);
-  background: var(--cobalt);
+  background: var(--rc-primary);
 }
 
 /* ---------- Layout ---------- */
@@ -132,85 +112,83 @@ select {
    (headings, rules, cards, diagrams) follows without knowing where it lives. */
 .section-light,
 .section-tint {
-  color: var(--graphite);
+  color: var(--rc-body);
 
-  --heading: var(--midnight);
-  --body: var(--graphite);
-  --muted: var(--slate);
+  --heading: var(--rc-night);
+  --body: var(--rc-body);
+  --muted: var(--rc-body);
   --surface-card: var(--paper);
-  --error: var(--alert);
+  --error: var(--red);
   --line: var(--line-light);
-  /* --chrome is 1.53:1 on paper — invisible as a field border. --slate is 5.73:1
-     on --paper and 5.35:1 on --ice, so a control's edge stays locatable (SC 1.4.11). */
-  --field-line: var(--slate);
-  /* Telemetry pulses are tuned for --night. On a light field the tick is the sole
-     carrier of daily state, so it needs >=3:1: #1a8f5f is 3.94:1 and #8a5a00 is
-     5.29:1 on --paper. The dark-field values stay untouched. */
-  --pulse-ok: #1a8f5f;
-  --pulse-warn: #8a5a00;
-  --viz-face-top: var(--chrome);
-  --viz-face-left: var(--cloud-100);
-  --viz-face-right: var(--cobalt);
-  --viz-recess: var(--ice);
-  --viz-shadow: color-mix(in srgb, var(--cobalt) 18%, transparent);
-  --viz-line: var(--cobalt);
-  --viz-line-soft: color-mix(in srgb, var(--cobalt) 40%, transparent);
-  --viz-accent: var(--signal);
-  --viz-label: var(--slate);
+  /* --rc-muted is only ~3.3:1 on paper — too close to the floor for a field
+     border. --rc-body is 6.73:1 on --paper and 6.35:1 on --rc-lavender, so a
+     control's edge stays locatable (SC 1.4.11). */
+  --field-line: var(--rc-body);
+  --viz-face-top: var(--rc-muted);
+  --viz-face-left: var(--line);
+  --viz-face-right: var(--rc-primary);
+  --viz-recess: var(--rc-lavender);
+  --viz-shadow: color-mix(in srgb, var(--rc-primary) 18%, transparent);
+  --viz-line: var(--rc-primary);
+  --viz-line-soft: color-mix(in srgb, var(--rc-primary) 40%, transparent);
+  --viz-accent: var(--rc-gold);
+  --viz-label: var(--rc-body);
 }
 .section-light {
   background: var(--paper);
 }
 .section-tint {
-  background: var(--ice);
+  background: var(--rc-lavender);
 }
 
 .section-dark {
-  color: var(--smoke);
-  background: var(--night);
+  color: var(--rc-muted);
+  background: var(--rc-night);
 
-  --heading: var(--ice);
-  --body: var(--smoke);
-  --muted: var(--smoke);
+  --heading: var(--rc-lavender);
+  --body: var(--rc-muted);
+  --muted: var(--rc-muted);
   --surface-card: color-mix(in srgb, var(--paper) 4%, transparent);
 
-  --viz-face-top: var(--chrome);
-  --viz-face-left: var(--midnight);
-  --viz-face-right: var(--cobalt);
-  --viz-recess: var(--abyss);
+  --viz-face-top: var(--rc-muted);
+  --viz-face-left: var(--rc-night);
+  --viz-face-right: var(--rc-primary);
+  --viz-recess: var(--rc-night-deep);
   --viz-shadow: #02030a;
-  --viz-line: var(--cobalt-bright);
-  --viz-line-soft: color-mix(in srgb, var(--chrome) 40%, transparent);
-  --viz-accent: var(--signal);
-  --viz-label: var(--smoke);
+  --viz-line: var(--rc-primary-light);
+  --viz-line-soft: color-mix(in srgb, var(--rc-muted) 40%, transparent);
+  --viz-accent: var(--rc-gold);
+  --viz-label: var(--rc-muted);
   --line: var(--line-dark);
-  --field-line: var(--chrome);
+  --field-line: var(--rc-muted);
 }
 
 .section-royal {
-  color: var(--ice);
-  background: var(--cobalt);
+  color: var(--rc-lavender);
+  background: var(--rc-primary);
 
   --heading: var(--paper);
-  --body: var(--chrome);
-  --muted: var(--chrome);
-  --surface-card: color-mix(in srgb, var(--night) 18%, transparent);
-  /* cobalt-bright on cobalt is 1.74:1 — below the 3:1 focus-indicator floor
-     (WCAG 2.2 SC 1.4.11), so the royal field re-points the ring to ice (7.47:1). */
-  --interactive: var(--ice);
-  --viz-face-top: var(--ice);
-  --viz-face-left: var(--cobalt-dim);
-  --viz-face-right: var(--cobalt-bright);
-  --viz-recess: var(--cobalt-dim);
+  --body: var(--rc-muted);
+  --muted: var(--rc-muted);
+  --surface-card: color-mix(in srgb, var(--rc-night) 18%, transparent);
+  /* rc-primary-light on rc-primary is 1.27:1 — below the 3:1 focus-indicator
+     floor (WCAG 2.2 SC 1.4.11), so the royal field re-points the ring to
+     rc-lavender (5.85:1). */
+  --interactive: var(--rc-lavender);
+  --viz-face-top: var(--rc-lavender);
+  --viz-face-left: var(--rc-primary-dark);
+  --viz-face-right: var(--rc-primary-light);
+  --viz-recess: var(--rc-primary-dark);
   --viz-shadow: rgb(5 7 18 / 30%);
-  --viz-line: var(--ice);
-  --viz-line-soft: color-mix(in srgb, var(--ice) 45%, transparent);
-  --viz-accent: var(--signal);
-  --viz-label: var(--chrome);
-  --line: color-mix(in srgb, var(--ice) 22%, transparent);
-  /* --chrome on --cobalt is 5.30:1; --slate would be 1.41:1, so royal re-points it
-     explicitly rather than inheriting a light field's value when nested. */
-  --field-line: var(--chrome);
+  --viz-line: var(--rc-lavender);
+  --viz-line-soft: color-mix(in srgb, var(--rc-lavender) 45%, transparent);
+  --viz-accent: var(--rc-gold);
+  --viz-label: var(--rc-muted);
+  --line: color-mix(in srgb, var(--rc-lavender) 22%, transparent);
+  /* rc-muted on rc-primary is only 1.86:1 — below the 3:1 field-border floor,
+     so royal re-points --field-line to rc-lavender (5.85:1) explicitly rather
+     than inheriting a light field's value when nested. */
+  --field-line: var(--rc-lavender);
 }
 
 .section-header {
@@ -230,7 +208,7 @@ h2,
 h3 {
   margin-top: 0;
   color: var(--heading);
-  font-family: var(--font-display);
+  font-family: var(--font-heading);
   letter-spacing: -0.03em;
   line-height: 1.04;
 }
@@ -270,7 +248,7 @@ p {
 .eyebrow {
   display: inline-block;
   margin: 0 0 1.25rem;
-  color: var(--cobalt);
+  color: var(--rc-primary);
   font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -278,17 +256,18 @@ p {
   text-transform: uppercase;
 }
 .section-dark .eyebrow {
-  color: var(--signal);
+  color: var(--rc-gold);
 }
-/* Signal on cobalt is 2.86:1, and an eyebrow is not a conversion action —
-   the royal field's only signal element is the primary button. */
+/* rc-gold on rc-primary is 4.05:1 — under the 4.5:1 body-text floor for this
+   small caps label, and an eyebrow is not a conversion action — the royal
+   field's only accent element is the primary button. */
 .section-royal .eyebrow {
   color: var(--paper);
 }
 
 /* ---------- Buttons ---------- */
-/* Primary is a signal pill with a nested arrow island (DESIGN.md 10.3).
-   Signal orange is the only conversion color in the system. */
+/* Primary is a gold pill with a nested arrow island (DESIGN.md 10.3).
+   rc-gold is the only conversion color in the system. */
 .button {
   display: inline-flex;
   align-items: center;
@@ -328,35 +307,35 @@ p {
 }
 
 .button-primary {
-  color: var(--night);
-  background: var(--signal);
+  color: var(--rc-night);
+  background: var(--rc-gold);
 }
 .button-primary::after {
-  background: color-mix(in srgb, var(--night) 12%, transparent);
+  background: color-mix(in srgb, var(--rc-night) 12%, transparent);
 }
 .button-primary:hover {
-  background: var(--signal-hot);
+  background: var(--rc-gold-light);
 }
 
 .button-ghost {
-  color: var(--midnight);
+  color: var(--rc-night);
   border-color: var(--line);
   background: var(--paper);
 }
 .button-ghost::after {
-  background: var(--ice);
+  background: var(--rc-lavender);
 }
 .button-ghost:hover {
-  border-color: var(--cobalt);
-  color: var(--cobalt);
+  border-color: var(--rc-primary);
+  color: var(--rc-primary);
 }
 
 .button-invert {
-  color: var(--midnight);
-  background: var(--ice);
+  color: var(--rc-night);
+  background: var(--rc-lavender);
 }
 .button-invert::after {
-  background: color-mix(in srgb, var(--midnight) 10%, transparent);
+  background: color-mix(in srgb, var(--rc-night) 10%, transparent);
 }
 .button-invert:hover {
   background: var(--paper);
@@ -364,7 +343,7 @@ p {
 
 .section-dark .button-ghost,
 .section-royal .button-ghost {
-  color: var(--ice);
+  color: var(--rc-lavender);
   border-color: var(--line-dark);
   background: color-mix(in srgb, var(--paper) 4%, transparent);
 }
@@ -374,8 +353,8 @@ p {
 }
 .section-dark .button-ghost:hover,
 .section-royal .button-ghost:hover {
-  color: var(--ice);
-  border-color: var(--signal);
+  color: var(--rc-lavender);
+  border-color: var(--rc-gold);
 }
 
 .button-block {
@@ -426,17 +405,17 @@ p {
   line-height: 1.3;
 }
 .chip-discount {
-  color: var(--night);
-  background: var(--signal);
+  color: var(--rc-night);
+  background: var(--rc-gold);
 }
 .chip-save {
-  color: var(--cobalt);
-  border: 1px solid color-mix(in srgb, var(--cobalt) 30%, transparent);
-  background: color-mix(in srgb, var(--cobalt) 6%, transparent);
+  color: var(--rc-primary);
+  border: 1px solid color-mix(in srgb, var(--rc-primary) 30%, transparent);
+  background: color-mix(in srgb, var(--rc-primary) 6%, transparent);
 }
 .section-dark .chip-save,
 .section-royal .chip-save {
-  color: var(--chrome);
+  color: var(--rc-muted);
   border-color: var(--line-dark);
   background: color-mix(in srgb, var(--paper) 5%, transparent);
 }
@@ -448,8 +427,8 @@ p {
   left: 0.75rem;
   padding: 0.75rem 1rem;
   border-radius: var(--r-pill);
-  color: var(--night);
-  background: var(--signal-hot);
+  color: var(--rc-night);
+  background: var(--rc-gold-light);
   font-weight: 800;
   transform: translateY(-200%);
 }
@@ -462,9 +441,9 @@ p {
   align-items: center;
   gap: 0.35rem;
   padding: 0.28rem 0.65rem;
-  border: 1px solid color-mix(in srgb, var(--signal) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rc-gold) 45%, transparent);
   border-radius: var(--r-pill);
-  color: var(--signal);
+  color: var(--rc-gold);
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -506,13 +485,13 @@ p {
   grid-column: 1 / -1;
   height: 4px;
   border-radius: var(--r-pill);
-  background: color-mix(in srgb, var(--chrome) 22%, transparent);
+  background: color-mix(in srgb, var(--rc-muted) 22%, transparent);
   overflow: hidden;
 }
 .telemetry-fill {
   height: 100%;
   border-radius: inherit;
-  background: var(--interactive);
+  background: var(--rc-primary);
   transform: scaleX(var(--fill, 0));
   transform-origin: left center;
   transition: transform 900ms var(--ease);
@@ -531,13 +510,13 @@ p {
   height: 8px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: var(--pulse-ok);
+  background: var(--green);
 }
 .status-dot[data-state="warn"] {
-  background: var(--pulse-warn);
+  background: var(--amber);
 }
 .status-dot[data-state="down"] {
-  background: var(--pulse-down);
+  background: var(--red);
 }
 
 /* ---------- Honest Ledger (DESIGN.md 10.5) ----------
@@ -590,7 +569,7 @@ p {
 /* ---------- Terminal / Console (DESIGN.md 7, 8.7) ---------- */
 .terminal {
   border-radius: var(--r-inner);
-  background: var(--midnight);
+  background: var(--rc-night);
   box-shadow: inset 0 1px 0 rgb(202 209 229 / 7%);
   overflow: hidden;
 }
@@ -599,37 +578,37 @@ p {
   align-items: center;
   gap: 0.4rem;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--chrome) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--rc-muted) 12%, transparent);
 }
 .terminal-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--chrome) 30%, transparent);
+  background: color-mix(in srgb, var(--rc-muted) 30%, transparent);
 }
 .terminal-title {
   margin-left: 0.5rem;
-  color: var(--smoke);
+  color: var(--rc-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
 }
 .terminal-body {
   margin: 0;
   padding: 1rem 1.25rem 1.25rem;
-  color: var(--chrome);
+  color: var(--rc-muted);
   font-family: var(--font-mono);
   font-size: 0.875rem;
   line-height: 1.7;
   overflow-x: auto;
 }
 .terminal-body .tok-cmd {
-  color: var(--ice);
+  color: var(--rc-lavender);
 }
 .terminal-body .tok-ok {
-  color: var(--pulse-ok);
+  color: var(--green);
 }
 .terminal-body .tok-dim {
-  color: var(--smoke);
+  color: var(--rc-muted);
 }
 
 /* ---------- Ledger table (DESIGN.md 10.6) ---------- */
@@ -662,10 +641,10 @@ p {
 }
 /* The Royal Clouds column is tinted, not shouted (10.6). */
 .ledger-table [data-own] {
-  background: color-mix(in srgb, var(--cobalt) 6%, transparent);
+  background: color-mix(in srgb, var(--rc-primary) 6%, transparent);
   box-shadow:
-    inset 1px 0 0 color-mix(in srgb, var(--cobalt) 35%, transparent),
-    inset -1px 0 0 color-mix(in srgb, var(--cobalt) 35%, transparent);
+    inset 1px 0 0 color-mix(in srgb, var(--rc-primary) 35%, transparent),
+    inset -1px 0 0 color-mix(in srgb, var(--rc-primary) 35%, transparent);
 }
 
 /* ---------- Segmented switch (billing term / currency) ---------- */
@@ -691,13 +670,13 @@ p {
     color 240ms var(--ease);
 }
 .segment button[aria-pressed="true"] {
-  color: var(--ice);
-  background: var(--midnight);
+  color: var(--rc-lavender);
+  background: var(--rc-night);
 }
 .section-dark .segment button[aria-pressed="true"],
 .section-royal .segment button[aria-pressed="true"] {
-  color: var(--night);
-  background: var(--ice);
+  color: var(--rc-night);
+  background: var(--rc-lavender);
 }
 
 /* ---------- Behaviour hooks ---------- */

@@ -157,8 +157,8 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
   /* 10.1 — 36px night band, label copy, one promo statement, optional dismiss. */
   .announcement {
     position: relative;
-    color: var(--chrome);
-    background: var(--night);
+    color: var(--rc-muted);
+    background: var(--rc-night);
   }
   .announcement p {
     display: flex;
@@ -182,10 +182,10 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    color: var(--signal);
+    color: var(--rc-gold);
     text-decoration: none;
   }
-  .announcement a:hover { color: var(--signal-hot); text-decoration: underline; }
+  .announcement a:hover { color: var(--rc-gold-light); text-decoration: underline; }
 
   .announcement-close {
     position: absolute;
@@ -197,12 +197,12 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     place-items: center;
     border: 0;
     border-radius: 50%;
-    color: var(--smoke);
+    color: var(--rc-muted);
     background: transparent;
     transform: translateY(-50%);
     cursor: pointer;
   }
-  .announcement-close:hover { color: var(--ice); }
+  .announcement-close:hover { color: var(--rc-lavender); }
 
   /* 10.2 — detached floating island: 64px, pill, midnight at 88% + chrome hairline. */
   .header-dock {
@@ -222,7 +222,7 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     padding: 0.4rem 0.4rem 0.4rem 1.5rem;
     border: 1px solid var(--line-dark);
     border-radius: var(--r-pill);
-    background: color-mix(in srgb, var(--midnight) 88%, transparent);
+    background: color-mix(in srgb, var(--rc-night) 88%, transparent);
     box-shadow: var(--sh-3);
   }
   @supports (backdrop-filter: blur(1px)) {
@@ -241,7 +241,7 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     min-height: 2.75rem;
     padding: 0 0.85rem;
     border-radius: var(--r-pill);
-    color: var(--ice);
+    color: var(--rc-lavender);
     font-family: var(--font-body);
     font-size: 0.9375rem;
     font-weight: 600;
@@ -249,7 +249,7 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     cursor: pointer;
   }
   .nav-group summary::-webkit-details-marker { display: none; }
-  .nav-group summary svg { color: var(--smoke); }
+  .nav-group summary svg { color: var(--rc-muted); }
   .nav-group summary:hover { background: color-mix(in srgb, var(--paper) 7%, transparent); }
   .nav-group[open] summary { background: color-mix(in srgb, var(--paper) 9%, transparent); }
   .nav-group[open] summary svg { transform: rotate(180deg); }
@@ -266,7 +266,7 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     padding: 0.6rem;
     border: 1px solid var(--line-dark);
     border-radius: var(--r-inner);
-    background: var(--abyss);
+    background: var(--rc-night-deep);
     box-shadow: var(--sh-3);
   }
   .nav-panel a {
@@ -275,13 +275,13 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     min-height: 2.75rem;
     padding: 0.5rem 0.85rem;
     border-radius: var(--r-input);
-    color: var(--chrome);
+    color: var(--rc-muted);
     font-size: 0.9375rem;
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
   }
-  .nav-panel a:hover { color: var(--ice); background: color-mix(in srgb, var(--paper) 6%, transparent); }
+  .nav-panel a:hover { color: var(--rc-lavender); background: color-mix(in srgb, var(--paper) 6%, transparent); }
 
   .header-actions { display: flex; flex-shrink: 0; align-items: center; gap: 0.75rem; }
   .login-link {
@@ -289,12 +289,12 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     align-items: center;
     min-height: 2.75rem;
     padding: 0 0.5rem;
-    color: var(--chrome);
+    color: var(--rc-muted);
     font-size: 0.9375rem;
     font-weight: 600;
     text-decoration: none;
   }
-  .login-link:hover { color: var(--ice); }
+  .login-link:hover { color: var(--rc-lavender); }
   .header-cta { min-height: 2.75rem; padding: 0.3rem 0.35rem 0.3rem 1.15rem; font-size: 0.875rem; }
   .header-cta::after { width: 2rem; height: 2rem; }
 
@@ -315,7 +315,7 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     width: 1.125rem;
     height: 2px;
     border-radius: 2px;
-    background: var(--ice);
+    background: var(--rc-lavender);
     content: "";
   }
   .bars { position: relative; }
@@ -333,7 +333,7 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     padding: 1.5rem;
     border: 1px solid var(--line-dark);
     border-radius: var(--r-shell);
-    background: var(--midnight);
+    background: var(--rc-night);
     box-shadow: var(--sh-3);
     overscroll-behavior: contain;
   }
@@ -341,7 +341,7 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
   .mobile-panel h2 {
     max-width: none;
     margin: 0 0 0.25rem;
-    color: var(--smoke);
+    color: var(--rc-muted);
     font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 700;
@@ -353,7 +353,7 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     align-items: center;
     min-height: 3rem;
     border-bottom: 1px solid var(--line-dark);
-    color: var(--ice);
+    color: var(--rc-lavender);
     font-size: 1.125rem;
     font-weight: 700;
     text-decoration: none;

@@ -129,13 +129,13 @@ const commandsOf = (lines: OperatorStripBlock["tabs"][number]["lines"]) =>
   /* .segment styles the pressed state via aria-pressed; a tablist uses
      aria-selected, so the active segment is re-stated here. */
   .tabbar button[aria-selected="true"] {
-    color: var(--night);
-    background: var(--ice);
+    color: var(--rc-night);
+    background: var(--rc-lavender);
   }
   .tabbar button:focus-visible,
   .copy-button:focus-visible,
   .panel:focus-visible {
-    outline: 2px solid var(--cobalt-bright);
+    outline: 2px solid var(--rc-primary-light);
     outline-offset: 2px;
   }
 

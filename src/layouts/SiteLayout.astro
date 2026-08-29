@@ -1,6 +1,11 @@
 ---
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource-variable/manrope";
+// tokens.css must load first: global.css's semantic layer now references its
+// --rc-*/--green/--amber/--red/--dk-*/--btn-* names (Task 2 migration). Names
+// global.css also declares itself (--paper, --line, --font-body, --font-mono)
+// still win the cascade since global.css is imported second.
+import "@/assets/styles/tokens.css";
 import "@/styles/global.css";
 import displayFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 import bodyFont from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
