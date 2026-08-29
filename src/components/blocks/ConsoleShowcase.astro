@@ -3,7 +3,6 @@
    every word inside it comes from the block. No fabricated screenshot, no metric
    the product cannot actually show (DESIGN.md 11). */
 import type { ConsoleShowcaseBlock } from "../../types/content";
-import RoyalConsole from "../visuals/RoyalConsole.astro";
 
 interface Props { block: ConsoleShowcaseBlock }
 const { block } = Astro.props;
@@ -54,7 +53,10 @@ const uid = Math.random().toString(36).slice(2, 8);
     <div class="frames" data-reveal>
       {screens.map((screen, index) => (
         <div class="frame" id={`console-frame-${uid}-${index}`} data-console-frame={index}>
-          <RoyalConsole label={screen.label} caption={screen.caption} />
+          <article class="screen-card">
+            <h3 class="screen-card__label">{screen.label}</h3>
+            {screen.caption && <p class="screen-card__caption">{screen.caption}</p>}
+          </article>
         </div>
       ))}
     </div>
@@ -103,12 +105,34 @@ const uid = Math.random().toString(36).slice(2, 8);
     max-width: 100%;
   }
   .console-switch button { min-height: 44px; }
-  /* Tabs are navigation, not conversion: the ring is --interactive like everywhere else. */
-  .console-switch button:focus-visible {
-    outline: 2px solid var(--rc-primary);
-    outline-offset: 3px;
+  /* --rc-primary (the global focus color) is only 2.26:1 on this section's
+     --rc-night ground — below the 3:1 floor (WCAG 2.2 SC 1.4.11). Re-pointed
+     to --rc-lavender, same override Hero/OperatorStrip use on dark grounds.
+     Covers the tab switcher and the rail's primary action link alike. */
+  .console-switch button:focus-visible,
+  .rail .button:focus-visible {
+    outline-color: var(--rc-lavender);
   }
 
   .frames { display: grid; gap: 1.5rem; }
   .frames [hidden] { display: none; }
+
+  .screen-card {
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: var(--radius-panel);
+    background: rgb(255 255 255 / 0.05);
+  }
+  .screen-card__label {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: #fff;
+  }
+  .screen-card__caption {
+    margin: 0;
+    max-width: 60ch;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgb(255 255 255 / 0.72);
+  }
 </style>
