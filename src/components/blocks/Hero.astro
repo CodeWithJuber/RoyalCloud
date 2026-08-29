@@ -1,5 +1,4 @@
 ---
-import RoyalCloudscape from "@/components/visuals/RoyalCloudscape.astro";
 import type { HeroBlock } from "../../types/content";
 
 interface Props { block: HeroBlock }
@@ -12,48 +11,42 @@ const secondaryExternal = block.secondaryAction
   : false;
 ---
 
-<section class="section-dark hero" aria-labelledby="hero-title">
-  <div class="shell hero__grid">
-    <div class="hero__copy" data-reveal>
-      {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
-      <h1 id="hero-title">{block.title}</h1>
-      <p class="lede">{block.summary}</p>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="shell hero__inner" data-reveal>
+    {block.eyebrow && <p class="hero__eyebrow">{block.eyebrow}</p>}
+    <h1 id="hero-title">{block.title}</h1>
+    <p class="hero__lede">{block.summary}</p>
 
-      <div class="button-row">
+    <div class="hero__actions">
+      <a
+        class="button button-cta"
+        href={block.primaryAction.href}
+        target={primaryExternal ? "_blank" : undefined}
+        rel={primaryExternal ? "noopener noreferrer" : undefined}
+      >{block.primaryAction.label}</a>
+
+      {block.secondaryAction && (
         <a
-          class="button button-primary"
-          href={block.primaryAction.href}
-          target={primaryExternal ? "_blank" : undefined}
-          rel={primaryExternal ? "noopener noreferrer" : undefined}
-        >{block.primaryAction.label}</a>
-
-        {block.secondaryAction && (
-          <a
-            class="button button-ghost"
-            href={block.secondaryAction.href}
-            target={secondaryExternal ? "_blank" : undefined}
-            rel={secondaryExternal ? "noopener noreferrer" : undefined}
-          >{block.secondaryAction.label}</a>
-        )}
-      </div>
-
-      {block.proof && block.proof.length > 0 && (
-        <ul class="proof">
-          {block.proof.map((item) => (
-            <li>
-              <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false">
-                <path d="M3 8.5l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              {item}
-            </li>
-          ))}
-        </ul>
+          class="button button-ghost"
+          href={block.secondaryAction.href}
+          target={secondaryExternal ? "_blank" : undefined}
+          rel={secondaryExternal ? "noopener noreferrer" : undefined}
+        >{block.secondaryAction.label}</a>
       )}
     </div>
 
-    <div class="hero__visual" aria-hidden="true" data-reveal>
-      <RoyalCloudscape label={block.eyebrow} />
-    </div>
+    {block.proof && block.proof.length > 0 && (
+      <ul class="hero__proof">
+        {block.proof.map((item) => (
+          <li>
+            <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false">
+              <path d="M3 8.5l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {item}
+          </li>
+        ))}
+      </ul>
+    )}
   </div>
 </section>
 
@@ -61,45 +54,74 @@ const secondaryExternal = block.secondaryAction
   .hero {
     position: relative;
     overflow: hidden;
-    padding-block: clamp(3.5rem, 7vw, 6rem) clamp(3rem, 6vw, 5rem);
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: linear-gradient(95deg, var(--rc-primary-dark), var(--rc-primary) 45%, var(--rc-primary-light));
+    color: #fff;
+    text-align: center;
   }
 
-  /* Editorial offset: copy upper-left, the system spans lower-right and bleeds. */
-  .hero__grid {
+  .hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    align-items: center;
-    gap: clamp(2rem, 5vw, 4rem);
+    justify-items: center;
+    gap: 1.25rem;
+    max-width: 52rem;
   }
 
-  .hero__copy { min-width: 0; }
-  h1 { margin: 0 0 1.25rem; }
-  .lede { margin: 0; }
-  .button-row { margin-top: 2rem; }
+  .hero__eyebrow {
+    margin: 0;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    /* rc-gold fails AA on this gradient (4.05:1 on primary, 3.19:1 on
+       primary-light — see global.css .section-royal .eyebrow for the same
+       rule elsewhere). rc-lavender clears 4.5:1 at every stop. */
+    color: var(--rc-lavender);
+  }
 
-  .hero__visual { min-width: 0; align-self: end; }
-  .hero__visual > :global(*) { width: 100%; height: auto; }
+  .hero h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2rem, 5.4vw, 3.5rem);
+    line-height: 1.12;
+  }
 
-  .proof {
+  .hero__lede {
+    margin: 0;
+    max-width: 42rem;
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    line-height: 1.6;
+    /* rc-lavender, not translucent white: at the gradient's lightest stop
+       rgb(255 255 255 / 0.88) composites to only 4.17:1 — under the 4.5:1
+       floor. rc-lavender holds 4.61:1 at that stop. */
+    color: var(--rc-lavender);
+  }
+
+  .hero__actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .hero__proof {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 0.75rem 1.75rem;
-    margin: 2rem 0 0;
+    margin: 1.5rem 0 0;
     padding: 0;
     list-style: none;
   }
-  .proof li {
+  .hero__proof li {
     display: flex;
     align-items: center;
     gap: 0.45rem;
-    color: var(--rc-muted);
     font-size: 0.875rem;
     font-weight: 700;
+    /* Same rc-lavender floor as .hero__lede — see comment there. */
+    color: var(--rc-lavender);
   }
-  .proof svg { flex-shrink: 0; color: var(--rc-primary); }
-
-  @media (max-width: 900px) {
-    .hero__grid { grid-template-columns: 1fr; }
-    .hero__visual { margin-inline: -1rem; }
-  }
+  .hero__proof svg { flex-shrink: 0; color: var(--rc-gold); }
 </style>

@@ -113,6 +113,15 @@ export const PAIRS = [
     size: "body",
   },
   {
+    // Hero eyebrow/lede/proof on the gradient's lightest stop (worst case —
+    // darker stops give more contrast for this light foreground, same logic
+    // as "white on primary-light" above).
+    label: "lavender on primary-light",
+    fg: "#faf7ff",
+    bg: "#7d59d9",
+    size: "body",
+  },
+  {
     // .chip-save's actual ground on a dark field: 5% --paper mixed over the
     // field color, not the raw field itself (color-mix(in srgb, var(--paper)
     // 5%, transparent) over --rc-night).

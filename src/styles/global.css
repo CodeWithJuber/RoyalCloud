@@ -345,6 +345,15 @@ p {
   background: var(--paper);
 }
 
+.button-cta {
+  background: linear-gradient(135deg, var(--rc-gold-light), var(--rc-gold));
+  color: var(--rc-ink);
+  border: 2px solid transparent;
+}
+.button-cta:hover {
+  filter: brightness(1.06);
+}
+
 .section-dark .button-ghost,
 .section-royal .button-ghost {
   color: var(--rc-lavender);
