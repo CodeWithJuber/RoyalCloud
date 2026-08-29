@@ -122,6 +122,24 @@ export const PAIRS = [
     size: "body",
   },
   {
+    // Hero button :focus-visible outline (global.css's default outline is
+    // --rc-primary — identical to this gradient's 45% stop, 1.00:1). Same
+    // worst-case stop as the pair above; distinct entry since it gates a
+    // non-text UI component (3:1), not body text.
+    label: "hero focus outline on primary-light",
+    fg: "#faf7ff",
+    bg: "#7d59d9",
+    size: "ui",
+  },
+  {
+    // .hero__proof's decorative checkmark icon, gold on the gradient's
+    // lightest stop — correct today (3.19:1), previously untested.
+    label: "hero proof icon on primary-light",
+    fg: "#ffc94b",
+    bg: "#7d59d9",
+    size: "ui",
+  },
+  {
     // .chip-save's actual ground on a dark field: 5% --paper mixed over the
     // field color, not the raw field itself (color-mix(in srgb, var(--paper)
     // 5%, transparent) over --rc-night).

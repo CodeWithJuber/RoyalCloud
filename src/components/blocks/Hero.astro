@@ -124,4 +124,12 @@ const secondaryExternal = block.secondaryAction
     color: var(--rc-lavender);
   }
   .hero__proof svg { flex-shrink: 0; color: var(--rc-gold); }
+
+  /* The global :focus-visible outline (global.css:93-95) is --rc-primary —
+     identical to this gradient's 45% stop (1.00:1, invisible) and under 3:1
+     at every stop. Override to rc-lavender, which clears 3:1 at all three
+     (4.60:1 worst case, at primary-light). */
+  .hero__actions .button:focus-visible {
+    outline-color: var(--rc-lavender);
+  }
 </style>
