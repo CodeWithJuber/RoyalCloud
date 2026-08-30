@@ -9,9 +9,9 @@
   --r-inner: 1.4375rem;
   --r-shell: 1.875rem;
   --r-pill: 999px;
-  --sh-1: 0 2px 8px rgb(47 54 212 / 8%);
-  --sh-2: 0 8px 28px rgb(47 54 212 / 12%);
-  --sh-3: 0 20px 60px rgb(10 14 36 / 28%);
+  --sh-1: 0 2px 8px rgb(47 28 106 / 8%);
+  --sh-2: 0 8px 28px rgb(47 28 106 / 12%);
+  --sh-3: 0 20px 60px rgb(2 3 10 / 28%);
 
   /* ---- Semantic ----
      Dark is the ground state (--rc-night canvas). Section classes re-point these,
@@ -181,7 +181,7 @@ select {
   --viz-face-left: var(--rc-primary-dark);
   --viz-face-right: var(--rc-primary-light);
   --viz-recess: var(--rc-primary-dark);
-  --viz-shadow: rgb(5 7 18 / 30%);
+  --viz-shadow: rgb(2 3 10 / 30%);
   --viz-line: var(--rc-lavender);
   --viz-line-soft: color-mix(in srgb, var(--rc-lavender) 45%, transparent);
   --viz-accent: var(--rc-gold);

@@ -69,7 +69,7 @@
   --line-strong: color-mix(in srgb, var(--rc-ink) 20%, transparent);
   --ok: var(--green);
   --ok-soft: rgb(31 164 99 / 0.13);
-  --save-bg: rgb(253 215 0 / 0.16);
+  --save-bg: rgb(255 201 75 / 0.16);
 
   /* ── Type — DM Sans, self-hosted ─────────────────────────── */
   --font-heading:

@@ -78,9 +78,23 @@ const target = (cta?: Cta) =>
     gap: 15px;
     flex-wrap: wrap;
   }
+  /* .default-btn (clone.css) is dead CSS — never shipped to the live site
+     (clone.css is only imported by the unrouted AstroWind Layout.astro), so
+     this class supplies its own complete pill styling rather than relying on
+     it. Lavender-on-royal mirrors global.css's .button-invert, the system's
+     existing "pops on a saturated/dark field" pattern. */
   .rc-cta-primary {
+    display: inline-block;
     font-size: 16px;
+    font-weight: 700;
+    color: var(--rc-night);
+    background: var(--rc-lavender);
+    border-radius: 50px;
     padding: 14px 40px;
+    transition: background 0.2s;
+  }
+  .rc-cta-primary:hover {
+    background: #fff;
   }
   .rc-cta-secondary {
     font-family: var(--font-heading);
@@ -96,5 +110,13 @@ const target = (cta?: Cta) =>
   .rc-cta-secondary:hover {
     border-color: #fff;
     background: rgba(255,255,255,0.1);
+  }
+  /* The global :focus-visible outline is --rc-primary, the exact color of
+     this band's background gradient (~1:1 contrast) — same class of bug
+     Hero/OperatorStrip/ShowcaseTabs already carry a scoped fix for. */
+  .rc-cta-primary:focus-visible,
+  .rc-cta-secondary:focus-visible {
+    outline: 3px solid var(--rc-lavender);
+    outline-offset: 2px;
   }
 </style>
