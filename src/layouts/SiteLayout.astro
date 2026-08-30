@@ -50,7 +50,40 @@ const { seo, structuredData = [] } = Astro.props;
     <a class="skip-link" href="#main-content">Skip to content</a>
     <SiteHeader />
     <slot />
+    <button type="button" class="to-top" data-to-top hidden aria-label="Back to top">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+        <path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
     <SiteFooter />
+    <style>
+      .to-top {
+        position: fixed;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        z-index: 40;
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border: none;
+        border-radius: 999px;
+        background: var(--rc-primary);
+        color: #fff;
+        cursor: pointer;
+        box-shadow: var(--shadow-md);
+      }
+      .to-top[hidden] {
+        display: none;
+      }
+      .to-top:hover {
+        background: var(--rc-primary-dark);
+      }
+      .to-top:focus-visible {
+        outline: 3px solid var(--rc-gold);
+        outline-offset: 2px;
+      }
+    </style>
     <script>
       const applyCurrency = (currency: "INR" | "USD") => {
         document.documentElement.dataset.currency = currency;
@@ -97,6 +130,29 @@ const { seo, structuredData = [] } = Astro.props;
       };
 
       initializeSite();
+    </script>
+    <script>
+      const toTop = document.querySelector<HTMLButtonElement>("[data-to-top]");
+      if (toTop) {
+        const SHOW_AFTER = 600;
+        let ticking = false;
+        const sync = () => {
+          toTop.hidden = window.scrollY < SHOW_AFTER;
+          ticking = false;
+        };
+        window.addEventListener("scroll", () => {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(sync);
+        }, { passive: true });
+
+        toTop.addEventListener("click", () => {
+          const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+        });
+
+        sync();
+      }
     </script>
   </body>
 </html>

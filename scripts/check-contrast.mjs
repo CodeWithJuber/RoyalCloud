@@ -218,6 +218,15 @@ export const PAIRS = [
     bg: "#2f1c6a",
     size: "ui",
   },
+  {
+    // Task 16 back-to-top button: filled --rc-primary background, its own
+    // :focus-visible outline is --rc-gold (not --rc-primary, since the
+    // global default is invisible on its own matching-hue fill).
+    label: "back-to-top focus ring on primary",
+    fg: "#ffc94b",
+    bg: "#673de6",
+    size: "ui",
+  },
 ];
 
 /* Verified while writing this plan — all pairs pass:
