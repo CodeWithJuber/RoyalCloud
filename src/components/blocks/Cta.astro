@@ -1,5 +1,4 @@
 ---
-import RouteSignal from "@/components/visuals/RouteSignal.astro";
 import type { CtaBlock } from "../../types/content";
 
 interface Props { block: CtaBlock }
@@ -8,8 +7,6 @@ const external = block.action.external ?? block.action.href.startsWith("http");
 ---
 
 <section class="section section-dark cta" aria-labelledby="cta-title" data-reveal>
-  <div class="cta__graphic" aria-hidden="true"><RouteSignal /></div>
-
   <div class="shell section-header cta__copy">
     {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
     <h2 id="cta-title">{block.title}</h2>
@@ -17,7 +14,7 @@ const external = block.action.external ?? block.action.href.startsWith("http");
 
     <div class="button-row">
       <a
-        class="button button-invert"
+        class="button button-cta"
         href={block.action.href}
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
@@ -27,19 +24,44 @@ const external = block.action.external ?? block.action.href.startsWith("http");
 </section>
 
 <style>
-  .cta { position: relative; isolation: isolate; overflow: hidden; }
-
-  .cta__graphic {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    opacity: 0.3;
-    pointer-events: none;
+  .cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(
+      95deg,
+      var(--rc-primary-dark),
+      var(--rc-primary) 45%,
+      var(--rc-primary-light)
+    );
+    color: #fff;
   }
-  .cta__graphic > :global(*) { width: min(70rem, 130%); height: auto; }
 
-  .cta__copy { margin-bottom: 0; }
-  .cta__copy .button-row { margin-top: 1.75rem; }
+  .cta__copy {
+    margin-bottom: 0;
+  }
+  .cta__copy h2 {
+    color: #fff;
+  }
+  /* rgb(255 255 255 / 0.88) composites to 4.17:1 at this gradient's lightest
+     stop (--rc-primary-light) — under the 4.5:1 floor, same finding as
+     Hero's .hero__lede. rc-lavender holds 4.60:1 at that stop. */
+  .cta__copy .lede {
+    color: var(--rc-lavender);
+  }
+  /* .section-dark .eyebrow (global.css) paints this gold — 3.19:1 on
+     --rc-primary-light, under the 4.5:1 floor now that this section is a
+     violet gradient rather than solid night. Same rc-lavender fix as above. */
+  .cta__copy .eyebrow {
+    color: var(--rc-lavender);
+  }
+  .cta__copy .button-row {
+    margin-top: 1.75rem;
+  }
+  /* The global :focus-visible outline is --rc-primary — 1.00:1 at this
+     gradient's 45% stop (identical color) and under 3:1 at every stop.
+     Override to rc-lavender, same fix Hero uses on this exact gradient. */
+  .cta__copy .button-row .button:focus-visible {
+    outline-color: var(--rc-lavender);
+  }
 </style>

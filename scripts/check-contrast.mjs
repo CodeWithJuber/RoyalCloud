@@ -199,6 +199,15 @@ export const PAIRS = [
     bg: "#2f1c6a",
     size: "body",
   },
+  {
+    // Cta's own gradient (Hero's, post-RouteSignal) — same worst-case stop
+    // and same rc-lavender fix as "hero focus outline on primary-light",
+    // recorded separately since it gates a different component's button.
+    label: "cta focus ring on primary-light",
+    fg: "#faf7ff",
+    bg: "#7d59d9",
+    size: "ui",
+  },
 ];
 
 /* Verified while writing this plan — all pairs pass:
@@ -210,7 +219,8 @@ export const PAIRS = [
    muted-dark/night-deep 6.97 · lavender/primary 5.85 · chip-lavender/night-composite
    11.64 · chip-lavender/primary-composite 5.31 · amber/white 5.38 · red/white 4.98
    gold/primary-dark 5.43 · gold/night 9.17 · operator-focus-ring/night 13.25
-   · terminal-title/night-deep 8.94 · infrastructure-detail/night 7.88 */
+   · terminal-title/night-deep 8.94 · infrastructure-detail/night 7.88
+   · cta-focus-ring/primary-light 4.60 */
 
 // Direct execution: report and exit non-zero on any failure.
 if (import.meta.url === `file://${process.argv[1]}`) {
