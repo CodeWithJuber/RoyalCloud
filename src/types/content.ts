@@ -182,15 +182,6 @@ export interface OperatorStripBlock {
   }>;
 }
 
-/* DESIGN.md 8.5 — the protection layers, named and explained. */
-export interface ShieldStackBlock {
-  component: "shield-stack";
-  eyebrow: string;
-  title: string;
-  summary: string;
-  layers: Array<{ name: string; detail: string }>;
-}
-
 /* DESIGN.md 10.8 — a real support transcript. responseTime/resolution are only
    present when the ticket data actually carries them. */
 export interface LiveAnswerBlock {
@@ -294,7 +285,6 @@ export type PageBlock =
   | LegalBlock
   | SpecPlatesBlock
   | OperatorStripBlock
-  | ShieldStackBlock
   | LiveAnswerBlock
   | LedgerTableBlock
   | LaunchSequenceBlock

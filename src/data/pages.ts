@@ -151,36 +151,35 @@ function answersFor(title: string, family: SitePage["family"]): AnswerBlock {
   };
 }
 
+/* Migrated off the retired ShieldStackBlock type (its visual, ShieldStack,
+   was dropped) onto feature-narrative — same eyebrow/title/summary, layers[]
+   renamed to items[] (name -> title, detail -> body). Every layer's copy is
+   preserved verbatim. */
 const shieldStack = (summary: string): PageBlock => ({
-  component: "shield-stack",
+  component: "feature-narrative",
   eyebrow: "Protection layers",
   title: "Every request passes five gates.",
   summary,
-  layers: [
+  items: [
     {
-      name: "Edge filtering",
-      detail:
-        "Traffic is screened before it reaches your origin, so volumetric noise never becomes your CPU load.",
+      title: "Edge filtering",
+      body: "Traffic is screened before it reaches your origin, so volumetric noise never becomes your CPU load.",
     },
     {
-      name: "DDoS mitigation",
-      detail:
-        "Network-level scrubbing sits in front of the fleet. It is part of the platform, not a paid add-on.",
+      title: "DDoS mitigation",
+      body: "Network-level scrubbing sits in front of the fleet. It is part of the platform, not a paid add-on.",
     },
     {
-      name: "Account isolation",
-      detail:
-        "Accounts are contained: one tenant's runaway process is not another tenant's outage.",
+      title: "Account isolation",
+      body: "Accounts are contained: one tenant's runaway process is not another tenant's outage.",
     },
     {
-      name: "Access control",
-      detail:
-        "Panel, SSH, and client-area access are separately credentialed and separately revocable.",
+      title: "Access control",
+      body: "Panel, SSH, and client-area access are separately credentialed and separately revocable.",
     },
     {
-      name: "Backups",
-      detail:
-        "Restore points are configurable per plan. Support will tell you exactly what is covered before you rely on it.",
+      title: "Backups",
+      body: "Restore points are configurable per plan. Support will tell you exactly what is covered before you rely on it.",
     },
   ],
 });

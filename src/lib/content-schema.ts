@@ -214,21 +214,6 @@ const operatorStripSchema = z.object({
     .min(1),
 });
 
-const shieldStackSchema = z.object({
-  component: z.literal("shield-stack"),
-  eyebrow: z.string(),
-  title: z.string().min(1),
-  summary: z.string(),
-  layers: z
-    .array(
-      z.object({
-        name: z.string().min(1),
-        detail: z.string().min(1),
-      }),
-    )
-    .min(1),
-});
-
 const liveAnswerSchema = z.object({
   component: z.literal("live-answer"),
   eyebrow: z.string(),
@@ -373,7 +358,6 @@ export const pageBlockSchema = z.discriminatedUnion("component", [
   legalSchema,
   specPlatesSchema,
   operatorStripSchema,
-  shieldStackSchema,
   liveAnswerSchema,
   ledgerTableSchema,
   launchSequenceSchema,
