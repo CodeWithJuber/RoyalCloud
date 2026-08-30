@@ -6,10 +6,11 @@
  * (fill="url(#rcgEnergy)") so brand gradients are defined once, not per
  * instance.
  *
- * Ids are namespaced `rcg*` to avoid colliding with the legacy AltitudeScene /
- * ArtShield local gradients (`rcSpec` / `rcCore`), since SVG ids are
- * document-global. Parts of an illustration that follow the per-page theme
- * accent use stroke/fill="currentColor" instead of these gradients.
+ * Ids are namespaced `rcg*` to avoid colliding with local gradients defined
+ * inside individual illustration files (e.g. ArtShield's `rcshld-g`), since
+ * SVG ids are document-global. Parts of an illustration that follow the
+ * per-page theme accent use stroke/fill="currentColor" instead of these
+ * gradients.
  */
 ---
 

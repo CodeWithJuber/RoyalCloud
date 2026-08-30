@@ -169,7 +169,7 @@ export interface SpecPlatesBlock {
   plates: Array<{ label: string; value: string }>;
 }
 
-/* DESIGN.md 10.10 — tabbed real terminal transcripts (rendered by DeployLog). */
+/* DESIGN.md 10.10 — tabbed real terminal transcripts. */
 export interface OperatorStripBlock {
   component: "operator-strip";
   eyebrow: string;
