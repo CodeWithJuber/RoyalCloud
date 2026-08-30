@@ -229,7 +229,7 @@ const helpCards = [
     font-family: var(--font-body);
     font-size: 14px;
     padding: 14px 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--line);
     border-radius: 50px 0 0 50px;
     outline: none;
     min-width: 0;
@@ -457,7 +457,7 @@ const helpCards = [
         const salesEmail = form.dataset.email || "sales@royalclouds.net";
         window.location.href = `mailto:${salesEmail}?subject=Newsletter%20Subscription&body=Please%20add%20${encodeURIComponent(email)}%20to%20the%20newsletter.`;
         status.textContent = "Thank you for subscribing!";
-        status.style.color = "#1fa463";
+        status.style.color = "var(--rc-success)";
       });
     }
 

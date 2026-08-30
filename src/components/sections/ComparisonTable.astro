@@ -135,22 +135,22 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
     color: var(--heading-blue);
     padding: 15px 20px;
     text-align: center;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid var(--line);
     background: #fafafa;
   }
   .compare-table thead th:first-child {
     text-align: left;
-    color: #22105f;
+    color: var(--rc-ink);
   }
 
   .compare-table tbody th {
     font-family: var(--font-heading);
     font-size: 14px;
     font-weight: 600;
-    color: #22105f;
+    color: var(--rc-ink);
     text-align: left;
     padding: 12px 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--line);
     white-space: nowrap;
   }
 
@@ -159,7 +159,7 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
     color: var(--body-color);
     text-align: center;
     padding: 12px 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--line);
   }
 
   .col-popular {
@@ -186,7 +186,7 @@ const rows = Array.from({ length: rowCount }, (_, i) => ({
   .compare-note {
     text-align: center;
     font-size: 13px;
-    color: #999;
+    color: var(--rc-muted);
     margin-top: 20px;
   }
 

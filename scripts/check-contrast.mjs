@@ -208,6 +208,16 @@ export const PAIRS = [
     bg: "#7d59d9",
     size: "ui",
   },
+  {
+    // ShowcaseTabs' .sc-tab :focus-visible (Task 12: its section background,
+    // #22105f, was tokenized to --rc-ink = --rc-night). The global default
+    // outline (--rc-primary) is 2.27:1 there, under 3:1 — same dark-ground
+    // gap Hero/OperatorStrip/Cta hit. Re-pointed to rc-lavender.
+    label: "showcase tabs focus ring on ink",
+    fg: "#faf7ff",
+    bg: "#2f1c6a",
+    size: "ui",
+  },
 ];
 
 /* Verified while writing this plan — all pairs pass:

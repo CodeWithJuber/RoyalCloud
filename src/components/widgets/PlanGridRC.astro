@@ -174,7 +174,7 @@ const shownPrice = (t: Tier) =>
     display: inline-flex;
     border-radius: 50px;
     overflow: hidden;
-    border: 2px solid #eee;
+    border: 2px solid var(--line);
     background: #fff;
   }
   .bill-toggle button {
@@ -198,7 +198,7 @@ const shownPrice = (t: Tier) =>
     margin-left: 4px;
   }
   .bill-toggle button.active .save-tag {
-    color: #fdd700;
+    color: var(--rc-gold);
   }
 
   .plan-cards {
@@ -261,7 +261,7 @@ const shownPrice = (t: Tier) =>
   }
   .plan-summary {
     font-size: 13px;
-    color: #999;
+    color: var(--rc-muted);
     margin: 0 0 15px;
   }
 
@@ -271,7 +271,7 @@ const shownPrice = (t: Tier) =>
   }
   .was {
     font-size: 14px;
-    color: #999;
+    color: var(--rc-muted);
     text-decoration: line-through;
     margin-right: 6px;
   }
@@ -306,7 +306,7 @@ const shownPrice = (t: Tier) =>
   }
   .period {
     font-size: 14px;
-    color: #999;
+    color: var(--rc-muted);
   }
 
   .plan-cta {
@@ -318,14 +318,14 @@ const shownPrice = (t: Tier) =>
 
   .plan-note {
     font-size: 12px;
-    color: #999;
+    color: var(--rc-muted);
     margin: 0 0 15px;
     min-height: 1.2em;
   }
 
   .plan-features {
     text-align: left;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--line);
     padding-top: 10px;
   }
   .plan-features summary {
@@ -362,7 +362,7 @@ const shownPrice = (t: Tier) =>
   }
   .plan-features li::before {
     content: "✓";
-    color: #1fa463;
+    color: var(--rc-success);
     font-weight: 700;
     font-size: 12px;
   }

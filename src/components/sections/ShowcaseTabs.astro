@@ -215,7 +215,7 @@ const {
 
 <style>
   .rc-showcase {
-    background: #22105f;
+    background: var(--rc-ink);
     padding: var(--space-section) 0;
     color: #fff;
   }
@@ -261,13 +261,20 @@ const {
     cursor: pointer;
     transition: all 0.2s;
   }
+  /* The global :focus-visible outline is --rc-primary — 2.27:1 on this
+     section's --rc-ink (= --rc-night) ground, under the 3:1 floor. Override
+     to rc-lavender, same fix Hero/OperatorStrip/Cta use on dark grounds. */
+  .sc-tab:focus-visible {
+    outline: 2px solid var(--rc-lavender);
+    outline-offset: 2px;
+  }
   .sc-tab:hover {
     border-color: rgba(255,255,255,0.4);
     color: #fff;
   }
   .sc-tab.active {
-    background: #7652f2;
-    border-color: #7652f2;
+    background: var(--rc-primary);
+    border-color: var(--rc-primary);
     color: #fff;
   }
 
@@ -294,7 +301,7 @@ const {
     padding: 12px 6px;
   }
   .f-row + .f-row {
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--line);
   }
   .f-ic {
     width: 30px;
@@ -308,18 +315,18 @@ const {
     flex: 1;
     font-family: var(--font-heading);
     font-size: 14px;
-    color: #22105f;
+    color: var(--rc-ink);
   }
   .f-row small {
     font-size: 12px;
-    color: #999;
+    color: var(--rc-muted);
   }
 
   .ssl-card {
     display: flex;
     align-items: center;
     gap: 16px;
-    border: 1px solid #eee;
+    border: 1px solid var(--line);
     border-radius: 14px;
     padding: 18px 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
@@ -331,16 +338,16 @@ const {
     height: 46px;
     border-radius: 12px;
     background: #e6f9f0;
-    color: #1fa463;
+    color: var(--rc-success);
   }
   .ssl-lock svg { width: 22px; height: 22px; }
   .ssl-card b {
     display: block;
     font-family: var(--font-heading);
     font-size: 15px;
-    color: #22105f;
+    color: var(--rc-ink);
   }
-  .ssl-card small { font-size: 12px; color: #999; }
+  .ssl-card small { font-size: 12px; color: var(--rc-muted); }
   .ssl-card > div { flex: 1; }
   .ssl-state {
     font-style: normal;
@@ -348,7 +355,7 @@ const {
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #1fa463;
+    color: var(--rc-success);
     background: #e6f9f0;
     border-radius: 50px;
     padding: 6px 14px;
@@ -358,7 +365,7 @@ const {
     gap: 18px;
     margin-top: 16px;
     font-size: 12px;
-    color: #999;
+    color: var(--rc-muted);
   }
 
   .bk-row {
@@ -367,21 +374,21 @@ const {
     gap: 14px;
     padding: 13px 6px;
   }
-  .bk-row + .bk-row { border-top: 1px solid #eee; }
+  .bk-row + .bk-row { border-top: 1px solid var(--line); }
   .bk-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #1fa463;
+    background: var(--rc-success);
   }
   .bk-row b {
     font-family: var(--font-heading);
     font-size: 14px;
-    color: #22105f;
+    color: var(--rc-ink);
     width: 150px;
   }
-  .bk-row small { flex: 1; font-size: 12px; color: #999; }
-  .bk-row em { font-style: normal; font-size: 12px; color: #1fa463; }
+  .bk-row small { flex: 1; font-size: 12px; color: var(--rc-muted); }
+  .bk-row em { font-style: normal; font-size: 12px; color: var(--rc-success); }
   .bk-row em.hot {
     font-family: var(--font-heading);
     font-weight: 700;
@@ -399,7 +406,7 @@ const {
   }
   .st {
     flex: 1;
-    border: 1px solid #eee;
+    border: 1px solid var(--line);
     border-radius: 12px;
     padding: 12px 14px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
@@ -409,12 +416,12 @@ const {
     font-size: 10px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #999;
+    color: var(--rc-muted);
   }
   .st b {
     font-family: var(--font-heading);
     font-size: 17px;
-    color: #22105f;
+    color: var(--rc-ink);
   }
   .st-bars {
     display: flex;

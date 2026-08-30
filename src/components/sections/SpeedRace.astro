@@ -153,22 +153,22 @@ const winDur = (
     bottom: 4px;
     right: 58px;
     width: 10px;
-    background: repeating-conic-gradient(#22105f 0% 25%, #fff 0% 50%) 0 0 / 10px 10px;
+    background: repeating-conic-gradient(var(--rc-ink) 0% 25%, #fff 0% 50%) 0 0 / 10px 10px;
     border-radius: 3px;
     opacity: 0.85;
   }
 
-  .lane + .lane { border-top: 1px dashed #eee; }
+  .lane + .lane { border-top: 1px dashed var(--line); }
   .lane { padding: 14px 0 16px; }
   .lane-label {
     display: block;
     font-family: var(--font-heading);
     font-size: 14px;
     font-weight: 700;
-    color: #999;
+    color: var(--rc-muted);
     margin-bottom: 8px;
   }
-  .lane.hl .lane-label { color: #22105f; }
+  .lane.hl .lane-label { color: var(--rc-ink); }
   .lane-road {
     position: relative;
     height: 40px;
@@ -180,7 +180,7 @@ const winDur = (
     right: 0;
     top: 50%;
     height: 2px;
-    background: #eee;
+    background: var(--line);
     border-radius: 2px;
   }
 
@@ -217,7 +217,7 @@ const winDur = (
     font-family: var(--font-heading);
     font-size: 15px;
     font-weight: 700;
-    color: #999;
+    color: var(--rc-muted);
     opacity: 0;
   }
   .lane.hl .lane-time {
@@ -233,13 +233,13 @@ const winDur = (
     flex-wrap: wrap;
     margin-top: 20px;
     padding-top: 18px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--line);
   }
   .race-win {
     font-family: var(--font-heading);
     font-size: 15px;
     font-weight: 700;
-    color: #22105f;
+    color: var(--rc-ink);
     opacity: 0;
     scale: 0.8;
   }
@@ -250,7 +250,7 @@ const winDur = (
   .race-note {
     margin: 16px 4px 0;
     font-size: 13px;
-    color: #999;
+    color: var(--rc-muted);
   }
 
   .race-card.go .racer {

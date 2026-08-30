@@ -100,7 +100,7 @@ const initials = (name: string) =>
     background: #fff;
     border-radius: 12px;
     padding: 30px 25px;
-    box-shadow: -9px 9px 0 0 #eee, 0 5px 25px rgba(0,0,0,0.06);
+    box-shadow: -9px 9px 0 0 var(--line), 0 5px 25px rgba(0,0,0,0.06);
     transition: transform 0.2s;
   }
   .testi-card:hover {
@@ -131,7 +131,7 @@ const initials = (name: string) =>
     align-items: center;
     gap: 12px;
     padding-top: 15px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--line);
   }
 
   .testi-avatar {
@@ -158,7 +158,7 @@ const initials = (name: string) =>
   .testi-footer small {
     display: block;
     font-size: 13px;
-    color: #999;
+    color: var(--rc-muted);
     margin-top: 2px;
   }
 
