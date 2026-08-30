@@ -1,14 +1,12 @@
 ---
-import "@fontsource-variable/bricolage-grotesque";
-import "@fontsource-variable/manrope";
+import "@fontsource-variable/dm-sans";
 // tokens.css must load first: global.css's semantic layer now references its
 // --rc-*/--green/--amber/--red/--dk-*/--btn-* names (Task 2 migration). Names
-// global.css also declares itself (--paper, --line, --font-body, --font-mono)
+// global.css also declares itself (--paper, --line, --font-mono)
 // still win the cascade since global.css is imported second.
 import "@/assets/styles/tokens.css";
 import "@/styles/global.css";
-import displayFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
-import bodyFont from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
+import bodyFont from "@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url";
 import SeoHead from "@/components/SeoHead.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
@@ -29,7 +27,6 @@ const { seo, structuredData = [] } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#050712" />
     <meta name="color-scheme" content="dark light" />
-    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/legacy-assets/assets/img/favi.png" type="image/png" />
     <SeoHead seo={seo} structuredData={structuredData} />

@@ -26,7 +26,7 @@ Royal Clouds reads as a premium hosting brand for founders, developers, and agen
 Three layers, split across two files that must load in this order (`src/layouts/SiteLayout.astro` imports `tokens.css` before `global.css` — this ordering was previously broken, i.e. `tokens.css` was never loaded at all, and was fixed as part of this rewrite):
 
 - **`src/assets/styles/tokens.css`** — primitives + most of the semantic layer (surfaces, text roles, brand roles, lines/status, type/radius/shadow/motion/spacing primitives, the component layer).
-- **`src/styles/global.css`** — component and layout rules that consume those tokens, plus a second, page-scoped semantic layer (`--canvas`, `--heading`, `--body`, `--muted`, `--interactive`, `--line`, `--field-line`, `--viz-*`) that `.section-light` / `.section-dark` / `.section-royal` repoint per band. Where global.css redeclares a name tokens.css also declares — `--font-body`, `--font-mono`, `--line`, `--paper` — global.css's value wins (it's imported second); this is deliberate, not drift.
+- **`src/styles/global.css`** — component and layout rules that consume those tokens, plus a second, page-scoped semantic layer (`--canvas`, `--heading`, `--body`, `--muted`, `--interactive`, `--line`, `--field-line`, `--viz-*`) that `.section-light` / `.section-dark` / `.section-royal` repoint per band. Where global.css redeclares a name tokens.css also declares — `--font-mono`, `--line`, `--paper` — global.css's value wins (it's imported second); this is deliberate, not drift. `--font-body` is no longer one of those names: global.css's competing declaration (and the dead, unused `--font-display: "Bricolage Grotesque Variable"`) were removed so tokens.css's DM Sans value wins for body text too, per the binding typography spec.
 
 **Rule:** components consume semantic/component names only, never primitives directly.
 
@@ -59,7 +59,7 @@ Three layers, split across two files that must load in this order (`src/layouts/
 Two self-hosted variable fonts (`@fontsource-variable/*`), loaded in `SiteLayout.astro`:
 
 - **Headings** — `--font-heading` (tokens.css only; global.css does not override it): **DM Sans Variable**, falling back to `"DM Sans"`, `ui-sans-serif`, `system-ui`, `sans-serif`.
-- **Body** — `--font-body`: declared in both files, but global.css's redeclaration wins the cascade (§3), so body copy actually renders in **Manrope Variable**, not DM Sans. Treat this as the current, intentional state, not a bug to silently "fix" by re-pointing one file — if unified is ever wanted, decide it explicitly and update both layers plus this doc together.
+- **Body** — `--font-body` (tokens.css only; global.css no longer redeclares it): **DM Sans Variable**, same stack as `--font-heading`. `SiteLayout.astro` imports `@fontsource-variable/dm-sans` and preloads `dm-sans-latin-wght-normal.woff2`; the `bricolage-grotesque` and `manrope` imports/preloads were removed as unused.
 - **Monospace** — `--font-mono`: global.css wins with **JetBrains Mono Variable**, used only in terminal/code-style components.
 
 ### Type scale

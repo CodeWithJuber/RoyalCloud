@@ -32,8 +32,6 @@
      Dark ground: --rc-muted on --rc-night is 4.22:1. */
   --field-line: var(--rc-muted);
 
-  --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
-  --font-body: "Manrope Variable", system-ui, sans-serif;
   /* Data/terminal register (DESIGN.md 5). Terminals, code, telemetry readouts and
      route/IP labels only — never prose. */
   --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", monospace;
