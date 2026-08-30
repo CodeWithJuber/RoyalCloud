@@ -100,7 +100,7 @@ const formAction = `${action.origin}${action.pathname}`;
     font-family: var(--font-heading);
     font-size: 14px;
     font-weight: 600;
-    color: var(--accent-hot);
+    color: var(--rc-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 8px;
@@ -121,7 +121,7 @@ const formAction = `${action.origin}${action.pathname}`;
     transition: border-color 0.2s;
   }
   .ds-input-wrap:focus-within {
-    border-color: var(--heading-blue);
+    border-color: var(--rc-primary);
   }
 
   .ds-input {
@@ -170,7 +170,7 @@ const formAction = `${action.origin}${action.pathname}`;
     font-family: var(--font-heading);
     font-size: 13px;
     font-weight: 600;
-    color: var(--heading-blue);
+    color: var(--rc-primary);
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 50px;
@@ -179,8 +179,8 @@ const formAction = `${action.origin}${action.pathname}`;
     transition: border-color 0.2s, background 0.2s;
   }
   .ds-suggest :global(button:hover) {
-    background: var(--heading-blue);
-    border-color: var(--heading-blue);
+    background: var(--rc-primary);
+    border-color: var(--rc-primary);
     color: #fff;
   }
 
@@ -190,7 +190,7 @@ const formAction = `${action.origin}${action.pathname}`;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
-    color: var(--body-color);
+    color: var(--rc-body);
   }
   .ds-status.is-error {
     color: #e53e3e;
@@ -205,10 +205,10 @@ const formAction = `${action.origin}${action.pathname}`;
   }
   .ds-tld-price {
     font-size: 14px;
-    color: var(--body-color);
+    color: var(--rc-body);
   }
   .ds-tld-price b {
-    color: var(--heading-blue);
+    color: var(--rc-primary);
     font-weight: 700;
     margin-right: 4px;
   }

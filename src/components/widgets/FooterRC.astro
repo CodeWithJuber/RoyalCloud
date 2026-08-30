@@ -191,12 +191,12 @@ const helpCards = [
     font-family: var(--font-heading);
     font-size: 22px;
     font-weight: 700;
-    color: var(--heading-blue);
+    color: var(--rc-primary);
     margin: 0 0 10px;
   }
   .help-card p {
     font-size: 14px;
-    color: var(--body-color);
+    color: var(--rc-body);
     line-height: 1.8;
     margin: 0 0 20px;
   }
@@ -204,12 +204,12 @@ const helpCards = [
     font-family: var(--font-heading);
     font-size: 14px;
     font-weight: 700;
-    color: var(--heading-blue);
+    color: var(--rc-primary);
     text-decoration: none;
     transition: color 0.2s;
   }
   .help-link:hover {
-    color: var(--royal-purple);
+    color: var(--rc-primary);
   }
 
   /* ── Newsletter ── */
@@ -235,7 +235,7 @@ const helpCards = [
     min-width: 0;
   }
   .nl-input:focus {
-    border-color: var(--heading-blue);
+    border-color: var(--rc-primary);
   }
   .nl-btn {
     border-radius: 0 50px 50px 0;
@@ -254,7 +254,7 @@ const helpCards = [
     color: rgba(255, 255, 255, 0.7);
   }
   .rc-footer-top {
-    background: var(--grad-footer);
+    background: linear-gradient(180deg, var(--rc-night) 0%, var(--rc-night-deep) 100%);
     padding: 60px 0 40px;
   }
   .rc-footer-grid {
@@ -308,7 +308,7 @@ const helpCards = [
     color: #fff;
     margin: 0 0 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--footer-line);
+    border-bottom: 2px solid var(--line);
   }
   .rc-fcol ul {
     list-style: none;
@@ -330,7 +330,7 @@ const helpCards = [
 
   /* ── Footer bottom ── */
   .rc-footer-bottom {
-    background: var(--footer-bottom-bg);
+    background: var(--rc-night-deep);
     padding: 20px 0;
   }
   .rc-bottom-inner {

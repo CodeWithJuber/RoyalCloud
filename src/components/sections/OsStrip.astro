@@ -47,7 +47,7 @@ const { eyebrow, title, subtitle, items } = Astro.props;
     font-family: var(--font-heading);
     font-size: 14px;
     font-weight: 600;
-    color: var(--accent-hot);
+    color: var(--rc-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 8px;
@@ -73,10 +73,10 @@ const { eyebrow, title, subtitle, items } = Astro.props;
   .os-chip:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    border-color: var(--heading-blue);
+    border-color: var(--rc-primary);
   }
   .os-chip.active {
-    border-color: var(--heading-blue);
+    border-color: var(--rc-primary);
     background: rgba(38,159,216,0.05);
   }
 
@@ -86,7 +86,7 @@ const { eyebrow, title, subtitle, items } = Astro.props;
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: var(--os-c, var(--heading-blue));
+    background: var(--os-c, var(--rc-primary));
     color: #fff;
     font-family: var(--font-heading);
     font-size: 17px;
