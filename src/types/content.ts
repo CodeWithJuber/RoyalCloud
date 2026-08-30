@@ -316,6 +316,7 @@ export interface SiteSettings {
   logoDark: string;
   logoLight: string;
   announcement: { message: string; action?: LinkField } | null;
+  marquee?: string[];
   navigation: NavigationGroup[];
   footerGroups: NavigationGroup[];
   support: LinkField[];

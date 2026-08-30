@@ -2,7 +2,7 @@
 import CurrencySwitch from "@/components/ui/CurrencySwitch.astro";
 import { siteSettings } from "@/data/settings";
 
-const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
+const { announcement, marquee, navigation, whmcsUrl, logoLight } = siteSettings;
 ---
 
 {announcement && (
@@ -22,6 +22,25 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
       </svg>
     </button>
   </aside>
+)}
+
+{marquee && marquee.length > 0 && (
+  <div class="marquee" aria-hidden="true">
+    {/* Duplicated once so the -50% translate loops seamlessly. aria-hidden
+        because a perpetually looping ticker is hostile to a screen reader. */}
+    <div class="marquee__track">
+      {[0, 1].map(() => (
+        <span class="marquee__group">
+          {marquee.map((item) => (
+            <>
+              <span>{item}</span>
+              <span class="marquee__star">✦</span>
+            </>
+          ))}
+        </span>
+      ))}
+    </div>
+  </div>
 )}
 
 <div class="header-dock" data-header>
@@ -221,6 +240,45 @@ const { announcement, navigation, whmcsUrl, logoLight } = siteSettings;
     cursor: pointer;
   }
   .announcement-close:hover { color: var(--rc-lavender); }
+
+  .marquee {
+    overflow: hidden;
+    padding-block: 0.625rem;
+    background: var(--rc-night);
+    color: #fff;
+  }
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 30s linear infinite;
+  }
+  .marquee__group {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-right: 2rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .marquee__star {
+    color: var(--rc-gold);
+  }
+
+  @keyframes marquee-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* A perpetually-moving band is a vestibular trigger — stop it entirely. */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
 
   /* 10.2 — detached floating island: 64px, pill, midnight at 88% + chrome hairline. */
   .header-dock {
