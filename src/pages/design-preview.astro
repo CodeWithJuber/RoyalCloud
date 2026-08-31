@@ -13,13 +13,165 @@
  * must never be copied into src/data/pages.ts.
  *
  * Blocks fed from src/data/catalog.ts use the REAL catalogue — what you see there ships.
+ *
+ * EXTENDED (2026-08-31): this is now also the closest thing this repo has to a Storybook —
+ * a full style-guide covering live tokens, every atom, the focus-ring rule, and coverage of
+ * every block in the PageBlock union, so the v3 redesign can be judged from one URL instead
+ * of clicking every route. See "Foundations", "Atoms", "Focus ring" and "Every remaining
+ * block" below. Nothing in this extension touches astro.config.mjs, the WHMCS links, or
+ * currency/pricing spans, and no colour hex is hardcoded in this file's own styles — every
+ * swatch, bar and box below reads a real custom property, and every hex LABEL is parsed
+ * from the actual tokens.css/global.css source text at build time so this page breaks
+ * honestly if a token breaks.
  */
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import { sharedHostingPlans, vpsConfiguratorAxes } from "@/data/catalog";
-import type { PageBlock } from "@/types/content";
+import type {
+  PageBlock,
+  HeroBlock,
+  TrustStripBlock,
+  FeatureNarrativeBlock,
+  InfrastructureBlock,
+  PartnerBlock,
+  AnswerBlock,
+  CtaBlock,
+  RichTextBlock,
+  LegalBlock,
+  SpecPlatesBlock,
+  OperatorStripBlock,
+  LaunchSequenceBlock,
+  ConsoleShowcaseBlock,
+  ContactFormBlock,
+  TestimonialBlock
+} from "@/types/content";
+
+// Raw source text of the two stylesheets that hold every custom property this page
+// documents. `?raw` is a build-time string import (Vite) — no runtime fs access, so this
+// works the same in `astro dev` and in the Cloudflare Workers build. Parsed below so every
+// hex/value label on this page is read from the real file, never typed by hand.
+import tokensCssRaw from "@/assets/styles/tokens.css?raw";
+import globalCssRaw from "@/styles/global.css?raw";
 
 const SAMPLE = "SAMPLE";
+
+/* ---------------------------------------------------------------- token parsing ---- */
+/* Flat `--name: value;` scan. Good enough for the primitive/semantic declarations this
+   page reads — global.css's one @media override (--section-space) isn't in the token
+   lists below, so the last-write-wins merge never picks up a media-scoped value here. */
+function parseCssVars(raw: string): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const match of raw.matchAll(/(--[\w-]+):\s*([^;]+);/g)) {
+    map.set(match[1], match[2].trim());
+  }
+  return map;
+}
+const tokenValues = new Map([...parseCssVars(tokensCssRaw), ...parseCssVars(globalCssRaw)]);
+const tv = (name: string) => tokenValues.get(name) ?? `MISSING — ${name} not found in tokens.css or global.css`;
+
+const colorTokenNames = [
+  "--rc-primary", "--rc-primary-dark", "--rc-primary-light", "--rc-primary-050",
+  "--rc-lavender", "--rc-ink", "--rc-night", "--rc-night-deep", "--rc-body",
+  "--rc-muted", "--rc-muted-dark", "--rc-success", "--rc-gold", "--rc-gold-light", "--rc-border"
+];
+const colorTokens = colorTokenNames.map((name) => ({ name, value: tv(name) }));
+
+const spacingTokenNames = ["--s-1", "--s-2", "--s-3", "--s-4", "--s-6", "--s-8", "--s-12", "--s-16"];
+const spacingTokens = spacingTokenNames.map((name) => ({ name, value: tv(name) }));
+
+const radiusTokenNames = [
+  "--radius-panel", "--radius-card", "--radius-btn", "--radius-md", "--radius-lg", "--r-sm",
+  "--r-input", "--r-inner", "--r-shell", "--r-pill"
+];
+const radiusTokens = radiusTokenNames.map((name) => ({ name, value: tv(name) }));
+
+/* Two elevation scales exist side by side — tokens.css's --shadow-* (ink-based, the one
+   its own header comment calls canonical) and global.css's --sh-1/2/3 (violet-tinted).
+   Both are live (grep confirms real consumers of each), so both are shown rather than
+   picking one and hiding the discrepancy — see the report for the flag. */
+const shadowTokenNames = ["--shadow-xs", "--shadow-sm", "--shadow-md", "--shadow-lg", "--shadow-card", "--shadow-cta", "--sh-1", "--sh-2", "--sh-3"];
+const shadowTokens = shadowTokenNames.map((name) => ({ name, value: tv(name) }));
+
+/* ------------------------------------------------------------- contrast reference --- */
+interface ContrastPair { label: string; fg: string; bg: string; size: "body" | "large" | "ui" }
+interface ContrastResult { label: string; ratio: number; required: number; pass: boolean }
+
+interface ContrastData {
+  pairs: ContrastPair[];
+  check: (p: ContrastPair) => ContrastResult;
+  source: string;
+}
+
+async function loadContrastData(): Promise<ContrastData> {
+  try {
+    const checker = (await import("../../scripts/check-contrast.mjs")) as {
+      PAIRS: ContrastPair[];
+      checkPair: (p: ContrastPair) => ContrastResult;
+    };
+    return {
+      pairs: checker.PAIRS,
+      check: checker.checkPair,
+      source: "scripts/check-contrast.mjs (live import — same module `npm run check:contrast` runs)"
+    };
+  } catch (error) {
+    // Same WCAG 2.1 relative-luminance formula as scripts/check-contrast.mjs, reimplemented
+    // rather than hardcoding ratio numbers — only the fallback path if the import above breaks.
+    const toRgb = (hex: string): [number, number, number] => {
+      const int = parseInt(hex.replace(/^#/, ""), 16);
+      return [(int >> 16) & 255, (int >> 8) & 255, int & 255];
+    };
+    const relativeLuminance = (hex: string) => {
+      const [r, g, b] = toRgb(hex).map((channel) => {
+        const s = channel / 255;
+        return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+    const contrastRatioLocal = (hexA: string, hexB: string) => {
+      const a = relativeLuminance(hexA);
+      const b = relativeLuminance(hexB);
+      const [light, dark] = a >= b ? [a, b] : [b, a];
+      return (light + 0.05) / (dark + 0.05);
+    };
+    const check = ({ fg, bg, label, size }: ContrastPair): ContrastResult => {
+      const required = size === "body" ? 4.5 : 3;
+      const ratio = contrastRatioLocal(fg, bg);
+      return { label, ratio: Math.round(ratio * 100) / 100, required, pass: ratio >= required };
+    };
+    // Minimal fallback set built from the tokens already parsed above — not hardcoded
+    // ratios, just enough pairs to keep the table populated if the import above fails.
+    const pairs: ContrastPair[] = [
+      { label: "body on white", fg: tv("--rc-body"), bg: "#ffffff", size: "body" },
+      { label: "ink heading on white", fg: tv("--rc-ink"), bg: "#ffffff", size: "body" },
+      { label: "white on primary", fg: "#ffffff", bg: tv("--rc-primary"), size: "body" },
+      { label: "white on night", fg: "#ffffff", bg: tv("--rc-night"), size: "body" },
+      { label: "muted-dark on night", fg: tv("--rc-muted-dark"), bg: tv("--rc-night"), size: "body" },
+      { label: "ink on gold (CTA)", fg: tv("--rc-ink"), bg: tv("--rc-gold"), size: "body" }
+    ];
+    return {
+      pairs,
+      check,
+      source: `computed locally — importing scripts/check-contrast.mjs failed (${(error as Error).message}), so the formula is reimplemented here instead of hardcoding ratios`
+    };
+  }
+}
+
+const { pairs: contrastPairs, check: checkPairFn, source: contrastSource } = await loadContrastData();
+const contrastRows = contrastPairs.map((pair) => ({ ...pair, ...checkPairFn(pair) }));
+const contrastFailCount = contrastRows.filter((row) => !row.pass).length;
+
+/* ------------------------------------------------------------------------ atoms ---- */
+const buttonAtoms = [
+  { cls: "button-primary", label: "Primary" },
+  { cls: "button-cta", label: "Continue" },
+  { cls: "button-ghost", label: "Ghost" },
+  { cls: "button-invert", label: "Invert" }
+];
+const chipAtoms = [
+  { cls: "chip-discount", label: "-20%" },
+  { cls: "chip-save", label: "Save $12/yr" }
+];
+const atomFields = ["section-light", "section-dark"] as const;
 
 /* Ships today. Real catalogue, real prices. */
 const realBlocks: PageBlock[] = [
@@ -45,6 +197,203 @@ const realBlocks: PageBlock[] = [
     }
   }
 ];
+
+/* ----------------------------------------------------- every remaining block ------- */
+/* 14 of the 20 PageBlock variants. They already ship on real routes (src/data/pages.ts)
+   with real copy — the fixtures below exist only to check this page's layout, so they
+   carry SAMPLE copy rather than duplicating production content. `partners` is the one
+   exception: its logos/names are identical to the real /about content, not invented. */
+const heroSample: HeroBlock = {
+  component: "hero",
+  eyebrow: `${SAMPLE} copy`,
+  title: "Every plan, one honest price.",
+  summary:
+    "This hero ships on every route with route-specific copy. The words here are illustrative only, sized to a realistic line length for layout review.",
+  primaryAction: { label: "See plans", href: "#top" },
+  secondaryAction: { label: "Compare VPS", href: "/kvm-vps-hosting" },
+  visual: "/legacy-assets/assets/images/cloudhost.png",
+  proof: ["SSD across every plan", "Root access on KVM", "Renewal rate shown up front"]
+};
+const trustStripSample: TrustStripBlock = {
+  component: "trust-strip",
+  items: [
+    { label: "01", detail: `${SAMPLE} — pick the workload, not the marketing tier` },
+    { label: "02", detail: `${SAMPLE} — read the exact limits before you pay` },
+    { label: "03", detail: `${SAMPLE} — deploy and manage from the client area` }
+  ]
+};
+const featureNarrativeSample: FeatureNarrativeBlock = {
+  component: "feature-narrative",
+  eyebrow: `${SAMPLE} copy`,
+  title: "One stack, four altitudes.",
+  summary: `${SAMPLE} summary — the real version of this block ships on the homepage.`,
+  visual: "/legacy-assets/assets/img/025-cloud-server.svg",
+  items: [
+    { title: "Shared", body: "Managed foundation, cPanel, visible limits." },
+    { title: "WordPress", body: "Updates, cache and backups handled for you." },
+    { title: "VPS", body: "Root access, dedicated cores, your own stack." },
+    { title: "Dedicated", body: "Single-tenant hardware, specified before quoted." }
+  ]
+};
+const infrastructureSample: InfrastructureBlock = {
+  component: "infrastructure",
+  eyebrow: `${SAMPLE} copy`,
+  title: "Where the machines actually are.",
+  summary: `${SAMPLE} summary — the live version lists audited facility detail.`,
+  visual: "/legacy-assets/assets/img/025-cloud-server.svg",
+  locations: [
+    { city: "Mumbai", region: "AP South", detail: `${SAMPLE} facility detail` },
+    { city: "Singapore", region: "AP Southeast", detail: `${SAMPLE} facility detail` },
+    { city: "Frankfurt", region: "EU Central", detail: `${SAMPLE} facility detail` }
+  ]
+};
+/* Real logos, real names — identical to what ships on /about. Not a sample. */
+const partnersSample: PartnerBlock = {
+  component: "partners",
+  eyebrow: "Platform ecosystem",
+  title: "Built on tools operators already trust.",
+  partners: [
+    { name: "LiteSpeed", logo: "/legacy-assets/assets/img/partners/LiteSpeed.svg" },
+    { name: "Cloudflare", logo: "/legacy-assets/assets/img/partners/cloudflare-logo.png" },
+    { name: "cPanel", logo: "/legacy-assets/assets/img/partners/cpanel-logo.png" },
+    { name: "CloudLinux", logo: "/legacy-assets/assets/img/partners/cloudlinux-logo.png" }
+  ]
+};
+const answersSample: AnswerBlock = {
+  component: "answers",
+  eyebrow: `${SAMPLE} copy`,
+  title: "What to know about this gallery",
+  answers: [
+    { question: "Is this page real?", answer: `${SAMPLE} — illustrative text only, shown to demonstrate the accordion.` },
+    { question: "Does the shipped answers block look different?", answer: "No — layout and interaction are identical to the real block; only this copy is invented." }
+  ]
+};
+const ctaSample: CtaBlock = {
+  component: "cta",
+  eyebrow: `${SAMPLE} copy`,
+  title: "See the whole system, not just a sales page.",
+  summary: `${SAMPLE} summary for layout review.`,
+  action: { label: "Back to top", href: "#top" }
+};
+const richTextSample: RichTextBlock = {
+  component: "rich-text",
+  title: `${SAMPLE} — Why we print the renewal price`,
+  html:
+    `<p><strong>${SAMPLE} COPY.</strong> The real block renders prose paragraphs, lists and inline links at the shared prose scale — this fixture exists to check that scale, not to state anything about the business.</p><ul><li>Prose links use <code>--rc-primary</code></li><li>Lists inherit the field's body colour</li></ul>`
+};
+const legalSample: LegalBlock = {
+  component: "legal",
+  updatedAt: "2026-01-01",
+  sections: [
+    { id: "sample-scope", title: `${SAMPLE} — Scope`, html: `<p>${SAMPLE} legal prose for layout review only — not a real policy.</p>` },
+    { id: "sample-contact", title: `${SAMPLE} — Contact`, html: `<p>${SAMPLE} — the real Legal block ships on the audited legal routes.</p>` }
+  ]
+};
+const specPlatesSample: SpecPlatesBlock = {
+  component: "spec-plates",
+  eyebrow: `${SAMPLE} copy`,
+  title: "Specification, engraved.",
+  summary: `${SAMPLE} values for layout review.`,
+  plates: [
+    { label: "vCPU", value: `${SAMPLE} · 4 cores` },
+    { label: "Memory", value: `${SAMPLE} · 8 GB` },
+    { label: "Storage", value: `${SAMPLE} · 100 GB NVMe` },
+    { label: "Transfer", value: `${SAMPLE} · 4 TB` }
+  ]
+};
+const operatorStripSample: OperatorStripBlock = {
+  component: "operator-strip",
+  eyebrow: `${SAMPLE} copy`,
+  title: "Push. Provision. Roll back.",
+  summary: `${SAMPLE} transcript for layout review — commands are representative, not captured from a real session.`,
+  tabs: [
+    {
+      label: "Git",
+      title: `${SAMPLE} — git push`,
+      lines: [
+        { kind: "cmd", text: "git push origin main" },
+        { kind: "out", text: "Enumerating objects: 12, done." },
+        { kind: "ok", text: "✓ Deployed to production" }
+      ]
+    },
+    {
+      label: "CLI",
+      title: `${SAMPLE} — royalctl`,
+      lines: [
+        { kind: "cmd", text: "royalctl deploy --env production" },
+        { kind: "out", text: "Building image..." },
+        { kind: "ok", text: "✓ Rollout complete" }
+      ]
+    }
+  ]
+};
+const launchSequenceSample: LaunchSequenceBlock = {
+  component: "launch-sequence",
+  eyebrow: `${SAMPLE} copy`,
+  title: "From order to running server.",
+  summary: `${SAMPLE} steps for layout review.`,
+  steps: [
+    { title: `${SAMPLE} — Order`, body: `${SAMPLE} step copy.` },
+    { title: `${SAMPLE} — Provision`, body: `${SAMPLE} step copy.` },
+    { title: `${SAMPLE} — Deploy`, body: `${SAMPLE} step copy.` }
+  ],
+  action: { label: "See plans", href: "#top" }
+};
+const consoleShowcaseSample: ConsoleShowcaseBlock = {
+  component: "console-showcase",
+  eyebrow: `${SAMPLE} copy`,
+  title: "The Royal Console.",
+  summary: `${SAMPLE} — no real screenshots are embedded; each frame is copy-only chrome per DESIGN.md 8.6.`,
+  screens: [
+    { label: `${SAMPLE} — Domains`, caption: `${SAMPLE} caption for layout review.` },
+    { label: `${SAMPLE} — Databases`, caption: `${SAMPLE} caption for layout review.` }
+  ]
+};
+const contactFormSample: ContactFormBlock = {
+  component: "contact-form",
+  eyebrow: `${SAMPLE} copy`,
+  title: "Talk to a person, not a bot.",
+  summary: `${SAMPLE} — this exact form (fields, validation, honeypot) already ships on /contact.`,
+  needs: [`${SAMPLE} option A`, `${SAMPLE} option B`],
+  action: { label: "Send", href: "#" },
+  responseTime: `${SAMPLE} — typical first response time`
+};
+
+const blockCoverage: Array<{ block: PageBlock; note: string }> = [
+  { block: heroSample, note: "ships on every route; copy below is SAMPLE for layout only" },
+  { block: trustStripSample, note: "ships on the homepage; copy below is SAMPLE for layout only" },
+  { block: featureNarrativeSample, note: "ships on several routes; copy below is SAMPLE for layout only" },
+  { block: infrastructureSample, note: "ships on several routes; copy below is SAMPLE for layout only" },
+  { block: partnersSample, note: "identical to the real /about content — not a sample" },
+  { block: answersSample, note: "ships on every route; copy below is SAMPLE for layout only" },
+  { block: ctaSample, note: "ships on the homepage; copy below is SAMPLE for layout only" },
+  { block: richTextSample, note: "ships on /about; copy below is SAMPLE for layout only" },
+  { block: legalSample, note: "ships on the legal routes; copy below is SAMPLE for layout only" },
+  { block: specPlatesSample, note: "ships on shared/VPS/dedicated; copy below is SAMPLE for layout only" },
+  { block: operatorStripSample, note: "ships on shared/VPS; copy below is SAMPLE for layout only" },
+  { block: launchSequenceSample, note: "ships on WordPress; copy below is SAMPLE for layout only" },
+  { block: consoleShowcaseSample, note: "ships on the homepage; copy below is SAMPLE for layout only" },
+  { block: contactFormSample, note: "ships on /contact and others; copy below is SAMPLE for layout only" }
+];
+
+/* `testimonials` has a full component file and a PageBlock variant, but a repo-wide
+   search of src/data/pages.ts finds it fed real content NOWHERE — every other route
+   simply omits it (About's own copy: "a wall of unverified quotes is decoration").
+   That makes it the same category as the three CANNOT-SHIP blocks below, not a normal
+   "ships elsewhere" block — see the report. */
+const testimonialsSample: TestimonialBlock = {
+  component: "testimonials",
+  eyebrow: `${SAMPLE} content`,
+  title: "How the quote card looks",
+  testimonials: [
+    {
+      quote: `${SAMPLE} — support fixed a 500 error in minutes and explained exactly what was wrong.`,
+      name: `${SAMPLE} — no such customer`,
+      context: `${SAMPLE} — fabricated for layout review only; never fed real content anywhere in src/data/pages.ts`,
+      approvalState: "approved"
+    }
+  ]
+};
 
 /* CANNOT ship until real data exists. Everything below is invented for layout review
    only — which is what the SAMPLE prefixes are there to make unmissable. */
@@ -107,13 +456,13 @@ const seo = {
   canonicalPath: "/design-preview",
   image: "/legacy-assets/assets/img/og/main.png",
   noindex: true,
-  updatedAt: "2026-07-12"
+  updatedAt: "2026-08-31"
 };
 ---
 
 <SiteLayout seo={seo}>
   <main id="main-content">
-    <section class="section section-tint">
+    <section class="section section-tint" id="top">
       <div class="shell">
         <p class="eyebrow">Internal</p>
         <h1>Component preview</h1>
@@ -121,7 +470,241 @@ const seo = {
       </div>
     </section>
 
-    <section class="section section-light">
+    <nav class="dp-nav" aria-label="Style guide sections">
+      <div class="shell">
+        <ol>
+          <li><a href="#foundations">Foundations</a></li>
+          <li><a href="#atoms">Atoms</a></li>
+          <li><a href="#focus">Focus ring</a></li>
+          <li><a href="#blocks">Blocks</a></li>
+        </ol>
+      </div>
+    </nav>
+
+    <section class="section section-light" id="foundations">
+      <div class="shell">
+        <p class="eyebrow">Foundations</p>
+        <h2>Tokens, live</h2>
+        <p class="lede">
+          Every value below is read from <code>tokens.css</code> and <code>global.css</code> at build time.
+          Swatches, bars and boxes use <code>var(--token)</code>; the name/value labels are parsed from the
+          real file text. If a token changes, this page changes with it.
+        </p>
+
+        <h3>Colour</h3>
+        <div class="token-grid">
+          {colorTokens.map((t) => (
+            <div class="token-swatch">
+              <div class="color-fill" style={`background:var(${t.name})`}></div>
+              <div class="token-swatch-meta">
+                <code class="token-swatch-name">{t.name}</code>
+                <span class="token-swatch-hex">{t.value}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3>Type scale</h3>
+        <div class="type-samples">
+          <div>
+            <h1>Aa — Heading one</h1>
+            <code class="atom-tag">h1 · var(--font-heading)</code>
+          </div>
+          <div>
+            <h2>Aa — Heading two</h2>
+            <code class="atom-tag">h2 · var(--font-heading)</code>
+          </div>
+          <div>
+            <h3>Aa — Heading three</h3>
+            <code class="atom-tag">h3 · var(--font-heading)</code>
+          </div>
+          <div>
+            <p class="lede">Aa — lede paragraph, the size used for section intros.</p>
+            <code class="atom-tag">.lede · var(--font-body)</code>
+          </div>
+          <div>
+            <p>Aa — body paragraph, the default reading size and weight for prose.</p>
+            <code class="atom-tag">p · var(--font-body)</code>
+          </div>
+          <div>
+            <p class="mono">Aa 0123 — confirms JetBrains Mono is actually loaded, not falling back to a system font.</p>
+            <code class="atom-tag">.mono · var(--font-mono)</code>
+          </div>
+        </div>
+
+        <h3>Spacing</h3>
+        <div class="scale-col">
+          {spacingTokens.map((t) => (
+            <div class="scale-row">
+              <span class="scale-label">{t.name} = {t.value}</span>
+              <span class="scale-bar" style={`width:${t.value}`}></span>
+            </div>
+          ))}
+        </div>
+
+        <h3>Radius</h3>
+        <div class="token-grid">
+          {radiusTokens.map((t) => (
+            <div class="token-swatch">
+              <div class="radius-box" style={`border-radius:${t.value}`}></div>
+              <div class="token-swatch-meta">
+                <code class="token-swatch-name">{t.name}</code>
+                <span class="token-swatch-hex">{t.value}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3>Shadow</h3>
+        <div class="token-grid">
+          {shadowTokens.map((t) => (
+            <div class="token-swatch">
+              <div class="shadow-demo-bg">
+                <div class="shadow-box" style={`box-shadow:${t.value}`}></div>
+              </div>
+              <div class="token-swatch-meta">
+                <code class="token-swatch-name">{t.name}</code>
+                <span class="token-swatch-hex">{t.value}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p class="fine">
+          Two elevation scales exist in parallel — tokens.css's <code>--shadow-*</code> and global.css's
+          <code>--sh-1/2/3</code> — with different colour bases. Both are live; see the report.
+        </p>
+
+        <h3>Contrast reference</h3>
+        <p class="lede">
+          Sourced from {contrastSource}. {contrastRows.length} pairings checked, {contrastFailCount} failing.
+        </p>
+        <div class="table-scroll">
+          <table class="contrast-table">
+            <thead>
+              <tr><th>Pairing</th><th>Ratio</th><th>Required</th><th>Result</th></tr>
+            </thead>
+            <tbody>
+              {contrastRows.map((row) => (
+                <tr>
+                  <td>
+                    <span class="contrast-swatch" style={`background:${row.bg}; color:${row.fg}`}>{row.label}</span>
+                  </td>
+                  <td class="mono">{row.ratio.toFixed(2)}:1</td>
+                  <td class="mono">{row.required}:1</td>
+                  <td class={row.pass ? "contrast-pass" : "contrast-fail"}>{row.pass ? "PASS" : "FAIL"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="atoms">
+      <div class="shell">
+        <p class="eyebrow">Atoms</p>
+        <h2>Every primitive, on every field</h2>
+        <p class="lede">
+          Buttons, chips, cards, inputs, the eyebrow and links — shown on both a light and a dark field,
+          because muted text and focus rings differ by field in this system.
+        </p>
+      </div>
+      <div class="shell atoms-grid">
+        {atomFields.map((fieldClass) => (
+          <div class={`${fieldClass} atoms-field`}>
+            <p class="fine">.{fieldClass}</p>
+            <div class="atom-row">
+              {buttonAtoms.map((b) => (
+                <div class="atom-demo">
+                  <a href="#atoms" class={`button ${b.cls}`}>{b.label}</a>
+                  <code class="atom-tag">.{b.cls}</code>
+                </div>
+              ))}
+              {chipAtoms.map((c) => (
+                <div class="atom-demo">
+                  <span class={`chip ${c.cls}`}>{c.label}</span>
+                  <code class="atom-tag">.{c.cls}</code>
+                </div>
+              ))}
+              <div class="atom-demo">
+                <span class="approval-note">Pending approval</span>
+                <code class="atom-tag">.approval-note</code>
+              </div>
+              <div class="atom-demo">
+                <div class="card atom-card">
+                  <h3>Card title</h3>
+                  <p>Card body copy, shown at a realistic width.</p>
+                </div>
+                <code class="atom-tag">.card</code>
+              </div>
+              <div class="atom-demo">
+                <p class="eyebrow">Eyebrow label</p>
+                <code class="atom-tag">.eyebrow</code>
+              </div>
+              <div class="atom-demo">
+                <a href="#atoms" class="dp-link">Inline link example</a>
+                <code class="atom-tag">.dp-link (page-local — no shared global link class exists)</code>
+              </div>
+              <div class="atom-demo">
+                <div class="dp-field">
+                  <label for={`dp-text-${fieldClass}`}>Text input</label>
+                  <input id={`dp-text-${fieldClass}`} class="dp-input" type="text" placeholder="you@example.com" />
+                </div>
+                <code class="atom-tag">.dp-input (custom — reads --field-line / --surface-card)</code>
+              </div>
+              <div class="atom-demo">
+                <div class="dp-field">
+                  <label for={`dp-textarea-${fieldClass}`}>Message</label>
+                  <textarea id={`dp-textarea-${fieldClass}`} class="dp-textarea" placeholder="Tell us what's wrong"></textarea>
+                </div>
+                <code class="atom-tag">.dp-textarea</code>
+              </div>
+              <div class="atom-demo">
+                <div class="dp-field">
+                  <label for={`dp-select-${fieldClass}`}>Plan</label>
+                  <select id={`dp-select-${fieldClass}`} class="dp-select">
+                    <option>Shared hosting</option>
+                    <option>VPS</option>
+                  </select>
+                </div>
+                <code class="atom-tag">.dp-select</code>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section section-light" id="focus">
+      <div class="shell">
+        <p class="eyebrow">Focus ring</p>
+        <h2>Press Tab to check every field</h2>
+        <p class="lede">
+          The rule that mattered most while building this system: <code>--interactive</code> must clear 3:1
+          against the field it sits on. Tab through the controls below on light, dark and royal — this is the
+          exact bug class that shipped once already (the ring was 1.00:1, invisible, on <code>.section-royal</code>).
+        </p>
+      </div>
+      <div class="shell focus-grid">
+        <div class="section-light focus-field">
+          <p class="fine">.section-light</p>
+          <a href="#focus" class="button button-primary">Focusable button</a>
+          <a href="#focus" class="dp-link">Focusable link</a>
+        </div>
+        <div class="section-dark focus-field">
+          <p class="fine">.section-dark</p>
+          <a href="#focus" class="button button-ghost">Focusable button</a>
+          <a href="#focus" class="dp-link">Focusable link</a>
+        </div>
+        <div class="section-royal focus-field">
+          <p class="fine">.section-royal</p>
+          <a href="#focus" class="button button-ghost">Focusable button</a>
+          <a href="#focus" class="dp-link">Focusable link</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light" id="blocks">
       <div class="shell">
         <p class="eyebrow">Ships today</p>
         <h2>Fed from the real catalogue</h2>
@@ -134,20 +717,50 @@ const seo = {
 
     {realBlocks.map((block) => <BlockRenderer block={block} />)}
 
+    <section class="section section-tint">
+      <div class="shell">
+        <p class="sample-copy-flag">Sample copy — real block</p>
+        <h2>Every remaining block in the system</h2>
+        <p class="lede">
+          The 14 blocks below already ship on real routes with real content (see <code>src/data/pages.ts</code>).
+          The copy shown here is illustrative <strong>SAMPLE</strong> text written only for this gallery — it
+          exists to check layout and contrast, not to state anything about the business. <code>partners</code> is
+          the one exception below: its logos and copy are identical to the real About page, not invented.
+        </p>
+      </div>
+    </section>
+
+    {blockCoverage.map(({ block, note }) => (
+      <>
+        <div class="component-tag"><p class="shell">Component <code>{block.component}</code> — {note}</p></div>
+        <BlockRenderer block={block} />
+      </>
+    ))}
+
     <section class="section section-dark">
       <div class="shell">
         <p class="warn-flag">Sample data — does not ship</p>
         <h2>Blocks waiting on real data</h2>
         <p class="lede">
-          The three blocks below are <strong>absent from every live route</strong>. They are rendered
+          The four blocks below are <strong>absent from every live route</strong>. They are rendered
           here with invented values purely so the design can be reviewed. Each ships the moment real
-          data exists: a status endpoint, a genuine anonymised transcript, and dated competitor
-          pricing. Do not copy these fixtures into <code>src/data/pages.ts</code>.
+          data exists: a status endpoint, a genuine anonymised transcript, dated competitor
+          pricing, and a real customer's consented quote. Do not copy these fixtures into
+          <code>src/data/pages.ts</code>.
         </p>
       </div>
     </section>
 
     {sampleOnlyBlocks.map((block) => <BlockRenderer block={block} />)}
+
+    <div class="component-tag">
+      <p class="shell">
+        Component <code>testimonials</code> — SAMPLE; a repo-wide search finds no real content fed to this
+        block anywhere in <code>src/data/pages.ts</code>, so it belongs in this "does not ship" group too
+        even though it isn't in the original three. See the report.
+      </p>
+    </div>
+    <BlockRenderer block={testimonialsSample} />
   </main>
 </SiteLayout>
 
@@ -167,8 +780,287 @@ const seo = {
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
+  .sample-copy-flag {
+    display: inline-block;
+    margin: 0 0 1.25rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--rc-primary);
+    border-radius: var(--r-pill);
+    color: var(--rc-primary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
   code {
     font-family: var(--font-mono);
     font-size: 0.9em;
+  }
+
+  /* ---- nav ---- */
+  .dp-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .dp-nav ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .dp-nav a {
+    color: var(--rc-primary);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+  .dp-nav a:hover {
+    text-decoration: underline;
+  }
+
+  /* ---- component coverage tag ---- */
+  .component-tag {
+    background: var(--rc-primary-050);
+    border-block: 1px solid var(--rc-border);
+  }
+  .component-tag p {
+    margin: 0;
+    padding: 0.6rem 0;
+    color: var(--rc-ink);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .component-tag code {
+    font-weight: 700;
+  }
+
+  /* ---- foundations: token grid ---- */
+  .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+  .token-swatch {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .color-fill {
+    height: 5rem;
+  }
+  .radius-box {
+    height: 5rem;
+    background: var(--rc-primary-050);
+    border-bottom: 1px solid var(--rc-primary);
+  }
+  .shadow-demo-bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: var(--rc-lavender);
+  }
+  .shadow-box {
+    width: 4rem;
+    height: 3rem;
+    background: var(--paper);
+    border-radius: var(--radius-card);
+  }
+  .token-swatch-meta {
+    padding: 0.75rem 0.9rem;
+  }
+  .token-swatch-name {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--rc-ink);
+  }
+  .token-swatch-hex {
+    display: block;
+    margin-top: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--rc-body);
+    word-break: break-all;
+  }
+
+  /* ---- foundations: type ---- */
+  .type-samples {
+    display: grid;
+    gap: 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+  .type-samples h1,
+  .type-samples h2,
+  .type-samples h3 {
+    margin-bottom: 0.4rem;
+  }
+  .atom-tag {
+    display: inline-block;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  /* ---- foundations: spacing ---- */
+  .scale-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+  .scale-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .scale-label {
+    flex-shrink: 0;
+    width: 9rem;
+    color: var(--rc-body);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+  .scale-bar {
+    flex-shrink: 0;
+    height: 1rem;
+    background: var(--rc-primary);
+    border-radius: var(--r-sm);
+  }
+
+  /* ---- foundations: contrast table ---- */
+  .table-scroll {
+    overflow-x: auto;
+    margin-top: 1.5rem;
+  }
+  .contrast-table {
+    width: 100%;
+    min-width: 32rem;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .contrast-table th,
+  .contrast-table td {
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    font-size: 0.875rem;
+  }
+  .contrast-table thead th {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .contrast-swatch {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .contrast-pass {
+    color: var(--green);
+    font-weight: 700;
+  }
+  .contrast-fail {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ---- atoms ---- */
+  .atoms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .atoms-field {
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-panel);
+  }
+  .atom-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+  .atom-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    max-width: 16rem;
+  }
+  .atom-card {
+    padding: 1.25rem;
+  }
+  .dp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    width: 100%;
+  }
+  .dp-field label {
+    color: var(--heading);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+  .dp-input,
+  .dp-textarea,
+  .dp-select {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--field-line);
+    border-radius: var(--r-input);
+    background: var(--surface-card);
+    color: var(--body);
+    font: inherit;
+  }
+  .dp-textarea {
+    min-height: 4rem;
+    resize: vertical;
+  }
+  .dp-link {
+    color: var(--rc-primary);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+  .section-dark .dp-link,
+  .section-royal .dp-link {
+    /* Never --rc-muted here — 4.22:1 on night, 1.86:1 on primary, both fail AA. */
+    color: var(--rc-lavender);
+  }
+
+  /* ---- focus ring ---- */
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .focus-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-panel);
   }
 </style>
