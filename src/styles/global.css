@@ -1,4 +1,4 @@
-/* Royal Systems v2 — see DESIGN.md.
+/* Royal Clouds — violet design system v3. See DESIGN.md.
    Layers: primitive -> semantic -> component. Components never reach past semantic. */
 :root {
   /* ---- Primitive: color ---- */
@@ -89,7 +89,7 @@ select {
   font: inherit;
 }
 :focus-visible {
-  outline: 2px solid var(--rc-primary);
+  outline: 2px solid var(--interactive);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -147,6 +147,12 @@ select {
   --body: var(--rc-muted-dark);
   --muted: var(--rc-muted-dark);
   --surface-card: color-mix(in srgb, var(--paper) 4%, transparent);
+  /* rc-primary-light (the root default) is only 2.88:1 on rc-night — below
+     the 3:1 focus-indicator floor (WCAG 2.2 SC 1.4.11). rc-lavender clears
+     it at 13.25:1, same fix .section-royal already applies for its own
+     ground. Every dark-field component's own focus override existed only
+     because this indirection was severed; restoring it here is the root fix. */
+  --interactive: var(--rc-lavender);
 
   --viz-face-top: var(--rc-muted);
   --viz-face-left: var(--rc-night);
@@ -506,7 +512,7 @@ p {
 .telemetry-fill {
   height: 100%;
   border-radius: inherit;
-  background: var(--rc-primary);
+  background: var(--interactive);
   transform: scaleX(var(--fill, 0));
   transform-origin: left center;
   transition: transform 900ms var(--ease);

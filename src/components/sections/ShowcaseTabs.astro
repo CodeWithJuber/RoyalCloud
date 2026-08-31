@@ -218,6 +218,10 @@ const {
     background: var(--rc-ink);
     padding: var(--space-section) 0;
     color: #fff;
+    /* Root default (--rc-primary-light) is 2.88:1 on --rc-ink (= --rc-night)
+       — under 3:1. Re-point for this surface: rc-lavender clears it at
+       13.25:1. Global :focus-visible reads --interactive (global.css:92). */
+    --interactive: var(--rc-lavender);
   }
   .rc-showcase .section-title h2 {
     color: #fff;
@@ -260,13 +264,6 @@ const {
     padding: 10px 22px;
     cursor: pointer;
     transition: all 0.2s;
-  }
-  /* The global :focus-visible outline is --rc-primary — 2.27:1 on this
-     section's --rc-ink (= --rc-night) ground, under the 3:1 floor. Override
-     to rc-lavender, same fix Hero/OperatorStrip/Cta use on dark grounds. */
-  .sc-tab:focus-visible {
-    outline: 2px solid var(--rc-lavender);
-    outline-offset: 2px;
   }
   .sc-tab:hover {
     border-color: rgba(255,255,255,0.4);

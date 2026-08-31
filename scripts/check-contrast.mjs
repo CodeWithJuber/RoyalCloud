@@ -86,7 +86,14 @@ export const PAIRS = [
   { label: "ink on gold (CTA)", fg: "#2f1c6a", bg: "#ffc94b", size: "body" },
   { label: "muted on white", fg: "#8b8c99", bg: "#ffffff", size: "large" },
   { label: "success on white", fg: "#009e81", bg: "#ffffff", size: "ui" },
-  { label: "success on night-deep", fg: "#009e81", bg: "#231252", size: "ui" },
+  {
+    // Its only consumer, OperatorStrip.astro .line-ok, is 13px transcript
+    // text — body-text floor (4.5:1) applies, not the 3:1 non-text floor.
+    label: "success on night-deep",
+    fg: "#009e81",
+    bg: "#231252",
+    size: "body",
+  },
   {
     label: "white on primary-light",
     fg: "#ffffff",
@@ -225,6 +232,25 @@ export const PAIRS = [
     label: "back-to-top focus ring on primary",
     fg: "#ffc94b",
     bg: "#673de6",
+    size: "ui",
+  },
+  {
+    // Root-cause fix (--interactive restored, global.css:92/146/509):
+    // .plan.section-royal's focus ring and its checkmark/telemetry-fill now
+    // read --interactive, which .section-royal points at rc-lavender. Was
+    // rc-primary-on-rc-primary, 1.00:1 — invisible on the featured plan.
+    label: "focus ring on primary",
+    fg: "#faf7ff",
+    bg: "#673de6",
+    size: "ui",
+  },
+  {
+    // SiteFooter's newsletter input :focus-visible border/box-shadow, now
+    // --interactive (inherited lavender from .section-dark) instead of the
+    // 2.65:1 --rc-primary it replaced.
+    label: "footer input focus ring on night-deep",
+    fg: "#faf7ff",
+    bg: "#231252",
     size: "ui",
   },
 ];

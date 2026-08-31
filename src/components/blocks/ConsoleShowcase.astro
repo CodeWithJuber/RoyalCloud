@@ -105,14 +105,10 @@ const uid = Math.random().toString(36).slice(2, 8);
     max-width: 100%;
   }
   .console-switch button { min-height: 44px; }
-  /* --rc-primary (the global focus color) is only 2.26:1 on this section's
-     --rc-night ground — below the 3:1 floor (WCAG 2.2 SC 1.4.11). Re-pointed
-     to --rc-lavender, same override Hero/OperatorStrip use on dark grounds.
-     Covers the tab switcher and the rail's primary action link alike. */
-  .console-switch button:focus-visible,
-  .rail .button:focus-visible {
-    outline-color: var(--rc-lavender);
-  }
+  /* No focus-ring override needed: .section-dark (global.css) sets
+     --interactive: var(--rc-lavender), inherited here, and the global
+     :focus-visible rule reads --interactive — 13.25:1 on --rc-night. Covers
+     the tab switcher and the rail's primary action link alike. */
 
   .frames { display: grid; gap: 1.5rem; }
   .frames [hidden] { display: none; }

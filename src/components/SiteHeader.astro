@@ -309,6 +309,10 @@ const { announcement, marquee, navigation, whmcsUrl, logoLight } = siteSettings;
     border-radius: var(--r-pill);
     background: color-mix(in srgb, var(--rc-night) 88%, transparent);
     box-shadow: var(--sh-3);
+    /* Root default (--rc-primary-light) is under 3:1 on this near-night
+       ground. Re-point the focus ring for this surface, same fix
+       .section-dark applies globally (global.css). */
+    --interactive: var(--rc-lavender);
   }
   @supports (backdrop-filter: blur(1px)) {
     .island { backdrop-filter: blur(14px) saturate(140%); }
@@ -353,6 +357,9 @@ const { announcement, marquee, navigation, whmcsUrl, logoLight } = siteSettings;
     border-radius: var(--r-inner);
     background: var(--rc-night-deep);
     box-shadow: var(--sh-3);
+    /* Root default (--rc-primary-light) is under 3:1 on --rc-night-deep.
+       Re-point the focus ring for this surface. */
+    --interactive: var(--rc-lavender);
   }
   .nav-panel a {
     display: flex;
@@ -360,7 +367,10 @@ const { announcement, marquee, navigation, whmcsUrl, logoLight } = siteSettings;
     min-height: 2.75rem;
     padding: 0.5rem 0.85rem;
     border-radius: var(--r-input);
-    color: var(--rc-muted);
+    /* --rc-muted-dark, not --rc-muted — the latter is 4.22:1 on --rc-night
+       and only marginally different here; kept consistent with every other
+       dark-ground body-text token in this system (DESIGN.md §7). */
+    color: var(--rc-muted-dark);
     font-size: 0.9375rem;
     font-weight: 600;
     text-decoration: none;
@@ -374,7 +384,9 @@ const { announcement, marquee, navigation, whmcsUrl, logoLight } = siteSettings;
     align-items: center;
     min-height: 2.75rem;
     padding: 0 0.5rem;
-    color: var(--rc-muted);
+    /* --rc-muted is 2.99:1 on the island's near-night ground — under the
+       4.5:1 body-text floor. --rc-muted-dark clears it (DESIGN.md §7). */
+    color: var(--rc-muted-dark);
     font-size: 0.9375rem;
     font-weight: 600;
     text-decoration: none;
@@ -421,6 +433,8 @@ const { announcement, marquee, navigation, whmcsUrl, logoLight } = siteSettings;
     background: var(--rc-night);
     box-shadow: var(--sh-3);
     overscroll-behavior: contain;
+    /* Root default (--rc-primary-light) is under 3:1 on --rc-night. */
+    --interactive: var(--rc-lavender);
   }
   .mobile-panel section { margin-bottom: 1.5rem; }
   .mobile-panel h2 {

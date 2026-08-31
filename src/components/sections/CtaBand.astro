@@ -64,6 +64,10 @@ const target = (cta?: Cta) =>
     padding: var(--space-section-sm) 0;
     color: #fff;
     text-align: center;
+    /* Root default (--rc-primary-light) is ~1:1 on this gradient's
+       rc-primary stop. Re-point for this surface: rc-lavender clears 3:1 at
+       both stops (5.85:1 worst case, at rc-primary). */
+    --interactive: var(--rc-lavender);
   }
   .rc-cta-band .section-title h2 {
     color: #fff;
@@ -110,13 +114,5 @@ const target = (cta?: Cta) =>
   .rc-cta-secondary:hover {
     border-color: #fff;
     background: rgba(255,255,255,0.1);
-  }
-  /* The global :focus-visible outline is --rc-primary, the exact color of
-     this band's background gradient (~1:1 contrast) — same class of bug
-     Hero/OperatorStrip/ShowcaseTabs already carry a scoped fix for. */
-  .rc-cta-primary:focus-visible,
-  .rc-cta-secondary:focus-visible {
-    outline: 3px solid var(--rc-lavender);
-    outline-offset: 2px;
   }
 </style>

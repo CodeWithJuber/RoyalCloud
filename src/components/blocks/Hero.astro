@@ -58,6 +58,12 @@ const secondaryExternal = block.secondaryAction
     background: linear-gradient(95deg, var(--rc-primary-dark), var(--rc-primary) 45%, var(--rc-primary-light));
     color: #fff;
     text-align: center;
+    /* Root default (--rc-primary-light) is under 3:1 at every stop of this
+       gradient (1.00:1 at the 45% stop, identical color). Re-point for this
+       surface: rc-lavender clears 3:1 at all three stops (4.60:1 worst case,
+       at primary-light). Global :focus-visible reads --interactive
+       (global.css:92), so no per-button override is needed here. */
+    --interactive: var(--rc-lavender);
   }
 
   .hero__inner {
@@ -124,12 +130,4 @@ const secondaryExternal = block.secondaryAction
     color: var(--rc-lavender);
   }
   .hero__proof svg { flex-shrink: 0; color: var(--rc-gold); }
-
-  /* The global :focus-visible outline (global.css:93-95) is --rc-primary —
-     identical to this gradient's 45% stop (1.00:1, invisible) and under 3:1
-     at every stop. Override to rc-lavender, which clears 3:1 at all three
-     (4.60:1 worst case, at primary-light). */
-  .hero__actions .button:focus-visible {
-    outline-color: var(--rc-lavender);
-  }
 </style>

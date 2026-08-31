@@ -146,16 +146,9 @@ const commandsOf = (lines: OperatorStripBlock["tabs"][number]["lines"]) =>
     color: var(--rc-night);
     background: var(--rc-lavender);
   }
-  /* --rc-primary-light (the global focus color) is only 2.88:1 on this
-     section's --rc-night ground — below the 3:1 floor (WCAG 2.2 SC 1.4.11).
-     rc-lavender clears it at 13.25:1, same override Hero uses on dark/royal
-     grounds. See scripts/check-contrast.mjs. */
-  .tabbar button:focus-visible,
-  .copy-button:focus-visible,
-  .panel:focus-visible {
-    outline: 2px solid var(--rc-lavender);
-    outline-offset: 2px;
-  }
+  /* No focus-ring override needed: .section-dark (global.css) sets
+     --interactive: var(--rc-lavender), inherited here, and the global
+     :focus-visible rule reads --interactive — 13.25:1 on --rc-night. */
 
   .copy-button {
     justify-content: center;

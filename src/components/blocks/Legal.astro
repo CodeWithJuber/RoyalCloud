@@ -48,7 +48,10 @@ const { block } = Astro.props;
         if (id === current) return;
         current = id;
         for (const [key, link] of links) {
-          link.classList.toggle("is-active", key === id);
+          const active = key === id;
+          link.classList.toggle("is-active", active);
+          if (active) link.setAttribute("aria-current", "true");
+          else link.removeAttribute("aria-current");
         }
       };
 

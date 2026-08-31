@@ -108,10 +108,15 @@ const tlds = [
     font-weight: 560;
   }
   input::placeholder { color: var(--rc-muted-dark); opacity: 1; }
-  /* DESIGN.md 14: a visible 2px ring everywhere — this is the hero's primary input. */
+  /* DESIGN.md 14: a visible 2px ring everywhere — this is the hero's primary
+     input. --rc-primary is 2.27:1 on this field's --rc-night background —
+     under the 3:1 floor. --interactive (lavender, inherited from
+     .section-dark) clears it at 13.25:1; kept as its own rule since the
+     border-color change on focus is a deliberate affordance beyond the
+     global ring alone. */
   input:focus-visible {
-    border-color: var(--rc-primary);
-    outline: 2px solid var(--rc-primary);
+    border-color: var(--interactive);
+    outline: 2px solid var(--interactive);
     outline-offset: 2px;
   }
 

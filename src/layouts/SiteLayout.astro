@@ -1,5 +1,9 @@
 ---
 import "@fontsource-variable/dm-sans";
+// global.css's --font-mono declares JetBrains Mono for the data/terminal
+// register (DESIGN.md 5) — terminal transcripts, ledger lines, telemetry
+// values. Load it, or every mono surface silently falls back to ui-monospace.
+import "@fontsource-variable/jetbrains-mono";
 // tokens.css must load first: global.css's semantic layer now references its
 // --rc-*/--green/--amber/--red/--dk-*/--btn-* names (Task 2 migration). Names
 // global.css also declares itself (--paper, --line, --font-mono)

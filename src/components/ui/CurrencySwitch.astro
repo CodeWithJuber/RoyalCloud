@@ -35,7 +35,9 @@
     padding: 0 0.65rem;
     border: 0;
     border-radius: var(--r-pill);
-    color: var(--rc-muted);
+    /* --rc-muted is 3.69:1 on this dark ground — under the 4.5:1 body-text
+       floor. --rc-muted-dark clears it (DESIGN.md §7). */
+    color: var(--rc-muted-dark);
     background: transparent;
     font-size: 0.75rem;
     font-weight: 700;

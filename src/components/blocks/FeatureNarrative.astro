@@ -3,13 +3,14 @@ import type { FeatureNarrativeBlock } from "../../types/content";
 
 interface Props { block: FeatureNarrativeBlock }
 const { block } = Astro.props;
+const titleId = "feature-narrative-title";
 ---
 
-<section class="section section-light features" aria-label={block.title}>
+<section class="section section-light features" aria-labelledby={titleId}>
   <div class="shell">
     <header class="section-header" data-reveal>
       {block.eyebrow && <p class="eyebrow">{block.eyebrow}</p>}
-      <h2>{block.title}</h2>
+      <h2 id={titleId}>{block.title}</h2>
       {block.summary && <p class="lede">{block.summary}</p>}
     </header>
 

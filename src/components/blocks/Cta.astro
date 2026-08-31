@@ -58,10 +58,8 @@ const external = block.action.external ?? block.action.href.startsWith("http");
   .cta__copy .button-row {
     margin-top: 1.75rem;
   }
-  /* The global :focus-visible outline is --rc-primary — 1.00:1 at this
-     gradient's 45% stop (identical color) and under 3:1 at every stop.
-     Override to rc-lavender, same fix Hero uses on this exact gradient. */
-  .cta__copy .button-row .button:focus-visible {
-    outline-color: var(--rc-lavender);
-  }
+  /* No focus-ring override needed: .section-dark (global.css) now sets
+     --interactive: var(--rc-lavender), which this element inherits, and the
+     global :focus-visible rule reads --interactive. Clears 3:1 at every
+     stop of this gradient (4.60:1 worst case, at primary-light). */
 </style>
