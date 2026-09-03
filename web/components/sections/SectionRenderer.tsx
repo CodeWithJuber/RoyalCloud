@@ -232,7 +232,7 @@ function renderSection(section: Section): ReactNode {
 
     case "planfinder":
       return (
-        <section className="section section-tint planfinder-section" aria-labelledby="planfinder-title">
+        <section className="section section-tint planfinder-section" id="planfinder" aria-labelledby="planfinder-title">
           <div className="site-shell planfinder-shell">
             <header className="section-header center" data-reveal>
               <p className="eyebrow">{str(s.eyebrow) ?? "Help me choose"}</p>

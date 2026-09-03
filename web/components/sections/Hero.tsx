@@ -51,6 +51,16 @@ function HeroActions({
   );
 }
 
+/* "Help me choose" — links to the interactive plan finder (home #planfinder). */
+function HelpMeChoose() {
+  return (
+    <a className="hero-help" href="/#planfinder">
+      <Icon name="search" size={16} />
+      Help me choose
+    </a>
+  );
+}
+
 function HeroBadges({ badges }: { badges?: string[] }) {
   if (!badges || badges.length === 0) return null;
   return (
@@ -125,6 +135,7 @@ function HomeHero({
           </form>
 
           <HeroActions primaryCta={primaryCta} secondaryCta={secondaryCta} />
+          <HelpMeChoose />
           {offer && <p className="hero-offer">{offer}</p>}
           <HeroBadges badges={badges} />
         </div>
@@ -171,6 +182,7 @@ export function Hero({
           {subtitle && <p className="hero-lede">{subtitle}</p>}
           {offer && <p className="hero-offer">{offer}</p>}
           <HeroActions primaryCta={primaryCta} secondaryCta={secondaryCta} />
+          <HelpMeChoose />
           <HeroBadges badges={badges} />
         </div>
 

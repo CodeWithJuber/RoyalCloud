@@ -68,6 +68,22 @@ for (const [name, path] of PAGES) {
       path: new URL(`../${file}`, import.meta.url).pathname,
       fullPage: true,
     });
+    /* Above-fold assertion on phones: the hero's interactive elements must be
+       visible in the first 844px — the search card and the primary CTA. */
+    if (width <= 640) {
+      const fold = await page.evaluate(() => {
+        const search = document.querySelector(".hero-search, .domain-row");
+        const cta = document.querySelector(".hero-actions .btn-primary");
+        const inView = (el) =>
+          el ? el.getBoundingClientRect().top < 844 : null;
+        return { search: inView(search), cta: inView(cta) };
+      });
+      if (fold.search === false || fold.cta === false) {
+        consoleErrors.push(
+          `above-fold: search=${fold.search} cta=${fold.cta} — interactive elements pushed below the fold`,
+        );
+      }
+    }
     if (consoleErrors.length > 0) errors[`${name}-${width}`] = consoleErrors;
     await page.close();
     console.log(`shot ${name}-${width}`);

@@ -67,6 +67,12 @@ export function PlanCards({
           {subtitle && <p className="lede">{subtitle}</p>}
         </header>
 
+        <a className="planfinder-banner" href="/#planfinder" data-reveal>
+          <Icon name="search" size={15} />
+          Not sure which plan fits? Answer 3 quick questions
+          <span aria-hidden="true">→</span>
+        </a>
+
         {showToggle && hasAnnual && (
           <div className="plan-toggle-row">
             <SegmentedControl
