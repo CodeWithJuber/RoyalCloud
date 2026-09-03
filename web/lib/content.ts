@@ -118,6 +118,10 @@ export const sectionSchema = z.discriminatedUnion("type", [
     items: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
   }),
   z.object({
+    type: z.literal("planfinder"),
+    ...base,
+  }),
+  z.object({
     type: z.literal("domainsearch"),
     ...base,
   }),
@@ -213,8 +217,11 @@ export const sectionSchema = z.discriminatedUnion("type", [
       .array(
         z.object({
           label: z.string(),
-          panel: z.enum(["files", "ssl", "backups", "stats"]),
+          panel: z.enum(["files", "ssl", "backups", "stats"]).optional(),
           text: z.string().optional(),
+          /* When set, the tab renders the rich product panel for this plan
+             deck (art + real starting price + features + checkout CTA). */
+          plan: z.string().optional(),
         }),
       )
       .optional(),

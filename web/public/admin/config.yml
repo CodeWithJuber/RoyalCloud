@@ -498,6 +498,24 @@ definitions:
                     max: 5,
                   }
                 - { name: quote, label: "Quote", widget: text }
+        # ---- Plan finder (interactive onboarding) ----
+        - name: planfinder
+          label: "Plan Finder (Help me choose)"
+          summary: "Plan finder — {{fields.title}}"
+          fields:
+            - {
+                name: eyebrow,
+                label: "Eyebrow",
+                widget: string,
+                required: false,
+              }
+            - { name: title, label: "Heading", widget: string, required: false }
+            - {
+                name: subtitle,
+                label: "Subtitle",
+                widget: text,
+                required: false,
+              }
         # ---- FAQ ----
         - name: faq
           label: "FAQ Accordion"
@@ -816,6 +834,24 @@ definitions:
                     label: "Panel",
                     widget: select,
                     options: ["files", "ssl", "backups", "stats"],
+                    required: false,
+                  }
+                - {
+                    name: plan,
+                    label: "Plan deck (renders the rich product panel)",
+                    widget: select,
+                    options:
+                      [
+                        "shared",
+                        "cpanel",
+                        "vps",
+                        "cyberpanel",
+                        "wordpress",
+                        "cloud",
+                        "dedicated",
+                        "reseller",
+                      ],
+                    required: false,
                   }
                 - {
                     name: text,

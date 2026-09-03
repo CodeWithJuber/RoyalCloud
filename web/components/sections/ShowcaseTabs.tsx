@@ -1,11 +1,19 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
-import type { KeyboardEvent } from "react";
+import { useState } from "react";
+import { TabList, Tab } from "@astryxdesign/core/TabList";
+import { Badge } from "@astryxdesign/core/Badge";
+import { Icon } from "../Icon";
+import { Price } from "../Price";
+import { ProductArt, type ProductKind } from "../art/ProductArt";
+import { PLAN_FILES, type PlanFile } from "@/lib/plans";
 
 export interface ShowcaseTab {
   label: string;
+  panel?: "files" | "ssl" | "backups" | "stats";
   text?: string;
+  /** When set, this tab renders the rich product panel for that plan deck. */
+  plan?: string;
 }
 
 interface ShowcaseTabsProps {
@@ -15,55 +23,67 @@ interface ShowcaseTabsProps {
   tabs?: ShowcaseTab[];
 }
 
-const DEFAULT_TABS: ShowcaseTab[] = [
-  {
-    label: "File Manager",
-    text: "Upload, edit and organize your site files right in the browser — no FTP client needed.",
-  },
-  {
-    label: "Free SSL",
-    text: "One click installs your Let's Encrypt certificate and renews it automatically, forever.",
-  },
-  {
-    label: "Backups",
-    text: "Automatic daily snapshots of your whole account. Restore a file, a database or everything in one click.",
-  },
-  {
-    label: "Live Stats",
-    text: "Visitors, bandwidth and resource usage at a glance, so you always know how your sites are doing.",
-  },
-];
+const PLAN_ART: Record<string, ProductKind> = {
+  shared: "shared",
+  cpanel: "shared",
+  wordpress: "wordpress",
+  vps: "vps",
+  cyberpanel: "cyberpanel",
+  cloud: "cloud",
+  dedicated: "dedicated",
+  reseller: "reseller",
+};
+
+function ProductPanel({ plan }: { plan: PlanFile }) {
+  const popular = plan.tiers.find((t) => t.popular) ?? plan.tiers[0];
+  const starting = plan.tiers[0];
+  return (
+    <div className="showcase-product">
+      <div className="showcase-product-art">
+        <ProductArt kind={PLAN_ART[plan.id] ?? "generic"} />
+      </div>
+      <div className="showcase-product-copy">
+        <Badge variant="purple" label={plan.eyebrow ?? plan.name} />
+        <h3>{plan.title}</h3>
+        {plan.subtitle && <p className="showcase-product-sub">{plan.subtitle}</p>}
+        <p className="showcase-product-price">
+          Starting at{" "}
+          <strong>
+            <Price value={starting.price} />
+            <span className="showcase-per">{starting.period ?? "/mo"}</span>
+          </strong>
+        </p>
+        <ul className="showcase-product-features">
+          {popular.features.slice(0, 4).map((feature) => (
+            <li key={feature}>
+              <Icon name="check" size={14} color="success" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+        <div className="showcase-product-actions">
+          <a className="btn btn-primary" href={popular.ctaUrl} target="_blank" rel="noopener noreferrer">
+            {popular.cta ?? "Get started"}
+            <span className="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a className="btn btn-secondary" href={`/${plan.slug}`}>
+            Compare plans
+            <span className="btn-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function ShowcaseTabs({
   eyebrow,
   title,
   subtitle,
-  tabs = DEFAULT_TABS,
+  tabs = [],
 }: ShowcaseTabsProps) {
-  const [active, setActive] = useState(0);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const baseId = useId();
-
-  const select = (index: number, focus = false) => {
-    setActive(index);
-    if (focus) tabRefs.current[index]?.focus();
-  };
-
-  /* WAI-ARIA tabs pattern: arrows/Home/End move selection AND focus. */
-  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const count = tabs.length;
-    let next = -1;
-    if (event.key === "ArrowRight" || event.key === "ArrowDown")
-      next = (active + 1) % count;
-    else if (event.key === "ArrowLeft" || event.key === "ArrowUp")
-      next = (active - 1 + count) % count;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = count - 1;
-    if (next >= 0) {
-      event.preventDefault();
-      select(next, true);
-    }
-  };
+  const [active, setActive] = useState(tabs[0]?.label ?? "");
+  const baseId = "showcase";
 
   return (
     <section className="section section-dark showcase">
@@ -75,54 +95,56 @@ export function ShowcaseTabs({
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
+
         <div className="showcase-stage" data-reveal>
-          <div
-            className="showcase-tabs"
+          <TabList
+            value={active}
+            onChange={setActive}
             role="tablist"
-            aria-label={title ?? "Control panel features"}
-            onKeyDown={onKeyDown}
+            layout="hug"
+            size="lg"
+            aria-label={title ?? "Product showcase"}
           >
             {tabs.map((tab, i) => (
-              <button
+              <Tab
                 key={tab.label}
-                ref={(el) => {
-                  tabRefs.current[i] = el;
-                }}
-                type="button"
-                role="tab"
-                id={`${baseId}-tab-${i}`}
-                className="showcase-tab"
-                aria-selected={i === active}
-                aria-controls={`${baseId}-panel-${i}`}
-                tabIndex={i === active ? 0 : -1}
-                onClick={() => select(i)}
-              >
-                {tab.label}
-              </button>
+                value={tab.label}
+                label={tab.label}
+                panelId={`${baseId}-panel-${i}`}
+              />
             ))}
-          </div>
-          {tabs.map((tab, i) => (
-            <div
-              key={tab.label}
-              role="tabpanel"
-              id={`${baseId}-panel-${i}`}
-              aria-labelledby={`${baseId}-tab-${i}`}
-              className="showcase-window"
-              tabIndex={0}
-              hidden={i !== active}
-            >
-              <div className="showcase-chrome" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-                <span>my.royalclouds.net/panel</span>
+          </TabList>
+
+          {tabs.map((tab, i) => {
+            const plan = tab.plan ? PLAN_FILES[tab.plan] : undefined;
+            return (
+              <div
+                key={tab.label}
+                role="tabpanel"
+                id={`${baseId}-panel-${i}`}
+                className="showcase-panel-wrap"
+                tabIndex={0}
+                hidden={tab.label !== active}
+              >
+                {plan ? (
+                  <ProductPanel plan={plan} />
+                ) : (
+                  <div className="showcase-window">
+                    <div className="showcase-chrome" aria-hidden="true">
+                      <i />
+                      <i />
+                      <i />
+                      <span>my.royalclouds.net/panel</span>
+                    </div>
+                    <div className="showcase-panel">
+                      <h3>{tab.label}</h3>
+                      {tab.text && <p>{tab.text}</p>}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="showcase-panel">
-                <h3>{tab.label}</h3>
-                {tab.text && <p>{tab.text}</p>}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

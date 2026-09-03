@@ -96,6 +96,27 @@ sections:
           multiple IPv4s.
         price: $130
         href: /dedicated-servers
+  - type: planfinder
+    eyebrow: Help me choose
+    title: Not sure which plan fits?
+    subtitle: >-
+      Answer three quick questions and we'll point you at the right plan — a
+      real one, with its real price and checkout link.
+  - type: showcase
+    eyebrow: One platform
+    title: Everything you need, built for how you work
+    subtitle: >-
+      Shared hosting, managed WordPress, KVM VPS and dedicated servers — pick
+      a lane to see the stack, the starting price and the plan we recommend.
+    tabs:
+      - label: Shared Hosting
+        plan: shared
+      - label: Managed WordPress
+        plan: wordpress
+      - label: KVM VPS
+        plan: vps
+      - label: Dedicated Servers
+        plan: dedicated
   - type: domainsearch
     eyebrow: Domains
     title: Find the perfect domain name

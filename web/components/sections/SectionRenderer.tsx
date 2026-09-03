@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { Hero, type CtaLink } from "./Hero";
 import { DomainSearch } from "./DomainSearch";
+import { PlanFinder } from "./PlanFinder";
 import { PlanCards } from "./PlanCards";
 import { TrustBar, type TrustItem } from "./TrustBar";
 import { FeatureGrid, type FeatureItem } from "./FeatureGrid";
@@ -227,6 +228,20 @@ function renderSection(section: Section): ReactNode {
           title={str(s.title)}
           subtitle={str(s.subtitle)}
         />
+      );
+
+    case "planfinder":
+      return (
+        <section className="section section-tint planfinder-section" aria-labelledby="planfinder-title">
+          <div className="site-shell planfinder-shell">
+            <header className="section-header center" data-reveal>
+              <p className="eyebrow">{str(s.eyebrow) ?? "Help me choose"}</p>
+              <h2 id="planfinder-title">{str(s.title) ?? "Not sure which plan fits?"}</h2>
+              <p className="lede">{str(s.subtitle) ?? "Answer three quick questions and we'll point you at the right plan — a real one, with its real price."}</p>
+            </header>
+            <PlanFinder />
+          </div>
+        </section>
       );
 
     case "domainsearch":

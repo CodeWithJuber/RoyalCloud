@@ -2895,3 +2895,325 @@ a.feature-card:hover .feature-more {
   position: relative;
   z-index: 1;
 }
+
+/* ============================================================
+   PlanFinder — interactive onboarding wizard
+   ============================================================ */
+
+.planfinder-shell {
+  max-width: 52rem;
+  margin-inline: auto;
+}
+.plan-finder {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  background: var(--color-background-card);
+  box-shadow: var(--shadow-med);
+}
+.plan-finder .astryx-stepper {
+  margin-bottom: 1.75rem;
+}
+
+.finder-question {
+  margin: 0 0 0.35rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+.finder-hint {
+  margin: 0 0 1.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+.finder-options {
+  display: grid;
+  gap: 0.75rem;
+}
+.finder-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1.5px solid var(--color-border-emphasized);
+  border-radius: 16px;
+  background: var(--color-background-card);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+.finder-option:hover {
+  border-color: var(--color-accent);
+  background: var(--rc-violet-050);
+  transform: translateY(-1px);
+}
+.finder-option:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.finder-option-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+}
+.finder-option:hover .finder-option-icon {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+.finder-option-copy {
+  flex: 1;
+  display: grid;
+  gap: 0.15rem;
+}
+.finder-option-copy strong {
+  color: var(--color-text-primary);
+  font-size: 1rem;
+}
+.finder-option-copy span {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+.finder-option-arrow {
+  color: var(--color-text-secondary);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.finder-option:hover .finder-option-arrow {
+  transform: translateX(3px);
+  color: var(--color-text-accent);
+}
+
+.finder-back {
+  margin-top: 1.25rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 32px;
+}
+.finder-back:hover {
+  color: var(--color-text-accent);
+}
+.finder-back:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.finder-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--color-text-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.finder-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 1.25rem;
+}
+.finder-price .px {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+.finder-per {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+.finder-ledger {
+  width: 100%;
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+}
+.finder-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1.25rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+.finder-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+.finder-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.finder-note {
+  margin: 1.25rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 560px) {
+  .finder-features {
+    grid-template-columns: 1fr;
+  }
+  .finder-actions .btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* ============================================================
+   Showcase — product tabs (Astryx TabList) + rich product panels
+   ============================================================ */
+
+.showcase .astryx-tablist {
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.showcase .astryx-tab {
+  color: #c5bfd5;
+}
+.showcase .astryx-tab[data-selected] {
+  color: #ffffff;
+}
+
+.showcase-product {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  background: #ffffff08;
+}
+.showcase-product-art .product-art svg {
+  border-radius: 18px;
+}
+.showcase-product-copy h3 {
+  margin: 0.9rem 0 0.5rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+.showcase-product-sub {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.showcase-product-price {
+  margin: 1.1rem 0;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+.showcase-product-price strong {
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.showcase-per {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.showcase-product-features {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+.showcase-product-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+.showcase-product-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.showcase .btn:focus-visible,
+.showcase-panel-wrap:focus-visible {
+  outline-color: #faf7ff;
+}
+
+@media (max-width: 860px) {
+  .showcase-product {
+    grid-template-columns: 1fr;
+  }
+  .showcase-product-art {
+    max-width: 22rem;
+  }
+}
+
+/* ============================================================
+   Premium polish — gradient border on popular cards, glass on
+   dark, refined hover/press motion
+   ============================================================ */
+
+/* Popular plan card: violet→gold gradient hairline + lifted shadow */
+.plan-popular {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--color-background-card), var(--color-background-card)) padding-box,
+    linear-gradient(135deg, #673de6, #9b85ff 45%, #ffc94b) border-box;
+  box-shadow: var(--shadow-med);
+}
+.plan-popular:hover {
+  box-shadow: var(--shadow-high);
+}
+
+/* Glass chrome on dark fields */
+.section-dark .card,
+.section-deep .card,
+.showcase-product {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Consistent card hover across the marketing chrome */
+.feature-card,
+.plan-card,
+.finder-option,
+.footer-contact a {
+  will-change: transform;
+}
+.feature-card:hover,
+.finder-option:hover {
+  border-color: var(--color-accent);
+}
+
+/* Buttons: press feedback + arrow micro-motion already standard;
+   keep target sizes >=44px everywhere. */
+.btn {
+  min-height: 44px;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Focus rings on dark fields use lavender (contrast-gated) */
+.section-dark :focus-visible,
+.section-deep :focus-visible,
+.section-royal :focus-visible,
+.hero :focus-visible {
+  outline-color: #faf7ff;
+}
