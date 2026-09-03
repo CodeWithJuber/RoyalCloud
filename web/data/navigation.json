@@ -1,0 +1,180 @@
+{
+  "header": {
+    "groups": [
+      {
+        "text": "Hosting",
+        "links": [
+          {
+            "text": "SSD Shared Hosting",
+            "href": "/shared-hosting",
+            "icon": "server",
+            "description": "Fast SSD sites with free cPanel & SSL"
+          },
+          {
+            "text": "cPanel Hosting",
+            "href": "/cpanel-hosting",
+            "icon": "apps",
+            "description": "The world's favourite control panel"
+          },
+          {
+            "text": "Managed WordPress",
+            "href": "/managed-wordpress-hosting",
+            "icon": "wordpress",
+            "description": "Optimized, auto-updated WordPress"
+          },
+          {
+            "text": "Reseller Hosting",
+            "href": "/reseller-hosting",
+            "icon": "users",
+            "description": "White-label hosting for agencies"
+          },
+          {
+            "text": "KVM VPS Hosting",
+            "href": "/kvm-vps-hosting",
+            "icon": "cpu",
+            "description": "Full root access on pure SSD KVM"
+          },
+          {
+            "text": "CyberPanel VPS",
+            "href": "/cyberpanel-vps-hosting",
+            "icon": "terminal",
+            "description": "LiteSpeed-powered CyberPanel servers"
+          },
+          {
+            "text": "Managed Cloud",
+            "href": "/cloud-ssd-hosting",
+            "icon": "cloud",
+            "description": "Scalable cloud, fully managed for you"
+          },
+          {
+            "text": "Dedicated Servers",
+            "href": "/dedicated-servers",
+            "icon": "database",
+            "description": "Bare-metal power, custom configs"
+          }
+        ]
+      },
+      {
+        "text": "Technology",
+        "links": [
+          {
+            "text": "Top Speed Solutions",
+            "href": "/speed",
+            "icon": "bolt",
+            "description": "SSD RAID-10 + LiteSpeed performance"
+          },
+          {
+            "text": "Amazing Uptime",
+            "href": "/uptime",
+            "icon": "uptime",
+            "description": "99.99% SLA with proactive monitoring"
+          },
+          {
+            "text": "Datacenter",
+            "href": "/datacenter",
+            "icon": "globe",
+            "description": "Tier-grade facilities & network"
+          }
+        ]
+      }
+    ],
+    "links": [
+      { "text": "Domains", "href": "/domains" },
+      { "text": "Blog", "href": "/blog" },
+      { "text": "About", "href": "/about" },
+      { "text": "Contact", "href": "/contact" }
+    ],
+    "actions": [
+      {
+        "text": "Sign in",
+        "href": "https://my.royalclouds.net/clientarea.php",
+        "variant": "secondary"
+      },
+      { "text": "Get started", "href": "https://my.royalclouds.net/cart.php" }
+    ]
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Hosting",
+        "links": [
+          { "text": "SSD Shared Hosting", "href": "/shared-hosting" },
+          { "text": "cPanel Hosting", "href": "/cpanel-hosting" },
+          { "text": "Managed WordPress", "href": "/managed-wordpress-hosting" },
+          { "text": "Reseller Hosting", "href": "/reseller-hosting" },
+          { "text": "KVM VPS Hosting", "href": "/kvm-vps-hosting" },
+          { "text": "CyberPanel VPS", "href": "/cyberpanel-vps-hosting" },
+          { "text": "Managed Cloud", "href": "/cloud-ssd-hosting" },
+          { "text": "Dedicated Servers", "href": "/dedicated-servers" }
+        ]
+      },
+      {
+        "title": "Technology",
+        "links": [
+          { "text": "Top Speed Solutions", "href": "/speed" },
+          { "text": "Amazing Uptime", "href": "/uptime" },
+          { "text": "Datacenter", "href": "/datacenter" },
+          { "text": "Domain Names", "href": "/domains" },
+          {
+            "text": "Compare VPS Plans",
+            "href": "/compare-royalclouds-vps-plans"
+          }
+        ]
+      },
+      {
+        "title": "Company",
+        "links": [
+          { "text": "About Us", "href": "/about" },
+          { "text": "Testimonials", "href": "/testimonials" },
+          { "text": "Partners", "href": "/partners" },
+          { "text": "Affiliates", "href": "/affiliate" },
+          { "text": "Blog", "href": "/blog" },
+          { "text": "Contact", "href": "/contact" }
+        ]
+      },
+      {
+        "title": "Support",
+        "links": [
+          { "text": "Support Center", "href": "/support" },
+          {
+            "text": "Client Area",
+            "href": "https://my.royalclouds.net/clientarea.php"
+          },
+          {
+            "text": "Submit a Ticket",
+            "href": "https://my.royalclouds.net/submitticket.php"
+          },
+          {
+            "text": "Knowledge Base",
+            "href": "https://my.royalclouds.net/knowledgebase.php"
+          },
+          { "text": "Login", "href": "/login" }
+        ]
+      }
+    ],
+    "secondaryLinks": [
+      { "text": "Terms of Service", "href": "/terms-of-service" },
+      { "text": "Privacy Policy", "href": "/privacy-policy" },
+      { "text": "Cookie Policy", "href": "/cookie-policy" }
+    ],
+    "socialLinks": [
+      {
+        "ariaLabel": "X",
+        "icon": "tabler:brand-x",
+        "href": "https://twitter.com/royalclouds"
+      },
+      {
+        "ariaLabel": "Instagram",
+        "icon": "tabler:brand-instagram",
+        "href": "https://www.instagram.com/royalclouds"
+      },
+      {
+        "ariaLabel": "Facebook",
+        "icon": "tabler:brand-facebook",
+        "href": "https://www.facebook.com/royalclouds"
+      },
+      { "ariaLabel": "RSS", "icon": "tabler:rss", "href": "/rss.xml" }
+    ],
+    "footNote": "<span class=\"font-semibold\">Royal Clouds</span> · Premium SSD hosting · All rights reserved."
+  }
+}

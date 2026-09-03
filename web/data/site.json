@@ -1,0 +1,47 @@
+{
+  "name": "Royal Clouds",
+  "legalName": "Royal Clouds",
+  "tagline": "Premium & Speed-Optimized Hosting with 24/7 Friendly Support",
+  "promo": "Special offer: <b>up to 30% off</b> hosting & domains, plans from $1.99/mo",
+  "description": "Royal Clouds offers premium SSD web hosting, KVM VPS, managed WordPress, managed cloud and dedicated servers, built for speed with LiteSpeed, free SSL, and friendly 24/7 support.",
+  "shortDescription": "Premium SSD web hosting, KVM VPS & dedicated servers built for speed.",
+  "url": "https://royalclouds.net",
+  "logo": "/images/royalclouds-logo.png",
+  "logoWhite": "/images/royalclouds-logo-white.png",
+  "ogImage": "/images/og-default.png",
+  "startingPrice": "$1.99",
+  "rating": "9.6",
+  "ratingMax": "10",
+  "contact": {
+    "email": "support@royalclouds.net",
+    "salesEmail": "sales@royalclouds.net",
+    "phone": "",
+    "addressLocality": "India",
+    "addressCountry": "IN"
+  },
+  "portal": {
+    "base": "https://my.royalclouds.net",
+    "clientArea": "https://my.royalclouds.net/clientarea.php",
+    "login": "https://my.royalclouds.net/clientarea.php",
+    "register": "https://my.royalclouds.net/register.php",
+    "cart": "https://my.royalclouds.net/cart.php",
+    "domainChecker": "https://my.royalclouds.net/cart.php?a=add&domain=register",
+    "submitTicket": "https://my.royalclouds.net/submitticket.php",
+    "affiliates": "https://my.royalclouds.net/affiliates.php",
+    "knowledgebase": "https://my.royalclouds.net/knowledgebase.php"
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/royalclouds",
+    "twitter": "https://twitter.com/royalclouds",
+    "instagram": "https://www.instagram.com/royalclouds",
+    "github": "",
+    "linkedin": ""
+  },
+  "trustBadges": [
+    "99.99% Uptime SLA",
+    "Free SSL Certificate",
+    "30-Day Money-Back Guarantee",
+    "Instant Setup"
+  ],
+  "since": 2014
+}

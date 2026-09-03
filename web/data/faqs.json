@@ -1,0 +1,28 @@
+{
+  "general": [
+    {
+      "q": "Why should I choose Royal Clouds for hosting?",
+      "a": "Royal Clouds runs on pure SSD storage with LiteSpeed web servers and Cloudflare CDN, making sites up to 15x faster than traditional HDD hosting. Every plan includes free SSL, a 1-click app installer, daily backups and genuinely friendly 24/7 support, all backed by a 99.99% uptime SLA and a 30-day money-back guarantee."
+    },
+    {
+      "q": "Do you offer a money-back guarantee?",
+      "a": "Yes. All shared, WordPress and reseller hosting plans come with a 30-day money-back guarantee, so you can try Royal Clouds completely risk-free."
+    },
+    {
+      "q": "Can you migrate my existing website for free?",
+      "a": "Absolutely. Our team migrates your website, databases and emails from your current host for free, with no downtime. Just open a ticket after signing up and we'll handle the rest."
+    },
+    {
+      "q": "Is SSL included?",
+      "a": "Yes, every hosting plan includes a free SSL certificate that is automatically installed and renewed, so your visitors' data is always encrypted."
+    },
+    {
+      "q": "What payment methods do you accept?",
+      "a": "We accept all major credit and debit cards, UPI, net banking and popular online wallets through our secure billing portal. Invoices renew automatically and you can cancel anytime."
+    },
+    {
+      "q": "How fast is your support?",
+      "a": "Our hosting specialists are available 24/7/365 via live chat, email and support tickets, with most chats answered in under a couple of minutes."
+    }
+  ]
+}

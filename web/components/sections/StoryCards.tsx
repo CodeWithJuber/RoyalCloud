@@ -1,0 +1,52 @@
+export interface StoryItem {
+  tag: string;
+  metric: string;
+  metricLabel: string;
+  quote: string;
+  name: string;
+  site?: string;
+}
+
+interface StoryCardsProps {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  items: StoryItem[];
+}
+
+export function StoryCards({ eyebrow, title, subtitle, items }: StoryCardsProps) {
+  return (
+    <section className="section section-tint stories">
+      <div className="site-shell">
+        {(eyebrow || title || subtitle) && (
+          <header className="section-header center" data-reveal>
+            {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+            {title && <h2>{title}</h2>}
+            {subtitle && <p className="lede">{subtitle}</p>}
+          </header>
+        )}
+        <div className="grid grid-3">
+          {items.map((story) => (
+            <article key={story.name} className="card story-card" data-reveal>
+              <span className="chip chip-save story-tag">{story.tag}</span>
+              <div className="story-metric">
+                <strong>{story.metric}</strong>
+                <small>{story.metricLabel}</small>
+              </div>
+              <blockquote>&ldquo;{story.quote}&rdquo;</blockquote>
+              <footer className="story-footer">
+                <span className="avatar-chip" aria-hidden="true">
+                  {story.name.slice(0, 1)}
+                </span>
+                <span>
+                  <b>{story.name}</b>
+                  {story.site && <small>{story.site}</small>}
+                </span>
+              </footer>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
