@@ -1,0 +1,92 @@
+{
+  "id": "cloud",
+  "name": "Managed Cloud Hosting",
+  "slug": "managed-digitalocean-cloud-hosting",
+  "icon": "cloud",
+  "eyebrow": "Managed Cloud",
+  "title": "Fully Managed DigitalOcean Cloud Hosting",
+  "subtitle": "Get the speed and scalability of DigitalOcean droplets with none of the sysadmin work. We deploy, secure, monitor and manage your cloud server 24/7.",
+  "currency": "$",
+  "billingNote": "We manage the server, you ship the project. Scale up in one click.",
+  "tiers": [
+    {
+      "name": "Cloud S",
+      "price": "15",
+      "period": "/mo",
+      "popular": false,
+      "summary": "Managed entry-level droplet.",
+      "cta": "Launch",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=41",
+      "features": [
+        "1 vCPU Core",
+        "2 GB RAM",
+        "50 GB SSD Storage",
+        "2 TB Transfer",
+        "Fully Managed",
+        "Free Migration",
+        "24/7 Monitoring"
+      ],
+      "priceAnnual": "12"
+    },
+    {
+      "name": "Cloud M",
+      "price": "29",
+      "period": "/mo",
+      "popular": true,
+      "summary": "Most popular managed cloud plan.",
+      "cta": "Launch",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=42",
+      "features": [
+        "2 vCPU Cores",
+        "4 GB RAM",
+        "80 GB SSD Storage",
+        "4 TB Transfer",
+        "Fully Managed",
+        "Free Migration",
+        "24/7 Monitoring"
+      ],
+      "priceAnnual": "23"
+    },
+    {
+      "name": "Cloud L",
+      "price": "55",
+      "period": "/mo",
+      "popular": false,
+      "summary": "For scaling production apps.",
+      "cta": "Launch",
+      "ctaUrl": "https://my.royalclouds.net/cart.php?a=add&pid=43",
+      "features": [
+        "4 vCPU Cores",
+        "8 GB RAM",
+        "160 GB SSD Storage",
+        "5 TB Transfer",
+        "Fully Managed",
+        "Free Migration",
+        "24/7 Monitoring"
+      ],
+      "priceAnnual": "44"
+    }
+  ],
+  "highlights": [
+    {
+      "icon": "cloud",
+      "title": "Fully Managed",
+      "text": "We handle OS, security patches, monitoring and updates so you don't have to."
+    },
+    {
+      "icon": "scale",
+      "title": "Scale in One Click",
+      "text": "Resize your cloud server up or down as your traffic grows."
+    },
+    {
+      "icon": "shield",
+      "title": "Managed Security",
+      "text": "Firewall, malware scanning and automated hardening included."
+    },
+    {
+      "icon": "backup",
+      "title": "Remote Backups",
+      "text": "Automatic off-site backups with one-click disaster recovery."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "astryx": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs",
+    "theme:build": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs theme build theme/royal.theme.ts -o app/royal-theme.css --icons-specifier ../theme/icons",
+    "theme:check": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs theme build theme/royal.theme.ts -o app/royal-theme.css --icons-specifier ../theme/icons --check",
+    "prebuild": "npm run theme:build",
+    "test": "vitest run",
+    "check:cms": "node scripts/verify-cms.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check": "npm run theme:check && npx tsc --noEmit && npm run lint && npm test && npm run check:cms && npm run check:contrast"
+  },
+  "dependencies": {
+    "@astryxdesign/core": "^0.5.2",
+    "@astryxdesign/theme-neutral": "^0.5.2",
+    "@stylexjs/stylex": "^0.19.0",
+    "@types/js-yaml": "^4.0.9",
+    "js-yaml": "^5.4.1",
+    "lucide-react": "^1.39.0",
+    "marked": "^18.0.11",
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@astryxdesign/cli": "^0.5.2",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.4",
+    "typescript": "^5",
+    "vitest": "^4.1.11"
+  }
+}
