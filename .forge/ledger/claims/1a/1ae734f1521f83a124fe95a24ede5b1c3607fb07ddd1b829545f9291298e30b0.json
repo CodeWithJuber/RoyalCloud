@@ -1,0 +1,1 @@
+{"body":{"id":"D-0028","text":"The announcement bar renders OUTSIDE .site-header so only the header bar sticks — a sticky element is confined to its parent box, so keeping the notice inside pinned it too and cost ~40px of every scrolled phone screen"},"kind":"decision","scope":{"level":"repo"},"v":1}

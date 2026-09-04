@@ -21,6 +21,8 @@ const { default: AxeBuilder } = await import("@axe-core/playwright");
 
 const BASE = process.env.BASE_URL ?? "http://localhost:3000";
 const OUT = "shots/audit";
+/* A route that must not exist, so not-found.tsx is audited like any page. */
+const NOT_FOUND_PROBE = "/definitely-not-a-page";
 
 /* Every content route, so a fix is proven site-wide and not just on the
    pages that happened to be looked at. */
@@ -51,7 +53,7 @@ const DEFAULT_PAGES = [
   ["landing-distro", "/ubuntu-vps"],
   ["legal-terms", "/terms-of-service"],
   ["legal-privacy", "/privacy-policy"],
-  ["404", "/definitely-not-a-page"],
+  ["404", NOT_FOUND_PROBE],
 ];
 
 /* Per-step loop; --full adds the rest of the master matrix. */
@@ -157,6 +159,19 @@ async function run() {
       if (msg.type() === "error") consoleErrors.push(`${width}px ${msg.text().slice(0, 160)}`);
     });
     page.on("pageerror", (err) => consoleErrors.push(`${width}px pageerror: ${err.message.slice(0, 160)}`));
+    /* "Failed to load resource: 404" in the console never names the resource,
+       and an off-host failure (the WHMCS redirect targets, unreachable from
+       CI) reads the same as a broken local asset. Record the request itself. */
+    page.on("response", (res) => {
+      /* The 404 route is a deliberate probe — its 404 is the assertion, not a
+         fault, so it would otherwise fill the report on every run. */
+      if (res.status() >= 400 && !res.url().endsWith(NOT_FOUND_PROBE)) {
+        consoleErrors.push(`${width}px HTTP ${res.status()} ${res.url()}`);
+      }
+    });
+    page.on("requestfailed", (req) => {
+      consoleErrors.push(`${width}px ${req.failure()?.errorText ?? "failed"} ${req.url()}`);
+    });
 
     for (const [name, path] of PAGES) {
       await goto(page, BASE + path);

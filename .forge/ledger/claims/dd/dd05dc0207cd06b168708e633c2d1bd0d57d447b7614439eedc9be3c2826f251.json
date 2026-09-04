@@ -1,0 +1,1 @@
+{"body":{"id":"D-0029","text":"Hero columns are repeat(auto-fit, minmax(min(100%, 26rem), 1fr)) plus @container shell for the art, not a viewport breakpoint — auto-fit collapses the vacated track so no width leaves half the band empty, and 917px 'desktop mode' is judged on the shell, not the viewport"},"kind":"decision","scope":{"level":"repo"},"v":1}

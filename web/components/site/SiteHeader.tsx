@@ -60,7 +60,7 @@ export function SiteHeader() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [announceVisible, setAnnounceVisible] = useState(true);
-  const headerRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -71,6 +71,14 @@ export function SiteHeader() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
+    /* The sheet starts flush under the bar wherever the bar currently is: at
+       the top of the page that is below the announcement, once scrolled the
+       announcement is gone and the bar is at 0. The page cannot scroll while
+       the sheet is open, so reading it once on open stays accurate. */
+    if (mobileOpen && barRef.current) {
+      const bottom = Math.max(0, Math.round(barRef.current.getBoundingClientRect().bottom));
+      document.documentElement.style.setProperty("--site-header-bottom", `${bottom}px`);
+    }
     return () => {
       document.body.style.overflow = "";
     };
@@ -87,11 +95,12 @@ export function SiteHeader() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  /* Publish the rendered header height as --site-header-h. Sticky elements,
-     the drawer and anchor scroll-padding sit under it; the announcement bar
-     can be dismissed and the bar shrinks on phones, so it is measured. */
+  /* Publish the *sticky* bar's height as --site-header-h. Only .header-bar
+     sticks — the announcement scrolls away — so sub-nav offsets and anchor
+     scroll-padding must clear the bar alone, not the dismissed-or-not
+     announcement above it. The bar shrinks on phones, so it is measured. */
   useEffect(() => {
-    const el = headerRef.current;
+    const el = barRef.current;
     if (!el || typeof ResizeObserver === "undefined") return;
     const root = document.documentElement;
     const publish = () =>
@@ -110,8 +119,12 @@ export function SiteHeader() {
     setMobileOpen(false);
   };
 
+  /* The announcement sits OUTSIDE .site-header on purpose: a sticky element is
+     confined to its parent's box, so keeping it in the wrapper would let the
+     bar scroll away with it. As a sibling it scrolls off, the wrapper stays
+     pinned, and the bar keeps ~40px of every screen it used to hold. */
   return (
-    <div className={`site-header ${scrolled ? "is-scrolled" : ""}`} ref={headerRef}>
+    <>
       {announcement && announceVisible && (
         <aside className="announcement" aria-label="Announcement">
           <p>
@@ -136,7 +149,8 @@ export function SiteHeader() {
         </aside>
       )}
 
-      <header className="header-bar">
+      <div className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+      <header className="header-bar" ref={barRef}>
         <div className="header-inner">
           <Link className="brand" href="/" aria-label="Royal Clouds home" onClick={closeAll}>
             {/* Intrinsic size, not the rendered size: CSS sizes it by height,
@@ -246,6 +260,7 @@ export function SiteHeader() {
           </div>
         </nav>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

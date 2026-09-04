@@ -4,6 +4,7 @@ import { HeroArt } from "../art/HeroArt";
 import { Icon } from "../Icon";
 import { RatingBadge } from "../RatingBadge";
 import { INTENTS, PLAN_TO_INTENT, finderHref } from "@/lib/intents";
+import { emphasize } from "@/lib/emphasize";
 
 export interface CtaLink {
   text: string;
@@ -109,8 +110,16 @@ function HeroBadges({ badges }: { badges?: string[] }) {
   );
 }
 
-/* Home hero: Bluehost composition — 2-col (copy + scene), domain search card
-   embedded in the copy column, trust tile row under. */
+/**
+ * Home hero: hosting first. Headline, proof, then the hosting CTA pair —
+ * no domain field. Domains stay reachable from the header and the /domains
+ * route; leading with a search box asked the visitor to name a domain before
+ * the page had said what it sells.
+ *
+ * The offer sits with the CTA it qualifies rather than below the chips, and
+ * `art` / `plan` are honoured so the 36 landing pages that share this hero
+ * stop discarding their authored scene.
+ */
 function HomeHero({
   eyebrow,
   title,
@@ -119,53 +128,26 @@ function HomeHero({
   primaryCta,
   secondaryCta,
   badges,
-}: Omit<HeroProps, "variant" | "art">) {
+  art,
+  plan,
+}: Omit<HeroProps, "variant">) {
   return (
     <section className="hero hero-home" aria-labelledby="hero-title">
       <div className="site-shell hero-home-grid" data-reveal>
         <div className="hero-copy">
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-          <h1 id="hero-title" dangerouslySetInnerHTML={{ __html: title }} />
+          <h1 id="hero-title">{emphasize(title)}</h1>
           {subtitle && <p className="hero-lede">{subtitle}</p>}
 
           <RatingBadge className="hero-rating" />
 
-          <form
-            className="hero-search"
-            method="get"
-            action="https://my.royalclouds.net/cart.php"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <input type="hidden" name="a" value="add" />
-            <input type="hidden" name="domain" value="register" />
-            <label htmlFor="hero-domain" className="sr-only">Domain name</label>
-            <Icon name="search" size={18} className="hero-search-icon" />
-            <input
-              id="hero-domain"
-              name="query"
-              type="text"
-              inputMode="url"
-              autoComplete="off"
-              spellCheck={false}
-              placeholder="Find your domain name…"
-              required
-            />
-            <button className="btn btn-primary" type="submit">
-              Search
-              <span className="btn-arrow" aria-hidden="true">↗</span>
-            </button>
-          </form>
-
-          <HeroActions primaryCta={primaryCta} secondaryCta={secondaryCta} />
-          <HeroIntents />
           {offer && <p className="hero-offer">{offer}</p>}
+          <HeroActions primaryCta={primaryCta} secondaryCta={secondaryCta} />
+          {plan ? <HelpMeChoose plan={plan} /> : <HeroIntents />}
           <HeroBadges badges={badges} />
         </div>
 
-        <div className="hero-art">
-          <HeroArt />
-        </div>
+        <div className="hero-art">{art ?? <HeroArt />}</div>
       </div>
     </section>
   );
@@ -193,6 +175,8 @@ export function Hero({
         primaryCta={primaryCta}
         secondaryCta={secondaryCta}
         badges={badges}
+        art={art}
+        plan={plan}
       />
     );
   }
@@ -202,7 +186,7 @@ export function Hero({
       <div className={`site-shell hero-inner${art ? "" : " hero-no-art"}`} data-reveal>
         <div className="hero-copy">
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-          <h1 id="hero-title" dangerouslySetInnerHTML={{ __html: title }} />
+          <h1 id="hero-title">{emphasize(title)}</h1>
           {subtitle && <p className="hero-lede">{subtitle}</p>}
           {offer && <p className="hero-offer">{offer}</p>}
           <HeroActions primaryCta={primaryCta} secondaryCta={secondaryCta} />

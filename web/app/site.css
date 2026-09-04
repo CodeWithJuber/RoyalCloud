@@ -314,6 +314,8 @@
    Site header — announcement bar + sticky nav + mega menu
    ============================================================ */
 
+/* Holds the bar and the drawer only — the announcement is a sibling above it,
+   so it scrolls away while this stays pinned. */
 .site-header {
   position: sticky;
   top: 0;
@@ -868,14 +870,9 @@
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
 }
-.hero-simple .hero-inner,
-.hero-home .hero-inner {
+.hero-simple .hero-inner {
   grid-template-columns: 1fr;
   max-width: 52rem;
-}
-.hero-home .hero-inner {
-  text-align: center;
-  margin-inline: auto;
 }
 
 .hero .eyebrow {
@@ -909,9 +906,6 @@
   font-size: var(--text-large-size);
   line-height: 1.6;
 }
-.hero-home .hero-lede {
-  margin-inline: auto;
-}
 
 .hero-offer {
   display: inline-block;
@@ -936,9 +930,6 @@
   gap: 0.75rem;
   margin-top: 2rem;
 }
-.hero-home .hero-actions {
-  justify-content: center;
-}
 
 .hero-badges {
   display: flex;
@@ -947,9 +938,6 @@
   margin: 2rem 0 0;
   padding: 0;
   list-style: none;
-}
-.hero-home .hero-badges {
-  justify-content: center;
 }
 .hero-badges li {
   display: inline-flex;
@@ -2615,63 +2603,19 @@ a.feature-card:hover .feature-more {
 }
 
 /* ============================================================
-   Home hero — 2-col composition with embedded domain search
+   Home hero — hosting-first copy column beside decorative art
    ============================================================ */
 
+/* Two columns only while both can hold a 26rem measure; auto-fit collapses the
+   second track rather than leaving half the band blank once the art is gone,
+   so there is no width where the copy sits in a squeezed half. */
 .hero-home-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
   text-align: left;
 }
-.hero-home-grid .hero-actions {
-  justify-content: flex-start;
-}
-.hero-home-grid .hero-badges {
-  justify-content: flex-start;
-}
-
-.hero-search {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.75rem;
-  padding: 0.5rem;
-  max-width: 30rem;
-  border-radius: 999px;
-  background: #ffffff;
-  box-shadow: var(--shadow-med);
-}
-.hero-search-icon {
-  margin-left: 0.75rem;
-  color: #595b68;
-  flex-shrink: 0;
-}
-.hero-search input {
-  flex: 1;
-  min-width: 0;
-  min-height: 2.9rem;
-  border: 0;
-  background: transparent;
-  color: #2f1c6a;
-  font-size: var(--font-size-base);
-  font-weight: 600;
-}
-.hero-search input::placeholder {
-  color: var(--color-text-secondary);
-}
-.hero-search input:focus {
-  outline: none;
-}
-.hero-search:focus-within {
-  outline: 2px solid var(--rc-gold);
-  outline-offset: 3px;
-}
-.hero-search .btn {
-  min-height: 2.9rem;
-}
-
 .hero-no-art .hero-inner,
 .hero-inner.hero-no-art {
   grid-template-columns: 1fr;
@@ -2689,24 +2633,14 @@ a.feature-card:hover .feature-more {
   border: 0;
 }
 
-@media (max-width: 900px) {
-  .hero-home-grid {
-    grid-template-columns: 1fr;
-  }
+/* The art is decorative. Drop it once the shell is too narrow to give both
+   tracks a real 26rem measure — measured on the shell, not the viewport, so a
+   917px "desktop mode" phone gets the full width for copy instead of a
+   squeezed pair. auto-fit then collapses the vacated track; nothing is left
+   holding empty space. */
+@container shell (max-width: 55rem) {
   .hero-home-grid .hero-art {
     display: none;
-  }
-  .hero-search {
-    border-radius: 20px;
-    flex-wrap: wrap;
-  }
-  .hero-search input {
-    flex: 1 1 100%;
-    padding-left: 0.5rem;
-  }
-  .hero-search .btn {
-    width: 100%;
-    justify-content: space-between;
   }
 }
 
@@ -3252,21 +3186,11 @@ a.feature-card:hover .feature-more {
     height: 1.9rem;
   }
 
-  /* Domain search stays a single compact pill — icon-only submit */
-  .hero-search,
+  /* The /#domains search stays a single compact pill. */
   .domain-row {
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-  }
-  .hero-search .btn {
-    width: auto;
-    min-width: 48px;
-    padding: 0 0.5rem 0 1rem;
-    justify-content: center;
-  }
-  .hero-search .btn .btn-arrow {
-    display: none;
   }
   .domain-row input {
     min-height: 3rem;
@@ -4156,7 +4080,7 @@ a.os-chip:focus-visible {
    ============================================================ */
 
 /* The drawer is a fixed layer inside the sticky header's stacking context;
-   the bars must sit above it so the logo, currency and close stay usable. */
+   the bar must sit above it so the logo, currency and close stay usable. */
 .announcement,
 .header-bar {
   position: relative;
@@ -4248,9 +4172,11 @@ a.os-chip:focus-visible {
   line-height: 1.35;
 }
 
-/* Drawer: starts under the header bar, uses the full shell width */
+/* Drawer: starts under the header bar wherever it currently sits — below the
+   announcement at the top of the page, at 0 once the announcement has scrolled
+   away. SiteHeader publishes the live bottom edge when the sheet opens. */
 .mobile-panel {
-  top: var(--site-header-h);
+  top: var(--site-header-bottom, var(--site-header-h));
   padding: 1.25rem 0 2.5rem;
 }
 .mobile-nav {
@@ -5241,5 +5167,40 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
     width: 100%;
     min-height: 3rem;
     padding-inline: 0.75rem;
+  }
+}
+
+/* ============================================================
+   Home hero on phones — one screen, one job
+   ============================================================ */
+
+/* The close button stays a 28px dot but takes a 44px tap: growing the box
+   would push the notice text into a third line for a control nobody aims at.
+   (WCAG 2.2 SC 2.5.8 asks 24×24; this gives the comfort target as hit area.) */
+.announcement-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 640px) {
+  /* The offer is a line of reassurance, not a chip: at this width the pill
+     wraps to two rows and spends 30px of the fold on its own border. */
+  .hero-home .hero-offer {
+    display: block;
+    padding-inline: 0;
+    padding-block: 0;
+    border: 0;
+    background: none;
+  }
+  /* Every badge here is repeated in the trust bar immediately below (and
+     "SSD RAID-10" leads the lede), so on one-column screens this is 74px of
+     duplicate text between the CTA and the next section. */
+  .hero-home .hero-badges {
+    display: none;
   }
 }

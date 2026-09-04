@@ -1,0 +1,1 @@
+{"body":{"id":"D-0030","text":"--site-header-h measures .header-bar alone now that the announcement scrolls away; the drawer uses --site-header-bottom, published from the bar's live rect when the sheet opens"},"kind":"decision","scope":{"level":"repo"},"v":1}

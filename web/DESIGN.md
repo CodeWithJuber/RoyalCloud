@@ -120,7 +120,7 @@ Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 mat
 - Visible `:focus-visible` on every interactive element: violet on light grounds, lavender (`#faf7ff`) on night/violet bands, gold only on the violet CTA button.
 - Tap targets ≥24px (dots 24px, chips and sub-nav pills ≥36px, buttons ≥44px).
 - Native semantics first: `<details>` accordion, `<table>` with `scope`, `<nav aria-label>`, `role="region"` + `aria-roledescription="carousel"`, `aria-live` for step and slide announcements, `aria-current` for the active pill.
-- Mobile above-the-fold: at ≤640px the hero's `.hero-search` / `.domain-row` and `.hero-actions .btn-primary` must sit within the first 844px (`scripts/qa-shots.mjs` asserts it; keep those class names).
+- Mobile above-the-fold: at ≤640px `.hero-actions .btn-primary` must sit within the first 844px (`scripts/qa-shots.mjs` asserts it; keep that class name). The home hero leads with the hosting CTA pair — no domain field; `.domain-row` lives in the mid-page `#domains` section and on `/domains`.
 
 ---
 

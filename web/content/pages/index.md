@@ -12,17 +12,17 @@ newsletter: true
 sections:
   - type: hero
     variant: gradient
-    title: Experience Premium & Speed-Optimized Hosting with <em>24/7 Friendly Support</em>
+    title: Premium SSD hosting with <em>24/7 human support</em>
     subtitle: >-
-      Up to 30% off domains and hosting. Free SSL certificate and a
-      money-back guarantee on every plan.
-    offer: Starting from $1.99/month
+      SSD RAID-10 with LiteSpeed, free migration and free SSL on every plan —
+      and real engineers on chat, day or night.
+    offer: 30-day money-back guarantee · Free SSL
     primaryCta:
-      text: Get started at $1.99/mo
-      href: /shared-hosting
-    secondaryCta:
-      text: View plans
+      text: See hosting plans
       href: "#plans"
+    secondaryCta:
+      text: Help me choose
+      href: "#planfinder"
     badges:
       - SSD RAID-10
       - Free SSL
