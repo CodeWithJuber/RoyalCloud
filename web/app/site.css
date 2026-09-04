@@ -116,8 +116,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  min-height: 3rem;
-  padding: 0.35rem 0.45rem 0.35rem 1.5rem;
+  min-height: var(--spacing-11);
+  padding: 0.5rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 999px;
   font-size: var(--font-size-base);
@@ -980,13 +980,6 @@
     min-height: 0;
   }
 }
-@media (max-width: 640px) {
-  .hero-actions .btn {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
-
 /* ============================================================
    Plan cards — the money component
    ============================================================ */
@@ -1509,13 +1502,6 @@ a.feature-card:hover .feature-more {
   gap: 0.75rem;
   margin-top: 2rem;
 }
-@media (max-width: 640px) {
-  .cta-actions .btn {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
-
 /* ============================================================
    OsStrip — OS chips with colored letter marks
    ============================================================ */
@@ -2421,9 +2407,6 @@ a.feature-card:hover .feature-more {
   font-size: var(--font-size-base);
   box-shadow: none;
 }
-.mobile-cta .btn-secondary {
-  flex: 0 0 38%;
-}
 @media (max-width: 768px) {
   .mobile-cta {
     display: flex;
@@ -3084,10 +3067,6 @@ a.feature-card:hover .feature-more {
   .finder-features {
     grid-template-columns: 1fr;
   }
-  .finder-actions .btn {
-    width: 100%;
-    justify-content: space-between;
-  }
 }
 
 /* ============================================================
@@ -3267,12 +3246,6 @@ a.feature-card:hover .feature-more {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.6rem;
     margin-top: 1.5rem;
-  }
-  .hero-actions .btn {
-    width: auto;
-    justify-content: space-between;
-    padding-left: 1.1rem;
-    min-height: 48px;
   }
   .hero-actions .btn .btn-arrow {
     width: 1.9rem;
@@ -5176,5 +5149,97 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   }
   .header-inner {
     gap: 0.5rem;
+  }
+}
+
+/* ============================================================
+   Button system — three sizes, one policy
+   md (44px) is the default floor, lg (52px) is every conversion row, sm
+   (36px) is table and chip context. Size is driven by context so no call
+   site carries a size class, and the five competing phone rules that used
+   to fight over width are gone.
+   ============================================================ */
+
+/* The arrow chip is the only reason a button is ever asymmetric. */
+.btn:has(.btn-arrow) {
+  padding-inline-end: 0.45rem;
+}
+
+/* lg — conversion rows */
+.hero-actions .btn,
+.cta-actions .btn,
+.plan-card .btn,
+.plan-enterprise .btn,
+.finder-actions .btn,
+.domain-row .btn,
+.mobile-cta .btn {
+  min-height: 3.25rem;
+  padding-inline: 1.75rem;
+  font-size: var(--font-size-base);
+}
+.hero-actions .btn:has(.btn-arrow),
+.cta-actions .btn:has(.btn-arrow),
+.plan-card .btn:has(.btn-arrow),
+.plan-enterprise .btn:has(.btn-arrow),
+.finder-actions .btn:has(.btn-arrow),
+.domain-row .btn:has(.btn-arrow),
+.mobile-cta .btn:has(.btn-arrow) {
+  padding-inline-end: 0.5rem;
+}
+
+/* sm — dense contexts */
+.compare-table .btn,
+.showcase-panel .btn {
+  min-height: var(--spacing-9);
+  padding-inline: 1rem;
+  font-size: var(--text-supporting-size);
+}
+
+/* Peers in a CTA row are equal citizens: same height, same weight, and on
+   phones the same full width, stacked. `space-between` used to strand up to
+   175px of dead pill between a short label and its chip. */
+.cta-row,
+.hero-actions,
+.cta-actions,
+.finder-actions,
+.mobile-actions {
+  align-items: stretch;
+}
+.btn {
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btn-block {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .hero-actions,
+  .cta-actions,
+  .finder-actions,
+  .mobile-actions,
+  .cta-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+  .hero-actions .btn,
+  .cta-actions .btn,
+  .finder-actions .btn,
+  .mobile-actions .btn,
+  .cta-row .btn {
+    width: 100%;
+  }
+  /* The sticky bar keeps its two peers side by side — it is the one row
+     where stacking would eat the viewport. */
+  .mobile-cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.65rem;
+  }
+  .mobile-cta .btn {
+    width: 100%;
+    min-height: 3rem;
+    padding-inline: 0.75rem;
   }
 }
