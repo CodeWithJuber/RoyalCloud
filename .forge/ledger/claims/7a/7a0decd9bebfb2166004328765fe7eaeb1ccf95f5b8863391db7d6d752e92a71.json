@@ -1,0 +1,1 @@
+{"body":{"id":"D-0032","text":"Plan card alignment is subgrid across rail -> slide -> card, replacing the .plan-summary min-height: 2.6em guess; the card's container-type was moved to .plan-body because inline-size containment silently disqualifies an element from being a subgrid"},"kind":"decision","scope":{"level":"repo"},"v":1}

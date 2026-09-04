@@ -98,25 +98,36 @@ export function Rail({
 
   const Noun = itemNoun.charAt(0).toUpperCase() + itemNoun.slice(1);
 
+  /* CSS decides whether this is a rail or a plain grid at a given width, so
+     the carousel semantics — and the rail's tab stop — are attached only when
+     it genuinely scrolls. Announcing "carousel, slide 1 of 5" over a static
+     three-up grid describes a widget that is not there. */
+  const isCarousel = overflowing;
+
   return (
     <div
       className={className}
       role="region"
-      aria-roledescription="carousel"
+      aria-roledescription={isCarousel ? "carousel" : undefined}
       aria-label={label}
-      data-controls={overflowing ? "true" : "false"}
+      data-controls={isCarousel ? "true" : "false"}
     >
       {/* Divs, not ul/li: each slide needs role="group" to carry
           aria-roledescription="slide", and a role on an <li> strips the
           list semantics its <ul> parent requires. */}
-      <div className={railClassName} ref={railRef} tabIndex={0} aria-label={`${label} — scroll sideways`}>
+      <div
+        className={railClassName}
+        ref={railRef}
+        tabIndex={isCarousel ? 0 : undefined}
+        aria-label={isCarousel ? `${label} — scroll sideways` : undefined}
+      >
         {children.map((child, i) => (
           <div
             key={keys?.[i] ?? i}
             className={slideClassName}
-            role="group"
-            aria-roledescription="slide"
-            aria-label={`${i + 1} of ${count}`}
+            role={isCarousel ? "group" : undefined}
+            aria-roledescription={isCarousel ? "slide" : undefined}
+            aria-label={isCarousel ? `${i + 1} of ${count}` : undefined}
             data-index={i}
             data-reveal={reveal ? "" : undefined}
             style={reveal ? ({ "--reveal-i": i } as CSSProperties) : undefined}

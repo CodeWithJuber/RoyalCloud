@@ -1017,25 +1017,27 @@
   font-size: var(--font-size-sm);
 }
 
-.plan-grid {
+/* One contract for every deck (3, 4, 5 and 6 tiers all ship): a card is never
+   narrower than 300px, and the column count follows from the shell instead of
+   a hardcoded per-deck number. At the 1200px shell that is three up, so the
+   4-tier deck stops rendering 285px columns. */
+.plan-rail {
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-.plan-grid[data-cols="3"] {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.plan-grid[data-cols="4"] {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-.plan-grid[data-cols="5"] {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  /* Four tracks per card row — the last one absorbs the slack so every card
+     in a row ends level. The list repeats for the second row of a 4-up deck. */
+  grid-auto-rows: auto auto auto 1fr;
 }
 
+/* Four rows — head, price, CTA, body — in every state, so the subgrid below
+   has something consistent to inherit. The query container is .plan-body, not
+   the card: an element with inline-size containment cannot be a subgrid, and
+   putting it here silently dropped the card out of the chain. */
 .plan-card {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
   gap: 0;
   padding: 1.75rem;
   border: 1px solid var(--color-border);
@@ -1159,19 +1161,47 @@
   text-align: center;
 }
 
-@media (max-width: 1100px) {
-  .plan-grid[data-cols="5"],
-  .plan-grid[data-cols="4"] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+/* Tablets: a snap rail, two cards at a time. Three or more tiers in a 730px
+   shell gave 225px columns — narrower than a phone's single card. The owner
+   chose the rail over a squeezed grid; Rail supplies prev/next, dots and the
+   live "n of N", and shows them only because it measures the overflow. */
+@media (min-width: 641px) and (max-width: 1023px) {
+  /* Still a grid, so the subgrid chain survives and the two visible cards
+     stay aligned — columns simply flow sideways instead of wrapping. */
+  .plan-rail {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 1.25rem) / 2);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* Room for the "Most Popular" badge (-0.85rem) and the 4px hover lift:
+       overflow-x on a box clips the other axis too. */
+    padding-block: 1.25rem 0.75rem;
+    margin-block: -1.25rem -0.75rem;
+    scrollbar-width: thin;
+  }
+  .plan-slide {
+    scroll-snap-align: start;
   }
 }
-@media (max-width: 640px) {
-  .plan-grid,
-  .plan-grid[data-cols="3"],
-  .plan-grid[data-cols="4"],
-  .plan-grid[data-cols="5"] {
-    grid-template-columns: 1fr;
+
+/* Centre a lone card on the last row rather than letting it hug the left
+   edge — a 4-tier deck is three up plus one. */
+@media (min-width: 1024px) {
+  .plan-slide:last-child:nth-child(3n + 1) {
+    grid-column: 2;
   }
+}
+
+.plan-rail-controls {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.plan-carousel[data-controls="true"] .plan-rail-controls {
+  display: flex;
 }
 
 /* ============================================================
@@ -3213,21 +3243,12 @@ a.feature-card:hover .feature-more {
     justify-content: flex-start;
   }
 
-  /* Grids densify instead of stacking tall */
-  /* auto-fit, not a hard 2-up: at 320px two 10rem tracks cannot fit the
-     296px shell, so the row collapses to one column instead of inflating
-     past the viewport. */
-  .grid-2,
-  .grid-3,
-  .grid-4 {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), minmax(0, 1fr)));
-  }
-  .plan-grid,
-  .plan-grid[data-cols="3"],
-  .plan-grid[data-cols="4"],
-  .plan-grid[data-cols="5"] {
-    grid-template-columns: 1fr;
-  }
+  /* .grid-2/3/4 collapse to one column in the ≤640 block near the top of this
+     file — the duplicate that used to sit here carried a nested minmax(),
+     which is invalid CSS, so it never applied. Its only two users
+     (StoryCards, SecurityLayers) are prose cards that want the full width
+     here, not two 10rem columns.
+     The plan deck needs nothing either: its 300px floor collapses it. */
 
   /* Sections run tighter */
   .section {
@@ -3248,13 +3269,34 @@ a.feature-card:hover .feature-more {
    Alignment — shared baselines inside card rows
    ============================================================ */
 
-/* Plan cards: name+summary hold a fixed band so price/CTA/features align
-   across a row regardless of copy length. */
-.plan-summary {
-  min-height: 2.6em;
+/* The summary's `min-height: 2.6em` band is gone: it was a guess at "two
+   lines" that could not align a three-line summary against a one-line one,
+   and the subgrid below does the real job at every width where cards sit
+   side by side. */
+
+/* Every card in a row shares the deck's four tracks, so head, price and CTA
+   land on the same lines however long each tier's copy runs — in the rail and
+   in the grid alike. This is what the min-height band could only approximate:
+   it cannot align a three-line summary against a one-line one, subgrid can.
+   The chain has to be unbroken — rail -> slide -> card — because a subgrid
+   passes its contents' sizes up to the tracks it borrows. */
+.plan-slide,
+.plan-card {
+  grid-row: span 4;
+  grid-template-rows: subgrid;
 }
-.plan-card .plan-pricing {
-  margin-top: auto;
+.plan-slide {
+  display: grid;
+}
+
+/* The body is the query container: how many spec tiles fit is a question
+   about the card's own width, not the viewport, so one rule covers the phone
+   column, the tablet rail and the desktop grid. The query itself lives beside
+   .plan-specs further down — @container adds no specificity, so it has to
+   come after the rule it overrides. */
+.plan-body {
+  container-type: inline-size;
+  container-name: plan;
 }
 
 /* Feature cards: "learn more" link pins to the bottom of each card. */
@@ -3766,7 +3808,10 @@ html {
 .testi-carousel[data-controls="true"] .testi-controls {
   display: flex;
 }
-.testi-nav {
+/* One set of rail controls: the testimonial carousel and the plan deck run
+   the same Rail component, so they get the same buttons and dots. */
+.testi-nav,
+.plan-rail-nav {
   display: grid;
   place-items: center;
   width: 2.75rem;
@@ -3781,26 +3826,31 @@ html {
     background-color 0.2s ease,
     opacity 0.2s ease;
 }
-.testi-nav:hover:not(:disabled) {
+.testi-nav:hover:not(:disabled),
+.plan-rail-nav:hover:not(:disabled) {
   border-color: var(--color-accent);
   background: var(--rc-violet-050);
 }
-.testi-nav:disabled {
+.testi-nav:disabled,
+.plan-rail-nav:disabled {
   opacity: 0.4;
   cursor: default;
 }
-.testi-nav:focus-visible {
+.testi-nav:focus-visible,
+.plan-rail-nav:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
-.testi-dots {
+.testi-dots,
+.plan-rail-dots {
   display: flex;
   gap: 0.35rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.testi-dots button {
+.testi-dots button,
+.plan-rail-dots button {
   display: grid;
   place-items: center;
   width: 1.5rem;
@@ -3810,7 +3860,8 @@ html {
   background: transparent;
   cursor: pointer;
 }
-.testi-dots button::before {
+.testi-dots button::before,
+.plan-rail-dots button::before {
   content: "";
   width: 0.5rem;
   height: 0.5rem;
@@ -3820,11 +3871,13 @@ html {
     transform 0.2s ease,
     background-color 0.2s ease;
 }
-.testi-dots button[aria-current="true"]::before {
+.testi-dots button[aria-current="true"]::before,
+.plan-rail-dots button[aria-current="true"]::before {
   background: var(--color-accent);
   transform: scale(1.4);
 }
-.testi-dots button:focus-visible {
+.testi-dots button:focus-visible,
+.plan-rail-dots button:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
   border-radius: 50%;
@@ -4582,6 +4635,15 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   gap: 0.5rem;
   margin: 0 0 1rem;
 }
+/* Tiles pair up while the card can hold two readable columns and drop to one
+   when it cannot. Asked of the card (.plan-body is the query container), so
+   one rule covers the phone column, the tablet rail and the desktop grid —
+   a 287px card in the rail gets the same treatment as a 288px phone card. */
+@container plan (max-width: 15rem) {
+  .plan-specs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 .plan-spec {
   display: grid;
   gap: 0.15rem;
@@ -4618,7 +4680,8 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  min-height: 2rem;
+  /* "All features" is a primary control inside the card, not a footnote. */
+  min-height: var(--spacing-11);
   list-style: none;
   color: var(--color-text-accent);
   font-size: var(--text-supporting-size);
