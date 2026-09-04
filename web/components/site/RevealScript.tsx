@@ -31,7 +31,16 @@ export function RevealScript() {
       { rootMargin: "0px 0px -8%", threshold: 0.08 },
     );
     reveals.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    /* Safety net: whatever the observer misses (restored scroll positions,
+       browser quirks) is revealed a few seconds in — bars and stats must
+       never stay at zero. */
+    const safety = window.setTimeout(() => {
+      reveals.forEach((el) => (el.dataset.visible = "true"));
+    }, 4000);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(safety);
+    };
   }, []);
 
   return null;

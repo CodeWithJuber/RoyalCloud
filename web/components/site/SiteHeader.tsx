@@ -3,10 +3,59 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { siteSettings } from "@/lib/settings";
+import {
+  HEADER_GROUPS,
+  HEADER_LINKS,
+  isExternal,
+  primaryAction,
+  signInAction,
+  type NavLink,
+} from "@/lib/navigation";
+import { Icon } from "../Icon";
 import { CurrencySwitch } from "./CurrencySwitch";
 
+/* One row of the mega menu and the drawer: icon + name + one-line description. */
+function NavItem({ link, onClick }: { link: NavLink; onClick?: () => void }) {
+  const body = (
+    <>
+      {link.icon && (
+        <span className="nav-item-icon" aria-hidden="true">
+          <Icon name={link.icon} size={18} />
+        </span>
+      )}
+      <span className="nav-item-copy">
+        <b>{link.text}</b>
+        {link.description && <small>{link.description}</small>}
+      </span>
+    </>
+  );
+  return isExternal(link.href) ? (
+    <a className="nav-item" href={link.href} target="_blank" rel="noopener noreferrer" onClick={onClick}>
+      {body}
+    </a>
+  ) : (
+    <Link className="nav-item" href={link.href} onClick={onClick}>
+      {body}
+    </Link>
+  );
+}
+
+function PlainLink({ link, className, onClick }: { link: NavLink; className: string; onClick?: () => void }) {
+  return isExternal(link.href) ? (
+    <a className={className} href={link.href} target="_blank" rel="noopener noreferrer" onClick={onClick}>
+      {link.text}
+    </a>
+  ) : (
+    <Link className={className} href={link.href} onClick={onClick}>
+      {link.text}
+    </Link>
+  );
+}
+
 export function SiteHeader() {
-  const { announcement, navigation, whmcsUrl, logoDark } = siteSettings;
+  const { announcement, logoDark } = siteSettings;
+  const signIn = signInAction();
+  const primary = primaryAction();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -38,9 +87,9 @@ export function SiteHeader() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  /* Publish the rendered header height as --site-header-h. Sticky elements
-     and anchor scroll-padding sit under it; the announcement bar can be
-     dismissed and the bar shrinks on phones, so it is measured, not assumed. */
+  /* Publish the rendered header height as --site-header-h. Sticky elements,
+     the drawer and anchor scroll-padding sit under it; the announcement bar
+     can be dismissed and the bar shrinks on phones, so it is measured. */
   useEffect(() => {
     const el = headerRef.current;
     if (!el || typeof ResizeObserver === "undefined") return;
@@ -55,6 +104,11 @@ export function SiteHeader() {
       root.style.removeProperty("--site-header-h");
     };
   }, []);
+
+  const closeAll = () => {
+    setOpenGroup(null);
+    setMobileOpen(false);
+  };
 
   return (
     <div className={`site-header ${scrolled ? "is-scrolled" : ""}`} ref={headerRef}>
@@ -84,53 +138,57 @@ export function SiteHeader() {
 
       <header className="header-bar">
         <div className="header-inner">
-          <Link className="brand" href="/" aria-label="Royal Clouds home" onClick={() => setMobileOpen(false)}>
+          <Link className="brand" href="/" aria-label="Royal Clouds home" onClick={closeAll}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={logoDark} width={176} height={46} alt="Royal Clouds" />
           </Link>
 
           <nav className="desktop-nav" aria-label="Primary">
-            {navigation.map((group) => (
+            {HEADER_GROUPS.map((group) => (
               <div
-                key={group.label}
-                className={`nav-group ${openGroup === group.label ? "open" : ""}`}
-                onMouseEnter={() => setOpenGroup(group.label)}
+                key={group.text}
+                className={`nav-group ${openGroup === group.text ? "open" : ""}`}
+                onMouseEnter={() => setOpenGroup(group.text)}
                 onMouseLeave={() => setOpenGroup(null)}
               >
                 <button
                   type="button"
                   className="nav-trigger"
-                  aria-expanded={openGroup === group.label}
+                  aria-expanded={openGroup === group.text}
                   aria-haspopup="true"
-                  onClick={() => setOpenGroup(openGroup === group.label ? null : group.label)}
+                  onClick={() => setOpenGroup(openGroup === group.text ? null : group.text)}
                 >
-                  <span>{group.label}</span>
+                  <span>{group.text}</span>
                   <svg viewBox="0 0 12 8" width="10" height="7" aria-hidden="true" focusable="false">
                     <path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
-                <div className="nav-panel">
-                  {group.items.map((item) => (
-                    <Link key={item.href} href={item.href} onClick={() => setOpenGroup(null)}>
-                      {item.label}
-                    </Link>
+                <div className="nav-panel" data-cols={group.links.length > 4 ? "2" : "1"}>
+                  {group.links.map((link) => (
+                    <NavItem key={link.href} link={link} onClick={() => setOpenGroup(null)} />
                   ))}
                 </div>
               </div>
+            ))}
+            {HEADER_LINKS.map((link) => (
+              <PlainLink key={link.href} link={link} className="nav-link" />
             ))}
           </nav>
 
           <div className="header-actions">
             <CurrencySwitch />
-            <a className="login-link" href={`${whmcsUrl}/login`}>Sign in</a>
-            <a className="btn btn-primary header-cta" href={whmcsUrl}>
-              Open console
+            <a className="login-link" href={signIn.href}>
+              {signIn.text}
+            </a>
+            <a className="btn btn-primary header-cta" href={primary.href} target="_blank" rel="noopener noreferrer">
+              {primary.text}
               <span className="btn-arrow" aria-hidden="true">↗</span>
             </a>
             <button
               type="button"
               className={`mobile-toggle ${mobileOpen ? "open" : ""}`}
               aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               onClick={() => setMobileOpen(!mobileOpen)}
             >
@@ -140,23 +198,43 @@ export function SiteHeader() {
         </div>
       </header>
 
-      <div className={`mobile-panel ${mobileOpen ? "open" : ""}`} inert={!mobileOpen}>
-        <nav aria-label="Mobile">
-          {navigation.map((group) => (
-            <section key={group.label}>
-              <h2>{group.label}</h2>
-              {group.items.map((item) => (
-                <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}>
-                  {item.label}
-                </Link>
+      {/* Drawer: sits under the (still visible) header bar, full shell width,
+          product groups with icons, quick links and the two account actions. */}
+      <div id="mobile-menu" className={`mobile-panel ${mobileOpen ? "open" : ""}`} inert={!mobileOpen}>
+        <nav className="mobile-nav" aria-label="Mobile">
+          <div className="mobile-groups">
+            {HEADER_GROUPS.map((group) => (
+              <section key={group.text} className="mobile-group">
+                <h2>{group.text}</h2>
+                <ul>
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <NavItem link={link} onClick={closeAll} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+          <section className="mobile-group mobile-more">
+            <h2>More</h2>
+            <ul className="mobile-chips">
+              {HEADER_LINKS.map((link) => (
+                <li key={link.href}>
+                  <PlainLink link={link} className="mobile-chip" onClick={closeAll} />
+                </li>
               ))}
-            </section>
-          ))}
-          <section>
-            <h2>Account</h2>
-            <a href={`${whmcsUrl}/login`}>Sign in</a>
-            <a href={whmcsUrl}>Open console</a>
+            </ul>
           </section>
+          <div className="mobile-actions">
+            <a className="btn btn-secondary" href={signIn.href}>
+              {signIn.text}
+            </a>
+            <a className="btn btn-primary" href={primary.href} target="_blank" rel="noopener noreferrer">
+              {primary.text}
+              <span className="btn-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
         </nav>
       </div>
     </div>
