@@ -283,6 +283,18 @@ definitions:
                     widget: string,
                     required: false,
                   }
+                - {
+                    name: metric,
+                    label: "Metric (headline figure, e.g. 15x — only real, sourced numbers)",
+                    widget: string,
+                    required: false,
+                  }
+                - {
+                    name: metricLabel,
+                    label: "Metric label (e.g. faster than HDD hosting)",
+                    widget: string,
+                    required: false,
+                  }
         # ---- Products (hosting-type cards) ----
         - name: products
           label: "Product Cards"

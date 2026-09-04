@@ -6,6 +6,9 @@ export interface FeatureItem {
   title: string;
   text: string;
   href?: string;
+  /** Headline figure (e.g. "15x") — rendered only when authored. */
+  metric?: string;
+  metricLabel?: string;
 }
 
 interface FeatureGridProps {
@@ -14,6 +17,8 @@ interface FeatureGridProps {
   title?: string;
   subtitle?: string;
   columns?: 2 | 3 | 4;
+  /** "tiles" = icon beside copy without card chrome (dense landing grids). */
+  variant?: "cards" | "tiles";
   items: FeatureItem[];
 }
 
@@ -23,10 +28,11 @@ export function FeatureGrid({
   title,
   subtitle,
   columns = 3,
+  variant = "cards",
   items,
 }: FeatureGridProps) {
   return (
-    <section className="section features" id={id}>
+    <section className="section features" id={id} data-variant={variant}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
@@ -43,6 +49,12 @@ export function FeatureGrid({
                 <span className="feature-icon">
                   <Icon name={item.icon ?? "bolt"} size={22} />
                 </span>
+                {item.metric && (
+                  <p className="feature-metric">
+                    <strong>{item.metric}</strong>
+                    {item.metricLabel && <small>{item.metricLabel}</small>}
+                  </p>
+                )}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
                 {item.href && (

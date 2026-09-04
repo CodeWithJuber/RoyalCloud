@@ -57,7 +57,13 @@ export const sectionSchema = z.discriminatedUnion("type", [
     ...base,
     columns: z.number().optional(),
     variant: z.enum(["cards", "tiles"]).optional(),
-    items: z.array(iconItemSchema),
+    items: z.array(
+      iconItemSchema.extend({
+        /* Headline figure shown above the title — only real, sourced numbers. */
+        metric: z.string().optional(),
+        metricLabel: z.string().optional(),
+      }),
+    ),
   }),
   z.object({
     type: z.literal("products"),

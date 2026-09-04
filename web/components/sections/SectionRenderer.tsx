@@ -175,6 +175,7 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
           title={str(s.title)}
           subtitle={str(s.subtitle)}
           columns={columns(s.columns)}
+          variant={s.variant === "tiles" ? "tiles" : undefined}
           items={items}
         />
       ) : null;
