@@ -36,3 +36,5 @@ refs/
 # forge regenerable mirrors + session state
 .agents/
 .forge/sessions/
+.forge/atlas.json
+.forge/atlas.cache.json

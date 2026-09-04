@@ -1,0 +1,1 @@
+{"body":{"id":"D-0006","text":"Hero intent chips render only on the gradient (home + landing) hero; product heroes keep the compact 'Help me choose' link with the page's product pre-answered — product heroes are height-constrained on phones (844px above-fold rule) and already name their product"},"kind":"decision","scope":{"level":"repo"},"v":1}

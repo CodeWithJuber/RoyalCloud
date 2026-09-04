@@ -1,0 +1,1 @@
+{"body":{"id":"D-0010","text":"Comparison tooltips appear only when a deck highlight title matches the row label (lib/feature-groups tooltipFor) — no explanatory copy is invented; rows are grouped by a deterministic keyword map and never re-indexed"},"kind":"decision","scope":{"level":"repo"},"v":1}

@@ -1,0 +1,1 @@
+{"body":{"id":"D-0007","text":"Plan finder budget bands are derived from each deck's real tier prices (floor(n-1)/3 and round(2(n-1)/3) of the sorted price ladder + 'No fixed budget'); a cap never names a price that does not exist, and clamping is announced as 'Closest match within your budget'"},"kind":"decision","scope":{"level":"repo"},"v":1}
