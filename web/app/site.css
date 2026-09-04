@@ -3959,3 +3959,52 @@ html {
     justify-content: center;
   }
 }
+
+/* ============================================================
+   One-click deploy tabs (OS strip v2)
+   ============================================================ */
+
+.os-row > li {
+  display: contents;
+}
+.os-copy {
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+}
+.os-text {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+a.os-chip {
+  text-decoration: none;
+}
+a.os-chip:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.os-chip[data-rich="true"] {
+  align-items: flex-start;
+  max-width: 22rem;
+  padding: 0.9rem 1.1rem 0.9rem 0.85rem;
+  border-radius: 16px;
+}
+.os-chip[data-rich="true"] .os-mark {
+  margin-top: 0.1rem;
+}
+
+.deploy-tabs {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+}
+.deploy-tabs .os-grid {
+  width: 100%;
+}
+.deploy-tabs .os-grid:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 6px;
+  border-radius: 12px;
+}
