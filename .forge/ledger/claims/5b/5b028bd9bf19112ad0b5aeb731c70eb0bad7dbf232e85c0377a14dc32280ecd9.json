@@ -1,0 +1,1 @@
+{"body":{"id":"D-0026","text":"CMS editor: Sveltia CMS 0.205.3 (pinned, Decap-compatible config, phone-friendly UI, 'Sign in with Token' fallback) replaces Decap at /admin; Decap's desktop-only UI was the 'mobile unresponsive' surface; local_backend is unsupported there and was already commented out"},"kind":"decision","scope":{"level":"repo"},"v":1}
