@@ -164,7 +164,7 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
         mark: hasBrandMark(label) ? (
           <BrandMark name={label} size={16} />
         ) : (
-          <Icon name={includeIcon(label)} size={14} />
+          <Icon name={includeIcon(label)} size={16} />
         ),
       }));
       return (

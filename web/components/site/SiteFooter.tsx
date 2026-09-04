@@ -25,11 +25,12 @@ export function SiteFooter() {
       </div>
       <div className="site-shell footer-grid">
         <section className="footer-brand">
+          {/* Intrinsic size (see SiteHeader) — CSS caps the rendered height. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={siteSettings.logoLight}
-            width={176}
-            height={46}
+            width={1434}
+            height={490}
             alt={siteSettings.organizationName}
             loading="lazy"
           />

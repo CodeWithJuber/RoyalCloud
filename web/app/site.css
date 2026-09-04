@@ -20,6 +20,11 @@
   --section-y: clamp(3.5rem, 6.5vw, 5.5rem);
   --section-y-sm: clamp(2.25rem, 4vw, 3.25rem);
   --header-gap: clamp(1.75rem, 4vw, 2.75rem);
+  /* One measure system and one card padding for the whole site. */
+  --measure: 46rem;
+  --measure-wide: 56rem;
+  --rc-card-pad: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  --rc-radius-card: 20px;
 }
 
 /* ---------- Layout ---------- */
@@ -67,7 +72,7 @@
   display: inline-block;
   margin: 0 0 1rem;
   color: var(--color-text-accent);
-  font-size: 0.8125rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -88,7 +93,7 @@
 }
 .section-header h2 {
   margin: 0 0 0.75rem;
-  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  font-size: var(--text-display-2-size);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.12;
@@ -98,7 +103,7 @@
   margin: 0;
   max-width: 62ch;
   color: var(--color-text-secondary);
-  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  font-size: var(--text-large-size);
   line-height: 1.55;
 }
 .section-header.center .lede {
@@ -115,7 +120,7 @@
   padding: 0.35rem 0.45rem 0.35rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 999px;
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   line-height: 1.2;
   text-decoration: none;
@@ -133,7 +138,7 @@
   height: 2.1rem;
   place-items: center;
   border-radius: 50%;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   transition: transform 0.22s ease;
 }
 .btn:hover .btn-arrow {
@@ -235,7 +240,7 @@
   gap: 0.35rem;
   padding: 0.28rem 0.7rem;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   line-height: 1.3;
 }
@@ -320,7 +325,7 @@
   padding: 0.55rem 2.5rem 0.55rem 1rem;
   background: var(--rc-night-deep);
   color: #f4f1ff;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   position: relative;
 }
@@ -426,7 +431,7 @@
   border-radius: 999px;
   background: transparent;
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   cursor: pointer;
   transition:
@@ -478,7 +483,7 @@
   padding: 0.65rem 0.85rem;
   border-radius: 10px;
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   text-decoration: none;
   transition:
@@ -502,7 +507,7 @@
 }
 .login-link {
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   text-decoration: none;
 }
@@ -517,7 +522,7 @@
 .header-cta {
   min-height: 2.75rem;
   padding-left: 1.25rem;
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
 }
 
 /* Currency switch (header) */
@@ -539,7 +544,7 @@
   border-radius: 999px;
   color: var(--color-text-secondary);
   background: transparent;
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -642,7 +647,7 @@
 .mobile-panel h2 {
   margin: 0 0 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -652,7 +657,7 @@
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--color-border);
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
   text-decoration: none;
 }
@@ -711,7 +716,7 @@
   margin: 0;
   max-width: 26ch;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 .footer-socials {
@@ -723,7 +728,7 @@
 }
 .footer-socials a {
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
 }
@@ -734,7 +739,7 @@
 .footer-group h2 {
   margin: 0 0 1rem;
   color: var(--color-text-primary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -748,7 +753,7 @@
 }
 .footer-group a {
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   text-decoration: none;
   transition: color 0.15s ease;
 }
@@ -772,7 +777,7 @@
 .footer-bottom p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 @media (max-width: 1024px) {
@@ -872,7 +877,7 @@
 
 .hero h1 {
   margin: 0 0 1.25rem;
-  font-size: clamp(2.5rem, 5.4vw, 4.2rem);
+  font-size: var(--text-display-1-size);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.05;
@@ -891,7 +896,7 @@
   margin: 0;
   max-width: 58ch;
   color: var(--color-text-secondary);
-  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-size: var(--text-large-size);
   line-height: 1.6;
 }
 .hero-home .hero-lede {
@@ -906,7 +911,7 @@
   border-radius: 999px;
   background: #ffffff0d;
   color: var(--rc-gold-light);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
 }
 .hero-simple .hero-offer {
@@ -941,7 +946,7 @@
   align-items: center;
   gap: 0.45rem;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
 }
 .hero-badges svg {
@@ -1001,7 +1006,7 @@
   border-radius: 999px;
   color: var(--color-text-secondary);
   background: transparent;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   cursor: pointer;
   transition:
@@ -1018,7 +1023,7 @@
 }
 .billing-toggle .chip-gold {
   padding: 0.15rem 0.5rem;
-  font-size: 0.7rem;
+  font-size: var(--font-size-sm);
 }
 
 .plan-grid {
@@ -1069,7 +1074,7 @@
   border-radius: 999px;
   background: var(--color-accent);
   color: #ffffff;
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1078,14 +1083,14 @@
 
 .plan-card h3 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: var(--text-heading-3-size);
   font-weight: 700;
   color: var(--color-text-primary);
 }
 .plan-summary {
   margin: 0.35rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.45;
 }
 
@@ -1100,7 +1105,7 @@
   gap: 0.5rem;
   margin-bottom: 0.35rem;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .plan-was .px {
   text-decoration: line-through;
@@ -1112,21 +1117,21 @@
   color: var(--color-text-primary);
 }
 .plan-price .px {
-  font-size: 2.25rem;
+  font-size: var(--font-size-4xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 .plan-period {
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
 }
 .plan-ledger {
   display: block;
   margin-top: 0.35rem;
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   line-height: 1.4;
 }
 
@@ -1146,7 +1151,7 @@
   align-items: flex-start;
   gap: 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.45;
 }
 .plan-features svg {
@@ -1159,7 +1164,7 @@
   margin: 2rem auto 0;
   max-width: 46rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   text-align: center;
 }
 
@@ -1205,7 +1210,7 @@
   border-radius: 50%;
   background: var(--color-accent);
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 
@@ -1232,7 +1237,7 @@
   align-items: center;
   gap: 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -1267,13 +1272,13 @@
 .feature-card h3 {
   margin: 0 0 0.5rem;
   color: var(--color-text-primary);
-  font-size: 1.075rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 .feature-card p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 a.feature-card {
@@ -1289,7 +1294,7 @@ a.feature-card:focus-visible {
   gap: 0.35rem;
   margin-top: 0.9rem;
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 a.feature-card:hover .feature-more {
@@ -1317,20 +1322,20 @@ a.feature-card:hover .feature-more {
 .product-card h3 {
   margin: 0 0 0.5rem;
   color: var(--color-text-primary);
-  font-size: 1.15rem;
+  font-size: var(--text-heading-3-size);
   font-weight: 700;
 }
 .product-text {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 .product-price {
   margin: auto 0 0;
   padding-top: 1.1rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .product-price .px {
   color: var(--color-text-primary);
@@ -1347,7 +1352,7 @@ a.feature-card:hover .feature-more {
   gap: 0.35rem;
   margin-top: 0.6rem;
   color: var(--color-text-accent);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .product-card:hover .product-link {
@@ -1377,19 +1382,19 @@ a.feature-card:hover .feature-more {
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
   font-family: var(--font-family-code);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .step-card h3 {
   margin: 0 0 0.5rem;
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 .step-card p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 
@@ -1440,7 +1445,7 @@ a.feature-card:hover .feature-more {
 .stat-value {
   display: block;
   color: var(--color-text-primary);
-  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-size: var(--text-display-1-size);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -1450,7 +1455,7 @@ a.feature-card:hover .feature-more {
   display: block;
   margin-top: 0.55rem;
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1471,7 +1476,7 @@ a.feature-card:hover .feature-more {
 .cta-inner h2 {
   margin: 0 0 0.9rem;
   color: var(--color-text-primary);
-  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  font-size: var(--text-display-2-size);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.12;
@@ -1484,7 +1489,7 @@ a.feature-card:hover .feature-more {
 .cta-lede {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  font-size: var(--text-large-size);
   line-height: 1.55;
 }
 .cta-actions {
@@ -1544,12 +1549,12 @@ a.feature-card:hover .feature-more {
   border-radius: 50%;
   background: var(--os-c, var(--color-accent));
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 800;
 }
 .os-chip b {
   color: var(--color-text-primary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 
@@ -1575,7 +1580,7 @@ a.feature-card:hover .feature-more {
   border-radius: 12px;
   background: var(--color-background-card);
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   letter-spacing: 0.01em;
   transition:
@@ -1609,7 +1614,7 @@ a.feature-card:hover .feature-more {
 }
 .bench-label {
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
 }
 .bench-track {
@@ -1629,7 +1634,7 @@ a.feature-card:hover .feature-more {
 .bench-value {
   color: var(--color-text-secondary);
   font-family: var(--font-family-code);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -1644,7 +1649,7 @@ a.feature-card:hover .feature-more {
   margin: 1.75rem auto 0;
   max-width: 44rem;
   color: var(--color-text-secondary);
-  font-size: 0.82rem;
+  font-size: var(--font-size-sm);
   line-height: 1.5;
   text-align: center;
 }
@@ -1680,19 +1685,19 @@ a.feature-card:hover .feature-more {
   background: var(--color-accent);
   color: #ffffff;
   font-family: var(--font-family-code);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .sec-card h3 {
   margin: 0 0 0.5rem;
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 .sec-card p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 .sec-stats {
@@ -1712,7 +1717,7 @@ a.feature-card:hover .feature-more {
 }
 .sec-stat dt {
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1721,7 +1726,7 @@ a.feature-card:hover .feature-more {
   margin: 0 0 0.4rem;
   color: var(--rc-gold);
   font-family: var(--font-family-code);
-  font-size: 1.5rem;
+  font-size: var(--font-size-2xl);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -1757,12 +1762,12 @@ a.feature-card:hover .feature-more {
 .compare-table td {
   padding: 0.85rem 1.25rem;
   border-bottom: 1px solid var(--color-border);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   text-align: center;
 }
 .compare-table thead th {
   color: var(--color-text-primary);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   border-bottom: 2px solid var(--color-border-emphasized);
 }
@@ -1795,7 +1800,7 @@ a.feature-card:hover .feature-more {
   border-radius: 999px;
   background: var(--rc-gold);
   color: var(--rc-night);
-  font-size: 0.65rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1803,14 +1808,14 @@ a.feature-card:hover .feature-more {
 }
 .compare-price .px {
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 .compare-period {
   margin-left: 0.15rem;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 .compare-cta-row th,
 .compare-cta-row td {
@@ -1820,7 +1825,7 @@ a.feature-card:hover .feature-more {
 .compare-table .btn {
   min-height: 2.5rem;
   padding: 0.25rem 0.35rem 0.25rem 1.1rem;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .compare-table .btn .btn-arrow {
   width: 1.8rem;
@@ -1830,7 +1835,7 @@ a.feature-card:hover .feature-more {
   margin: 1.5rem auto 0;
   max-width: 46rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.5;
   text-align: center;
 }
@@ -1854,7 +1859,7 @@ a.feature-card:hover .feature-more {
   flex: 1;
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   line-height: 1.65;
 }
 .testi-footer {
@@ -1865,11 +1870,11 @@ a.feature-card:hover .feature-more {
 .testi-footer strong {
   display: block;
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .testi-footer small {
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 
 /* ============================================================
@@ -1887,7 +1892,7 @@ a.feature-card:hover .feature-more {
 .story-metric strong {
   display: block;
   color: var(--color-text-accent);
-  font-size: 2.25rem;
+  font-size: var(--font-size-4xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.05;
@@ -1896,13 +1901,13 @@ a.feature-card:hover .feature-more {
   display: block;
   margin-top: 0.25rem;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 .story-card blockquote {
   flex: 1;
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.92rem;
+  font-size: var(--font-size-base);
   line-height: 1.65;
 }
 .story-footer {
@@ -1915,12 +1920,12 @@ a.feature-card:hover .feature-more {
 .story-footer b {
   display: block;
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.3;
 }
 .story-footer small {
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 
 /* ============================================================
@@ -1945,7 +1950,7 @@ a.feature-card:hover .feature-more {
   gap: 1rem;
   padding: 1.1rem 1.25rem;
   color: var(--color-text-primary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   line-height: 1.4;
   cursor: pointer;
@@ -1979,7 +1984,7 @@ a.feature-card:hover .feature-more {
   margin: 0;
   padding: 0 1.25rem 1.2rem;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.65;
 }
 
@@ -2006,7 +2011,7 @@ a.feature-card:hover .feature-more {
 .split-copy h2 {
   margin: 0 0 0.75rem;
   color: var(--color-text-primary);
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-size: var(--text-display-2-size);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -2014,13 +2019,13 @@ a.feature-card:hover .feature-more {
 .split-copy .lede {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   line-height: 1.6;
 }
 .split-body {
   margin: 1rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   line-height: 1.7;
 }
 
@@ -2060,13 +2065,13 @@ a.feature-card:hover .feature-more {
 .split-panel h3 {
   margin: 0 0 0.2rem;
   color: var(--color-text-primary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
 }
 .split-panel p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.55;
 }
 
@@ -2142,7 +2147,7 @@ a.feature-card:hover .feature-more {
   background: var(--color-background-card);
   --color-text-primary: #2f1c6a; /* white pill on the dark field */
   color: var(--color-text-primary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   white-space: nowrap;
   box-shadow: var(--shadow-low);
@@ -2160,7 +2165,7 @@ a.feature-card:hover .feature-more {
 .map-pin-label em {
   margin-left: 0.35rem;
   color: var(--color-success);
-  font-size: 0.65rem;
+  font-size: var(--font-size-sm);
   font-style: normal;
   font-weight: 700;
 }
@@ -2168,7 +2173,7 @@ a.feature-card:hover .feature-more {
   margin: 1.75rem auto 0;
   max-width: 44rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.5;
   text-align: center;
 }
@@ -2217,7 +2222,7 @@ a.feature-card:hover .feature-more {
   border-radius: 999px;
   background: transparent;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   cursor: pointer;
   transition:
@@ -2273,7 +2278,7 @@ a.feature-card:hover .feature-more {
   margin-left: 0.6rem;
   color: #c5bfd5;
   font-family: var(--font-family-code);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
 }
 .showcase-panel {
@@ -2286,14 +2291,14 @@ a.feature-card:hover .feature-more {
 .showcase-panel h3 {
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 1.25rem;
+  font-size: var(--text-heading-3-size);
   font-weight: 700;
 }
 .showcase-panel p {
   margin: 0;
   max-width: 52ch;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   line-height: 1.65;
 }
 
@@ -2315,7 +2320,7 @@ a.feature-card:hover .feature-more {
   display: block;
   margin-bottom: 0.6rem;
   color: var(--color-text-primary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .domain-row {
@@ -2330,7 +2335,7 @@ a.feature-card:hover .feature-more {
   border-radius: 999px;
   background: #ffffff;
   color: #2f1c6a;
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
 }
 .domain-row input::placeholder {
@@ -2344,7 +2349,7 @@ a.feature-card:hover .feature-more {
 .domain-help {
   margin: 0.75rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 .domain-tlds {
   display: flex;
@@ -2362,7 +2367,7 @@ a.feature-card:hover .feature-more {
   border: 1px solid var(--color-border);
   border-radius: 999px;
   background: #ffffff08;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .tld-name {
   color: var(--color-text-primary);
@@ -2375,7 +2380,7 @@ a.feature-card:hover .feature-more {
 }
 .tld-note {
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
 }
 @media (max-width: 640px) {
   .domain-row {
@@ -2403,7 +2408,7 @@ a.feature-card:hover .feature-more {
   justify-content: center;
   min-height: 3rem;
   padding: 0 0.9rem;
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   box-shadow: none;
 }
 .mobile-cta .btn-secondary {
@@ -2435,7 +2440,7 @@ a.feature-card:hover .feature-more {
 .prose-section .prose {
   max-width: 48rem;
   color: var(--color-text-secondary);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   line-height: 1.75;
 }
 .prose h2,
@@ -2447,10 +2452,10 @@ a.feature-card:hover .feature-more {
   line-height: 1.25;
 }
 .prose h2 {
-  font-size: 1.6rem;
+  font-size: var(--font-size-2xl);
 }
 .prose h3 {
-  font-size: 1.25rem;
+  font-size: var(--text-heading-3-size);
 }
 .prose p {
   margin: 0 0 1rem;
@@ -2472,7 +2477,7 @@ a.feature-card:hover .feature-more {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .prose th,
 .prose td {
@@ -2496,7 +2501,7 @@ a.feature-card:hover .feature-more {
   color: var(--rc-night);
   background: var(--rc-gold-light);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   text-decoration: none;
   transform: translateY(-200%);
 }
@@ -2549,7 +2554,7 @@ a.feature-card:hover .feature-more {
 @media (max-width: 640px) {
   .announcement {
     padding: 0.6rem 2.75rem 0.6rem 0.9rem;
-    font-size: 0.78rem;
+    font-size: var(--font-size-sm);
     line-height: 1.4;
     justify-content: flex-start;
   }
@@ -2657,7 +2662,7 @@ a.feature-card:hover .feature-more {
   border: 0;
   background: transparent;
   color: #2f1c6a;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
 }
 .hero-search input::placeholder {
@@ -2719,7 +2724,7 @@ a.feature-card:hover .feature-more {
   gap: 0.5rem;
   margin-top: 1.5rem;
   color: #c5bfd5;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .hero-rating strong {
   color: #ffffff;
@@ -2755,10 +2760,10 @@ a.feature-card:hover .feature-more {
   align-items: center;
   gap: 0.45rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .plan-was-inline .px {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .plan-features-rest {
@@ -2766,12 +2771,12 @@ a.feature-card:hover .feature-more {
 }
 .plan-more {
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .astryx-collapsible-trigger {
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   min-height: 32px;
 }
@@ -2791,12 +2796,12 @@ a.feature-card:hover .feature-more {
 .plan-enterprise h3 {
   margin: 0 0 0.25rem;
   color: #ffffff;
-  font-size: 1.15rem;
+  font-size: var(--text-heading-3-size);
   font-weight: 700;
 }
 .plan-enterprise p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .plan-enterprise .btn:focus-visible {
   outline-color: #faf7ff;
@@ -2835,10 +2840,10 @@ a.feature-card:hover .feature-more {
   padding: 1.35rem;
 }
 .feature-card h3 {
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
 }
 .feature-card p {
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.55;
 }
 .feature-icon {
@@ -2873,7 +2878,7 @@ a.feature-card:hover .feature-more {
   border-radius: 14px;
   background: #ffffff08;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
   transition: border-color 0.2s ease, color 0.2s ease;
@@ -2917,14 +2922,14 @@ a.feature-card:hover .feature-more {
 
 .finder-question {
   margin: 0 0 0.35rem;
-  font-size: 1.4rem;
+  font-size: var(--font-size-xl);
   font-weight: 700;
   color: var(--color-text-primary);
 }
 .finder-hint {
   margin: 0 0 1.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
 }
 .finder-options {
   display: grid;
@@ -2975,11 +2980,11 @@ a.feature-card:hover .feature-more {
 }
 .finder-option-copy strong {
   color: var(--color-text-primary);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
 }
 .finder-option-copy span {
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .finder-option-arrow {
   color: var(--color-text-secondary);
@@ -2995,7 +3000,7 @@ a.feature-card:hover .feature-more {
   border: 0;
   background: transparent;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   cursor: pointer;
   min-height: 32px;
@@ -3012,7 +3017,7 @@ a.feature-card:hover .feature-more {
 .finder-kicker {
   margin: 0 0 0.35rem;
   color: var(--color-text-accent);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -3025,7 +3030,7 @@ a.feature-card:hover .feature-more {
   margin: 1rem 0 1.25rem;
 }
 .finder-price .px {
-  font-size: 2.25rem;
+  font-size: var(--font-size-4xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--color-text-primary);
@@ -3037,7 +3042,7 @@ a.feature-card:hover .feature-more {
 .finder-ledger {
   width: 100%;
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 .finder-features {
   display: grid;
@@ -3052,7 +3057,7 @@ a.feature-card:hover .feature-more {
   align-items: center;
   gap: 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
 }
 .finder-actions {
   display: flex;
@@ -3062,7 +3067,7 @@ a.feature-card:hover .feature-more {
 .finder-note {
   margin: 1.25rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 @media (max-width: 560px) {
@@ -3105,30 +3110,30 @@ a.feature-card:hover .feature-more {
 }
 .showcase-product-copy h3 {
   margin: 0.9rem 0 0.5rem;
-  font-size: 1.6rem;
+  font-size: var(--font-size-2xl);
   font-weight: 700;
   color: var(--color-text-primary);
 }
 .showcase-product-sub {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 .showcase-product-price {
   margin: 1.1rem 0;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
 }
 .showcase-product-price strong {
   color: var(--color-text-primary);
-  font-size: 1.5rem;
+  font-size: var(--font-size-2xl);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 .showcase-per {
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
 }
 .showcase-product-features {
@@ -3143,7 +3148,7 @@ a.feature-card:hover .feature-more {
   align-items: center;
   gap: 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .showcase-product-actions {
   display: flex;
@@ -3181,21 +3186,12 @@ a.feature-card:hover .feature-more {
   box-shadow: var(--shadow-high);
 }
 
-/* Glass chrome on dark fields */
-.section-dark .card,
-.section-deep .card,
-.showcase-product {
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
+/* No glass on dark fields: these cards sit on flat --rc-night / --rc-night-deep
+   fills, so a backdrop blur has nothing to blur — it only bought one extra
+   compositing layer per card, re-snapshotted on every scroll. Real glass stays
+   on .header-bar and .product-subnav, where page content scrolls underneath. */
 
 /* Consistent card hover across the marketing chrome */
-.feature-card,
-.plan-card,
-.finder-option,
-.footer-contact a {
-  will-change: transform;
-}
 .feature-card:hover,
 .finder-option:hover {
   border-color: var(--color-accent);
@@ -3229,11 +3225,11 @@ a.feature-card:hover .feature-more {
     padding-block: 2.25rem;
   }
   .hero h1 {
-    font-size: clamp(2rem, 9.4vw, 2.6rem);
+    font-size: var(--text-display-1-size);
     margin-bottom: 0.9rem;
   }
   .hero-lede {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
   }
   .hero-art {
     display: none;
@@ -3287,7 +3283,7 @@ a.feature-card:hover .feature-more {
   }
   .domain-row input {
     min-height: 3rem;
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
   }
   .domain-row .btn {
     width: auto;
@@ -3330,7 +3326,7 @@ a.feature-card:hover .feature-more {
     margin-bottom: 1.75rem;
   }
   .section-header h2 {
-    font-size: clamp(1.55rem, 7.4vw, 2rem);
+    font-size: var(--text-display-2-size);
   }
 }
 
@@ -3398,7 +3394,7 @@ a.feature-card:hover .feature-more {
   gap: 0.45rem;
   margin-top: 1rem;
   color: #c5bfd5;
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
 }
@@ -3434,7 +3430,7 @@ a.feature-card:hover .feature-more {
   border-radius: 999px;
   background: var(--color-background-card);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
   transition: border-color 0.2s ease, color 0.2s ease;
@@ -3487,7 +3483,7 @@ html {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .rating-badge strong {
   font-weight: 700;
@@ -3530,7 +3526,7 @@ html {
   display: block;
   margin-bottom: 0.5rem;
   color: #c5bfd5;
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -3553,7 +3549,7 @@ html {
   border-radius: 999px;
   background: #ffffff14;
   color: #faf7ff;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -3604,12 +3600,12 @@ html {
   }
 }
 .finder-budget .finder-option-copy strong .px {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
 }
 .finder-alt {
   width: 100%;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .finder-alt .px {
   font-weight: 700;
@@ -3658,25 +3654,25 @@ html {
 .compare-flag {
   background: #ffffff;
   color: var(--color-accent);
-  font-size: 0.62rem;
+  font-size: var(--font-size-sm);
 }
 
 .compare-term {
   display: block;
   margin-top: 0.15rem;
   color: var(--color-text-secondary);
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
 }
 .compare-best td {
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   line-height: 1.4;
 }
 
 .compare-table .compare-group th {
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -3734,7 +3730,7 @@ html {
   border-radius: 999px;
   background: var(--color-background-card);
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   cursor: pointer;
 }
@@ -3774,7 +3770,7 @@ html {
 .bench-scale {
   margin: 0 0 0.75rem;
   color: #c5bfd5;
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -3979,7 +3975,7 @@ html {
 }
 .os-text {
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   line-height: 1.45;
 }
@@ -4052,7 +4048,7 @@ a.os-chip:focus-visible {
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -4077,7 +4073,7 @@ a.os-chip:focus-visible {
   gap: 0.35rem;
   min-height: 2.5rem;
   padding-block: 0.25rem;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   white-space: nowrap;
 }
 .subnav-cta small {
@@ -4102,7 +4098,7 @@ a.os-chip:focus-visible {
 }
 .feature-metric strong {
   color: var(--color-text-accent);
-  font-size: 1.6rem;
+  font-size: var(--font-size-2xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -4110,7 +4106,7 @@ a.os-chip:focus-visible {
 }
 .feature-metric small {
   color: var(--color-text-secondary);
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -4136,7 +4132,7 @@ a.os-chip:focus-visible {
   margin-bottom: 0;
 }
 .features[data-variant="tiles"] .feature-card h3 {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
 }
 
 /* ============================================================
@@ -4188,7 +4184,7 @@ a.os-chip:focus-visible {
   padding: 0 0.85rem;
   border-radius: 999px;
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   text-decoration: none;
   transition:
@@ -4256,13 +4252,13 @@ a.os-chip:focus-visible {
   gap: 0.1rem;
 }
 .nav-item-copy b {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   line-height: 1.3;
 }
 .nav-item-copy small {
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
   line-height: 1.35;
 }
 
@@ -4318,7 +4314,7 @@ a.os-chip:focus-visible {
   border: 1px solid var(--color-border-emphasized);
   border-radius: 999px;
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   text-decoration: none;
 }
@@ -4335,7 +4331,7 @@ a.os-chip:focus-visible {
   display: inline-flex;
   padding: 0.35rem 0.45rem 0.35rem 1.5rem;
   border-bottom: 0;
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
 }
 .mobile-panel .mobile-actions .btn-secondary {
   padding-right: 1.5rem;
@@ -4413,12 +4409,12 @@ a.os-chip:focus-visible {
 }
 .map-location b {
   display: block;
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
 }
 .map-location small {
   display: block;
   color: #c5bfd5;
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 .map-location-dot {
   flex-shrink: 0;
@@ -4499,13 +4495,13 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .split-list h3 {
   margin: 0 0 0.25rem;
   color: var(--color-text-primary);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
 }
 .split-list p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.55;
 }
 @media (min-width: 1024px) {
@@ -4652,7 +4648,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   border-radius: 999px;
   background: var(--rc-violet-050);
   color: #5025d1;
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
 }
 .plan-card[data-recommended="true"] {
@@ -4684,7 +4680,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   gap: 0.35rem;
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -4694,7 +4690,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .plan-spec dd {
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 800;
   letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
@@ -4710,7 +4706,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   min-height: 2rem;
   list-style: none;
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   cursor: pointer;
 }
@@ -4743,7 +4739,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .plan-feature-group h4 {
   margin: 0 0 0.45rem;
   color: var(--color-text-accent);
-  font-size: 0.7rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -4766,11 +4762,11 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 }
 .plan-highlights b {
   color: var(--color-text-primary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .plan-highlights small {
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   line-height: 1.45;
 }
 .plan-highlight-icon {
@@ -4827,7 +4823,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .plan-includes-label {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -4844,7 +4840,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   border-radius: 999px;
   background: var(--color-background-card);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   list-style: none;
 }
@@ -4873,7 +4869,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   min-width: 0;
 }
 .plan-enterprise h3 {
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
 }
 .plan-enterprise p {
   color: #c5bfd5;
@@ -4927,7 +4923,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .finder-drawer-head h2 {
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 1.35rem;
+  font-size: var(--font-size-xl);
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -4965,7 +4961,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 }
 .finder-progress-label {
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -4984,7 +4980,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   transition: width var(--duration-medium) ease;
 }
 .finder-flow[data-variant="drawer"] .finder-question {
-  font-size: 1.25rem;
+  font-size: var(--text-heading-3-size);
 }
 .finder-flow[data-variant="drawer"] .finder-option {
   padding: 0.85rem 1rem;
@@ -5050,7 +5046,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   margin-left: auto;
   min-height: 2.25rem;
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
@@ -5065,4 +5061,35 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 }
 .subnav-help + .subnav-cta {
   margin-left: 0;
+}
+
+/* ============================================================
+   Layout tokens v4 — container queries + touch-first hover
+   ============================================================ */
+
+/* The shell is the site's container: card internals respond to the shell
+   (or their own track) width, never to the viewport. */
+.site-shell {
+  container-type: inline-size;
+  container-name: shell;
+}
+
+/* Hover lifts only where a hover exists; touch gets a press instead. */
+@media (hover: none) {
+  .card:hover,
+  .plan-card:hover,
+  .feature-card:hover,
+  .product-card:hover,
+  .finder-option:hover,
+  .os-chip:hover,
+  .tech-logo:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+.card:active,
+.plan-card:active,
+.finder-option:active,
+.os-chip:active {
+  transform: scale(0.995);
 }

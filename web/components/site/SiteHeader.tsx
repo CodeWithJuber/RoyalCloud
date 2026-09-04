@@ -139,8 +139,17 @@ export function SiteHeader() {
       <header className="header-bar">
         <div className="header-inner">
           <Link className="brand" href="/" aria-label="Royal Clouds home" onClick={closeAll}>
+            {/* Intrinsic size, not the rendered size: CSS sizes it by height,
+                so a wrong ratio here reserves the wrong width and the sticky
+                header reflows once the file loads. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logoDark} width={176} height={46} alt="Royal Clouds" />
+            <img
+              src={logoDark}
+              width={970}
+              height={207}
+              alt="Royal Clouds"
+              fetchPriority="high"
+            />
           </Link>
 
           <nav className="desktop-nav" aria-label="Primary">

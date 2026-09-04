@@ -57,7 +57,7 @@ function ProductPanel({ plan }: { plan: PlanFile }) {
         <ul className="showcase-product-features">
           {popular.features.slice(0, 4).map((feature) => (
             <li key={feature}>
-              <Icon name="check" size={14} color="success" />
+              <Icon name="check" size={16} color="success" />
               {feature}
             </li>
           ))}

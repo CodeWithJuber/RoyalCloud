@@ -282,7 +282,7 @@ export function FinderFlow({
             <ul className="finder-features">
               {result.tier.features.slice(0, 4).map((feature) => (
                 <li key={feature}>
-                  <Icon name="check" size={14} color="success" />
+                  <Icon name="check" size={16} color="success" />
                   {feature}
                 </li>
               ))}

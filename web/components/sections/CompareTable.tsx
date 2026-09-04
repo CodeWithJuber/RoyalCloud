@@ -127,7 +127,7 @@ export function CompareTable({ caption, tiers, groups, hasAnnual, tableId }: Com
                     {row.tooltip && (
                       <Tooltip content={row.tooltip} placement="above">
                         <button type="button" className="compare-info" aria-label={`About ${row.label}`}>
-                          <Icon name="info" size={14} />
+                          <Icon name="info" size={16} />
                         </button>
                       </Tooltip>
                     )}
@@ -174,7 +174,7 @@ export function CompareTable({ caption, tiers, groups, hasAnnual, tableId }: Com
           onClick={() => setExpanded((value) => !value)}
         >
           {expanded ? "Show less" : "Compare all features"}
-          <Icon name={expanded ? "arrowUp" : "arrowDown"} size={14} />
+          <Icon name={expanded ? "arrowUp" : "arrowDown"} size={16} />
         </button>
       )}
     </>

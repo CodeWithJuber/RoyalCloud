@@ -58,7 +58,7 @@ export function FaqAccordion({
               <summary>
                 <span className="faq-q">{faq.q}</span>
                 <span className="faq-toggle" aria-hidden="true">
-                  <Icon name="chevronDown" size={14} />
+                  <Icon name="chevronDown" size={16} />
                 </span>
               </summary>
               <p className="faq-answer">{faq.a}</p>

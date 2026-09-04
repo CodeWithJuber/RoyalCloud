@@ -79,14 +79,14 @@ function HeroIntents() {
         {INTENTS.filter((intent) => intent.chip).map((intent) => (
           <li key={intent.id}>
             <Link className="hero-intent" href={finderHref(intent.id)} data-finder={intent.id}>
-              <Icon name={intent.icon} size={14} />
+              <Icon name={intent.icon} size={16} />
               {intent.label}
             </Link>
           </li>
         ))}
         <li>
           <Link className="hero-intent hero-intent-help" href={finderHref()} data-finder="">
-            <Icon name="search" size={14} />
+            <Icon name="search" size={16} />
             Not sure? Help me choose
           </Link>
         </li>
@@ -101,7 +101,7 @@ function HeroBadges({ badges }: { badges?: string[] }) {
     <ul className="hero-badges">
       {badges.map((badge) => (
         <li key={badge}>
-          <Icon name="check" size={14} color="inherit" className="hero-badge-icon" />
+          <Icon name="check" size={16} color="inherit" className="hero-badge-icon" />
           {badge}
         </li>
       ))}

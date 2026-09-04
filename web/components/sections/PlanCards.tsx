@@ -183,7 +183,7 @@ function FeatureList({ features }: { features: string[] }) {
     <ul className="plan-features">
       {features.map((feature) => (
         <li key={feature}>
-          <Icon name="check" size={14} color="success" className="plan-check" />
+          <Icon name="check" size={16} color="success" className="plan-check" />
           {feature}
         </li>
       ))}
@@ -236,7 +236,7 @@ function PlanCard({
         {tier.summary && <p className="plan-summary">{tier.summary}</p>}
         {recommended && (
           <p className="plan-reco" role="status">
-            <Icon name="check" size={14} />
+            <Icon name="check" size={16} />
             Recommended for you
           </p>
         )}
@@ -274,7 +274,7 @@ function PlanCard({
           {specs.map((spec) => (
             <div key={spec.key} className="plan-spec">
               <dt>
-                <Icon name={spec.icon} size={14} />
+                <Icon name={spec.icon} size={16} />
                 {spec.label}
               </dt>
               <dd>{spec.value}</dd>

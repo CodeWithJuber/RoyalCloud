@@ -47,12 +47,13 @@ export function CountUp({
         if (!entries.some((entry) => entry.isIntersecting)) return;
         observer.disconnect();
         cancelAnimationFrame(frame);
+        /* Start from zero only once the element is in view: until then the
+           authored value stays visible, so a stat never reads "0.0". */
+        setDisplay(formatCountable(parsed, 0));
         frame = requestAnimationFrame(tick);
       },
       { threshold: 0.3 },
     );
-    /* Rest at zero until the element is in view, so the count is seen. */
-    frame = requestAnimationFrame(() => setDisplay(formatCountable(parsed, 0)));
     observer.observe(el);
 
     return () => {
