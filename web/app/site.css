@@ -186,7 +186,10 @@
 .section-deep .btn-secondary,
 .section-royal .btn-secondary {
   color: #faf7ff;
-  border-color: #faf7ff33;
+  /* 38% white measures 3.07:1 against night, clearing the 3:1 non-text
+     minimum; #faf7ff33 was 2.03:1 and the border is this button's only
+     shape indicator. */
+  border-color: #faf7ff60;
   background: #ffffff0a;
 }
 .section-dark .btn-secondary .btn-arrow,
@@ -701,7 +704,7 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr repeat(4, 1fr);
+  grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr));
   gap: 2.5rem;
   padding-bottom: 3rem;
 }
@@ -727,10 +730,18 @@
   list-style: none;
 }
 .footer-socials a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--spacing-11);
   color: var(--color-text-secondary);
   font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
+}
+.footer-socials a:focus-visible {
+  outline: 2px solid #faf7ff;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 .footer-socials a:hover {
   color: #ffffff;
@@ -781,9 +792,8 @@
 }
 
 @media (max-width: 1024px) {
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  /* Columns are set by the later tablet block; only the brand span belongs
+     here (an earlier grid-template-columns was dead against it). */
   .footer-brand {
     grid-column: 1 / -1;
   }
@@ -854,7 +864,7 @@
 
 .hero-inner {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
 }
@@ -1994,7 +2004,7 @@ a.feature-card:hover .feature-more {
 
 .split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
 }
@@ -2339,7 +2349,7 @@ a.feature-card:hover .feature-more {
   font-weight: 600;
 }
 .domain-row input::placeholder {
-  color: #8b8c99;
+  color: var(--color-text-secondary);
 }
 .domain-row input:focus-visible {
   outline: 2px solid var(--rc-gold);
@@ -2627,7 +2637,7 @@ a.feature-card:hover .feature-more {
 
 .hero-home-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
   text-align: left;
@@ -2666,7 +2676,7 @@ a.feature-card:hover .feature-more {
   font-weight: 600;
 }
 .hero-search input::placeholder {
-  color: #8b8c99;
+  color: var(--color-text-secondary);
 }
 .hero-search input:focus {
   outline: none;
@@ -3046,7 +3056,7 @@ a.feature-card:hover .feature-more {
 }
 .finder-features {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.5rem 1.25rem;
   margin: 0 0 1.5rem;
   padding: 0;
@@ -3097,7 +3107,7 @@ a.feature-card:hover .feature-more {
 
 .showcase-product {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
   padding: clamp(1.5rem, 4vw, 2.5rem);
@@ -3211,6 +3221,10 @@ a.feature-card:hover .feature-more {
 .section-deep :focus-visible,
 .section-royal :focus-visible,
 .hero :focus-visible {
+  /* Width and style too: setting only the colour recolours the UA's
+     `outline-style: auto` ring, which Chromium ignores. */
+  outline: 2px solid #faf7ff;
+  outline-offset: 2px;
   outline-color: #faf7ff;
 }
 
@@ -3236,7 +3250,7 @@ a.feature-card:hover .feature-more {
   }
   .hero-badges {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.5rem 1rem;
     margin-top: 1.5rem;
   }
@@ -3250,7 +3264,7 @@ a.feature-card:hover .feature-more {
   /* CTAs share one row instead of stacking full-width */
   .hero-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.6rem;
     margin-top: 1.5rem;
   }
@@ -3294,7 +3308,7 @@ a.feature-card:hover .feature-more {
   /* Trustbar: 2-col equal tiles, no ragged wrap */
   .trustbar-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.6rem 1rem;
     justify-content: stretch;
   }
@@ -3303,10 +3317,13 @@ a.feature-card:hover .feature-more {
   }
 
   /* Grids densify instead of stacking tall */
+  /* auto-fit, not a hard 2-up: at 320px two 10rem tracks cannot fit the
+     296px shell, so the row collapses to one column instead of inflating
+     past the viewport. */
   .grid-2,
   .grid-3,
   .grid-4 {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), minmax(0, 1fr)));
   }
   .plan-grid,
   .plan-grid[data-cols="3"],
@@ -3392,7 +3409,12 @@ a.feature-card:hover .feature-more {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  margin-top: 1rem;
+  /* Standalone link, so WCAG 2.5.8 applies: give it a real hit box and pull
+     the padding back so the optical left edge does not move. */
+  min-height: var(--spacing-11);
+  padding-inline: 0.75rem;
+  margin-inline-start: -0.75rem;
+  margin-top: 0.75rem;
   color: #c5bfd5;
   font-size: var(--text-supporting-size);
   font-weight: 600;
@@ -3747,21 +3769,10 @@ html {
   }
 }
 
-/* Wide screens: the header row sticks under the site header (+ sub-nav) */
-@media (min-width: 1024px) {
-  .compare-scroll {
-    overflow: visible;
-  }
-  .compare-table thead th {
-    position: sticky;
-    top: calc(var(--site-header-h) + var(--subnav-h));
-    z-index: 3;
-    background: var(--color-background-card);
-  }
-  .compare-table thead th.compare-popular {
-    background: var(--color-accent);
-  }
-}
+/* The comparison table always scrolls inside its own container. Releasing it
+   to `overflow: visible` on wide screens let a 7-column deck (1142px of
+   min-content) push the page sideways at 1024-1150px; a sticky header is not
+   worth a horizontally scrolling document. */
 
 /* ============================================================
    Stats count-up + benchmark bars fill on reveal
@@ -4077,8 +4088,10 @@ a.os-chip:focus-visible {
   white-space: nowrap;
 }
 .subnav-cta small {
+  /* The theme's prose rule paints <small> secondary grey, which lands at
+     2.9:1 on gold — this line is button ink, so it inherits. */
+  color: inherit;
   font-weight: 500;
-  opacity: 0.85;
 }
 @media (max-width: 768px) {
   .product-subnav {
@@ -4115,7 +4128,7 @@ a.os-chip:focus-visible {
 /* Tiles: icon beside the copy, no card chrome — for dense landing grids */
 .features[data-variant="tiles"] .feature-card {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   column-gap: 1rem;
   padding: 0.75rem 0.5rem;
   border-color: transparent;
@@ -4344,7 +4357,7 @@ a.os-chip:focus-visible {
 /* Product hero keeps two columns down to 760px; stacked art is capped */
 @media (min-width: 761px) and (max-width: 900px) {
   .hero-inner {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   }
 }
 @media (max-width: 760px) {
@@ -4383,8 +4396,11 @@ a.os-chip:focus-visible {
     max-width: none;
   }
 }
-.map-stage {
-  aspect-ratio: 2 / 1;
+/* Gated: unconditional, this beat the 4/3 phone ratio declared earlier. */
+@media (min-width: 641px) {
+  .map-stage {
+    aspect-ratio: 2 / 1;
+  }
 }
 .map-pin-label {
   opacity: 1;
@@ -5092,4 +5108,73 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .finder-option:active,
 .os-chip:active {
   transform: scale(0.995);
+}
+
+/* ============================================================
+   Base layer — focus, hit area, wrapping
+   One block instead of forty restatements: Astryx ships no global
+   :focus-visible for hand-written HTML, so any selector that forgot its own
+   ring simply had none.
+   ============================================================ */
+
+:is(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* No double-tap-zoom delay on anything that acts like a control. */
+:is(a, button, summary, [role="tab"], input, select) {
+  touch-action: manipulation;
+}
+
+/* Long tokens (URLs in legal copy, distro names in narrow cards) break
+   instead of widening the page. */
+.prose,
+.prose a,
+.card,
+.feature-card,
+.product-card,
+.os-chip b,
+.os-text,
+.testi-card blockquote,
+.story-card blockquote {
+  overflow-wrap: anywhere;
+}
+
+/* Cards are grid/flex children: without this they refuse to shrink below
+   their longest word and push the row past the viewport. */
+.card,
+.feature-card,
+.product-card,
+.os-chip,
+.finder-option-copy,
+.faq-q,
+.nav-item-copy,
+.testi-card blockquote,
+.story-card blockquote {
+  min-width: 0;
+}
+
+.feature-card h3,
+.product-card h3,
+.os-chip b {
+  hyphens: auto;
+}
+
+/* Phone header: logo 140 + currency 121 + toggle 44 did not fit a 296px
+   shell at 320. The currency labels shorten to their symbols — the buttons
+   keep their aria-labels, so nothing is lost to assistive tech. */
+@media (max-width: 420px) {
+  .brand img {
+    width: 116px;
+  }
+  .currency-name {
+    display: none;
+  }
+  .currency-switch button {
+    padding-inline: 0.5rem;
+  }
+  .header-inner {
+    gap: 0.5rem;
+  }
 }

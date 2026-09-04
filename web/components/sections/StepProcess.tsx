@@ -26,7 +26,14 @@ export function StepProcess({ id, eyebrow, title, subtitle, items }: StepProcess
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
-        <ol className="steps-grid" data-cols={Math.min(items.length, 4)}>
+        {/* The grid becomes a snap rail on phones, so it needs to be focusable
+            and named — a mouse can drag it, a keyboard cannot reach it. */}
+        <ol
+          className="steps-grid"
+          data-cols={Math.min(items.length, 4)}
+          tabIndex={0}
+          aria-label={title ? `${title} — scroll sideways` : "Steps — scroll sideways"}
+        >
           {items.map((step, i) => (
             <li
               key={step.title}

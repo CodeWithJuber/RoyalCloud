@@ -46,7 +46,7 @@ export function Rail({
   keys,
   reveal = true,
 }: RailProps) {
-  const railRef = useRef<HTMLUListElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [overflowing, setOverflowing] = useState(false);
   const [edges, setEdges] = useState({ start: true, end: false });
@@ -106,9 +106,12 @@ export function Rail({
       aria-label={label}
       data-controls={overflowing ? "true" : "false"}
     >
-      <ul className={railClassName} ref={railRef} tabIndex={0} aria-label={`${label} — scroll sideways`}>
+      {/* Divs, not ul/li: each slide needs role="group" to carry
+          aria-roledescription="slide", and a role on an <li> strips the
+          list semantics its <ul> parent requires. */}
+      <div className={railClassName} ref={railRef} tabIndex={0} aria-label={`${label} — scroll sideways`}>
         {children.map((child, i) => (
-          <li
+          <div
             key={keys?.[i] ?? i}
             className={slideClassName}
             role="group"
@@ -119,9 +122,9 @@ export function Rail({
             style={reveal ? ({ "--reveal-i": i } as CSSProperties) : undefined}
           >
             {child}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
       <div className={controlsClassName}>
         <button

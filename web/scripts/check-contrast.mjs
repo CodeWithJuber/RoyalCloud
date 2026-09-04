@@ -98,6 +98,14 @@ export const PAIRS = [
 
   { label: "benchmark scale caption on night", fg: "#c5bfd5", bg: "#2f1c6a", size: "body" },
 
+  // Search placeholders are text, so they carry the body threshold
+  { label: "search placeholder on white", fg: "#595b68", bg: "#ffffff", size: "body" },
+  // Secondary button on dark fields: the border is its only shape indicator
+  // (#faf7ff at 38% flattened over night)
+  { label: "secondary button border on night", fg: "#7b6ea2", bg: "#2f1c6a", size: "ui" },
+  // Sub-nav price line on the gold pill (no opacity — it is solid ink)
+  { label: "subnav price line on gold", fg: "#2f1c6a", bg: "#ffc94b", size: "body" },
+
   // Plan cards v3: spec tiles and the "recommended" chip on violet-050
   { label: "spec tile value ink on violet-050", fg: "#2f1c6a", bg: "#f0edff", size: "body" },
   { label: "spec tile label on violet-050", fg: "#595b68", bg: "#f0edff", size: "body" },
