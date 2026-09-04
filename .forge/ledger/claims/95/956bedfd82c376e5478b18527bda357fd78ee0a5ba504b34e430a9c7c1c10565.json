@@ -1,0 +1,1 @@
+{"body":{"id":"D-0005","text":"Section anchors come from lib/section-ids (explicit content id wins, else per-type default, -2/-3 suffixes) and SectionRenderer passes them as id props; PageView computes them once — avoids adding id fields to every CMS block"},"kind":"decision","scope":{"level":"repo"},"v":1}

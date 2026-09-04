@@ -60,6 +60,8 @@ sections:
       - icon: bolt
         title: LiteSpeed + LSCache
         text: Serve pages up to 15x faster than standard Apache HDD hosting.
+        metric: 15x
+        metricLabel: faster than HDD hosting
       - icon: shield
         title: Free SSL & DDoS Protection
         text: Every site is encrypted and shielded with Cloudflare and free SSL.

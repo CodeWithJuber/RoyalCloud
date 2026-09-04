@@ -1,0 +1,1 @@
+{"body":{"id":"D-0004","text":"web/package.json check runs 'next typegen' before tsc — LayoutProps is a Next 16 generated global type in .next/types, so a fresh checkout failed tsc (TS2304) before any build; typegen makes the gate deterministic"},"kind":"decision","scope":{"level":"repo"},"v":1}

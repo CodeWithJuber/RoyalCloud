@@ -58,7 +58,11 @@ for (const [name, path] of PAGES) {
     const page = await browser.newPage({ viewport: { width, height: 900 } });
     const consoleErrors = [];
     page.on("console", (msg) => {
-      if (msg.type() === "error") consoleErrors.push(msg.text());
+      if (msg.type() !== "error") return;
+      /* The 404 probe page must answer 404 — the browser's own "Failed to load
+         resource: 404" line for the document itself is expected there. */
+      if (name === "404" && /status of 404/.test(msg.text())) return;
+      consoleErrors.push(msg.text());
     });
     page.on("pageerror", (err) => consoleErrors.push(String(err)));
     await page.goto(`${BASE}${path}`, { waitUntil: "networkidle", timeout: 60000 }).catch(() => {});

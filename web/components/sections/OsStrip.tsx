@@ -1,4 +1,6 @@
-import type { CSSProperties } from "react";
+import { DEPLOY_CATALOG, groupsIn } from "@/lib/deploy-catalog";
+import { DeployTabs } from "./DeployTabs";
+import { OsChip, type DeployItem } from "./OsChip";
 
 export interface OsItem {
   name: string;
@@ -7,37 +9,50 @@ export interface OsItem {
 }
 
 interface OsStripProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
   items: OsItem[];
 }
 
-export function OsStrip({ eyebrow, title, subtitle, items }: OsStripProps) {
+/* Server shell: enriches authored names from the deploy catalogue. Pages that
+   list only distros keep the flat chip row (no JS); pages whose items span
+   more than one group get the tabbed "one-click deploy" grid. */
+export function OsStrip({ id, eyebrow, title, subtitle, items }: OsStripProps) {
+  const enriched: DeployItem[] = items.map((item) => {
+    const entry = DEPLOY_CATALOG[item.name];
+    return { ...item, href: entry?.href, text: entry?.text };
+  });
+  const groups = groupsIn(items.map((item) => item.name));
+  const tabbed = groups.length > 1;
+
   return (
-    <section className="section-sm osstrip">
+    <section className="section-sm osstrip" id={id}>
       <div className="site-shell">
-        {(eyebrow || title || subtitle) && (
+        {(eyebrow || title || subtitle || tabbed) && (
           <header className="section-header center" data-reveal>
-            {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+            {(eyebrow || tabbed) && <p className="eyebrow">{eyebrow ?? "One-click deploy"}</p>}
             {title && <h2>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
-        <ul className="os-row" data-reveal>
-          {items.map((os) => (
-            <li key={os.name} className={`os-chip${os.active ? " active" : ""}`}>
-              <span
-                className="os-mark"
-                style={os.color ? ({ "--os-c": os.color } as CSSProperties) : undefined}
-                aria-hidden="true"
-              >
-                {os.name.slice(0, 1)}
-              </span>
-              <b>{os.name}</b>
-            </li>
-          ))}
-        </ul>
+        {tabbed ? (
+          <DeployTabs
+            items={enriched}
+            groups={groups}
+            label={title ?? "One-click deploy options"}
+            baseId={`${id ?? "deploy"}-panel`}
+          />
+        ) : (
+          <ul className="os-row" data-reveal>
+            {enriched.map((item) => (
+              <li key={item.name}>
+                <OsChip item={item} />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );

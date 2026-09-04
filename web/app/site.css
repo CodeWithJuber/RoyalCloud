@@ -3447,3 +3447,724 @@ a.feature-card:hover .feature-more {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
+
+/* ============================================================
+   Interaction infra — header-height var + anchor offset, reveal
+   stagger, rating badge, light-card hover hairline
+   ============================================================ */
+
+:root {
+  /* Measured at runtime by SiteHeader (ResizeObserver); ProductSubnav adds
+     its own height. Anchor jumps and sticky elements sit below both. */
+  --site-header-h: 4.5rem;
+  --subnav-h: 0px;
+}
+html {
+  scroll-padding-top: calc(var(--site-header-h) + var(--subnav-h) + 1rem);
+}
+
+/* Reveal stagger: grid children carry --reveal-i (their index). A delayed
+   animation plays over the existing transform-only reveal; fill-mode
+   "backwards" holds the offset during the delay and releases `transform`
+   afterwards, so hover lifts keep working. Capped at 6 steps (360ms). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes reveal-in {
+    from {
+      transform: translateY(1.25rem);
+    }
+    to {
+      transform: none;
+    }
+  }
+  [data-js="true"] [data-reveal][data-visible="true"] {
+    animation: reveal-in 0.6s cubic-bezier(0.32, 0.72, 0, 1) backwards;
+    animation-delay: calc(min(var(--reveal-i, 0), 6) * 60ms);
+  }
+}
+
+/* Rating badge — hero, testimonials header, trust strip (data/site.json) */
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.rating-badge strong {
+  font-weight: 700;
+}
+.rating-stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--rc-gold);
+}
+.hero-rating.rating-badge {
+  display: flex;
+}
+
+/* Light-section cards: violet hairline on hover — the same border-box
+   technique as .plan-popular; gold stays reserved for the popular plan and
+   conversion CTAs. */
+.features .feature-card:hover,
+.products .product-card:hover {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--color-background-card), var(--color-background-card)) padding-box,
+    linear-gradient(135deg, var(--color-accent), #9b85ff) border-box;
+}
+
+/* ============================================================
+   Hero intent chips ("What are you building?") + plan finder v2
+   ============================================================ */
+
+.hero-intents {
+  margin-top: 1.25rem;
+  min-width: 0;
+  max-width: 100%;
+}
+/* The no-wrap chip row must not inflate the hero column's intrinsic width
+   (grid items default to min-width: auto), or the page scrolls sideways. */
+.hero-home-grid > .hero-copy {
+  min-width: 0;
+}
+.hero-intents-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #c5bfd5;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.hero-intents ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.hero-intent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #faf7ff2e;
+  border-radius: 999px;
+  background: #ffffff14;
+  color: #faf7ff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+.hero-intent:hover {
+  background: #ffffff26;
+  border-color: #faf7ff66;
+  color: #ffffff;
+}
+.hero-intent:focus-visible {
+  outline: 2px solid #faf7ff;
+  outline-offset: 2px;
+}
+.hero-intent-help {
+  background: transparent;
+}
+@media (max-width: 640px) {
+  /* One scrollable row — the chips never push the search or CTAs down. */
+  .hero-intents {
+    margin-top: 1rem;
+  }
+  .hero-intents-label {
+    display: none;
+  }
+  .hero-intents ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hero-intents ul::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-intent {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}
+
+/* Finder v2: two-column options, budget bands, annual alternative, step motion */
+@media (min-width: 561px) {
+  .finder-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.finder-budget .finder-option-copy strong .px {
+  font-size: 1rem;
+}
+.finder-alt {
+  width: 100%;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+.finder-alt .px {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+.finder-result .finder-back {
+  margin-top: 1rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes finder-forward {
+    from {
+      transform: translateX(1.25rem);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes finder-back {
+    from {
+      transform: translateX(-1.25rem);
+    }
+    to {
+      transform: none;
+    }
+  }
+  .finder-body[data-dir="forward"] {
+    animation: finder-forward var(--duration-medium, 300ms) cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .finder-body[data-dir="back"] {
+    animation: finder-back var(--duration-medium, 300ms) cubic-bezier(0.32, 0.72, 0, 1);
+  }
+}
+
+/* ============================================================
+   Comparison table v2 — synced billing, best-for row, grouped rows,
+   column highlight, phone collapse, sticky header on wide screens
+   ============================================================ */
+
+.compare-toolbar {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+/* "Most popular" flag: white pill on the violet header cell (gold stays on CTAs) */
+.compare-flag {
+  background: #ffffff;
+  color: var(--color-accent);
+  font-size: 0.62rem;
+}
+
+.compare-term {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+.compare-best td {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.compare-table .compare-group th {
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.compare-info {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.35rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+  vertical-align: middle;
+  cursor: help;
+}
+.compare-info:hover {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+.compare-info:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Hovered/focused column */
+.compare-table td[data-active="true"],
+.compare-table tbody tr:nth-child(even) td[data-active="true"] {
+  background: #f4f0fd;
+}
+.compare-table thead th[data-active="true"] {
+  background: #f4f0fd;
+}
+.compare-table td.compare-popular[data-active="true"],
+.compare-table tbody tr:nth-child(even) td.compare-popular[data-active="true"] {
+  background: #673de61f;
+}
+.compare-table thead th.compare-popular[data-active="true"] {
+  background: var(--color-accent);
+}
+
+/* Phone collapse: lead rows + first group until expanded (JS only; without
+   JS every row renders) */
+.compare-more {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 1rem auto 0;
+  min-height: 2.5rem;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid var(--color-border-emphasized);
+  border-radius: 999px;
+  background: var(--color-background-card);
+  color: var(--color-text-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.compare-more:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+@media (max-width: 767px) {
+  .compare-more {
+    display: inline-flex;
+  }
+  [data-js="true"] .compare-table[data-expanded="false"] .compare-extra {
+    display: none;
+  }
+}
+
+/* Wide screens: the header row sticks under the site header (+ sub-nav) */
+@media (min-width: 1024px) {
+  .compare-scroll {
+    overflow: visible;
+  }
+  .compare-table thead th {
+    position: sticky;
+    top: calc(var(--site-header-h) + var(--subnav-h));
+    z-index: 3;
+    background: var(--color-background-card);
+  }
+  .compare-table thead th.compare-popular {
+    background: var(--color-accent);
+  }
+}
+
+/* ============================================================
+   Stats count-up + benchmark bars fill on reveal
+   ============================================================ */
+
+.bench-scale {
+  margin: 0 0 0.75rem;
+  color: #c5bfd5;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+/* Bars start empty and fill when the panel reveals; each bar waits 90ms
+   longer than the one above. Reduced motion: full width, no transition. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-js="true"] .bench-panel .bench-fill {
+    transition: width var(--duration-slow, 700ms) cubic-bezier(0.32, 0.72, 0, 1)
+      calc(var(--i, 0) * 90ms);
+  }
+  [data-js="true"] .bench-panel:not([data-visible="true"]) .bench-fill {
+    width: 0;
+  }
+}
+
+/* ============================================================
+   Testimonials carousel + FAQ accordion v2 + trust grid
+   ============================================================ */
+
+.testi-aggregate {
+  justify-content: center;
+  margin-top: 0.75rem;
+  color: var(--color-text-secondary);
+}
+.testi-aggregate strong {
+  color: var(--color-text-primary);
+}
+
+.testi-carousel {
+  position: relative;
+}
+.testi-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0.25rem 0 0.5rem;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.testi-rail::-webkit-scrollbar {
+  display: none;
+}
+.testi-rail:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+.testi-slide {
+  scroll-snap-align: start;
+}
+.testi-slide .testi-card {
+  height: 100%;
+}
+@media (min-width: 768px) {
+  .testi-rail {
+    grid-auto-columns: calc((100% - 1.25rem) / 2);
+  }
+}
+@media (min-width: 1024px) {
+  .testi-rail {
+    grid-auto-columns: calc((100% - 2.5rem) / 3);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .testi-rail {
+    scroll-behavior: auto;
+  }
+}
+
+.testi-controls {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.testi-carousel[data-controls="true"] .testi-controls {
+  display: flex;
+}
+.testi-nav {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--color-border-emphasized);
+  border-radius: 999px;
+  background: var(--color-background-card);
+  color: var(--color-text-accent);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+}
+.testi-nav:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  background: var(--rc-violet-050);
+}
+.testi-nav:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.testi-nav:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.testi-dots {
+  display: flex;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.testi-dots button {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.testi-dots button::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #8b8c99;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+.testi-dots button[aria-current="true"]::before {
+  background: var(--color-accent);
+  transform: scale(1.4);
+}
+.testi-dots button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+/* FAQ: chevron flips; the answer's open/close animates where the browser
+   supports it (Chromium 131+), everywhere else it simply toggles. */
+.faq-item[open] .faq-toggle {
+  transform: rotate(180deg);
+}
+@supports (interpolate-size: allow-keywords) {
+  .faq-item {
+    interpolate-size: allow-keywords;
+  }
+  .faq-item::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition:
+      content-visibility var(--duration-medium, 300ms) allow-discrete,
+      block-size var(--duration-medium, 300ms) cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content,
+  .faq-toggle {
+    transition: none;
+  }
+}
+
+/* Trust strip: four proof points become four equal tiles on wide screens */
+@media (min-width: 900px) {
+  .trustbar-row[data-count="4"] {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .trustbar-row[data-count="4"] .trustbar-item {
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   One-click deploy tabs (OS strip v2)
+   ============================================================ */
+
+.os-row > li {
+  display: contents;
+}
+.os-copy {
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+}
+.os-text {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+a.os-chip {
+  text-decoration: none;
+}
+a.os-chip:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.os-chip[data-rich="true"] {
+  align-items: flex-start;
+  max-width: 22rem;
+  padding: 0.9rem 1.1rem 0.9rem 0.85rem;
+  border-radius: 16px;
+}
+.os-chip[data-rich="true"] .os-mark {
+  margin-top: 0.1rem;
+}
+
+.deploy-tabs {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+}
+.deploy-tabs .os-grid {
+  width: 100%;
+}
+.deploy-tabs .os-grid:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+
+/* ============================================================
+   Product sub-nav — sticky "On this page" pills + starting price
+   ============================================================ */
+
+.product-subnav {
+  position: sticky;
+  top: var(--site-header-h);
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+.product-subnav-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3.25rem;
+}
+.subnav-links {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.subnav-links::-webkit-scrollbar {
+  display: none;
+}
+.subnav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.subnav-link:hover {
+  color: var(--color-text-accent);
+  background: var(--rc-violet-050);
+}
+.subnav-link[aria-current="location"] {
+  color: #ffffff;
+  background: var(--color-accent);
+}
+.subnav-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.subnav-cta {
+  margin-left: auto;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  padding-block: 0.25rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.subnav-cta small {
+  font-weight: 500;
+  opacity: 0.85;
+}
+@media (max-width: 768px) {
+  .product-subnav {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Feature cards — metric callouts + "tiles" variant
+   ============================================================ */
+
+.feature-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: 0 0 0.6rem;
+}
+.feature-metric strong {
+  color: var(--color-text-accent);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.feature-metric small {
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Tiles: icon beside the copy, no card chrome — for dense landing grids */
+.features[data-variant="tiles"] .feature-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+  padding: 0.75rem 0.5rem;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+.features[data-variant="tiles"] .feature-card:hover {
+  transform: none;
+  border-color: transparent;
+  background: var(--rc-violet-050);
+}
+.features[data-variant="tiles"] .feature-icon {
+  grid-row: 1 / span 3;
+  margin-bottom: 0;
+}
+.features[data-variant="tiles"] .feature-card h3 {
+  font-size: 1rem;
+}
+
+/* ============================================================
+   Mobile overflow fixes — no horizontal scroll at 390px
+   ============================================================ */
+
+@media (max-width: 640px) {
+  /* Trust tiles may wrap inside their grid cell instead of overflowing it */
+  .trustbar-item {
+    white-space: normal;
+    min-width: 0;
+  }
+}
+@media (max-width: 560px) {
+  /* Brand + currency switch + hamburger must fit a 390px header */
+  .header-inner {
+    gap: 0.75rem;
+  }
+  .brand img {
+    width: 140px;
+    height: auto;
+  }
+}
+/* Domain search: let the input shrink so the row fits 390px (flex items default
+   to min-width: auto = the input's intrinsic size, which pushed the button out) */
+.domain-row input {
+  min-width: 0;
+}
+.domain-row .btn {
+  flex-shrink: 0;
+}

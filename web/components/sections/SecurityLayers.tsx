@@ -1,3 +1,6 @@
+import type { CSSProperties } from "react";
+import { CountUp } from "../CountUp";
+
 export interface SecurityLayer {
   title: string;
   text: string;
@@ -9,6 +12,7 @@ export interface SecurityStat {
 }
 
 interface SecurityLayersProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -17,6 +21,7 @@ interface SecurityLayersProps {
 }
 
 export function SecurityLayers({
+  id,
   eyebrow,
   title,
   subtitle,
@@ -24,7 +29,7 @@ export function SecurityLayers({
   stats,
 }: SecurityLayersProps) {
   return (
-    <section className="section section-dark security">
+    <section className="section section-dark security" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
@@ -35,7 +40,12 @@ export function SecurityLayers({
         )}
         <div className="grid grid-3 sec-grid">
           {layers.map((layer, i) => (
-            <article key={layer.title} className="card sec-card" data-reveal>
+            <article
+              key={layer.title}
+              className="card sec-card"
+              data-reveal
+              style={{ "--reveal-i": i } as CSSProperties}
+            >
               <span className="sec-num">{String(i + 1).padStart(2, "0")}</span>
               <h3>{layer.title}</h3>
               <p>{layer.text}</p>
@@ -47,7 +57,9 @@ export function SecurityLayers({
             {stats.map((stat) => (
               <div key={stat.label} className="sec-stat">
                 <dt>{stat.label}</dt>
-                <dd>{stat.value}</dd>
+                <dd>
+                  <CountUp value={stat.value} />
+                </dd>
               </div>
             ))}
           </dl>

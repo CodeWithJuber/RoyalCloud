@@ -12,18 +12,20 @@ const TECH_STACK = [
 ];
 
 interface TechLogosProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
 }
 
 export function TechLogos({
+  id,
   eyebrow,
   title = "Built on trusted technology",
   subtitle,
 }: TechLogosProps) {
   return (
-    <section className="section-sm techlogos">
+    <section className="section-sm techlogos" id={id}>
       <div className="site-shell">
         <header className="section-header center" data-reveal>
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}

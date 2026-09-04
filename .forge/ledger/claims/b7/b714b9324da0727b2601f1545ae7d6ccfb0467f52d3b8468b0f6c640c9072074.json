@@ -1,0 +1,1 @@
+{"body":{"id":"D-0001","text":"web/DESIGN.md (new) is the design authority for the Next.js app; root DESIGN.md stays Astro-only — the root doc names Astro files that do not exist in web/, and the owner asked to stop relying on it and document the current violet/gold Astryx theme from real sources"},"kind":"decision","scope":{"level":"repo"},"v":1}

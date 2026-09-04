@@ -283,6 +283,18 @@ definitions:
                     widget: string,
                     required: false,
                   }
+                - {
+                    name: metric,
+                    label: "Metric (headline figure, e.g. 15x — only real, sourced numbers)",
+                    widget: string,
+                    required: false,
+                  }
+                - {
+                    name: metricLabel,
+                    label: "Metric label (e.g. faster than HDD hosting)",
+                    widget: string,
+                    required: false,
+                  }
         # ---- Products (hosting-type cards) ----
         - name: products
           label: "Product Cards"
@@ -630,6 +642,13 @@ definitions:
                 required: false,
               }
             - { name: note, label: "Footnote", widget: string, required: false }
+            - {
+                name: scale,
+                label: "Axis hint (lower/higher is better)",
+                widget: select,
+                options: ["lower", "higher"],
+                required: false,
+              }
             - name: items
               label: "Bars"
               widget: list
@@ -669,6 +688,13 @@ definitions:
                 required: false,
               }
             - { name: note, label: "Footnote", widget: string, required: false }
+            - {
+                name: scale,
+                label: "Axis hint (lower/higher is better)",
+                widget: select,
+                options: ["lower", "higher"],
+                required: false,
+              }
             - name: items
               label: "Racers"
               widget: list

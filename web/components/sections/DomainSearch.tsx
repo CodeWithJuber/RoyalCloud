@@ -10,12 +10,14 @@ const TLDS = [
 ];
 
 interface DomainSearchProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
 }
 
 export function DomainSearch({
+  id,
   eyebrow,
   title = "Find the perfect domain name",
   subtitle,
@@ -27,7 +29,7 @@ export function DomainSearch({
   const formAction = `${action.origin}${action.pathname}`;
 
   return (
-    <section className="section section-dark domain-search" aria-labelledby="domain-search-title">
+    <section className="section section-dark domain-search" id={id} aria-labelledby="domain-search-title">
       <div className="site-shell domain-shell" data-reveal>
         <header className="section-header center">
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}

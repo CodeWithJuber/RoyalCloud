@@ -100,7 +100,7 @@ sections:
     eyebrow: Help me choose
     title: Not sure which plan fits?
     subtitle: >-
-      Answer three quick questions and we'll point you at the right plan — a
+      Answer four quick questions and we'll point you at the right plan — a
       real one, with its real price and checkout link.
   - type: showcase
     eyebrow: One platform
@@ -185,6 +185,7 @@ sections:
     eyebrow: Independent reviews
     title: See Where We Rank in the Competition
     note: Rated 9.6/10 overall by a top hosting review site, as of the last review date.
+    scale: higher
     items:
       - label: Reliability
         value: 9.7

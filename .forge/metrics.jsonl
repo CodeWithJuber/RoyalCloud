@@ -41,3 +41,12 @@
 {"t":1786114709918,"stage":"gate","outcome":"pass"}
 {"t":1786114709918,"stage":"route","tier":"complex"}
 {"t":1786114720863,"stage":"gate","outcome":"stop-pass"}
+{"t":1788486471915,"stage":"gate","outcome":"halt"}
+{"t":1788486472166,"stage":"route","tier":"medium","ref":"b2883c56d267"}
+{"t":1788486472230,"stage":"cache","outcome":"miss","savedEstimate":0}
+{"t":1788486508460,"stage":"gate","outcome":"pass"}
+{"t":1788486508644,"stage":"route","tier":"complex","ref":"c359cbfb355e"}
+{"t":1788486508802,"stage":"cache","outcome":"miss","savedEstimate":0}
+{"t":1788487676355,"stage":"gate","outcome":"pass"}
+{"t":1788487676429,"stage":"route","tier":"complex","ref":"0b85ce4880f4"}
+{"t":1788487676565,"stage":"cache","outcome":"miss","savedEstimate":0}

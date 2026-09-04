@@ -1,115 +1,227 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import Link from "next/link";
 import { Stepper, Step } from "@astryxdesign/core/Stepper";
 import { Icon } from "../Icon";
 import { Price } from "../Price";
 import { PLAN_FILES } from "@/lib/plans";
+import { isIntentId } from "@/lib/intents";
+import { savePct, termLabel } from "@/lib/billing-store";
+import {
+  BUILD_OPTIONS,
+  SIZE_OPTIONS,
+  STACK_OPTIONS,
+  STACKS_FOR,
+  budgetBands,
+  deckFor,
+  recommend,
+  type Build,
+  type Size,
+  type Stack,
+} from "@/lib/plan-finder";
 
 /**
- * PlanFinder — "Help me choose" interactive onboarding. Three answers map onto
- * the real plan catalog (PLAN_FILES) — every recommendation is an actual
- * sellable plan with its real price and its real WHMCS checkout link.
+ * PlanFinder — "Help me choose" in four answers: build → stack → size →
+ * budget. Every recommendation is a real tier of a real deck with its live
+ * WHMCS checkout link (lib/plan-finder.ts is pure and unit-tested). Budget
+ * bands come from the deck's actual prices. `?for=<intent>` pre-answers the
+ * build so hero chips and product pages land straight on step two.
  */
 
-interface Option {
+type StepKey = "build" | "stack" | "size" | "budget";
+const STEP_ORDER: StepKey[] = ["build", "stack", "size", "budget"];
+const STEP_LABELS: Record<StepKey, string> = {
+  build: "Build",
+  stack: "Stack",
+  size: "Size",
+  budget: "Budget",
+};
+
+interface Answers {
+  build?: Build;
+  stack?: Stack;
+  size?: Size;
+  budget?: string;
+}
+
+interface OptionView {
   id: string;
   icon: string;
-  title: string;
+  title: ReactNode;
   text: string;
 }
 
-const STEPS: { question: string; hint: string; options: Option[] }[] = [
-  {
-    question: "What are you building?",
-    hint: "Pick the closest match — you can change later.",
-    options: [
-      { id: "shared", icon: "globe", title: "A website or blog", text: "Company site, portfolio, or blog on cPanel" },
-      { id: "wordpress", icon: "wordpress", title: "A WordPress site", text: "WordPress with updates and caching handled" },
-      { id: "vps", icon: "terminal", title: "An app or custom stack", text: "Root access, your own OS and services" },
-      { id: "dedicated", icon: "server", title: "High-traffic or enterprise", text: "Single-tenant hardware, maximum resources" },
-    ],
-  },
-  {
-    question: "How hands-on do you want to be?",
-    hint: "Managed means we handle updates, security and backups.",
-    options: [
-      { id: "managed", icon: "shield", title: "Manage it for me", text: "We patch, secure, monitor and back up" },
-      { id: "handson", icon: "settings", title: "I'll run it myself", text: "Full control, we keep the lights on" },
-    ],
-  },
-  {
-    question: "How big is the workload?",
-    hint: "Rough guesses are fine — plans scale up any time.",
-    options: [
-      { id: "low", icon: "rocket", title: "Just starting out", text: "A first site, a test project, light traffic" },
-      { id: "mid", icon: "gauge", title: "Growing steadily", text: "Regular visitors, a store, several sites" },
-      { id: "high", icon: "scale", title: "Heavy or critical", text: "High traffic, production apps, many sites" },
-    ],
-  },
-];
-
-/* Map (product, control, size) → a real plan tier from the catalog.
-   Deck indexes: shared 0-4, wordpress 0-2, vps 0-5, dedicated 0-3. */
-function recommend(product: string, size: string): { plan: string; tier: number } {
-  const tierFor = (deck: number[], size: string) =>
-    size === "low" ? deck[0] : size === "mid" ? deck[1] : deck[2];
-  switch (product) {
-    case "shared":
-      return { plan: "shared", tier: tierFor([0, 2, 3], size) }; // Starter / Deluxe / Ultimate
-    case "wordpress":
-      return { plan: "wordpress", tier: tierFor([0, 1, 2], size) }; // Managed I/II/III
-    case "vps":
-      return { plan: "vps", tier: tierFor([1, 2, 4], size) }; // KVM 2 / 3 / 5
-    default:
-      return { plan: "dedicated", tier: size === "high" ? 3 : 1 }; // Xeon E3-1230v5 / Dual E5
-  }
+interface StepView {
+  key: StepKey;
+  question: string;
+  hint: string;
+  options: OptionView[];
 }
 
+/* Decks with a single sensible stack skip the stack question. */
+const autoStack = (build: Build): Stack | undefined =>
+  STACKS_FOR[build].length === 1 ? STACKS_FOR[build][0] : undefined;
+
+/* `?for=<intent>` from the URL as an external store: the server snapshot is
+   null, so hydration matches the static HTML and the prefill applies on the
+   client's first post-hydration render — no effect has to write state. */
+const noopSubscribe = () => () => {};
+const readUrlIntent = (): Build | null => {
+  try {
+    const value = new URLSearchParams(window.location.search).get("for");
+    return isIntentId(value) ? value : null;
+  } catch {
+    return null;
+  }
+};
+const useUrlIntent = (): Build | null =>
+  useSyncExternalStore(noopSubscribe, readUrlIntent, () => null);
+
 export function PlanFinder() {
+  const urlBuild = useUrlIntent();
+  const [touched, setTouched] = useState(false);
+  const [answers, setAnswers] = useState<Answers>({});
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<string[]>([]);
-  const done = step >= STEPS.length;
+  const [dir, setDir] = useState<"forward" | "back">("forward");
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  /* The deep link pre-answers the build until the visitor touches the finder;
+     it is derived, never copied into state. */
+  const prefill: Answers | null =
+    !touched && urlBuild ? { build: urlBuild, stack: autoStack(urlBuild) } : null;
+  const view: Answers = prefill ?? answers;
+  const at = prefill ? (prefill.stack ? 2 : 1) : step;
+  const done = at >= STEP_ORDER.length;
+
+  /* After an answer, keyboard and screen-reader users land on the next question. */
+  useEffect(() => {
+    if (touched) headingRef.current?.focus({ preventScroll: true });
+  }, [at, touched]);
+
+  const bands = useMemo(
+    () => (view.build && view.stack ? budgetBands(deckFor(view.build, view.stack)) : []),
+    [view.build, view.stack],
+  );
+
+  const current: StepView | null = useMemo(() => {
+    if (done) return null;
+    const key = STEP_ORDER[at];
+    switch (key) {
+      case "build":
+        return {
+          key,
+          question: "What are you building?",
+          hint: "Pick the closest match — you can change it later.",
+          options: BUILD_OPTIONS,
+        };
+      case "stack": {
+        const allowed = view.build ? STACKS_FOR[view.build] : [];
+        return {
+          key,
+          question: "How do you want to run it?",
+          hint: "A control panel, a tuned stack, or fully managed.",
+          options: STACK_OPTIONS.filter((option) => allowed.includes(option.id)),
+        };
+      }
+      case "size":
+        return {
+          key,
+          question: "How big is the workload?",
+          hint: "Rough guesses are fine — plans scale up any time.",
+          options: SIZE_OPTIONS,
+        };
+      case "budget":
+        return {
+          key,
+          question: "What's your monthly budget?",
+          hint: "These bands come from the real plan prices — pick the closest.",
+          options: bands.map((band) => ({
+            id: band.id,
+            icon: "billing",
+            title:
+              band.max === null ? (
+                band.label
+              ) : (
+                <>
+                  Up to <Price value={String(band.max)} />
+                  /mo
+                </>
+              ),
+            text: band.max === null ? "Show the best fit for the workload" : "Plans at or under this price",
+          })),
+        };
+    }
+  }, [done, at, view.build, bands]);
 
   const result = useMemo(() => {
-    if (!done) return null;
-    const [product, , size] = answers;
-    const { plan, tier } = recommend(product, size);
-    const file = PLAN_FILES[plan];
-    const t = file.tiers[Math.min(tier, file.tiers.length - 1)];
-    return { file, tier: t };
-  }, [answers, done]);
+    if (!done || !view.build || !view.stack || !view.size) return null;
+    const band = bands.find((b) => b.id === view.budget);
+    const rec = recommend(view.build, view.stack, view.size, band?.max ?? null);
+    const file = PLAN_FILES[rec.deckId];
+    return { file, tier: file.tiers[rec.tierIndex], clamped: rec.clamped };
+  }, [done, view.build, view.stack, view.size, view.budget, bands]);
 
-  function choose(optionId: string) {
-    const next = [...answers.slice(0, step), optionId];
+  function commit(next: Answers, nextStep: number, direction: "forward" | "back") {
+    setTouched(true);
+    setDir(direction);
     setAnswers(next);
-    setStep(step + 1);
+    setStep(nextStep);
+  }
+
+  function choose(key: StepKey, id: string) {
+    if (key === "build") {
+      const build = id as Build;
+      const stack = autoStack(build);
+      commit({ build, stack }, stack ? 2 : 1, "forward");
+      return;
+    }
+    if (key === "stack") {
+      commit({ ...view, stack: id as Stack, size: undefined, budget: undefined }, 2, "forward");
+      return;
+    }
+    if (key === "size") {
+      commit({ ...view, size: id as Size, budget: undefined }, 3, "forward");
+      return;
+    }
+    commit({ ...view, budget: id }, 4, "forward");
+  }
+
+  function back() {
+    const skippedStack = view.build ? autoStack(view.build) !== undefined : false;
+    commit(view, at === 2 && skippedStack ? 0 : Math.max(0, at - 1), "back");
   }
 
   function restart() {
-    setAnswers([]);
-    setStep(0);
+    commit({}, 0, "back");
   }
 
   return (
     <div className="plan-finder" data-reveal>
-      <Stepper activeStep={Math.min(step, STEPS.length - 1)} label="Plan finder progress" density="compact">
-        {STEPS.map((s, i) => (
-          <Step key={s.question} step={i} label={`Step ${i + 1}`} />
+      <Stepper
+        activeStep={Math.min(at, STEP_ORDER.length - 1)}
+        label="Plan finder progress"
+        density="compact"
+      >
+        {STEP_ORDER.map((key, i) => (
+          <Step key={key} step={i} label={STEP_LABELS[key]} />
         ))}
       </Stepper>
 
-      {!done ? (
-        <div className="finder-body" key={step}>
-          <h3 className="finder-question">{STEPS[step].question}</h3>
-          <p className="finder-hint">{STEPS[step].hint}</p>
-          <div className="finder-options" role="list">
-            {STEPS[step].options.map((option) => (
+      {current ? (
+        <div className="finder-body" key={at} data-dir={dir}>
+          <h3 className="finder-question" ref={headingRef} tabIndex={-1}>
+            {current.question}
+          </h3>
+          <p className="finder-hint">{current.hint}</p>
+          <div className={`finder-options${current.key === "budget" ? " finder-budget" : ""}`}>
+            {current.options.map((option) => (
               <button
                 key={option.id}
                 type="button"
                 className="finder-option"
-                onClick={() => choose(option.id)}
+                onClick={() => choose(current.key, option.id)}
               >
                 <span className="finder-option-icon">
                   <Icon name={option.icon} size={22} />
@@ -122,24 +234,32 @@ export function PlanFinder() {
               </button>
             ))}
           </div>
-          {step > 0 && (
-            <button type="button" className="finder-back" onClick={() => setStep(step - 1)}>
+          {at > 0 && (
+            <button type="button" className="finder-back" onClick={back}>
               ← Back
             </button>
           )}
         </div>
       ) : (
         result && (
-          <div className="finder-body finder-result" aria-live="polite">
-            <p className="finder-kicker">Our recommendation</p>
-            <h3 className="finder-question">
+          <div className="finder-body finder-result" key="result" data-dir={dir} aria-live="polite">
+            <p className="finder-kicker">
+              {result.clamped ? "Closest match within your budget" : "Our recommendation"}
+            </p>
+            <h3 className="finder-question" ref={headingRef} tabIndex={-1}>
               {result.file.name} — {result.tier.name}
             </h3>
-            <p className="finder-hint">{result.tier.summary}</p>
+            {result.tier.summary && <p className="finder-hint">{result.tier.summary}</p>}
             <div className="finder-price">
               <Price value={result.tier.price} />
               <span className="finder-per">{result.tier.period ?? "/mo"}</span>
-              <span className="finder-ledger">billed monthly · renews at the same rate</span>
+              <span className="finder-ledger">{termLabel("monthly")}</span>
+              {savePct(result.tier) > 0 && result.tier.priceAnnual && (
+                <span className="finder-alt">
+                  or <Price value={result.tier.priceAnnual} />
+                  {result.tier.period ?? "/mo"} {termLabel("annual")} · save {savePct(result.tier)}%
+                </span>
+              )}
             </div>
             <ul className="finder-features">
               {result.tier.features.slice(0, 4).map((feature) => (
@@ -150,14 +270,23 @@ export function PlanFinder() {
               ))}
             </ul>
             <div className="finder-actions">
-              <a className="btn btn-primary" href={result.tier.ctaUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                className="btn btn-primary"
+                href={result.tier.ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Get {result.tier.name}
                 <span className="btn-arrow" aria-hidden="true">↗</span>
               </a>
-              <button type="button" className="btn btn-secondary" onClick={restart}>
-                Start over
-              </button>
+              <Link className="btn btn-secondary" href={`/${result.file.slug}#compare`}>
+                Compare all {result.file.name} tiers
+                <span className="btn-arrow" aria-hidden="true">→</span>
+              </Link>
             </div>
+            <button type="button" className="finder-back" onClick={restart}>
+              Start over
+            </button>
             <p className="finder-note">
               Every option is a real plan — prices and checkout are the live catalog.
             </p>

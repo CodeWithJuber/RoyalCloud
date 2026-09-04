@@ -70,7 +70,8 @@ sections:
         panel: stats
         text: Watch requests, cache hits and resource usage from the OpenLiteSpeed dashboard.
   - type: osstrip
-    title: Pick your Linux base in one click
+    eyebrow: One-click deploy
+    title: Pick your Linux base, panel and app in one click
     items:
       - name: Ubuntu
         color: "#e95420"
@@ -81,6 +82,10 @@ sections:
         color: "#932279"
       - name: Rocky Linux
         color: "#10b981"
+      - name: CyberPanel
+        active: true
+      - name: WordPress
+        color: "#21759b"
   - type: features
     title: Built for modern WordPress developers
     columns: 4

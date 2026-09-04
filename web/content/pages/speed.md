@@ -30,6 +30,7 @@ sections:
   - type: race
     title: Watch the load times race
     note: Median full-page load of a standard WordPress site in our lab tests.
+    scale: lower
     items:
       - label: Royal Clouds (SSD + LiteSpeed)
         value: 0.4
@@ -65,6 +66,7 @@ sections:
     eyebrow: Speed Test
     title: Measured, not promised
     note: Median full-page load of a standard WordPress site in our lab tests. Results vary by site and region.
+    scale: lower
     items:
       - label: Royal Clouds (SSD + LiteSpeed)
         value: 0.4

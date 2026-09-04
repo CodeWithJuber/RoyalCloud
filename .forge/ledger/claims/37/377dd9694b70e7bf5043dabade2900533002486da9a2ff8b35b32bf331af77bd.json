@@ -1,0 +1,1 @@
+{"body":{"id":"D-0002","text":"Term-only price labels ('per month, billed monthly/yearly') replace 'renews at the same rate' in PlanCards and PlanFinder — the plan catalog carries no renewal data, so a renewal claim would be invented; the owner chose not to add a renewal field"},"kind":"decision","scope":{"level":"repo"},"v":1}
