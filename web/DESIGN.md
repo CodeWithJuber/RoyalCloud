@@ -44,7 +44,7 @@ Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM 
 
 ## 4. Layout, spacing, radius, shadow, motion
 
-- **Shell:** `--site-shell: 1200px` (`.site-shell`). Section rhythm `--section-y: clamp(3.5rem, 6.5vw, 5.5rem)`, `--section-y-sm` for shallow bands, `--header-gap` under section headers.
+- **Shell:** `--site-shell: 1200px` (`.site-shell`). Section rhythm `--section-y: clamp(3rem, 5.5vw, 5rem)` (`clamp(2.5rem, 5vw, 3.25rem)` at ≤1024px), `--section-y-sm` for shallow bands, `--header-gap` under section headers; two consecutive light sections share one gap (the second's top padding halves), dark/royal/tint bands keep full padding.
 - **Bands:** `.section` (light), `.section-tint` (lavender), `.section-dark` (night), `.section-deep` (night-deep), `.section-royal` (violet gradient), `.section-sm` (shallow).
 - **Grids:** `.grid`, `.grid-2/-3/-4` (2-up on phones, 1-up for `.grid-4` under 1024px).
 - **Radius:** cards 20px (theme), plan finder and tables 24px/20px, chips and buttons 999px.
@@ -56,9 +56,9 @@ Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM 
 
 ## 5. Component inventory
 
-**Site chrome** (`components/site/`): `SiteHeader` (announcement, sticky nav, mega menu, mobile drawer, height publisher), `SiteFooter`, `MobileCtaBar` (phone-only sticky CTA), `ProductSubnav` (desktop sticky "On this page" pills + "From $X/mo"), `CurrencySwitch` (USD/INR via `<html data-currency>`), `RevealScript` (scroll reveal).
+**Site chrome** (`components/site/`): `SiteHeader` (announcement, sticky nav, mega menu, mobile drawer, height publisher), `SiteFooter`, `MobileCtaBar` (phone-only sticky CTA), `ProductSubnav` (desktop sticky "On this page" pills + "Help me choose" + "From $X/mo"), `FinderDrawer` (site-wide "Help me choose" `<dialog>`), `FinderJump` (home: in-page jump to the inline finder), `CurrencySwitch` (USD/INR via `<html data-currency>`), `RevealScript` (scroll reveal).
 
-**Shared atoms** (`components/`): `Price` (dual-currency spans, CSS shows one — never mutate from JS), `RatingBadge` (aggregate rating from `data/site.json`), `CountUp` (stat count-up), `Icon` (theme icon registry), `Prose`.
+**Shared atoms** (`components/`): `Price` (dual-currency spans, CSS shows one — never mutate from JS), `RatingBadge` (aggregate rating from `data/site.json`), `CountUp` (stat count-up), `Icon` (theme icon registry), `BrandMark` (real brand glyphs from the vendored Simple Icons subset in `lib/brand-icons.ts`; server-only — pass the node into client components), `Prose`.
 
 **Sections** (`components/sections/`, dispatched by `SectionRenderer` from the `type` in content frontmatter):
 
@@ -66,20 +66,21 @@ Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM 
 | --- | --- | --- |
 | `hero` | `Hero` | gradient/product/simple; home hero carries the domain search and intent chips |
 | `trustbar` | `TrustBar` | four items become four tiles ≥900px |
-| `pricing` | `PlanCards` (client) | shared billing store, term-only labels, popular hairline |
+| `pricing` | `PlanCards` (client) | spec tiles read from each tier's features (`lib/plan-specs.ts`), native `<details>` "All features" with grouped rest + deck highlights, "Every plan includes" brand strip from a "·" deck note, shared billing store, term-only labels |
 | `comparison` | `ComparisonTable` → `CompareTable` (client) | grouped rows, best-for, synced billing, sticky header |
-| `planfinder` | `PlanFinder` (client) | four steps, budget bands from real prices, `?for=` prefill |
+| `planfinder` | `PlanFinder` → `FinderFlow` (client) | four steps, budget bands from real prices, `?for=` prefill; the same flow powers `FinderDrawer` |
 | `features` | `FeatureGrid` | optional `metric`, `variant: tiles` |
 | `products` | `ProductGrid` | starting prices |
-| `content` | `ContentSplit` | copy + checklist + art |
+| `content` | `ContentSplit` | copy beside the art, checklist as a full-width night strip (count-based columns) |
 | `steps` | `StepProcess` | scroll-snap rail on phones |
 | `stats` | `StatsBand` | `CountUp` values |
 | `benchmark` / `race` | `BenchmarkBars` | bars fill on reveal, optional `scale` caption |
 | `testimonials` | `Testimonials` → `TestimonialCarousel` (client) | inline or global items, rating aggregate |
 | `faq` | `FaqAccordion` | native exclusive `<details>`, FAQPage JSON-LD |
-| `osstrip` | `OsStrip` → `DeployTabs` (client) | tabs only when items span OS/panel/app |
+| `osstrip` | `OsStrip` → `DeployTabs` (client) | real distro/panel glyphs where they exist, letter marks otherwise; tabs only when items span OS/panel/app |
 | `showcase` | `ShowcaseTabs` (client) | Astryx TabList product panels |
-| `domainsearch`, `techlogos`, `cta`, `storycards`, `security`, `mapband` | one component each | static |
+| `techlogos` | `TechLogos` | brand glyph + name; wordmark only where no glyph exists |
+| `domainsearch`, `cta`, `storycards`, `security`, `mapband` | one component each | static |
 
 Illustrations are hand-built SVG in `components/art/` (`HeroArt`, `ProductArt`, `SectionArt`), all `aria-hidden`.
 
@@ -94,7 +95,10 @@ Every section receives a stable `id` from `lib/section-ids.ts` (explicit content
 | Scroll reveal + stagger | `RevealScript`, `[data-reveal]`, `--reveal-i` | IntersectionObserver marks `data-visible` | everything visible at once, no delay | content is never hidden — transform only |
 | Billing period | `lib/billing-store.ts` (client), `lib/billing.ts` (pure) | SegmentedControl in `PlanCards` and `CompareTable` | n/a | annual prices shown (server snapshot) |
 | Currency | `CurrencySwitch`, `Price` | flips `<html data-currency>` | n/a | USD |
-| Plan finder | `PlanFinder`, `lib/plan-finder.ts`, `lib/intents.ts` | option buttons; `/?for=<intent>#planfinder` prefills the build | no slide between steps | first question renders; answers need JS |
+| Plan finder | `FinderFlow`, `lib/plan-finder.ts`, `lib/intents.ts` | option buttons; `/?for=<intent>#planfinder` prefills the build | no slide between steps | first question renders; answers need JS |
+| Help-me-choose drawer | `FinderDrawer`, `lib/recommend-store.ts` | any `[data-finder]` link (hero help, intent chips on landing pages, pricing banner, sub-nav); native `<dialog>` side panel ≥641px, bottom sheet on phones; "Show it on this page" marks and scrolls to the matching card | no slide-in, instant scroll | links lead to `/#planfinder` |
+| In-page finder jump | `FinderJump`, `lib/finder-intent-store.ts` | on the home page the same links scroll to the inline finder on step two and rewrite the URL to `?for=` | instant scroll | links lead to `/#planfinder` |
+| Plan card details | `PlanCards` `<details class="plan-more">` | summary toggles grouped rest features + deck highlights; CSS `::details-content` animation where supported; price re-enters on billing change | no transition | native open/close |
 | Comparison table | `CompareTable`, `lib/feature-groups.ts` | hover/focus highlights a column; phone "Compare all features" | n/a | every row renders |
 | Count-up stats | `CountUp`, `lib/count-up.ts` | first time in view, rAF over 1.2s | final value immediately | final value |
 | Benchmark bars | `BenchmarkBars` CSS | panel `data-visible` | full width, no transition | full width |
@@ -111,7 +115,7 @@ Rules: every animation ≥200ms lives inside `@media (prefers-reduced-motion: no
 
 ## 7. Accessibility floor
 
-Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 math: body ≥4.5:1, large/UI ≥3:1). Every rendered pairing is listed in `PAIRS` — adding a colour pairing means adding it there; thresholds are never lowered. The list includes the hero intent chips over night, the comparison table's active column tint (`#f4f0fd`), the benchmark axis caption on night, and the carousel's inactive dot on white.
+Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 math: body ≥4.5:1, large/UI ≥3:1). Every rendered pairing is listed in `PAIRS` — adding a colour pairing means adding it there; thresholds are never lowered. The list includes the hero intent chips over night, the comparison table's active column tint (`#f4f0fd`), the benchmark axis caption on night, the carousel's inactive dot on white, and the plan spec tiles on violet-050.
 
 - Visible `:focus-visible` on every interactive element: violet on light grounds, lavender (`#faf7ff`) on night/violet bands, gold only on the violet CTA button.
 - Tap targets ≥24px (dots 24px, chips and sub-nav pills ≥36px, buttons ≥44px).
@@ -127,6 +131,8 @@ Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 mat
 - Testimonials carry a name and a site; the data has no role/company field yet — add one before claiming it.
 - Stats and benchmark bars are authored numbers from content; `CountUp` animates only plain quantities and never invents a value.
 - Deploy chips get descriptions only when the text is copied verbatim from a plan highlight or the page's own copy (test-enforced).
+- Brand marks are real glyphs only: the vendored Simple Icons subset (`lib/brand-icons.ts`, CC0, regenerated by `scripts/vendor-brands.mjs`). A brand without a glyph (LiteSpeed, CloudLinux, CyberPanel, Softaculous, WHMCS) is a wordmark or a letter mark — never a drawn approximation.
+- Plan card specs and the "Every plan includes" strip are derived from the catalog (`data/plans/*.json` features and a "·"-separated `billingNote`), never authored twice.
 - No sparkle/"magic" language, no fake scarcity, no chat widgets that open themselves.
 
 ---

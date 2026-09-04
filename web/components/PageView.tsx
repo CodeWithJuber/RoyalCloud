@@ -6,6 +6,9 @@ import type { PageContent } from "@/lib/content";
 import { withSectionIds } from "@/lib/section-ids";
 import { buildSubnav } from "@/lib/subnav";
 import { ProductSubnav } from "@/components/site/ProductSubnav";
+import { FinderDrawer } from "@/components/site/FinderDrawer";
+import { FinderJump } from "@/components/site/FinderJump";
+import { finderMarks } from "@/components/FinderMarks";
 
 export function PageView({ page }: { page: PageContent }) {
   const jsonLd = buildJsonLd(page);
@@ -13,6 +16,11 @@ export function PageView({ page }: { page: PageContent }) {
   /* Product pages (pricing + comparison) get a sticky sub-nav right under the hero. */
   const subnav = buildSubnav(sections);
   const heroIndex = Math.max(0, sections.findIndex((section) => section.type === "hero"));
+  /* The page's own deck pre-answers the finder; pages that embed the finder
+     inline (home) scroll to it instead of opening the drawer. */
+  const pricing = sections.find((section) => section.type === "pricing");
+  const planId = typeof pricing?.plan === "string" ? pricing.plan : undefined;
+  const hasInlineFinder = sections.some((section) => section.type === "planfinder");
 
   return (
     <>
@@ -37,10 +45,15 @@ export function PageView({ page }: { page: PageContent }) {
       <main id="main-content">
         <SectionRenderer
           sections={sections}
-          after={subnav ? { index: heroIndex, node: <ProductSubnav {...subnav} /> } : undefined}
+          after={
+            subnav
+              ? { index: heroIndex, node: <ProductSubnav {...subnav} planId={planId} /> }
+              : undefined
+          }
         />
         {page.body && <Prose markdown={page.body} />}
       </main>
+      {hasInlineFinder ? <FinderJump /> : <FinderDrawer planId={planId} marks={finderMarks()} />}
       {jsonLd.map((entry, i) => (
         <script
           key={i}

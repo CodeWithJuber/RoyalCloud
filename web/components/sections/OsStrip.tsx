@@ -1,4 +1,5 @@
 import { DEPLOY_CATALOG, groupsIn } from "@/lib/deploy-catalog";
+import { BrandMark, hasBrandMark } from "../BrandMark";
 import { DeployTabs } from "./DeployTabs";
 import { OsChip, type DeployItem } from "./OsChip";
 
@@ -22,7 +23,10 @@ interface OsStripProps {
 export function OsStrip({ id, eyebrow, title, subtitle, items }: OsStripProps) {
   const enriched: DeployItem[] = items.map((item) => {
     const entry = DEPLOY_CATALOG[item.name];
-    return { ...item, href: entry?.href, text: entry?.text };
+    /* Real distro / panel glyphs render here on the server; the client tabs
+       only ever receive the finished node. */
+    const mark = hasBrandMark(item.name) ? <BrandMark name={item.name} size={18} /> : undefined;
+    return { ...item, href: entry?.href, text: entry?.text, mark };
   });
   const groups = groupsIn(items.map((item) => item.name));
   const tabbed = groups.length > 1;

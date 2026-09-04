@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Icon } from "../Icon";
 import { SectionArt, type SectionArtKind } from "../art/SectionArt";
 
@@ -28,6 +29,12 @@ const ART_KINDS: Record<string, SectionArtKind> = {
   migration: "migration",
 };
 
+/**
+ * Copy beside the illustration, then the checklist as a full-width night
+ * strip: one tile per item across the shell on desktop, two-up on tablets,
+ * stacked on phones. The copy column never floats mid-height beside a tall
+ * list, and the strip uses the whole width instead of half of it.
+ */
 export function ContentSplit({
   eyebrow,
   title,
@@ -39,37 +46,38 @@ export function ContentSplit({
 }: ContentSplitProps) {
   const hasItems = items !== undefined && items.length > 0;
   const artKind = image ? (ART_KINDS[image] ?? "generic") : undefined;
-  const hasMedia = hasItems || artKind !== undefined;
   return (
-    <section className="section content-split">
-      <div
-        className={`site-shell split${reverse ? " split-reverse" : ""}${hasMedia ? "" : " split-solo"}`}
-      >
-        <div className="split-copy" data-reveal>
-          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-          {title && <h2>{title}</h2>}
-          {subtitle && <p className="lede">{subtitle}</p>}
-          {body && <p className="split-body">{body}</p>}
-        </div>
-        {hasMedia && (
-          <div className="split-media" data-reveal>
-            {artKind && <SectionArt kind={artKind} />}
-            {hasItems && (
-              <ul className="split-list">
-                {items.map((item) => (
-                  <li key={item.title}>
-                    <span className="split-icon">
-                      <Icon name={item.icon ?? "bolt"} size={18} />
-                    </span>
-                    <div>
-                      <h3>{item.title}</h3>
-                      <p>{item.text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
+    <section className="section content-split" data-strip={hasItems ? "true" : undefined}>
+      <div className="site-shell">
+        <div
+          className={`split${reverse ? " split-reverse" : ""}${artKind ? "" : " split-solo"}`}
+        >
+          <div className="split-copy" data-reveal>
+            {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+            {title && <h2>{title}</h2>}
+            {subtitle && <p className="lede">{subtitle}</p>}
+            {body && <p className="split-body">{body}</p>}
           </div>
+          {artKind && (
+            <div className="split-media" data-reveal>
+              <SectionArt kind={artKind} />
+            </div>
+          )}
+        </div>
+        {hasItems && (
+          <ul className="split-list" data-count={items.length}>
+            {items.map((item, i) => (
+              <li key={item.title} data-reveal style={{ "--reveal-i": i } as CSSProperties}>
+                <span className="split-icon">
+                  <Icon name={item.icon ?? "bolt"} size={20} />
+                </span>
+                <div className="split-item-copy">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </section>

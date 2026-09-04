@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
+import Link from "next/link";
+import { Icon } from "../Icon";
 import { Price } from "../Price";
+import { PLAN_TO_INTENT, finderHref } from "@/lib/intents";
 import { useScrollspy } from "@/lib/use-scrollspy";
 import type { Subnav } from "@/lib/subnav";
 
@@ -11,8 +14,9 @@ import type { Subnav } from "@/lib/subnav";
  * Hidden on phones — MobileCtaBar covers them. Publishes its own height as
  * --subnav-h so sticky table headers and anchor padding clear it.
  */
-export function ProductSubnav({ links, cta }: Subnav) {
+export function ProductSubnav({ links, cta, planId }: Subnav & { planId?: string }) {
   const ref = useRef<HTMLElement>(null);
+  const intent = planId ? PLAN_TO_INTENT[planId] : undefined;
   const ids = useMemo(() => links.map((link) => link.href.slice(1)), [links]);
 
   /* Runs before the scrollspy effect below (declaration order) so the
@@ -50,6 +54,10 @@ export function ProductSubnav({ links, cta }: Subnav) {
             </li>
           ))}
         </ul>
+        <Link className="subnav-help" href={finderHref(intent)} data-finder={intent ?? ""}>
+          <Icon name="search" size={14} />
+          Help me choose
+        </Link>
         {cta && (
           <a className="btn btn-primary subnav-cta" href={cta.href}>
             From <Price value={cta.price} />
