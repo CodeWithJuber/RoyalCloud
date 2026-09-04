@@ -185,6 +185,7 @@ sections:
     eyebrow: Independent reviews
     title: See Where We Rank in the Competition
     note: Rated 9.6/10 overall by a top hosting review site, as of the last review date.
+    scale: higher
     items:
       - label: Reliability
         value: 9.7

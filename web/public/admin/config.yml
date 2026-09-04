@@ -630,6 +630,13 @@ definitions:
                 required: false,
               }
             - { name: note, label: "Footnote", widget: string, required: false }
+            - {
+                name: scale,
+                label: "Axis hint (lower/higher is better)",
+                widget: select,
+                options: ["lower", "higher"],
+                required: false,
+              }
             - name: items
               label: "Bars"
               widget: list
@@ -669,6 +676,13 @@ definitions:
                 required: false,
               }
             - { name: note, label: "Footnote", widget: string, required: false }
+            - {
+                name: scale,
+                label: "Axis hint (lower/higher is better)",
+                widget: select,
+                options: ["lower", "higher"],
+                required: false,
+              }
             - name: items
               label: "Racers"
               widget: list

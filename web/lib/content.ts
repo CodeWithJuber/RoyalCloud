@@ -165,6 +165,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
     type: z.literal("benchmark"),
     ...base,
     note: z.string().optional(),
+    scale: z.enum(["lower", "higher"]).optional(),
     items: z.array(
       z.object({
         label: z.string(),
@@ -178,6 +179,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
     type: z.literal("race"),
     ...base,
     note: z.string().optional(),
+    scale: z.enum(["lower", "higher"]).optional(),
     items: z.array(
       z.object({
         label: z.string(),

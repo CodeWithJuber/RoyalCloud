@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { CountUp } from "../CountUp";
 
 export interface SecurityLayer {
   title: string;
@@ -56,7 +57,9 @@ export function SecurityLayers({
             {stats.map((stat) => (
               <div key={stat.label} className="sec-stat">
                 <dt>{stat.label}</dt>
-                <dd>{stat.value}</dd>
+                <dd>
+                  <CountUp value={stat.value} />
+                </dd>
               </div>
             ))}
           </dl>

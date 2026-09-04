@@ -96,6 +96,8 @@ export const PAIRS = [
   { label: "compare active column heading", fg: "#2f1c6a", bg: "#f4f0fd", size: "body" },
   { label: "compare popular flag on violet header", fg: "#673de6", bg: "#ffffff", size: "ui" },
 
+  { label: "benchmark scale caption on night", fg: "#c5bfd5", bg: "#2f1c6a", size: "body" },
+
   // Status
   { label: "success check on white", fg: "#009e81", bg: "#ffffff", size: "ui" },
   { label: "error red on white", fg: "#d32f2f", bg: "#ffffff", size: "body" },

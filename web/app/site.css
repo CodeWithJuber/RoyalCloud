@@ -3761,3 +3761,29 @@ html {
     background: var(--color-accent);
   }
 }
+
+/* ============================================================
+   Stats count-up + benchmark bars fill on reveal
+   ============================================================ */
+
+.bench-scale {
+  margin: 0 0 0.75rem;
+  color: #c5bfd5;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+/* Bars start empty and fill when the panel reveals; each bar waits 90ms
+   longer than the one above. Reduced motion: full width, no transition. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-js="true"] .bench-panel .bench-fill {
+    transition: width var(--duration-slow, 700ms) cubic-bezier(0.32, 0.72, 0, 1)
+      calc(var(--i, 0) * 90ms);
+  }
+  [data-js="true"] .bench-panel:not([data-visible="true"]) .bench-fill {
+    width: 0;
+  }
+}

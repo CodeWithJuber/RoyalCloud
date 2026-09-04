@@ -331,6 +331,7 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
           title={str(s.title)}
           subtitle={str(s.subtitle)}
           note={str(s.note)}
+          scale={s.scale === "lower" || s.scale === "higher" ? s.scale : undefined}
           items={items}
         />
       ) : null;
