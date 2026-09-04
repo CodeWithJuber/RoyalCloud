@@ -6,6 +6,9 @@
     <meta name="robots" content="noindex" />
     <title>Royal Clouds — Content Manager</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Absolute config path: the CMS is reached at /admin (no trailing slash),
+         where a relative "config.yml" would resolve to /config.yml and 404. -->
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
   </head>
   <body>
     <!-- Decap CMS: Git-backed visual editor. Edits commit to the repo and
