@@ -3518,6 +3518,13 @@ html {
 
 .hero-intents {
   margin-top: 1.25rem;
+  min-width: 0;
+  max-width: 100%;
+}
+/* The no-wrap chip row must not inflate the hero column's intrinsic width
+   (grid items default to min-width: auto), or the page scrolls sideways. */
+.hero-home-grid > .hero-copy {
+  min-width: 0;
 }
 .hero-intents-label {
   display: block;
@@ -3580,8 +3587,6 @@ html {
     scroll-snap-type: x proximity;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    margin-inline: -1rem;
-    padding-inline: 1rem;
   }
   .hero-intents ul::-webkit-scrollbar {
     display: none;
@@ -4132,4 +4137,34 @@ a.os-chip:focus-visible {
 }
 .features[data-variant="tiles"] .feature-card h3 {
   font-size: 1rem;
+}
+
+/* ============================================================
+   Mobile overflow fixes — no horizontal scroll at 390px
+   ============================================================ */
+
+@media (max-width: 640px) {
+  /* Trust tiles may wrap inside their grid cell instead of overflowing it */
+  .trustbar-item {
+    white-space: normal;
+    min-width: 0;
+  }
+}
+@media (max-width: 560px) {
+  /* Brand + currency switch + hamburger must fit a 390px header */
+  .header-inner {
+    gap: 0.75rem;
+  }
+  .brand img {
+    width: 140px;
+    height: auto;
+  }
+}
+/* Domain search: let the input shrink so the row fits 390px (flex items default
+   to min-width: auto = the input's intrinsic size, which pushed the button out) */
+.domain-row input {
+  min-width: 0;
+}
+.domain-row .btn {
+  flex-shrink: 0;
 }

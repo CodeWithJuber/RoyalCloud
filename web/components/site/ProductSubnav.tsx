@@ -14,8 +14,9 @@ import type { Subnav } from "@/lib/subnav";
 export function ProductSubnav({ links, cta }: Subnav) {
   const ref = useRef<HTMLElement>(null);
   const ids = useMemo(() => links.map((link) => link.href.slice(1)), [links]);
-  const active = useScrollspy(ids);
 
+  /* Runs before the scrollspy effect below (declaration order) so the
+     observer's band already accounts for this bar's height. */
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof ResizeObserver === "undefined") return;
@@ -30,6 +31,8 @@ export function ProductSubnav({ links, cta }: Subnav) {
       root.style.removeProperty("--subnav-h");
     };
   }, []);
+
+  const active = useScrollspy(ids);
 
   return (
     <nav className="product-subnav" aria-label="On this page" ref={ref}>

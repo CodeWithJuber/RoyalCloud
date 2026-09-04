@@ -40,12 +40,25 @@ export function useScrollspy(ids: string[]): string | null {
           if (entry.isIntersecting) visible.add(entry.target.id);
           else visible.delete(entry.target.id);
         }
+        /* The section under the line just below the sticky chrome wins —
+           adjacent sections both "intersect" the band, so intersection alone
+           cannot break the tie. Re-read the chrome height: the sub-nav
+           publishes --subnav-h after mount. */
+        const line = rootLengthPx("--site-header-h") + rootLengthPx("--subnav-h") + 1;
+        const containing = targets.find((el) => {
+          const rect = el.getBoundingClientRect();
+          return rect.top <= line && rect.bottom > line;
+        });
+        if (containing) {
+          setActive(containing.id);
+          return;
+        }
         const first = list.find((id) => visible.has(id));
         if (first) {
           setActive(first);
           return;
         }
-        const passed = targets.filter((el) => el.getBoundingClientRect().top < offset + 1);
+        const passed = targets.filter((el) => el.getBoundingClientRect().top < line);
         setActive(passed.length > 0 ? passed[passed.length - 1].id : null);
       },
       { rootMargin: `-${Math.round(offset)}px 0px -55% 0px`, threshold: 0 },
