@@ -571,6 +571,7 @@ definitions:
           label: "Domain Search"
           summary: "Domain search"
           fields:
+            - { name: id, label: "Anchor id", widget: string, required: false }
             - {
                 name: eyebrow,
                 label: "Eyebrow",

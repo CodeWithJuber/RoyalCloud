@@ -125,7 +125,10 @@ Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 mat
 
 - Visible `:focus-visible` on every interactive element: violet on light grounds, lavender (`#faf7ff`) on night/violet bands, gold only on the violet CTA button.
 - Tap targets ≥24px (dots 24px, chips and sub-nav pills ≥36px, buttons ≥44px).
-- Native semantics first: `<details>` accordion, `<table>` with `scope`, `<nav aria-label>`, `role="region"` + `aria-roledescription="carousel"`, `aria-live` for step and slide announcements, `aria-current` for the active pill.
+- Native semantics first: `<details>` accordion, `<table>` with `scope`, `<nav aria-label>`, `role="region"` + `aria-roledescription="carousel"`, `aria-live` for step and slide announcements, `aria-current` for the active pill and the active OS chip.
+- **Every band is a named landmark.** `lib/section-name.ts` gives each `<section>` an accessible name — `aria-labelledby` its visible heading where the band has a stable anchor id, `aria-label` where it does not. An unnamed `<section>` is not exposed as a region at all, so it cannot be jumped to.
+- **Never claim a widget you do not have.** Carousel semantics, dots, prev/next and a scroll container's tab stop are all conditioned on `useOverflow` — the box has to actually scroll first.
+- **Every link that leaves the site says so.** `<NewTabHint />` on each `target="_blank"`, gated by `isExternalCta` where the href is authored, so an in-site link never claims to open a tab (WCAG 2.2 G201).
 - Mobile above-the-fold: at ≤640px `.hero-actions .btn-primary` must sit within the first 844px (`scripts/qa-shots.mjs` asserts it; keep that class name). The home hero leads with the hosting CTA pair — no domain field; `.domain-row` lives in the mid-page `#domains` section and on `/domains`.
 
 ---
@@ -148,4 +151,7 @@ Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 mat
 - **CMS lockstep:** a new section type or field changes `lib/content.ts` (use `z.enum` for enumerations — `verify-cms.mjs` reads every `z.literal` as a section type), `components/sections/SectionRenderer.tsx` and `public/admin/config.yml` in the same commit. The CMS (Sveltia, Decap-compatible) deletes unknown fields on save; `/admin` login runs through `app/oauth/*` (see README).
 - **Route contract:** 60 content routes and 7 redirects (`tests/routes.test.ts`); every off-site CTA points at `https://my.royalclouds.net`.
 - **Server/client boundary:** section shells are server components; client children receive serialisable props. `lib/billing.ts` is importable everywhere, `lib/billing-store.ts` only from client files.
-- **Gates:** `npm run check` (theme drift, `next typegen`, `tsc`, ESLint, Vitest, CMS lockstep, contrast) and `npm run build` must exit 0. Visual QA: `npm run dev` then `node scripts/qa-shots.mjs` (1440 and 390 widths, zero console errors, above-the-fold assertion).
+- **Gates:** `npm run check` (theme drift, `next typegen`, `tsc`, ESLint, Vitest, CMS lockstep, **CSS rules**, contrast) and `npm run build` must exit 0.
+- **`npm run check:css`** (`scripts/check-css.mjs`) fails the build on five mistakes this stylesheet has actually made, each of which shipped silently once: a nested `minmax()` (invalid CSS — the browser drops the whole declaration), a raw numeric `font-size` outside `:root`, `will-change`, a surface `border-radius` that is not a role token (2px/4px focus rings and 999px pills excepted), and a hardcoded `repeat(N, …)` on a card family that `--card-min` drives. Adding a rule here is cheaper than finding the same bug twice.
+- **`npm run audit`** (`scripts/audit.mjs`) drives Playwright against `npm run start`: the horizontal-overflow detector and axe-core (WCAG 2.2 AA) over every content route at 8 widths, `--full` for the whole 320→3840 matrix plus landscape and 200% zoom, `--lighthouse` for the six sample pages. Gate: zero overflow offenders, zero axe critical/serious. Read the Lighthouse caveat in the generated report before quoting an LCP number.
+- Visual QA: `npm run dev` then `node scripts/qa-shots.mjs` (1440 and 390 widths, zero console errors, above-the-fold assertion).

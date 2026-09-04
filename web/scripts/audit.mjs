@@ -59,8 +59,8 @@ const DEFAULT_PAGES = [
 /* Per-step loop; --full adds the rest of the master matrix. */
 const LOOP_WIDTHS = [320, 390, 412, 768, 917, 1024, 1280, 1920];
 const FULL_WIDTHS = [
-  320, 360, 375, 390, 412, 430, 540, 600, 768, 820, 834, 1024, 1180, 1280, 1366,
-  1440, 1536, 1728, 1920, 2560, 3840,
+  320, 360, 375, 390, 412, 430, 540, 600, 768, 820, 834, 1024, 1100, 1152, 1180,
+  1280, 1366, 1440, 1536, 1728, 1920, 2560, 3840,
 ];
 /* axe on a phone and a desktop width — the DOM is the same, but layout-driven
    rules (target size, reflow) differ. */
@@ -122,6 +122,40 @@ const OVERFLOW_PROBE = () => {
   return { docScroll: doc.scrollWidth, docClient: doc.clientWidth, bad: bad.slice(0, 12) };
 };
 
+/**
+ * Content escaping its own column. The overflow probe above only sees faults
+ * that widen the document, so a header whose nav is wider than the shell it
+ * sits in reads as clean at every width where the spill still fits inside the
+ * viewport — which is how a 128px-wide broken band survived three audits.
+ * Here the parent is the shell, not the page.
+ */
+const SHELL_PROBE = () => {
+  const bad = [];
+  for (const shell of document.querySelectorAll(".site-shell, .header-inner")) {
+    const box = shell.getBoundingClientRect();
+    if (box.width === 0) continue;
+    if (getComputedStyle(shell).overflowX !== "visible") continue;
+    for (const child of shell.children) {
+      const style = getComputedStyle(child);
+      if (style.position === "fixed" || style.position === "absolute") continue;
+      if (style.display === "none" || style.visibility === "hidden") continue;
+      const rect = child.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) continue;
+      const spill = Math.round(Math.max(rect.right - box.right, box.left - rect.left));
+      if (spill > 1) {
+        const cls = typeof child.className === "string" ? child.className : "";
+        bad.push({
+          parent: shell.className.split(" ").slice(0, 2).join("."),
+          tag: child.tagName.toLowerCase(),
+          cls: cls.split(" ").filter(Boolean).slice(0, 2).join("."),
+          spill,
+        });
+      }
+    }
+  }
+  return bad.slice(0, 8);
+};
+
 /** One retry: a dropped connection mid-sweep should not void a 26-page run. */
 async function goto(page, url) {
   try {
@@ -136,7 +170,9 @@ async function goto(page, url) {
 const rows = [];
 const axeRows = [];
 let overflowFailures = 0;
+let shellFailures = 0;
 let axeFailures = 0;
+const shellRows = [];
 const consoleErrors = [];
 
 async function run() {
@@ -183,6 +219,16 @@ async function run() {
         console.log(
           `FAIL overflow ${name}@${width} doc ${result.docScroll}>${result.docClient} ::`,
           result.bad.map((b) => `${b.tag}.${b.cls}@${b.right}`).join(" "),
+        );
+      }
+
+      const spills = await page.evaluate(SHELL_PROBE);
+      if (spills.length > 0) {
+        shellFailures += 1;
+        shellRows.push({ page: name, width, spills });
+        console.log(
+          `FAIL shell ${name}@${width} ::`,
+          spills.map((b) => `${b.tag}.${b.cls} out of .${b.parent} by ${b.spill}px`).join(" "),
         );
       }
 
@@ -277,6 +323,18 @@ async function run() {
           "",
         ]
       : []),
+    shellFailures === 0
+      ? `## Content inside its shell\nPASS — nothing escapes .site-shell / .header-inner.\n`
+      : [
+          "## Content inside its shell",
+          "| Page | Width | Escapes |",
+          "| --- | --- | --- |",
+          ...shellRows.map(
+            (r) =>
+              `| ${r.page} | ${r.width} | ${r.spills.map((b) => `\`${b.tag}.${b.cls}\` +${b.spill}px`).join(", ")} |`,
+          ),
+          "",
+        ].join("\n"),
     ...(lhRows.length > 0
       ? [
           "## Lighthouse (mobile)",
@@ -306,7 +364,8 @@ async function run() {
   console.log(`\n${report.split("\n").slice(0, 12).join("\n")}\n…full report: ${OUT}/report.md`);
 
   const lhFail = lhRows.filter((r) => r.fail).length;
-  if (overflowFailures > 0 || axeFailures > 0 || lhFail > 0) process.exit(1);
+  if (overflowFailures > 0 || shellFailures > 0 || axeFailures > 0 || lhFail > 0)
+    process.exit(1);
 }
 
 async function runLighthouse() {

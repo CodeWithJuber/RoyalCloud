@@ -213,6 +213,9 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
 
     case "content": {
       const items = list(s.items, isChecklistItem);
+      /* A split with no body, no checklist and no art is an empty band with a
+         heading on it — the two section types that could still render one. */
+      if (!str(s.body) && items.length === 0 && !str(s.image)) return null;
       return (
         <ContentSplit
           eyebrow={str(s.eyebrow)}
@@ -407,6 +410,7 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
 
     case "showcase": {
       const tabs = list(s.tabs, isShowcaseTab);
+      if (tabs.length === 0) return null;
       return (
         <ShowcaseTabs
           id={ctx.anchor ?? undefined}

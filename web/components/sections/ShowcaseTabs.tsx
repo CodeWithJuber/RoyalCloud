@@ -8,6 +8,7 @@ import { Price } from "../Price";
 import { ProductArt, type ProductKind } from "../art/ProductArt";
 import { PLAN_FILES, type PlanFile } from "@/lib/plans";
 import { sectionName, sectionTitleId } from "@/lib/section-name";
+import { NewTabHint } from "../NewTabHint";
 
 export interface ShowcaseTab {
   label: string;
@@ -67,6 +68,7 @@ function ProductPanel({ plan }: { plan: PlanFile }) {
           <a className="btn btn-primary" href={popular.ctaUrl} target="_blank" rel="noopener noreferrer">
             {popular.cta ?? "Get started"}
             <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
           </a>
           <a className="btn btn-secondary" href={`/${plan.slug}`}>
             Compare plans

@@ -255,10 +255,6 @@
   border: 1px solid #673de633;
   background: #673de60f;
 }
-.chip-gold {
-  color: var(--rc-night);
-  background: var(--rc-gold);
-}
 .section-dark .chip-save,
 .section-deep .chip-save,
 .section-royal .chip-save {
@@ -412,7 +408,7 @@
   margin-inline: auto;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   min-height: 4.5rem;
 }
 
@@ -446,7 +442,7 @@
   align-items: center;
   gap: 0.35rem;
   min-height: 44px;
-  padding: 0 0.85rem;
+  padding: 0 0.65rem;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -686,7 +682,12 @@
   outline-offset: 2px;
 }
 
-@media (max-width: 1080px) {
+/* 1169px is measured, not chosen. Bisected against the rendered header: the
+   actions row spills past the shell by 13px at 1155 and reaches 0 at 1170, so
+   the nav appears from 1170 up and the drawer — which already exists and is
+   tested — takes over below it. Note the overflow detector cannot see this
+   class of fault: content escaping its own column is not page overflow. */
+@media (max-width: 1169px) {
   .desktop-nav,
   .login-link {
     display: none;
@@ -988,47 +989,6 @@
   background: var(--color-background-body);
 }
 
-.billing-toggle {
-  display: flex;
-  justify-content: center;
-  gap: 0.25rem;
-  margin: 0 auto 2.5rem;
-  width: fit-content;
-  padding: 0.25rem;
-  border: 1px solid var(--color-border-emphasized);
-  border-radius: 999px;
-  background: var(--color-background-card);
-}
-.billing-toggle button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 44px;
-  padding: 0.4rem 1.25rem;
-  border: 0;
-  border-radius: 999px;
-  color: var(--color-text-secondary);
-  background: transparent;
-  font-size: var(--font-size-base);
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-.billing-toggle button[aria-pressed="true"] {
-  color: #ffffff;
-  background: var(--color-accent);
-}
-.billing-toggle button:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-}
-.billing-toggle .chip-gold {
-  padding: 0.15rem 0.5rem;
-  font-size: var(--font-size-sm);
-}
-
 /* One contract for every deck (3, 4, 5 and 6 tiers all ship): a card is never
    narrower than 300px, and the column count follows from the shell instead of
    a hardcoded per-deck number. At the 1200px shell that is three up, so the
@@ -1103,17 +1063,6 @@
   margin: 1.25rem 0;
   padding-block: 1rem;
   border-block: 1px solid var(--color-border);
-}
-.plan-was {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.35rem;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-base);
-}
-.plan-was .px {
-  text-decoration: line-through;
 }
 .plan-price {
   display: flex;
@@ -2003,9 +1952,6 @@ a.feature-card:hover .feature-more {
 .split-reverse .split-copy {
   order: 2;
 }
-.split-reverse .split-panel {
-  order: 1;
-}
 .split-solo {
   grid-template-columns: 1fr;
   max-width: var(--measure);
@@ -2032,28 +1978,6 @@ a.feature-card:hover .feature-more {
 }
 
 /* The panel inverts: night field on a light section, so text roles re-point. */
-.split-panel {
-  --color-text-primary: #faf7ff;
-  --color-text-secondary: #c5bfd5;
-  padding: clamp(1.5rem, 3vw, 2.25rem);
-  border-radius: var(--rc-radius-card);
-  background:
-    radial-gradient(30rem 16rem at 110% -20%, #673de655, transparent 60%),
-    var(--rc-night);
-  box-shadow: var(--shadow-med);
-}
-.split-panel ul {
-  display: grid;
-  gap: 1.1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.split-panel li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-}
 .split-icon {
   display: grid;
   place-items: center;
@@ -2064,19 +1988,6 @@ a.feature-card:hover .feature-more {
   background: #ffffff12;
   color: var(--rc-gold);
 }
-.split-panel h3 {
-  margin: 0 0 0.2rem;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-base);
-  font-weight: 700;
-}
-.split-panel p {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--text-supporting-size);
-  line-height: 1.55;
-}
-
 @media (max-width: 860px) {
   .split,
   .split-reverse {
@@ -2210,42 +2121,6 @@ a.feature-card:hover .feature-more {
   max-width: var(--measure);
   margin-inline: auto;
 }
-.showcase-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.showcase-tab {
-  min-height: 2.75rem;
-  padding: 0 1.25rem;
-  border: 1px solid var(--color-border-emphasized);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--color-text-secondary);
-  font-size: var(--text-supporting-size);
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
-}
-.showcase-tab:hover {
-  color: var(--color-text-primary);
-  border-color: #faf7ff66;
-}
-.showcase-tab[aria-selected="true"] {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: #ffffff;
-}
-.showcase-tab:focus-visible {
-  outline: 2px solid #faf7ff;
-  outline-offset: 2px;
-}
-
 /* The window is a light card on a dark field — re-point text roles back. */
 .showcase-window {
   --color-text-primary: #2f1c6a;
@@ -2639,18 +2514,6 @@ a.feature-card:hover .feature-more {
   grid-template-columns: 1fr;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 /* The art is decorative. Drop it once the shell is too narrow to give both
    tracks a real 26rem measure — measured on the shell, not the viewport, so a
    917px "desktop mode" phone gets the full width for copy instead of a
@@ -2674,24 +2537,10 @@ a.feature-card:hover .feature-more {
 .hero-rating strong {
   color: #ffffff;
 }
-.hero-stars {
-  display: inline-flex;
-  gap: 2px;
-}
-
 /* ============================================================
    Plan cards v2 — Astryx composition (SegmentedControl, Badge,
    Collapsible) + enterprise banner
    ============================================================ */
-
-.plan-toggle-row {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto 2.5rem;
-}
-.plan-toggle-row .astryx-segmented-control {
-  box-shadow: var(--shadow-low);
-}
 
 .plan-price-row {
   display: flex;
@@ -2711,9 +2560,6 @@ a.feature-card:hover .feature-more {
   font-size: var(--font-size-base);
 }
 
-.plan-features-rest {
-  margin-top: 0.55rem;
-}
 .plan-more {
   color: var(--color-text-accent);
   font-size: var(--text-supporting-size);
@@ -4128,7 +3974,7 @@ a.os-chip:focus-visible {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0 0.85rem;
+  padding: 0 0.65rem;
   border-radius: 999px;
   color: var(--color-text-primary);
   font-size: var(--font-size-base);
@@ -5248,4 +5094,12 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   flex-shrink: 0;
   margin-left: auto;
   color: var(--color-text-accent);
+}
+
+/* Stands in for the term toggle on decks with no annual price, so the slot
+   is never just empty. */
+.plan-term-note {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-supporting-size);
 }

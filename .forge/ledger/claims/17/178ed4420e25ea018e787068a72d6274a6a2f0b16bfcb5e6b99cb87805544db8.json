@@ -1,0 +1,1 @@
+{"body":{"id":"D-0047","text":"Dead-selector sweep removed 24 rule blocks for 10 provably unreferenced classes; .grid-2/.grid-4 were KEPT despite reading as dead because grid grid-${columns} builds them at runtime, as were .astryx-* (library-emitted) and .hero-product/.hero-simple (hero-${variant})"},"kind":"decision","scope":{"level":"repo"},"v":1}

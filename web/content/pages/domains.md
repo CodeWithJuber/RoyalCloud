@@ -26,6 +26,7 @@ sections:
       - Easy Transfers
       - ICANN-accredited
   - type: domainsearch
+    id: domain-search
     eyebrow: Domain Search
     title: Check if your domain is available
     subtitle: Type the name you want and we'll check it across all popular extensions.

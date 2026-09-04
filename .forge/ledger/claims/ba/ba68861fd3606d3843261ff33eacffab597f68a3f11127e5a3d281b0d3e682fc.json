@@ -1,0 +1,1 @@
+{"body":{"id":"D-0045","text":"Every outbound link announces itself: <NewTabHint /> on all 16 target=_blank sites, gated by isExternalCta where the href is authored so an in-site CTA never claims to open a tab. The duplicated targetProps predicate in Hero and CtaBand became lib/external-link.ts with four tests"},"kind":"decision","scope":{"level":"repo"},"v":1}

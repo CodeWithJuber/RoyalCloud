@@ -13,6 +13,7 @@ import {
 } from "@/lib/navigation";
 import { Icon } from "../Icon";
 import { CurrencySwitch } from "./CurrencySwitch";
+import { NewTabHint } from "../NewTabHint";
 
 /* One row of the mega menu and the drawer: icon + name + one-line description. */
 function NavItem({ link, onClick }: { link: NavLink; onClick?: () => void }) {
@@ -32,6 +33,7 @@ function NavItem({ link, onClick }: { link: NavLink; onClick?: () => void }) {
   return isExternal(link.href) ? (
     <a className="nav-item" href={link.href} target="_blank" rel="noopener noreferrer" onClick={onClick}>
       {body}
+      <NewTabHint />
     </a>
   ) : (
     <Link className="nav-item" href={link.href} onClick={onClick}>
@@ -44,6 +46,7 @@ function PlainLink({ link, className, onClick }: { link: NavLink; className: str
   return isExternal(link.href) ? (
     <a className={className} href={link.href} target="_blank" rel="noopener noreferrer" onClick={onClick}>
       {link.text}
+      <NewTabHint />
     </a>
   ) : (
     <Link className={className} href={link.href} onClick={onClick}>
@@ -206,6 +209,7 @@ export function SiteHeader() {
             <a className="btn btn-primary header-cta" href={primary.href} target="_blank" rel="noopener noreferrer">
               {primary.text}
               <span className="btn-arrow" aria-hidden="true">↗</span>
+              <NewTabHint />
             </a>
             <button
               type="button"
@@ -256,6 +260,7 @@ export function SiteHeader() {
             <a className="btn btn-primary" href={primary.href} target="_blank" rel="noopener noreferrer">
               {primary.text}
               <span className="btn-arrow" aria-hidden="true">↗</span>
+              <NewTabHint />
             </a>
           </div>
         </nav>

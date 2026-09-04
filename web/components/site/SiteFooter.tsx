@@ -1,5 +1,6 @@
 import { siteSettings } from "@/lib/settings";
 import { Icon } from "../Icon";
+import { NewTabHint } from "../NewTabHint";
 
 export function SiteFooter() {
   const groups = [...siteSettings.footerGroups, { label: "Support", items: siteSettings.support }];
@@ -16,10 +17,12 @@ export function SiteFooter() {
           <a href={`${siteSettings.whmcsUrl}/submitticket.php`} target="_blank" rel="noopener noreferrer">
             <Icon name="report" size={16} />
             Open a support ticket
+            <NewTabHint />
           </a>
           <a href={siteSettings.whmcsUrl} target="_blank" rel="noopener noreferrer">
             <Icon name="chat" size={16} />
             24/7 live chat
+            <NewTabHint />
           </a>
         </div>
       </div>
@@ -44,6 +47,7 @@ export function SiteFooter() {
                 <li key={social.href}>
                   <a href={social.href} rel="noreferrer" target="_blank">
                     {social.label}
+                    <NewTabHint />
                   </a>
                 </li>
               ))}
@@ -59,6 +63,7 @@ export function SiteFooter() {
                 <li key={item.href}>
                   <a href={item.href} {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
                     {item.label}
+                    {item.external && <NewTabHint />}
                   </a>
                 </li>
               ))}

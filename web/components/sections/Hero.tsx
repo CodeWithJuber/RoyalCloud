@@ -5,6 +5,8 @@ import { Icon } from "../Icon";
 import { RatingBadge } from "../RatingBadge";
 import { INTENTS, PLAN_TO_INTENT, finderHref } from "@/lib/intents";
 import { emphasize } from "@/lib/emphasize";
+import { isExternalCta, targetProps } from "@/lib/external-link";
+import { NewTabHint } from "../NewTabHint";
 
 export interface CtaLink {
   text: string;
@@ -26,11 +28,6 @@ interface HeroProps {
   plan?: string;
 }
 
-const targetProps = (cta?: CtaLink) =>
-  cta?.external || /^https?:\/\//.test(cta?.href ?? "")
-    ? { target: "_blank", rel: "noopener noreferrer" }
-    : {};
-
 function HeroActions({
   primaryCta,
   secondaryCta,
@@ -45,12 +42,14 @@ function HeroActions({
         <a className="btn btn-primary" href={primaryCta.href} {...targetProps(primaryCta)}>
           {primaryCta.text}
           <span className="btn-arrow" aria-hidden="true">↗</span>
+          {isExternalCta(primaryCta) && <NewTabHint />}
         </a>
       )}
       {secondaryCta && (
         <a className="btn btn-secondary" href={secondaryCta.href} {...targetProps(secondaryCta)}>
           {secondaryCta.text}
           <span className="btn-arrow" aria-hidden="true">→</span>
+          {isExternalCta(secondaryCta) && <NewTabHint />}
         </a>
       )}
     </div>

@@ -10,6 +10,7 @@ import type { PlanTier } from "./PlanCards";
 import type { RowGroup } from "@/lib/feature-groups";
 import { maxSavePct, priceFor, setBilling, termLabel, useBilling } from "@/lib/billing-store";
 import { useOverflow } from "@/lib/use-overflow";
+import { NewTabHint } from "../NewTabHint";
 
 /**
  * Interactive half of the comparison table. Prices follow the shared billing
@@ -171,6 +172,7 @@ export function CompareTable({ caption, tiers, groups, hasAnnual, tableId }: Com
                   >
                     {tier.cta ?? "Get Started"}
                     <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
                   </a>
                 </td>
               ))}

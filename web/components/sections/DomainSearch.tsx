@@ -1,5 +1,6 @@
 import { siteSettings } from "@/lib/settings";
 import { Price } from "@/components/Price";
+import { NewTabHint } from "../NewTabHint";
 
 const TLDS = [
   { tld: ".com", usd: "9.99", note: "most popular" },
@@ -58,6 +59,7 @@ export function DomainSearch({
               <button className="btn btn-primary" type="submit">
                 Search domains
                 <span className="btn-arrow" aria-hidden="true">↗</span>
+                <NewTabHint />
               </button>
             </div>
             <p id="domain-search-help" className="domain-help">

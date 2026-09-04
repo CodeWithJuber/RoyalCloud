@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+/* A 404 that search engines index is a 404 that shows up in results. */
+export const metadata: Metadata = {
+  title: "Page not found | Royal Clouds",
+  description: "This path no longer reaches a Royal Clouds page.",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (

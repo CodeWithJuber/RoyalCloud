@@ -1,0 +1,107 @@
+#!/usr/bin/env node
+/**
+ * check-css.mjs — guards the stylesheet against the specific mistakes this
+ * codebase has actually made, each one of which shipped silently once.
+ *
+ * Run: node scripts/check-css.mjs (part of `npm run check`).
+ */
+import { readFile } from "node:fs/promises";
+
+const FILE = "app/site.css";
+const src = await readFile(FILE, "utf8");
+const lines = src.split("\n");
+
+/* Everything inside :root is a token declaration and is allowed raw values —
+   that is the point of a token. Track the brace depth of the :root block. */
+const rootRanges = [];
+{
+  let depth = 0;
+  let start = -1;
+  lines.forEach((line, i) => {
+    if (start === -1 && /^:root\b[^{]*\{/.test(line)) {
+      start = i;
+      depth = 0;
+    }
+    if (start !== -1) {
+      depth += (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+      if (depth <= 0) {
+        rootRanges.push([start, i]);
+        start = -1;
+      }
+    }
+  });
+}
+const inRoot = (i) => rootRanges.some(([a, b]) => i >= a && i <= b);
+
+const RULES = [
+  {
+    id: "nested-minmax",
+    // minmax() is not a valid track-breadth, so the whole declaration is
+    // dropped by the browser. This shipped once and nobody noticed for a week.
+    test: (line) => /minmax\([^)]*minmax\(/.test(line),
+    why: "minmax() cannot nest — the browser drops the whole declaration. Use minmax(min(100%, N), 1fr).",
+  },
+  {
+    id: "raw-font-size",
+    test: (line, i) => !inRoot(i) && /font-size:\s*(\d|\.)/.test(line) && !/var\(/.test(line),
+    why: "font-size must come from a token (--font-size-*, --text-*-size); raw values reintroduce the two type scales.",
+  },
+  {
+    id: "will-change",
+    test: (line) => /will-change:/.test(line),
+    why: "will-change promotes a layer for the life of the element; use it only with a measurement that says it helps.",
+  },
+  {
+    id: "raw-surface-radius",
+    // Allowed raw pixel radii: 2px and 4px are focus-ring rounding, 999px is
+    // the pill. Every surface radius comes from a role token.
+    test: (line, i) => {
+      if (inRoot(i)) return false;
+      const m = line.match(/border-radius:\s*([^;]+);/);
+      if (!m) return false;
+      const values = m[1].match(/\d+px/g);
+      if (!values) return false;
+      return values.some((v) => !["2px", "4px", "999px"].includes(v));
+    },
+    why: "surface radii come from --rc-radius-card / --rc-radius-tile / 999px / 50%; only 2px and 4px focus rings are raw.",
+  },
+];
+
+const failures = [];
+lines.forEach((line, i) => {
+  if (line.trim().startsWith("/*") || line.trim().startsWith("*")) return;
+  for (const rule of RULES) {
+    if (rule.skip) continue;
+    if (rule.test(line, i)) {
+      failures.push({ rule: rule.id, line: i + 1, text: line.trim().slice(0, 96), why: rule.why });
+    }
+  }
+});
+
+/* A card family must not carry its own column count — that is what
+   --card-min replaced. */
+const FAMILIES = /^\.(grid-[234]|product-grid|steps-grid|split-list|stats-row|sec-stats|plan-rail)\b/;
+let selector = "";
+lines.forEach((line, i) => {
+  if (line.includes("{")) selector = line.split("{")[0].trim();
+  if (!FAMILIES.test(selector)) return;
+  if (/grid-template-columns:\s*repeat\(\s*\d/.test(line)) {
+    failures.push({
+      rule: "hardcoded-card-columns",
+      line: i + 1,
+      text: line.trim().slice(0, 96),
+      why: `${selector} is driven by --card-min; a fixed column count brings the per-family breakpoints back.`,
+    });
+  }
+});
+
+if (failures.length > 0) {
+  console.error(`check-css: ${failures.length} problem(s) in ${FILE}\n`);
+  for (const f of failures) {
+    console.error(`  ${FILE}:${f.line}  [${f.rule}]`);
+    console.error(`    ${f.text}`);
+    console.error(`    ${f.why}\n`);
+  }
+  process.exit(1);
+}
+console.log(`check-css: OK — ${lines.length} lines, ${RULES.filter((r) => !r.skip).length + 1} rules.`);

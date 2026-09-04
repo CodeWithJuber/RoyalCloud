@@ -21,6 +21,7 @@ import {
   useBilling,
   type Billing,
 } from "@/lib/billing-store";
+import { NewTabHint } from "../NewTabHint";
 
 export interface PlanTier {
   name: string;
@@ -119,6 +120,11 @@ export function PlanCards({
               />
             </SegmentedControl>
           )}
+          {/* An empty slot where every other deck shows a term toggle reads as
+              a bug. Say why it is absent. */}
+          {!canToggle && (
+            <p className="plan-term-note">Billed monthly — this range has no annual term.</p>
+          )}
           <Link className="planfinder-banner" href={finderHref(intent)} data-finder={intent ?? ""}>
             <Icon name="search" size={15} />
             Not sure which plan fits? Answer 4 quick questions
@@ -188,6 +194,7 @@ export function PlanCards({
           >
             Talk to sales
             <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
           </a>
         </div>
       </div>
@@ -284,6 +291,7 @@ function PlanCard({
       >
         {tier.cta ?? "Get Started"}
         <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
       </a>
 
       {/* Always rendered, even when it has nothing in it: the card is a
