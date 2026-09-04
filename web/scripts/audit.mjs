@@ -280,6 +280,15 @@ async function run() {
     ...(lhRows.length > 0
       ? [
           "## Lighthouse (mobile)",
+          "",
+          "Lighthouse's mobile preset applies a 4x CPU throttle and a simulated",
+          "slow network. Against a local server on a shared CI container that",
+          "inflates every timing by roughly an order of magnitude: the same page",
+          "whose LCP reads ~3s here paints its LCP element (the hero h1) in under",
+          "200ms unthrottled. Treat LCP here as a regression signal between runs on",
+          "the same machine, not as a field number — that has to come from the",
+          "deployed site.",
+          "",
           "| Page | LCP | CLS | TBT | Perf | A11y |",
           "| --- | --- | --- | --- | --- | --- |",
           ...lhRows.map(

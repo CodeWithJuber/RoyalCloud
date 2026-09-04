@@ -24,7 +24,11 @@
   --measure: 46rem;
   --measure-wide: 56rem;
   --rc-card-pad: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  /* Three radius roles. A surface (card, panel, table, drawer), a tile inside
+     one (spec tiles, avatars, art frames), and a pill (buttons, chips). 50%
+     stays for true circles. Anything else was drift. */
   --rc-radius-card: 20px;
+  --rc-radius-tile: 12px;
 }
 
 /* ---------- Layout ---------- */
@@ -74,8 +78,7 @@
   color: var(--color-text-accent);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .section-dark .eyebrow,
 .section-deep .eyebrow,
@@ -84,7 +87,7 @@
 }
 
 .section-header {
-  max-width: 46rem;
+  max-width: var(--measure);
   margin-bottom: var(--header-gap);
 }
 .section-header.center {
@@ -213,7 +216,7 @@
 .card {
   background: var(--color-background-card);
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   padding: 1.75rem;
   transition:
     transform 0.22s ease,
@@ -479,7 +482,7 @@
   min-width: 15rem;
   padding: 0.5rem;
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-popover);
   box-shadow: var(--shadow-med);
   opacity: 0;
@@ -498,7 +501,7 @@
 .nav-panel a {
   display: block;
   padding: 0.65rem 0.85rem;
-  border-radius: 10px;
+  border-radius: var(--rc-radius-tile);
   color: var(--color-text-primary);
   font-size: var(--font-size-base);
   font-weight: 600;
@@ -589,7 +592,7 @@
   width: 44px;
   height: 44px;
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: transparent;
   cursor: pointer;
   position: relative;
@@ -833,9 +836,7 @@
    grid. Depth without noise. */
 .hero-home {
   background:
-    radial-gradient(46rem 26rem at 82% -12%, #7d59d980, transparent 62%),
-    radial-gradient(38rem 24rem at -8% 108%, #5025d166, transparent 65%),
-    radial-gradient(30rem 20rem at 55% 118%, #ffc94b21, transparent 70%),
+    radial-gradient(58rem 32rem at 80% -16%, #7d59d98c, transparent 64%),
     var(--rc-night);
   color: #f4f1ff;
   --color-text-primary: #ffffff;
@@ -884,7 +885,7 @@
 }
 .hero-simple .hero-inner {
   grid-template-columns: 1fr;
-  max-width: 52rem;
+  max-width: var(--measure-wide);
 }
 
 .hero .eyebrow {
@@ -901,7 +902,6 @@
   letter-spacing: -0.03em;
   line-height: 1.05;
   color: var(--color-text-primary);
-  text-wrap: balance;
 }
 .hero h1 em {
   font-style: normal;
@@ -1053,7 +1053,7 @@
   gap: 0;
   padding: 1.75rem;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
   transition:
     transform 0.22s ease,
@@ -1167,7 +1167,7 @@
 
 .plan-note {
   margin: 2rem auto 0;
-  max-width: 46rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
   font-size: var(--text-supporting-size);
   text-align: center;
@@ -1198,10 +1198,22 @@
 }
 
 /* Centre a lone card on the last row rather than letting it hug the left
-   edge — a 4-tier deck is three up plus one. */
-@media (min-width: 1024px) {
+   edge — a 4-tier deck is three up plus one. Scoped to the width band where
+   the deck is actually three up: past 1800px the shell widens and a fourth
+   card fills the row, where moving it would be the bug. Keep this range and
+   the --site-shell step below in step. */
+@media (min-width: 1024px) and (max-width: 1799px) {
   .plan-slide:last-child:nth-child(3n + 1) {
     grid-column: 2;
+  }
+}
+
+/* Very wide screens. A 1200px column in a 2560px field reads as a mistake,
+   not as restraint: the shell and the vertical rhythm both step up once. */
+@media (min-width: 1800px) {
+  :root {
+    --site-shell: 1360px;
+    --section-y: clamp(4rem, 4.5vw, 6rem);
   }
 }
 
@@ -1289,7 +1301,7 @@
   width: 3rem;
   height: 3rem;
   margin-bottom: 1.1rem;
-  border-radius: 14px;
+  border-radius: var(--rc-radius-card);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -1398,16 +1410,19 @@ a.feature-card:hover .feature-more {
   padding: 0;
   list-style: none;
 }
-.step-num {
+/* One numbered marker. Steps carry it on light grounds, security layers on a
+   dark card — the only difference is the fill, so that is all each sets. */
+.step-num,
+.sec-num {
   display: inline-grid;
   place-items: center;
   min-width: 2.5rem;
   height: 2.5rem;
   padding-inline: 0.5rem;
   margin-bottom: 1rem;
-  border-radius: 12px;
-  background: var(--rc-violet-050);
-  color: var(--color-text-accent);
+  border-radius: var(--rc-radius-tile);
+  background: var(--num-fill, var(--rc-violet-050));
+  color: var(--num-ink, var(--color-text-accent));
   font-family: var(--font-family-code);
   font-size: var(--text-supporting-size);
   font-weight: 700;
@@ -1465,8 +1480,7 @@ a.feature-card:hover .feature-more {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 /* ============================================================
@@ -1477,7 +1491,7 @@ a.feature-card:hover .feature-more {
   padding-block: var(--section-y-sm);
 }
 .cta-inner {
-  max-width: 44rem;
+  max-width: var(--measure);
   margin-inline: auto;
   text-align: center;
 }
@@ -1488,7 +1502,6 @@ a.feature-card:hover .feature-more {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.12;
-  text-wrap: balance;
 }
 .cta-inner h2 em {
   font-style: normal;
@@ -1578,7 +1591,7 @@ a.feature-card:hover .feature-more {
   align-items: center;
   padding: 0.7rem 1.35rem;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: var(--color-background-card);
   color: var(--color-text-secondary);
   font-size: var(--font-size-base);
@@ -1600,7 +1613,7 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .bench-panel {
-  max-width: 52rem;
+  max-width: var(--measure-wide);
   margin-inline: auto;
 }
 .bench-row {
@@ -1631,6 +1644,7 @@ a.feature-card:hover .feature-more {
   width: var(--w);
   border-radius: 999px;
   background: #7a68ad;
+  transform-origin: left center;
 }
 .bench-value {
   color: var(--color-text-secondary);
@@ -1648,7 +1662,7 @@ a.feature-card:hover .feature-more {
 }
 .bench-note {
   margin: 1.75rem auto 0;
-  max-width: 44rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   line-height: 1.5;
@@ -1676,18 +1690,8 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .sec-num {
-  display: inline-grid;
-  place-items: center;
-  min-width: 2.5rem;
-  height: 2.5rem;
-  padding-inline: 0.5rem;
-  margin-bottom: 1rem;
-  border-radius: 12px;
-  background: var(--color-accent);
-  color: #ffffff;
-  font-family: var(--font-family-code);
-  font-size: var(--text-supporting-size);
-  font-weight: 700;
+  --num-fill: var(--color-accent);
+  --num-ink: #ffffff;
 }
 .sec-card h3 {
   margin: 0 0 0.5rem;
@@ -1706,7 +1710,7 @@ a.feature-card:hover .feature-more {
   margin: 2.5rem 0 0;
   padding: 1.75rem;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
 }
 .sec-stat {
@@ -1718,8 +1722,7 @@ a.feature-card:hover .feature-more {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .sec-stat dd {
   margin: 0 0 0.4rem;
@@ -1738,7 +1741,7 @@ a.feature-card:hover .feature-more {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
 }
 .compare-table {
@@ -1832,7 +1835,7 @@ a.feature-card:hover .feature-more {
 }
 .compare-note {
   margin: 1.5rem auto 0;
-  max-width: 46rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
   font-size: var(--text-supporting-size);
   line-height: 1.5;
@@ -1934,12 +1937,12 @@ a.feature-card:hover .feature-more {
 .faq-list {
   display: grid;
   gap: 0.75rem;
-  max-width: 48rem;
+  max-width: var(--measure);
   margin-inline: auto;
 }
 .faq-item {
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
   overflow: hidden;
 }
@@ -2005,7 +2008,7 @@ a.feature-card:hover .feature-more {
 }
 .split-solo {
   grid-template-columns: 1fr;
-  max-width: 46rem;
+  max-width: var(--measure);
 }
 .split-copy h2 {
   margin: 0 0 0.75rem;
@@ -2033,7 +2036,7 @@ a.feature-card:hover .feature-more {
   --color-text-primary: #faf7ff;
   --color-text-secondary: #c5bfd5;
   padding: clamp(1.5rem, 3vw, 2.25rem);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background:
     radial-gradient(30rem 16rem at 110% -20%, #673de655, transparent 60%),
     var(--rc-night);
@@ -2057,7 +2060,7 @@ a.feature-card:hover .feature-more {
   flex-shrink: 0;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 10px;
+  border-radius: var(--rc-radius-tile);
   background: #ffffff12;
   color: var(--rc-gold);
 }
@@ -2091,11 +2094,11 @@ a.feature-card:hover .feature-more {
 
 .map-stage {
   position: relative;
-  max-width: 58rem;
+  max-width: var(--measure-wide);
   margin-inline: auto;
   aspect-ratio: 5 / 2;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background-image: radial-gradient(circle, #ffffff1c 1.4px, transparent 1.5px);
   background-size: 22px 22px;
   background-position: center;
@@ -2170,7 +2173,7 @@ a.feature-card:hover .feature-more {
 }
 .map-note {
   margin: 1.75rem auto 0;
-  max-width: 44rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
   font-size: var(--text-supporting-size);
   line-height: 1.5;
@@ -2204,7 +2207,7 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .showcase-stage {
-  max-width: 46rem;
+  max-width: var(--measure);
   margin-inline: auto;
 }
 .showcase-tabs {
@@ -2247,7 +2250,7 @@ a.feature-card:hover .feature-more {
 .showcase-window {
   --color-text-primary: #2f1c6a;
   --color-text-secondary: #595b68;
-  border-radius: 18px;
+  border-radius: var(--rc-radius-card);
   overflow: hidden;
   background: var(--color-background-card);
   box-shadow: var(--shadow-high);
@@ -2306,13 +2309,13 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .domain-shell {
-  max-width: 56rem;
+  max-width: var(--measure-wide);
   margin-inline: auto;
 }
 .domain-card {
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid var(--color-border);
-  border-radius: 24px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
 }
 .domain-card label {
@@ -2434,7 +2437,7 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .prose-section .prose {
-  max-width: 48rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
   font-size: var(--font-size-base);
   line-height: 1.75;
@@ -2584,7 +2587,7 @@ a.feature-card:hover .feature-more {
   display: block;
 }
 .section-art svg {
-  border-radius: 24px;
+  border-radius: var(--rc-radius-card);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -2731,7 +2734,7 @@ a.feature-card:hover .feature-more {
   flex-wrap: wrap;
   margin-top: 2.5rem;
   padding: 1.5rem 2rem;
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background: var(--rc-night);
   color: #c5bfd5;
 }
@@ -2794,7 +2797,7 @@ a.feature-card:hover .feature-more {
   width: 2.6rem;
   height: 2.6rem;
   margin-bottom: 0.9rem;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -2817,7 +2820,7 @@ a.feature-card:hover .feature-more {
   gap: 0.6rem;
   padding: 0.7rem 1.1rem;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
   color: var(--color-text-secondary);
   font-size: var(--text-supporting-size);
@@ -2848,13 +2851,13 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .planfinder-shell {
-  max-width: 52rem;
+  max-width: var(--measure-wide);
   margin-inline: auto;
 }
 .plan-finder {
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid var(--color-border);
-  border-radius: 24px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
   box-shadow: var(--shadow-med);
 }
@@ -2883,7 +2886,7 @@ a.feature-card:hover .feature-more {
   gap: 1rem;
   padding: 1rem 1.25rem;
   border: 1.5px solid var(--color-border-emphasized);
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
   text-align: left;
   cursor: pointer;
@@ -2907,7 +2910,7 @@ a.feature-card:hover .feature-more {
   width: 2.75rem;
   height: 2.75rem;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -2961,8 +2964,7 @@ a.feature-card:hover .feature-more {
   color: var(--color-text-accent);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .finder-price {
   display: flex;
@@ -3040,11 +3042,11 @@ a.feature-card:hover .feature-more {
   align-items: center;
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid var(--color-border);
-  border-radius: 24px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
 }
 .showcase-product-art .product-art svg {
-  border-radius: 18px;
+  border-radius: var(--rc-radius-card);
 }
 .showcase-product-copy h3 {
   margin: 0.9rem 0 0.5rem;
@@ -3474,8 +3476,7 @@ html {
   color: #c5bfd5;
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .hero-intents ul {
   display: flex;
@@ -3707,8 +3708,7 @@ html {
   color: #c5bfd5;
   font-size: var(--font-size-sm);
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   text-align: right;
 }
 
@@ -3716,11 +3716,11 @@ html {
    longer than the one above. Reduced motion: full width, no transition. */
 @media (prefers-reduced-motion: no-preference) {
   [data-js="true"] .bench-panel .bench-fill {
-    transition: width var(--duration-slow, 700ms) cubic-bezier(0.32, 0.72, 0, 1)
+    transition: transform var(--duration-slow, 700ms) cubic-bezier(0.32, 0.72, 0, 1)
       calc(var(--i, 0) * 90ms);
   }
   [data-js="true"] .bench-panel:not([data-visible="true"]) .bench-fill {
-    width: 0;
+    transform: scaleX(0);
   }
 }
 
@@ -3759,7 +3759,7 @@ html {
 .testi-rail:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 4px;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
 }
 .testi-slide {
   scroll-snap-align: start;
@@ -3936,7 +3936,7 @@ a.os-chip:focus-visible {
   align-items: flex-start;
   max-width: 22rem;
   padding: 0.9rem 1.1rem 0.9rem 0.85rem;
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
 }
 .os-chip[data-rich="true"] .os-mark {
   margin-top: 0.1rem;
@@ -3953,7 +3953,7 @@ a.os-chip:focus-visible {
 .deploy-tabs .os-grid:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 6px;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
 }
 
 /* ============================================================
@@ -4056,8 +4056,7 @@ a.os-chip:focus-visible {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 /* Tiles: icon beside the copy, no card chrome — for dense landing grids */
@@ -4165,7 +4164,7 @@ a.os-chip:focus-visible {
   gap: 0.75rem;
   padding: 0.6rem 0.7rem;
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   color: var(--color-text-primary);
   text-decoration: none;
   transition:
@@ -4191,7 +4190,7 @@ a.os-chip:focus-visible {
   flex-shrink: 0;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 10px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -4238,7 +4237,7 @@ a.os-chip:focus-visible {
 .mobile-group {
   padding: 1rem;
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
 }
 .mobile-group h2 {
@@ -4350,7 +4349,7 @@ a.os-chip:focus-visible {
   gap: 0.85rem;
   padding: 0.85rem 1rem;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
   color: #faf7ff;
 }
@@ -4417,7 +4416,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   margin: clamp(1.75rem, 4vw, 2.75rem) 0 0;
   padding: clamp(1.25rem, 3vw, 2rem);
   list-style: none;
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background:
     radial-gradient(30rem 16rem at 110% -20%, #673de655, transparent 60%),
     var(--rc-night);
@@ -4433,7 +4432,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .split-list .split-icon {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: #ffffff12;
   color: var(--rc-gold);
 }
@@ -4617,7 +4616,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   display: grid;
   gap: 0.15rem;
   padding: 0.6rem 0.75rem;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
 }
 .plan-spec dt {
@@ -4688,8 +4687,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   color: var(--color-text-accent);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .plan-highlights {
   display: grid;
@@ -4722,7 +4720,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   flex-shrink: 0;
   width: 1.75rem;
   height: 1.75rem;
-  border-radius: 8px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -4772,8 +4770,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .plan-includes ul {
   display: contents;
@@ -4809,7 +4806,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   margin-top: 1.5rem;
   padding: 1.1rem 1.5rem;
   gap: 0.75rem 1.5rem;
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
 }
 .plan-enterprise > div {
   flex: 1 1 24rem;
@@ -4910,8 +4907,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .finder-progress-bar {
   height: 5px;
@@ -4938,7 +4934,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
     width: 100vw;
     height: auto;
     max-height: 92dvh;
-    border-radius: 24px 24px 0 0;
+    border-radius: var(--rc-radius-card) var(--rc-radius-card) 0 0;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -5047,6 +5043,16 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
    :focus-visible for hand-written HTML, so any selector that forgot its own
    ring simply had none.
    ============================================================ */
+
+/* Headings balance their last line instead of leaving one orphan word;
+   body copy avoids the single-word last line. Two declarations replace the
+   two ad-hoc `text-wrap: balance` calls that covered the hero and one h2. */
+:is(h1, h2, h3, .section-header h2, .cta-inner h2, blockquote) {
+  text-wrap: balance;
+}
+:is(p, li, dd, figcaption) {
+  text-wrap: pretty;
+}
 
 :is(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--color-accent);

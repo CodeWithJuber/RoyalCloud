@@ -1,0 +1,1 @@
+{"body":{"id":"D-0040","text":"Three radius roles replace nine ad-hoc values: --rc-radius-card 20px for any surface, --rc-radius-tile 12px for a tile inside one, 999px for pills, 50% for circles. 12px was chosen over the plan's 8px because it had 11 existing uses to 8px's one"},"kind":"decision","scope":{"level":"repo"},"v":1}

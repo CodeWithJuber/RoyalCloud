@@ -13,7 +13,6 @@ sections:
   - type: hero
     variant: product
     art: il-cyberpanel
-    eyebrow: CyberPanel VPS
     title: CyberPanel VPS Hosting
     subtitle: >-
       Deploy blazing-fast WordPress sites in minutes with CyberPanel and OpenLiteSpeed pre-installed, on isolated KVM
@@ -46,7 +45,6 @@ sections:
   - type: pricing
     id: pricing
     plan: cyberpanel
-    eyebrow: CyberPanel VPS
     title: CyberPanel VPS Hosting plans
     subtitle: Transparent pricing with everything you need included.
   - type: comparison

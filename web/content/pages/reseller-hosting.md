@@ -46,7 +46,6 @@ sections:
   - type: pricing
     id: pricing
     plan: reseller
-    eyebrow: Reseller
     title: Reseller Hosting plans
     subtitle: Transparent pricing with everything you need included.
   - type: comparison

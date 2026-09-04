@@ -13,7 +13,6 @@ sections:
   - type: hero
     variant: product
     art: il-shared
-    eyebrow: SSD Shared Hosting
     title: Lightning-Fast SSD Shared Hosting
     subtitle: >-
       The fastest shared hosting powered by SSD drives, the LiteSpeed Web Server and CloudLinux, with free

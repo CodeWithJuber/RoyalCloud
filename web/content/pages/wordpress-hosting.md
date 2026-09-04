@@ -46,7 +46,6 @@ sections:
   - type: pricing
     id: pricing
     plan: wordpress
-    eyebrow: WordPress
     title: Managed WordPress Hosting plans
     subtitle: Transparent pricing with everything you need included.
   - type: comparison

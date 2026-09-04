@@ -41,7 +41,6 @@ sections:
       - icon: rocket
         text: Instant Setup
   - type: features
-    eyebrow: Benefits
     title: Benefits of using Royal Clouds
     columns: 3
     items:
@@ -62,7 +61,6 @@ sections:
           email or support tickets.
   - type: products
     id: plans
-    eyebrow: Hosting
     title: Wide Range of Hosting Plans
     subtitle: >-
       Whether you're a professional developer or have never run a website
@@ -97,7 +95,6 @@ sections:
         price: $130
         href: /dedicated-servers
   - type: planfinder
-    eyebrow: Help me choose
     title: Not sure which plan fits?
     subtitle: >-
       Answer four quick questions and we'll point you at the right plan — a
@@ -118,7 +115,6 @@ sections:
       - label: Dedicated Servers
         plan: dedicated
   - type: domainsearch
-    eyebrow: Domains
     title: Find the perfect domain name
     subtitle: >-
       Enter the domain name of your choice and pick an extension — .com,
@@ -146,7 +142,6 @@ sections:
           Scale to bigger plans any time, with 24/7 support covering every
           issue from the basic to the complex.
   - type: content
-    eyebrow: Performance
     title: High Speed Web Servers
     image: speed
     layout: chips
@@ -163,7 +158,6 @@ sections:
       - icon: gauge
         title: Website optimization
   - type: content
-    eyebrow: Support
     title: Unbeatable Support, 24/7
     image: support
     reverse: true
@@ -199,7 +193,6 @@ sections:
         display: 9.6/10
         highlight: true
   - type: features
-    eyebrow: Managed servers
     title: Let Us Manage Your Server
     subtitle: >-
       Stay 100% focused on your product. We manage the servers, you focus on
@@ -229,13 +222,11 @@ sections:
           Automatic remote backups with single-click restore in case of any
           disaster.
   - type: testimonials
-    eyebrow: Testimonials
     title: Customers Feedback
     subtitle: What customers say about Royal Clouds.
     source: global
     limit: 3
   - type: features
-    eyebrow: Security
     title: Secure Web Hosting Solutions
     columns: 3
     items:

@@ -1,0 +1,1 @@
+{"body":{"id":"D-0041","text":"--measure 46rem / --measure-wide 56rem now carry the fifteen centred blocks that had six unrelated max-widths between 44 and 58rem; the tokens were declared in Step 1 and referenced nowhere"},"kind":"decision","scope":{"level":"repo"},"v":1}
