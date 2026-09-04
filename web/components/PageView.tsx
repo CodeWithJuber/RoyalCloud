@@ -4,10 +4,15 @@ import { Prose } from "@/components/Prose";
 import { buildJsonLd } from "@/lib/seo";
 import type { PageContent } from "@/lib/content";
 import { withSectionIds } from "@/lib/section-ids";
+import { buildSubnav } from "@/lib/subnav";
+import { ProductSubnav } from "@/components/site/ProductSubnav";
 
 export function PageView({ page }: { page: PageContent }) {
   const jsonLd = buildJsonLd(page);
   const sections = withSectionIds(page.sections);
+  /* Product pages (pricing + comparison) get a sticky sub-nav right under the hero. */
+  const subnav = buildSubnav(sections);
+  const heroIndex = Math.max(0, sections.findIndex((section) => section.type === "hero"));
 
   return (
     <>
@@ -30,7 +35,10 @@ export function PageView({ page }: { page: PageContent }) {
         </nav>
       )}
       <main id="main-content">
-        <SectionRenderer sections={sections} />
+        <SectionRenderer
+          sections={sections}
+          after={subnav ? { index: heroIndex, node: <ProductSubnav {...subnav} /> } : undefined}
+        />
         {page.body && <Prose markdown={page.body} />}
       </main>
       {jsonLd.map((entry, i) => (
