@@ -3637,3 +3637,127 @@ html {
     animation: finder-back var(--duration-medium, 300ms) cubic-bezier(0.32, 0.72, 0, 1);
   }
 }
+
+/* ============================================================
+   Comparison table v2 — synced billing, best-for row, grouped rows,
+   column highlight, phone collapse, sticky header on wide screens
+   ============================================================ */
+
+.compare-toolbar {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+/* "Most popular" flag: white pill on the violet header cell (gold stays on CTAs) */
+.compare-flag {
+  background: #ffffff;
+  color: var(--color-accent);
+  font-size: 0.62rem;
+}
+
+.compare-term {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+.compare-best td {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.compare-table .compare-group th {
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.compare-info {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.35rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+  vertical-align: middle;
+  cursor: help;
+}
+.compare-info:hover {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+.compare-info:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Hovered/focused column */
+.compare-table td[data-active="true"],
+.compare-table tbody tr:nth-child(even) td[data-active="true"] {
+  background: #f4f0fd;
+}
+.compare-table thead th[data-active="true"] {
+  background: #f4f0fd;
+}
+.compare-table td.compare-popular[data-active="true"],
+.compare-table tbody tr:nth-child(even) td.compare-popular[data-active="true"] {
+  background: #673de61f;
+}
+.compare-table thead th.compare-popular[data-active="true"] {
+  background: var(--color-accent);
+}
+
+/* Phone collapse: lead rows + first group until expanded (JS only; without
+   JS every row renders) */
+.compare-more {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 1rem auto 0;
+  min-height: 2.5rem;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid var(--color-border-emphasized);
+  border-radius: 999px;
+  background: var(--color-background-card);
+  color: var(--color-text-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.compare-more:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+@media (max-width: 767px) {
+  .compare-more {
+    display: inline-flex;
+  }
+  [data-js="true"] .compare-table[data-expanded="false"] .compare-extra {
+    display: none;
+  }
+}
+
+/* Wide screens: the header row sticks under the site header (+ sub-nav) */
+@media (min-width: 1024px) {
+  .compare-scroll {
+    overflow: visible;
+  }
+  .compare-table thead th {
+    position: sticky;
+    top: calc(var(--site-header-h) + var(--subnav-h));
+    z-index: 3;
+    background: var(--color-background-card);
+  }
+  .compare-table thead th.compare-popular {
+    background: var(--color-accent);
+  }
+}
