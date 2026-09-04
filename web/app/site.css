@@ -269,14 +269,42 @@
   display: grid;
   gap: 1.25rem;
 }
-.grid-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+/* One contract for every card row on the site. The column count follows the
+   space available and the family's smallest acceptable card — never a
+   hardcoded count, so a four-step process is four across on a desktop and a
+   snap rail on a phone without either being written down as a breakpoint.
+   Families set --card-min; that is the whole vocabulary. */
+.grid-2,
+.grid-3,
+.grid-4,
+.product-grid,
+.steps-grid,
+.split-list,
+.stats-row,
+.sec-stats {
+  display: grid;
+  gap: var(--card-gap, 1.25rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min, 18rem)), 1fr));
 }
-.grid-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
+.grid-2,
+.grid-3,
 .grid-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  --card-min: 17rem;
+}
+.product-grid {
+  --card-min: 16rem;
+}
+.steps-grid {
+  --card-min: 15rem;
+}
+.split-list {
+  --card-min: 14rem;
+}
+.stats-row {
+  --card-min: 10rem;
+}
+.sec-stats {
+  --card-min: 9rem;
 }
 
 /* ---------- Reveal (progressive enhancement only) ----------
@@ -293,22 +321,6 @@
   transform: none;
 }
 
-/* ---------- Mobile ---------- */
-@media (max-width: 1024px) {
-  .grid-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .grid-3 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 640px) {
-  .grid-2,
-  .grid-3,
-  .grid-4 {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ============================================================
    Site header — announcement bar + sticky nav + mega menu
@@ -1331,9 +1343,6 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .product-grid {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
 .product-card {
   display: flex;
@@ -1385,9 +1394,6 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .steps-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1419,20 +1425,7 @@ a.feature-card:hover .feature-more {
   line-height: 1.6;
 }
 
-@media (min-width: 641px) {
-  .steps-grid[data-cols="2"],
-  .steps-grid[data-cols="3"],
-  .steps-grid[data-cols="4"] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
 @media (min-width: 1025px) {
-  .steps-grid[data-cols="3"] {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .steps-grid[data-cols="4"] {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
   /* Connector only exists when every card sits in a single row. */
   .step-card {
     position: relative;
@@ -1453,12 +1446,6 @@ a.feature-card:hover .feature-more {
 
 .stats-band {
   padding-block: var(--section-y-sm);
-}
-.stats-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.75rem clamp(2.5rem, 6vw, 4.5rem);
 }
 .stat {
   text-align: center;
@@ -1715,9 +1702,7 @@ a.feature-card:hover .feature-more {
   line-height: 1.6;
 }
 .sec-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: 1rem;
+  --card-gap: 1rem;
   margin: 2.5rem 0 0;
   padding: 1.75rem;
   border: 1px solid var(--color-border);
@@ -4319,16 +4304,10 @@ a.os-chip:focus-visible {
   }
 }
 
-/* Stats: a real grid — 4-up, then 2×2 on tablets and phones */
+/* Stats: the contract packs as many 10rem tiles as fit — 4-up wide, 2×2 on a
+   tablet, one column on a phone, with no breakpoint written down. */
 .stats-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: 1.75rem 1.5rem;
-}
-@media (max-width: 900px) {
-  .stats-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  --card-gap: 1.75rem 1.5rem;
 }
 
 /* ============================================================
@@ -4434,9 +4413,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .split-list {
   --color-text-primary: #faf7ff;
   --color-text-secondary: #c5bfd5;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-  gap: 1.25rem 1.5rem;
+  --card-gap: 1.25rem 1.5rem;
   margin: clamp(1.75rem, 4vw, 2.75rem) 0 0;
   padding: clamp(1.25rem, 3vw, 2rem);
   list-style: none;
@@ -4473,11 +4450,6 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   line-height: 1.55;
 }
 @media (min-width: 1024px) {
-  .split-list[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .split-list[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .split-list[data-count="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .split-list[data-count="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-  .split-list[data-count="6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .split-list li + li {
     padding-left: 1.5rem;
     border-left: 1px solid #faf7ff1f;
@@ -4492,9 +4464,6 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   }
 }
 @media (min-width: 641px) and (max-width: 1023px) {
-  .split-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .split-list li:last-child:nth-child(odd) {
     grid-column: 1 / -1;
     flex-direction: row;
@@ -5266,4 +5235,11 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   .hero-home .hero-badges {
     display: none;
   }
+}
+
+/* The active OS chip's tick — the non-colour half of "you are here". */
+.os-chip-current {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--color-text-accent);
 }

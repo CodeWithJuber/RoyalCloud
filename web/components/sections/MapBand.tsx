@@ -1,3 +1,5 @@
+import { sectionName, sectionTitleId } from "@/lib/section-name";
+
 export interface MapPin {
   label: string;
   x: number;
@@ -33,12 +35,12 @@ export function MapBand({
   pins = DEFAULT_PINS,
 }: MapBandProps) {
   return (
-    <section className="section section-dark mapband" id={id}>
+    <section className="section section-dark mapband" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}

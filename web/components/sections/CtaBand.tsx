@@ -1,4 +1,5 @@
 import type { CtaLink } from "./Hero";
+import { emphasize } from "@/lib/emphasize";
 
 interface CtaBandProps {
   title: string; // may contain <em> accents — trusted local content
@@ -23,9 +24,9 @@ export function CtaBand({
   secondaryCta,
 }: CtaBandProps) {
   return (
-    <section className="section-royal cta-band">
+    <section className="section-royal cta-band" aria-labelledby="cta-band-title">
       <div className="site-shell cta-inner" data-reveal>
-        <h2 dangerouslySetInnerHTML={{ __html: title }} />
+        <h2 id="cta-band-title">{emphasize(title)}</h2>
         {subtitle && <p className="cta-lede">{subtitle}</p>}
         {(primaryCta || secondaryCta) && (
           <div className="cta-actions">

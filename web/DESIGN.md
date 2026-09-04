@@ -38,7 +38,7 @@ Light mode is the shipping mode (`app/providers.tsx` mounts the theme with `mode
 
 ## 3. Typography
 
-Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM Sans** (`--font-dm-sans`) for body and headings, **JetBrains Mono** (`--font-jetbrains-mono`) for code and tabular data (benchmark values, prices use `font-variant-numeric: tabular-nums`). Type scale base 14 / ratio 1.2; heading weights 700. Display sizes are inline `clamp()` values in `app/site.css` (hero `h1` ≈ `clamp(2rem, 9.4vw, 2.6rem)` on phones). Helpers: `.eyebrow` (uppercase, tracked, accent), `.lede` (intro paragraph), `.section-header` (eyebrow + h2 + lede block).
+Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM Sans** (`--font-dm-sans`) for body and headings, **JetBrains Mono** (`--font-jetbrains-mono`) for code and tabular data (benchmark values, prices use `font-variant-numeric: tabular-nums`). Type scale base 16 / ratio 1.2 (body 16px, secondary `--text-supporting-size` 14px, tracked micro-labels `--font-size-sm` 13px — nothing smaller); heading weights 700. Display sizes are theme tokens: `--text-display-1-size: clamp(2.25rem, 4vw, 3.25rem)`, `--text-display-2-size: clamp(1.75rem, 1.1rem + 2.6vw, 2.5rem)`. No raw `font-size` values outside `:root`. Helpers: `.eyebrow` (uppercase, tracked, accent), `.lede` (intro paragraph), `.section-header` (eyebrow + h2 + lede block).
 
 ---
 
@@ -46,7 +46,9 @@ Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM 
 
 - **Shell:** `--site-shell: 1200px` (`.site-shell`). Section rhythm `--section-y: clamp(3rem, 5.5vw, 5rem)` (`clamp(2.5rem, 5vw, 3.25rem)` at ≤1024px), `--section-y-sm` for shallow bands, `--header-gap` under section headers; two consecutive light sections share one gap (the second's top padding halves), dark/royal/tint bands keep full padding.
 - **Bands:** `.section` (light), `.section-tint` (lavender), `.section-dark` (night), `.section-deep` (night-deep), `.section-royal` (violet gradient), `.section-sm` (shallow).
-- **Grids:** `.grid`, `.grid-2/-3/-4` (2-up on phones, 1-up for `.grid-4` under 1024px).
+- **Card grid contract:** one rule drives every card row — `repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr))`. A family sets `--card-min` (and `--card-gap` when it needs a different gutter); the column count then follows the space available, so no card family carries a breakpoint or a hardcoded count. Current minimums: `.grid-2/-3/-4` 17rem, `.product-grid` 16rem, `.steps-grid` 15rem, `.split-list` 14rem, `.stats-row` 10rem, `.sec-stats` 9rem, plan deck 300px. Adding a family means adding a `--card-min`, never a media query.
+- **Plan deck:** three layouts over one DOM — stacked ≤640px, a two-up snap rail 641–1023px (`Rail`), auto-fit from 1024px. Cards align through `subgrid` (rail → slide → card, four rows: head, price, CTA, body), so price and CTA sit on the same line across a row. A card's query container is `.plan-body`, never `.plan-card` — inline-size containment disqualifies an element from being a subgrid.
+- **Scrollers:** `useOverflow` (`lib/use-overflow.ts`) measures whether a box really scrolls. Tab stops, prev/next buttons, dots and `aria-roledescription="carousel"` are all conditioned on it — a static grid must not announce itself as a carousel, and a box that fits must not be a focus stop.
 - **Radius:** cards 20px (theme), plan finder and tables 24px/20px, chips and buttons 999px.
 - **Shadow:** Astryx `--shadow-low / --shadow-med / --shadow-high` (ink-violet tinted via `--color-shadow`).
 - **Motion tokens:** `--duration-fast 125ms`, `--duration-medium 300ms`, `--duration-slow 700ms` (theme `motion`), easing `cubic-bezier(0.32, 0.72, 0, 1)` for reveals and slides.
@@ -64,7 +66,7 @@ Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM 
 
 | `type` | Component | Notes |
 | --- | --- | --- |
-| `hero` | `Hero` | gradient/product/simple; home hero carries the domain search and intent chips |
+| `hero` | `Hero` | gradient/product/simple; the home hero is hosting-first — eyebrow, h1, lede, rating, offer, CTA pair, intent chips, no domain field. Domain search lives in the `domainsearch` section and on `/domains`. |
 | `trustbar` | `TrustBar` | four items become four tiles ≥900px |
 | `pricing` | `PlanCards` (client) | spec tiles read from each tier's features (`lib/plan-specs.ts`), native `<details>` "All features" with grouped rest + deck highlights, "Every plan includes" brand strip from a "·" deck note, shared billing store, term-only labels |
 | `comparison` | `ComparisonTable` → `CompareTable` (client) | grouped rows, best-for, synced billing, sticky header |

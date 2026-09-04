@@ -1,0 +1,1 @@
+{"body":{"id":"D-0036","text":"Astryx SectionHeader/Heading/Text are NOT adopted for the 15 content sections: Heading and Text are 'use client', so routing static section headings through them would client-render text that is server-rendered today; Grid/Card/Stack are server-safe and remain fair game"},"kind":"decision","scope":{"level":"repo"},"v":1}

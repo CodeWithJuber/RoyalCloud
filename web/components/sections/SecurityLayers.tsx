@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { CountUp } from "../CountUp";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 export interface SecurityLayer {
   title: string;
@@ -29,12 +30,12 @@ export function SecurityLayers({
   stats,
 }: SecurityLayersProps) {
   return (
-    <section className="section section-dark security" id={id}>
+    <section className="section section-dark security" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}

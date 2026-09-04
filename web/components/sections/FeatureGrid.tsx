@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { Icon } from "../Icon";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 export interface FeatureItem {
   icon?: string;
@@ -32,12 +33,12 @@ export function FeatureGrid({
   items,
 }: FeatureGridProps) {
   return (
-    <section className="section features" id={id} data-variant={variant}>
+    <section className="section features" id={id} data-variant={variant} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}

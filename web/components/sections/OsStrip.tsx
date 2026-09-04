@@ -2,6 +2,7 @@ import { DEPLOY_CATALOG, groupsIn } from "@/lib/deploy-catalog";
 import { BrandMark, hasBrandMark } from "../BrandMark";
 import { DeployTabs } from "./DeployTabs";
 import { OsChip, type DeployItem } from "./OsChip";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 export interface OsItem {
   name: string;
@@ -32,12 +33,12 @@ export function OsStrip({ id, eyebrow, title, subtitle, items }: OsStripProps) {
   const tabbed = groups.length > 1;
 
   return (
-    <section className="section-sm osstrip" id={id}>
+    <section className="section-sm osstrip" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle || tabbed) && (
           <header className="section-header center" data-reveal>
             {(eyebrow || tabbed) && <p className="eyebrow">{eyebrow ?? "One-click deploy"}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}

@@ -3,6 +3,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
+import { useOverflow } from "@/lib/use-overflow";
 
 /**
  * Rail — a CSS scroll-snap rail with previous/next buttons, dots and a live
@@ -48,8 +49,7 @@ export function Rail({
 }: RailProps) {
   const railRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
-  const [overflowing, setOverflowing] = useState(false);
-  const [edges, setEdges] = useState({ start: true, end: false });
+  const { overflowing, atStart, atEnd } = useOverflow(railRef);
   const count = children.length;
 
   /* Which slide leads the viewport, and whether the rail overflows at all. */
@@ -70,21 +70,7 @@ export function Rail({
     );
     rail.querySelectorAll<HTMLElement>("[data-index]").forEach((slide) => observer.observe(slide));
 
-    const measure = () => {
-      setOverflowing(rail.scrollWidth > rail.clientWidth + 1);
-      setEdges({
-        start: rail.scrollLeft <= 1,
-        end: rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 1,
-      });
-    };
-    const resize = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
-    resize?.observe(rail);
-    rail.addEventListener("scroll", measure, { passive: true });
-    return () => {
-      observer.disconnect();
-      resize?.disconnect();
-      rail.removeEventListener("scroll", measure);
-    };
+    return () => observer.disconnect();
   }, [count]);
 
   function go(index: number) {
@@ -142,7 +128,7 @@ export function Rail({
           type="button"
           className={navClassName}
           aria-label={`Previous ${itemNoun}`}
-          disabled={edges.start}
+          disabled={atStart}
           onClick={() => go(active - 1)}
         >
           <Icon name="chevronLeft" size={16} />
@@ -163,7 +149,7 @@ export function Rail({
           type="button"
           className={navClassName}
           aria-label={`Next ${itemNoun}`}
-          disabled={edges.end}
+          disabled={atEnd}
           onClick={() => go(active + 1)}
         >
           <Icon name="chevronRight" size={16} />

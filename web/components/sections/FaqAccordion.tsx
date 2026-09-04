@@ -1,5 +1,6 @@
 import faqsData from "@/data/faqs.json";
 import { Icon } from "../Icon";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 interface FaqItem {
   q: string;
@@ -45,11 +46,11 @@ export function FaqAccordion({
   };
 
   return (
-    <section className="section section-tint faq-section" id={id}>
+    <section className="section section-tint faq-section" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         <header className="section-header center" data-reveal>
           <p className="eyebrow">{eyebrow}</p>
-          <h2>{title}</h2>
+          <h2 id={sectionTitleId(id)}>{title}</h2>
           {subtitle && <p className="lede">{subtitle}</p>}
         </header>
         <div className="faq-list">

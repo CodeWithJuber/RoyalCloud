@@ -1,6 +1,7 @@
 import testimonialsData from "@/data/testimonials.json";
 import { RatingBadge } from "../RatingBadge";
 import { TestimonialCarousel, type Testimonial } from "./TestimonialCarousel";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 interface TestimonialsProps {
   id?: string;
@@ -30,11 +31,11 @@ export function Testimonials({
   if (list.length === 0) return null;
 
   return (
-    <section className="section testimonials" id={id}>
+    <section className="section testimonials" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         <header className="section-header center" data-reveal>
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-          <h2>{title}</h2>
+          <h2 id={sectionTitleId(id)}>{title}</h2>
           {subtitle && <p className="lede">{subtitle}</p>}
           <RatingBadge className="testi-aggregate" />
         </header>

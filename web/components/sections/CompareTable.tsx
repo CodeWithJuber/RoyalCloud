@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { FocusEvent, MouseEvent } from "react";
 import { SegmentedControl, SegmentedControlItem } from "@astryxdesign/core/SegmentedControl";
 import { Tooltip } from "@astryxdesign/core/Tooltip";
@@ -9,6 +9,7 @@ import { Price } from "../Price";
 import type { PlanTier } from "./PlanCards";
 import type { RowGroup } from "@/lib/feature-groups";
 import { maxSavePct, priceFor, setBilling, termLabel, useBilling } from "@/lib/billing-store";
+import { useOverflow } from "@/lib/use-overflow";
 
 /**
  * Interactive half of the comparison table. Prices follow the shared billing
@@ -31,6 +32,8 @@ export function CompareTable({ caption, tiers, groups, hasAnnual, tableId }: Com
   const billing = hasAnnual ? stored : "monthly";
   const [activeCol, setActiveCol] = useState<number | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { overflowing } = useOverflow(scrollRef);
 
   const colOf = (target: EventTarget | null): number | null => {
     const cell = target instanceof Element ? target.closest("[data-col]") : null;
@@ -65,7 +68,18 @@ export function CompareTable({ caption, tiers, groups, hasAnnual, tableId }: Com
         </div>
       )}
 
-      <div className="compare-scroll" data-reveal>
+      {/* A scroll container is only reachable by keyboard if something in it
+          can take focus. The table's cells cannot, so the container itself is
+          the tab stop — with a name, so it is announced as what it is rather
+          than as an unlabelled group. */}
+      <div
+        className="compare-scroll"
+        ref={scrollRef}
+        role="region"
+        aria-label={caption}
+        tabIndex={overflowing ? 0 : undefined}
+        data-reveal
+      >
         <table
           className="compare-table"
           id={tableId}

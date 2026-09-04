@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 export interface BenchItem {
   label: string;
@@ -29,12 +30,12 @@ export function BenchmarkBars({
 }: BenchmarkBarsProps) {
   const max = Math.max(1, ...items.map((item) => item.value));
   return (
-    <section className="section section-dark benchmark" id={id}>
+    <section className="section section-dark benchmark" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}

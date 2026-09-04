@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 export interface StoryItem {
   tag: string;
@@ -19,12 +20,12 @@ interface StoryCardsProps {
 
 export function StoryCards({ id, eyebrow, title, subtitle, items }: StoryCardsProps) {
   return (
-    <section className="section section-tint stories" id={id}>
+    <section className="section section-tint stories" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
