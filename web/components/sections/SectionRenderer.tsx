@@ -13,6 +13,7 @@ import { StepProcess, type StepItem } from "./StepProcess";
 import { StatsBand, type StatItem } from "./StatsBand";
 import { ComparisonTable } from "./ComparisonTable";
 import { Testimonials } from "./Testimonials";
+import type { Testimonial } from "./TestimonialCarousel";
 import { FaqAccordion } from "./FaqAccordion";
 import { TechLogos } from "./TechLogos";
 import { CtaBand } from "./CtaBand";
@@ -99,6 +100,16 @@ const isMapPin = (v: unknown): v is MapPin =>
   typeof v.y === "number";
 const isShowcaseTab = (v: unknown): v is ShowcaseTab =>
   isRecord(v) && isString(v.label);
+const isTestimonialItem = (v: unknown): v is Testimonial =>
+  isRecord(v) &&
+  isString(v.name) &&
+  isString(v.quote) &&
+  (v.site === undefined || isString(v.site)) &&
+  (v.rating === undefined || typeof v.rating === "number");
+const isFaqItem = (v: unknown): v is { q: string; a: string } =>
+  isRecord(v) && isString(v.q) && isString(v.a);
+const source = (v: unknown): "global" | "inline" | undefined =>
+  v === "inline" || v === "global" ? v : undefined;
 
 const columns = (v: unknown): 2 | 3 | 4 | undefined =>
   v === 2 || v === 3 || v === 4 ? v : undefined;
@@ -227,26 +238,35 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
         />
       );
 
-    case "testimonials":
+    case "testimonials": {
+      const items = list(s.items, isTestimonialItem);
       return (
         <Testimonials
           id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
+          source={source(s.source)}
+          items={items.length > 0 ? items : undefined}
           limit={typeof s.limit === "number" ? s.limit : undefined}
         />
       );
+    }
 
-    case "faq":
+    case "faq": {
+      const items = list(s.items, isFaqItem);
       return (
         <FaqAccordion
           id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
+          source={source(s.source)}
+          items={items.length > 0 ? items : undefined}
+          jsonld={s.jsonld === false ? false : undefined}
         />
       );
+    }
 
     case "planfinder":
       return (

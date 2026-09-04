@@ -98,6 +98,8 @@ export const PAIRS = [
 
   { label: "benchmark scale caption on night", fg: "#c5bfd5", bg: "#2f1c6a", size: "body" },
 
+  { label: "carousel inactive dot on white", fg: "#8b8c99", bg: "#ffffff", size: "ui" },
+
   // Status
   { label: "success check on white", fg: "#009e81", bg: "#ffffff", size: "ui" },
   { label: "error red on white", fg: "#d32f2f", bg: "#ffffff", size: "body" },

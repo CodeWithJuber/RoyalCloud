@@ -12,7 +12,7 @@ interface TrustBarProps {
 export function TrustBar({ items }: TrustBarProps) {
   return (
     <div className="trustbar section-deep">
-      <ul className="site-shell trustbar-row">
+      <ul className="site-shell trustbar-row" data-count={items.length}>
         {items.map((item) => (
           <li key={item.text} className="trustbar-item">
             <Icon name={item.icon ?? "shield"} size={18} />
