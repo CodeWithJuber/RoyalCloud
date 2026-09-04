@@ -7,15 +7,16 @@ export interface OsItem {
 }
 
 interface OsStripProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
   items: OsItem[];
 }
 
-export function OsStrip({ eyebrow, title, subtitle, items }: OsStripProps) {
+export function OsStrip({ id, eyebrow, title, subtitle, items }: OsStripProps) {
   return (
-    <section className="section-sm osstrip">
+    <section className="section-sm osstrip" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>

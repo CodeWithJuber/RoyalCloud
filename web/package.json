@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typegen": "next typegen",
     "astryx": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs",
     "theme:build": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs theme build theme/royal.theme.ts -o app/royal-theme.css --icons-specifier ../theme/icons",
     "theme:check": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs theme build theme/royal.theme.ts -o app/royal-theme.css --icons-specifier ../theme/icons --check",
@@ -14,7 +15,7 @@
     "test": "vitest run",
     "check:cms": "node scripts/verify-cms.mjs",
     "check:contrast": "node scripts/check-contrast.mjs",
-    "check": "npm run theme:check && npx tsc --noEmit && npm run lint && npm test && npm run check:cms && npm run check:contrast"
+    "check": "npm run theme:check && npm run typegen && npx tsc --noEmit && npm run lint && npm test && npm run check:cms && npm run check:contrast"
   },
   "dependencies": {
     "@astryxdesign/core": "^0.5.2",

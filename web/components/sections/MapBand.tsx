@@ -6,6 +6,7 @@ export interface MapPin {
 }
 
 interface MapBandProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -24,6 +25,7 @@ const DEFAULT_PINS: MapPin[] = [
 const clamp = (n: number) => Math.min(96, Math.max(4, n));
 
 export function MapBand({
+  id,
   eyebrow,
   title,
   subtitle,
@@ -31,7 +33,7 @@ export function MapBand({
   pins = DEFAULT_PINS,
 }: MapBandProps) {
   return (
-    <section className="section section-dark mapband">
+    <section className="section section-dark mapband" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>

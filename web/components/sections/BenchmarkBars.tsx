@@ -8,6 +8,7 @@ export interface BenchItem {
 }
 
 interface BenchmarkBarsProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -16,6 +17,7 @@ interface BenchmarkBarsProps {
 }
 
 export function BenchmarkBars({
+  id,
   eyebrow,
   title,
   subtitle,
@@ -24,7 +26,7 @@ export function BenchmarkBars({
 }: BenchmarkBarsProps) {
   const max = Math.max(1, ...items.map((item) => item.value));
   return (
-    <section className="section section-dark benchmark">
+    <section className="section section-dark benchmark" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>

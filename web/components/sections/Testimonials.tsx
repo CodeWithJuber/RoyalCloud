@@ -8,6 +8,7 @@ interface Testimonial {
 }
 
 interface TestimonialsProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -34,6 +35,7 @@ function Star() {
 }
 
 export function Testimonials({
+  id,
   eyebrow,
   title = "What our customers say",
   subtitle,
@@ -43,7 +45,7 @@ export function Testimonials({
   const list = typeof limit === "number" && limit > 0 ? all.slice(0, limit) : all;
 
   return (
-    <section className="section testimonials">
+    <section className="section testimonials" id={id}>
       <div className="site-shell">
         <header className="section-header center" data-reveal>
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}

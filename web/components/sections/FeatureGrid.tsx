@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Icon } from "../Icon";
 
 export interface FeatureItem {
@@ -8,6 +9,7 @@ export interface FeatureItem {
 }
 
 interface FeatureGridProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -16,6 +18,7 @@ interface FeatureGridProps {
 }
 
 export function FeatureGrid({
+  id,
   eyebrow,
   title,
   subtitle,
@@ -23,7 +26,7 @@ export function FeatureGrid({
   items,
 }: FeatureGridProps) {
   return (
-    <section className="section features">
+    <section className="section features" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
@@ -33,7 +36,8 @@ export function FeatureGrid({
           </header>
         )}
         <div className={`grid grid-${columns}`}>
-          {items.map((item) => {
+          {items.map((item, i) => {
+            const stagger = { "--reveal-i": i } as CSSProperties;
             const body = (
               <>
                 <span className="feature-icon">
@@ -49,11 +53,11 @@ export function FeatureGrid({
               </>
             );
             return item.href ? (
-              <a key={item.title} className="card feature-card" href={item.href} data-reveal>
+              <a key={item.title} className="card feature-card" href={item.href} data-reveal style={stagger}>
                 {body}
               </a>
             ) : (
-              <article key={item.title} className="card feature-card" data-reveal>
+              <article key={item.title} className="card feature-card" data-reveal style={stagger}>
                 {body}
               </article>
             );

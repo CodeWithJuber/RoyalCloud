@@ -38,6 +38,24 @@ export function SiteHeader() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
+  /* Publish the rendered header height as --site-header-h. Sticky elements
+     and anchor scroll-padding sit under it; the announcement bar can be
+     dismissed and the bar shrinks on phones, so it is measured, not assumed. */
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const root = document.documentElement;
+    const publish = () =>
+      root.style.setProperty("--site-header-h", `${Math.round(el.getBoundingClientRect().height)}px`);
+    publish();
+    const observer = new ResizeObserver(publish);
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty("--site-header-h");
+    };
+  }, []);
+
   return (
     <div className={`site-header ${scrolled ? "is-scrolled" : ""}`} ref={headerRef}>
       {announcement && announceVisible && (

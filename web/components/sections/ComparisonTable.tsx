@@ -2,6 +2,7 @@ import { getPlanFile } from "@/lib/plans";
 import { Price } from "../Price";
 
 interface ComparisonTableProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -14,6 +15,7 @@ const featureLabel = (text: string) =>
   text.replace(/^(unlimited|free|\d+[\w.]*)\s+(gb\s+|tb\s+)?/i, "") || text;
 
 export function ComparisonTable({
+  id,
   eyebrow,
   title,
   subtitle,
@@ -34,7 +36,7 @@ export function ComparisonTable({
     popular ? "compare-popular" : undefined;
 
   return (
-    <section className="section compare-section">
+    <section className="section compare-section" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>

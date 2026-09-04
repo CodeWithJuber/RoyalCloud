@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 export interface SecurityLayer {
   title: string;
   text: string;
@@ -9,6 +11,7 @@ export interface SecurityStat {
 }
 
 interface SecurityLayersProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -17,6 +20,7 @@ interface SecurityLayersProps {
 }
 
 export function SecurityLayers({
+  id,
   eyebrow,
   title,
   subtitle,
@@ -24,7 +28,7 @@ export function SecurityLayers({
   stats,
 }: SecurityLayersProps) {
   return (
-    <section className="section section-dark security">
+    <section className="section section-dark security" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
@@ -35,7 +39,12 @@ export function SecurityLayers({
         )}
         <div className="grid grid-3 sec-grid">
           {layers.map((layer, i) => (
-            <article key={layer.title} className="card sec-card" data-reveal>
+            <article
+              key={layer.title}
+              className="card sec-card"
+              data-reveal
+              style={{ "--reveal-i": i } as CSSProperties}
+            >
               <span className="sec-num">{String(i + 1).padStart(2, "0")}</span>
               <h3>{layer.title}</h3>
               <p>{layer.text}</p>

@@ -3,9 +3,11 @@ import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import { Prose } from "@/components/Prose";
 import { buildJsonLd } from "@/lib/seo";
 import type { PageContent } from "@/lib/content";
+import { withSectionIds } from "@/lib/section-ids";
 
 export function PageView({ page }: { page: PageContent }) {
   const jsonLd = buildJsonLd(page);
+  const sections = withSectionIds(page.sections);
 
   return (
     <>
@@ -28,7 +30,7 @@ export function PageView({ page }: { page: PageContent }) {
         </nav>
       )}
       <main id="main-content">
-        <SectionRenderer sections={page.sections} />
+        <SectionRenderer sections={sections} />
         {page.body && <Prose markdown={page.body} />}
       </main>
       {jsonLd.map((entry, i) => (

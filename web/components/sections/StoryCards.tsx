@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 export interface StoryItem {
   tag: string;
   metric: string;
@@ -8,15 +10,16 @@ export interface StoryItem {
 }
 
 interface StoryCardsProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
   items: StoryItem[];
 }
 
-export function StoryCards({ eyebrow, title, subtitle, items }: StoryCardsProps) {
+export function StoryCards({ id, eyebrow, title, subtitle, items }: StoryCardsProps) {
   return (
-    <section className="section section-tint stories">
+    <section className="section section-tint stories" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
@@ -26,8 +29,13 @@ export function StoryCards({ eyebrow, title, subtitle, items }: StoryCardsProps)
           </header>
         )}
         <div className="grid grid-3">
-          {items.map((story) => (
-            <article key={story.name} className="card story-card" data-reveal>
+          {items.map((story, i) => (
+            <article
+              key={story.name}
+              className="card story-card"
+              data-reveal
+              style={{ "--reveal-i": i } as CSSProperties}
+            >
               <span className="chip chip-save story-tag">{story.tag}</span>
               <div className="story-metric">
                 <strong>{story.metric}</strong>

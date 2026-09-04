@@ -28,11 +28,21 @@ import { PLAN_FILES } from "@/lib/plans";
 
 export interface Section {
   type: string;
+  /** Stable in-page anchor from lib/section-ids (null for hero/trustbar/cta/content). */
+  anchor?: string | null;
   [key: string]: unknown;
 }
 
 interface SectionRendererProps {
   sections: Section[];
+  /** Optional node rendered right after the section at `index` (e.g. the product sub-nav under the hero). */
+  after?: { index: number; node: ReactNode };
+}
+
+interface RenderContext {
+  anchor: string | null;
+  /** Deck id of the page's first pricing section — the page's product. */
+  plan?: string;
 }
 
 /* --------------------------------------------------------------------------
@@ -93,7 +103,7 @@ const isShowcaseTab = (v: unknown): v is ShowcaseTab =>
 const columns = (v: unknown): 2 | 3 | 4 | undefined =>
   v === 2 || v === 3 || v === 4 ? v : undefined;
 
-function renderSection(section: Section): ReactNode {
+function renderSection(section: Section, ctx: RenderContext): ReactNode {
   const s = section;
   switch (s.type) {
     case "hero": {
@@ -132,7 +142,7 @@ function renderSection(section: Section): ReactNode {
       if (tiers.length === 0) return null;
       return (
         <PlanCards
-          id={str(s.id)}
+          id={ctx.anchor ?? "pricing"}
           eyebrow={str(s.eyebrow) ?? planFile.eyebrow}
           title={str(s.title) ?? planFile.title}
           subtitle={str(s.subtitle) ?? planFile.subtitle}
@@ -147,6 +157,7 @@ function renderSection(section: Section): ReactNode {
       const items = list(s.items, isFeatureItem);
       return items.length > 0 ? (
         <FeatureGrid
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -160,6 +171,7 @@ function renderSection(section: Section): ReactNode {
       const items = list(s.items, isProductItem);
       return items.length > 0 ? (
         <ProductGrid
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -187,6 +199,7 @@ function renderSection(section: Section): ReactNode {
       const items = list(s.items, isStepItem);
       return items.length > 0 ? (
         <StepProcess
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -197,12 +210,13 @@ function renderSection(section: Section): ReactNode {
 
     case "stats": {
       const items = list(s.items, isStatItem);
-      return items.length > 0 ? <StatsBand items={items} /> : null;
+      return items.length > 0 ? <StatsBand id={ctx.anchor ?? undefined} items={items} /> : null;
     }
 
     case "comparison":
       return (
         <ComparisonTable
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -214,6 +228,7 @@ function renderSection(section: Section): ReactNode {
     case "testimonials":
       return (
         <Testimonials
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -224,6 +239,7 @@ function renderSection(section: Section): ReactNode {
     case "faq":
       return (
         <FaqAccordion
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -232,7 +248,7 @@ function renderSection(section: Section): ReactNode {
 
     case "planfinder":
       return (
-        <section className="section section-tint planfinder-section" id="planfinder" aria-labelledby="planfinder-title">
+        <section className="section section-tint planfinder-section" id={ctx.anchor ?? "planfinder"} aria-labelledby="planfinder-title">
           <div className="site-shell planfinder-shell">
             <header className="section-header center" data-reveal>
               <p className="eyebrow">{str(s.eyebrow) ?? "Help me choose"}</p>
@@ -247,6 +263,7 @@ function renderSection(section: Section): ReactNode {
     case "domainsearch":
       return (
         <DomainSearch
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -256,6 +273,7 @@ function renderSection(section: Section): ReactNode {
     case "techlogos":
       return (
         <TechLogos
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -279,6 +297,7 @@ function renderSection(section: Section): ReactNode {
       const items = list(s.items, isOsItem);
       return items.length > 0 ? (
         <OsStrip
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -291,6 +310,7 @@ function renderSection(section: Section): ReactNode {
       const items = list(s.items, isStoryItem);
       return items.length > 0 ? (
         <StoryCards
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -304,6 +324,7 @@ function renderSection(section: Section): ReactNode {
       const items = list(s.items, isBenchItem);
       return items.length > 0 ? (
         <BenchmarkBars
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -319,6 +340,7 @@ function renderSection(section: Section): ReactNode {
       const stats = list(s.stats, isSecurityStat);
       return (
         <SecurityLayers
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -332,6 +354,7 @@ function renderSection(section: Section): ReactNode {
       const pins = list(s.pins, isMapPin);
       return (
         <MapBand
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -345,6 +368,7 @@ function renderSection(section: Section): ReactNode {
       const tabs = list(s.tabs, isShowcaseTab);
       return (
         <ShowcaseTabs
+          id={ctx.anchor ?? undefined}
           eyebrow={str(s.eyebrow)}
           title={str(s.title)}
           subtitle={str(s.subtitle)}
@@ -358,12 +382,18 @@ function renderSection(section: Section): ReactNode {
   }
 }
 
-export function SectionRenderer({ sections }: SectionRendererProps) {
+export function SectionRenderer({ sections, after }: SectionRendererProps) {
+  /* The first pricing deck names the page's product; heroes and finder
+     banners prefill from it. */
+  const firstPricing = sections.find((section) => section.type === "pricing");
+  const plan = firstPricing ? (str(firstPricing.plan) ?? "shared") : undefined;
+
   return (
     <>
       {sections.map((section, i) => (
         <Fragment key={`${section.type}-${i}`}>
-          {renderSection(section)}
+          {renderSection(section, { anchor: section.anchor ?? null, plan })}
+          {after && after.index === i ? after.node : null}
         </Fragment>
       ))}
     </>

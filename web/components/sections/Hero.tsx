@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { HeroArt } from "../art/HeroArt";
 import { Icon } from "../Icon";
+import { RatingBadge } from "../RatingBadge";
 
 export interface CtaLink {
   text: string;
@@ -54,10 +56,10 @@ function HeroActions({
 /* "Help me choose" — links to the interactive plan finder (home #planfinder). */
 function HelpMeChoose() {
   return (
-    <a className="hero-help" href="/#planfinder">
+    <Link className="hero-help" href="/#planfinder">
       <Icon name="search" size={16} />
       Help me choose
-    </a>
+    </Link>
   );
 }
 
@@ -94,18 +96,7 @@ function HomeHero({
           <h1 id="hero-title" dangerouslySetInnerHTML={{ __html: title }} />
           {subtitle && <p className="hero-lede">{subtitle}</p>}
 
-          <div className="hero-rating">
-            <span className="hero-stars" aria-hidden="true">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <svg key={i} viewBox="0 0 20 20" width="15" height="15" focusable="false">
-                  <path d="M10 1.7l2.6 5.2 5.7.8-4.1 4 1 5.7L10 14.7l-5.2 2.7 1-5.7-4.1-4 5.7-.8Z" fill="#ffc94b" />
-                </svg>
-              ))}
-            </span>
-            <span>
-              Rated <strong>9.6/10</strong> by our customers
-            </span>
-          </div>
+          <RatingBadge className="hero-rating" />
 
           <form
             className="hero-search"

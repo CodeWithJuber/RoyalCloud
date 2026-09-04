@@ -6,12 +6,14 @@ interface FaqItem {
 }
 
 interface FaqAccordionProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
 }
 
 export function FaqAccordion({
+  id,
   eyebrow = "FAQ",
   title = "Frequently Asked Questions",
   subtitle,
@@ -29,7 +31,7 @@ export function FaqAccordion({
   };
 
   return (
-    <section className="section section-tint faq-section">
+    <section className="section section-tint faq-section" id={id}>
       <div className="site-shell">
         <header className="section-header center" data-reveal>
           <p className="eyebrow">{eyebrow}</p>

@@ -17,6 +17,7 @@ export interface ShowcaseTab {
 }
 
 interface ShowcaseTabsProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -77,6 +78,7 @@ function ProductPanel({ plan }: { plan: PlanFile }) {
 }
 
 export function ShowcaseTabs({
+  id,
   eyebrow,
   title,
   subtitle,
@@ -86,7 +88,7 @@ export function ShowcaseTabs({
   const baseId = "showcase";
 
   return (
-    <section className="section section-dark showcase">
+    <section className="section section-dark showcase" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>

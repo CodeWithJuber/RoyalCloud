@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Icon } from "../Icon";
 import { Price } from "../Price";
 
@@ -11,6 +12,7 @@ export interface ProductItem {
 }
 
 interface ProductGridProps {
+  id?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -24,9 +26,9 @@ function StartingPrice({ value }: { value: string }) {
   return <Price value={match[0]} />;
 }
 
-export function ProductGrid({ eyebrow, title, subtitle, items }: ProductGridProps) {
+export function ProductGrid({ id, eyebrow, title, subtitle, items }: ProductGridProps) {
   return (
-    <section className="section products">
+    <section className="section products" id={id}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
@@ -36,8 +38,14 @@ export function ProductGrid({ eyebrow, title, subtitle, items }: ProductGridProp
           </header>
         )}
         <div className="product-grid">
-          {items.map((item) => (
-            <a key={item.title} className="card product-card" href={item.href} data-reveal>
+          {items.map((item, i) => (
+            <a
+              key={item.title}
+              className="card product-card"
+              href={item.href}
+              data-reveal
+              style={{ "--reveal-i": i } as CSSProperties}
+            >
               <span className="feature-icon">
                 <Icon name={item.icon ?? "server"} size={22} />
               </span>

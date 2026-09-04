@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import type { CSSProperties } from "react";
+import Link from "next/link";
 import { Badge } from "@astryxdesign/core/Badge";
 import { Collapsible } from "@astryxdesign/core/Collapsible";
 import { SegmentedControl, SegmentedControlItem } from "@astryxdesign/core/SegmentedControl";
 import { Icon } from "../Icon";
 import { Price } from "../Price";
 import { siteSettings } from "@/lib/settings";
+import {
+  hasAnnualSaving,
+  maxSavePct,
+  priceFor,
+  savePct,
+  setBilling,
+  termLabel,
+  useBilling,
+} from "@/lib/billing-store";
 
 export interface PlanTier {
   name: string;
@@ -31,13 +41,6 @@ interface PlanCardsProps {
   badge?: string;
 }
 
-const savePct = (t: PlanTier) => {
-  const monthly = parseFloat(t.price);
-  const annual = parseFloat(t.priceAnnual ?? t.price);
-  if (!monthly || !annual || annual >= monthly) return 0;
-  return Math.round((1 - annual / monthly) * 100);
-};
-
 const VISIBLE_FEATURES = 6;
 
 export function PlanCards({
@@ -50,13 +53,12 @@ export function PlanCards({
   showToggle = true,
   badge = "Most Popular",
 }: PlanCardsProps) {
-  const hasAnnual = tiers.some((t) => savePct(t) > 0);
-  const [billing, setBilling] = useState<string>(
-    hasAnnual && showToggle ? "annual" : "monthly",
-  );
-
-  const shownPrice = (t: PlanTier) =>
-    billing === "annual" ? (t.priceAnnual ?? t.price) : t.price;
+  /* The shared billing store keeps these cards and the comparison table in
+     lockstep; decks with no real annual saving stay on monthly pricing. */
+  const canToggle = showToggle && hasAnnualSaving(tiers);
+  const stored = useBilling();
+  const billing = canToggle ? stored : "monthly";
+  const onAnnual = billing === "annual";
 
   return (
     <section className="section plan-section" id={id} aria-labelledby={`${id}-title`}>
@@ -67,30 +69,32 @@ export function PlanCards({
           {subtitle && <p className="lede">{subtitle}</p>}
         </header>
 
-        <a className="planfinder-banner" href="/#planfinder" data-reveal>
+        <Link className="planfinder-banner" href="/#planfinder" data-reveal>
           <Icon name="search" size={15} />
           Not sure which plan fits? Answer 3 quick questions
           <span aria-hidden="true">→</span>
-        </a>
+        </Link>
 
-        {showToggle && hasAnnual && (
+        {canToggle && (
           <div className="plan-toggle-row">
             <SegmentedControl
               value={billing}
-              onChange={setBilling}
+              onChange={(value) => setBilling(value === "annual" ? "annual" : "monthly")}
               label="Billing period"
               layout="hug"
             >
               <SegmentedControlItem value="monthly" label="Monthly" />
-              <SegmentedControlItem value="annual" label="Annual — save 20%" />
+              <SegmentedControlItem
+                value="annual"
+                label={`Annual — save up to ${maxSavePct(tiers)}%`}
+              />
             </SegmentedControl>
           </div>
         )}
 
         <div className="plan-grid" data-cols={tiers.length >= 5 ? 3 : Math.min(tiers.length, 5)}>
-          {tiers.map((tier) => {
+          {tiers.map((tier, i) => {
             const save = savePct(tier);
-            const onAnnual = billing === "annual";
             const visible = tier.features.slice(0, VISIBLE_FEATURES);
             const hidden = tier.features.slice(VISIBLE_FEATURES);
             return (
@@ -98,6 +102,7 @@ export function PlanCards({
                 key={tier.name}
                 className={`plan-card ${tier.popular ? "plan-popular" : ""}`}
                 data-reveal
+                style={{ "--reveal-i": i } as CSSProperties}
               >
                 {tier.popular && (
                   <span className="plan-badge">
@@ -110,7 +115,7 @@ export function PlanCards({
                 <div className="plan-pricing">
                   <div className="plan-price-row">
                     <span className="plan-price">
-                      <Price value={shownPrice(tier)} />
+                      <Price value={priceFor(tier, billing)} />
                       <span className="plan-period">{tier.period ?? "/mo"}</span>
                     </span>
                     {save > 0 && onAnnual && (
@@ -120,11 +125,7 @@ export function PlanCards({
                       </span>
                     )}
                   </div>
-                  <span className="plan-ledger">
-                    {onAnnual && save > 0
-                      ? "Billed annually · renews at the same rate"
-                      : "Billed monthly · renews at the same rate"}
-                  </span>
+                  <span className="plan-ledger">{termLabel(billing)}</span>
                 </div>
 
                 <a
