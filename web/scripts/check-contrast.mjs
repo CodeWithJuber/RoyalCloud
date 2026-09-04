@@ -87,6 +87,10 @@ export const PAIRS = [
   { label: "focus lavender on night-deep", fg: "#faf7ff", bg: "#231252", size: "ui" },
   { label: "focus gold on violet CTA button", fg: "#ffc94b", bg: "#673de6", size: "ui" },
 
+  // Hero intent chips (translucent white over night, flattened)
+  { label: "hero intent chip on night", fg: "#faf7ff", bg: "#3b2a75", size: "body" },
+  { label: "hero intent chip hover on night", fg: "#ffffff", bg: "#473a80", size: "body" },
+
   // Status
   { label: "success check on white", fg: "#009e81", bg: "#ffffff", size: "ui" },
   { label: "error red on white", fg: "#d32f2f", bg: "#ffffff", size: "body" },

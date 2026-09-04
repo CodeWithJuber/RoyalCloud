@@ -100,7 +100,7 @@ sections:
     eyebrow: Help me choose
     title: Not sure which plan fits?
     subtitle: >-
-      Answer three quick questions and we'll point you at the right plan — a
+      Answer four quick questions and we'll point you at the right plan — a
       real one, with its real price and checkout link.
   - type: showcase
     eyebrow: One platform

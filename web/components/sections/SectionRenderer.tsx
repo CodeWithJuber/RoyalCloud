@@ -114,6 +114,7 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
       return (
         <Hero
           variant={variant === "gradient" ? "home" : variant === "simple" ? "simple" : "product"}
+          plan={ctx.plan}
           eyebrow={str(s.eyebrow)}
           title={title}
           subtitle={str(s.subtitle)}
@@ -143,6 +144,7 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
       return (
         <PlanCards
           id={ctx.anchor ?? "pricing"}
+          planId={str(s.plan) ?? "shared"}
           eyebrow={str(s.eyebrow) ?? planFile.eyebrow}
           title={str(s.title) ?? planFile.title}
           subtitle={str(s.subtitle) ?? planFile.subtitle}
@@ -253,7 +255,7 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
             <header className="section-header center" data-reveal>
               <p className="eyebrow">{str(s.eyebrow) ?? "Help me choose"}</p>
               <h2 id="planfinder-title">{str(s.title) ?? "Not sure which plan fits?"}</h2>
-              <p className="lede">{str(s.subtitle) ?? "Answer three quick questions and we'll point you at the right plan — a real one, with its real price."}</p>
+              <p className="lede">{str(s.subtitle) ?? "Answer four quick questions and we'll point you at the right plan — a real one, with its real price."}</p>
             </header>
             <PlanFinder />
           </div>

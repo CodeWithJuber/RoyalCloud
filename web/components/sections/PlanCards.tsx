@@ -8,6 +8,7 @@ import { SegmentedControl, SegmentedControlItem } from "@astryxdesign/core/Segme
 import { Icon } from "../Icon";
 import { Price } from "../Price";
 import { siteSettings } from "@/lib/settings";
+import { PLAN_TO_INTENT, finderHref } from "@/lib/intents";
 import {
   hasAnnualSaving,
   maxSavePct,
@@ -32,6 +33,8 @@ export interface PlanTier {
 
 interface PlanCardsProps {
   id?: string;
+  /** Deck id — the finder banner pre-answers this product. */
+  planId?: string;
   eyebrow?: string;
   title: string;
   subtitle?: string;
@@ -45,6 +48,7 @@ const VISIBLE_FEATURES = 6;
 
 export function PlanCards({
   id = "pricing",
+  planId,
   eyebrow,
   title,
   subtitle,
@@ -69,9 +73,13 @@ export function PlanCards({
           {subtitle && <p className="lede">{subtitle}</p>}
         </header>
 
-        <Link className="planfinder-banner" href="/#planfinder" data-reveal>
+        <Link
+          className="planfinder-banner"
+          href={finderHref(planId ? PLAN_TO_INTENT[planId] : undefined)}
+          data-reveal
+        >
           <Icon name="search" size={15} />
-          Not sure which plan fits? Answer 3 quick questions
+          Not sure which plan fits? Answer 4 quick questions
           <span aria-hidden="true">→</span>
         </Link>
 

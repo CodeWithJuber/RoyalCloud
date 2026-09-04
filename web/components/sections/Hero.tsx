@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HeroArt } from "../art/HeroArt";
 import { Icon } from "../Icon";
 import { RatingBadge } from "../RatingBadge";
+import { INTENTS, PLAN_TO_INTENT, finderHref } from "@/lib/intents";
 
 export interface CtaLink {
   text: string;
@@ -20,6 +21,8 @@ interface HeroProps {
   secondaryCta?: CtaLink;
   badges?: string[];
   art?: ReactNode;
+  /** Deck id of the page's product — prefills the plan finder link. */
+  plan?: string;
 }
 
 const targetProps = (cta?: CtaLink) =>
@@ -53,13 +56,42 @@ function HeroActions({
   );
 }
 
-/* "Help me choose" — links to the interactive plan finder (home #planfinder). */
-function HelpMeChoose() {
+/* "Help me choose" — links to the plan finder, pre-answering the page's product. */
+function HelpMeChoose({ plan }: { plan?: string }) {
+  const intent = plan ? PLAN_TO_INTENT[plan] : undefined;
   return (
-    <Link className="hero-help" href="/#planfinder">
+    <Link className="hero-help" href={finderHref(intent)}>
       <Icon name="search" size={16} />
       Help me choose
     </Link>
+  );
+}
+
+/* "What are you building?" — intent chips; each lands on the finder's second
+   step with the build pre-answered, the last one starts from scratch. */
+function HeroIntents() {
+  return (
+    <nav className="hero-intents" aria-label="What are you building?">
+      <span className="hero-intents-label" aria-hidden="true">
+        What are you building?
+      </span>
+      <ul>
+        {INTENTS.filter((intent) => intent.chip).map((intent) => (
+          <li key={intent.id}>
+            <Link className="hero-intent" href={finderHref(intent.id)}>
+              <Icon name={intent.icon} size={14} />
+              {intent.label}
+            </Link>
+          </li>
+        ))}
+        <li>
+          <Link className="hero-intent hero-intent-help" href={finderHref()}>
+            <Icon name="search" size={14} />
+            Not sure? Help me choose
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 }
 
@@ -126,7 +158,7 @@ function HomeHero({
           </form>
 
           <HeroActions primaryCta={primaryCta} secondaryCta={secondaryCta} />
-          <HelpMeChoose />
+          <HeroIntents />
           {offer && <p className="hero-offer">{offer}</p>}
           <HeroBadges badges={badges} />
         </div>
@@ -149,6 +181,7 @@ export function Hero({
   secondaryCta,
   badges,
   art,
+  plan,
 }: HeroProps) {
   if (variant === "home") {
     return (
@@ -173,7 +206,7 @@ export function Hero({
           {subtitle && <p className="hero-lede">{subtitle}</p>}
           {offer && <p className="hero-offer">{offer}</p>}
           <HeroActions primaryCta={primaryCta} secondaryCta={secondaryCta} />
-          <HelpMeChoose />
+          <HelpMeChoose plan={plan} />
           <HeroBadges badges={badges} />
         </div>
 

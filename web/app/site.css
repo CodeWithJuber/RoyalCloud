@@ -3511,3 +3511,129 @@ html {
     linear-gradient(var(--color-background-card), var(--color-background-card)) padding-box,
     linear-gradient(135deg, var(--color-accent), #9b85ff) border-box;
 }
+
+/* ============================================================
+   Hero intent chips ("What are you building?") + plan finder v2
+   ============================================================ */
+
+.hero-intents {
+  margin-top: 1.25rem;
+}
+.hero-intents-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #c5bfd5;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.hero-intents ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.hero-intent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #faf7ff2e;
+  border-radius: 999px;
+  background: #ffffff14;
+  color: #faf7ff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+.hero-intent:hover {
+  background: #ffffff26;
+  border-color: #faf7ff66;
+  color: #ffffff;
+}
+.hero-intent:focus-visible {
+  outline: 2px solid #faf7ff;
+  outline-offset: 2px;
+}
+.hero-intent-help {
+  background: transparent;
+}
+@media (max-width: 640px) {
+  /* One scrollable row — the chips never push the search or CTAs down. */
+  .hero-intents {
+    margin-top: 1rem;
+  }
+  .hero-intents-label {
+    display: none;
+  }
+  .hero-intents ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+  .hero-intents ul::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-intent {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}
+
+/* Finder v2: two-column options, budget bands, annual alternative, step motion */
+@media (min-width: 561px) {
+  .finder-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.finder-budget .finder-option-copy strong .px {
+  font-size: 1rem;
+}
+.finder-alt {
+  width: 100%;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+.finder-alt .px {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+.finder-result .finder-back {
+  margin-top: 1rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes finder-forward {
+    from {
+      transform: translateX(1.25rem);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes finder-back {
+    from {
+      transform: translateX(-1.25rem);
+    }
+    to {
+      transform: none;
+    }
+  }
+  .finder-body[data-dir="forward"] {
+    animation: finder-forward var(--duration-medium, 300ms) cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .finder-body[data-dir="back"] {
+    animation: finder-back var(--duration-medium, 300ms) cubic-bezier(0.32, 0.72, 0, 1);
+  }
+}
