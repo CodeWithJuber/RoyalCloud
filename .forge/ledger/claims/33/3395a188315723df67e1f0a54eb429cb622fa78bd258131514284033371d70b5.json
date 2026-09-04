@@ -1,0 +1,1 @@
+{"body":{"id":"D-0020","text":"Site-wide 'Help me choose' is a native <dialog> drawer (side panel ≥641px, bottom sheet on phones) opened by any [data-finder] link via a capture-phase listener so next/link yields; without JS the links still lead to /#planfinder; home keeps the inline finder and jumps to it instead"},"kind":"decision","scope":{"level":"repo"},"v":1}

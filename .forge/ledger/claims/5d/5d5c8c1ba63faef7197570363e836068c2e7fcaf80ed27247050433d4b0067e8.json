@@ -1,0 +1,1 @@
+{"body":{"id":"D-0019","text":"A '·'-separated deck billingNote renders as the 'Every plan includes' brand strip; prose notes stay a note — no new CMS field, the existing data convention is the contract"},"kind":"decision","scope":{"level":"repo"},"v":1}
