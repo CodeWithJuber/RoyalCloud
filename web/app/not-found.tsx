@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-/* A 404 that search engines index is a 404 that shows up in results. */
+/* Next already emits `noindex` for the not-found route; a second robots tag
+   from here said the same thing twice. What it does not provide is a title
+   and description, so those are all this adds. */
 export const metadata: Metadata = {
   title: "Page not found | Royal Clouds",
   description: "This path no longer reaches a Royal Clouds page.",
-  robots: { index: false, follow: true },
 };
 
 export default function NotFound() {
