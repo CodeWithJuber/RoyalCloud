@@ -4168,3 +4168,901 @@ a.os-chip:focus-visible {
 .domain-row .btn {
   flex-shrink: 0;
 }
+
+/* ============================================================
+   Header v2 — mega menu rows with icons, drawer under a visible header
+   ============================================================ */
+
+/* The drawer is a fixed layer inside the sticky header's stacking context;
+   the bars must sit above it so the logo, currency and close stay usable. */
+.announcement,
+.header-bar {
+  position: relative;
+  z-index: 100;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  color: var(--color-text-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.nav-link:hover {
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+}
+.nav-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.nav-panel {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 19rem;
+  padding: 0.6rem;
+}
+.nav-panel[data-cols="2"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-width: 38rem;
+}
+.nav-panel .nav-item,
+.mobile-panel .nav-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.6rem 0.7rem;
+  border: 0;
+  border-radius: 12px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.nav-panel .nav-item:hover,
+.mobile-panel .nav-item:hover {
+  background: var(--rc-violet-050);
+}
+.nav-panel .nav-item:hover b,
+.mobile-panel .nav-item:hover b {
+  color: var(--color-text-accent);
+}
+.nav-panel .nav-item:focus-visible,
+.mobile-panel .nav-item:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+.nav-item-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+}
+.nav-item-copy {
+  display: grid;
+  gap: 0.1rem;
+}
+.nav-item-copy b {
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.nav-item-copy small {
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+/* Drawer: starts under the header bar, uses the full shell width */
+.mobile-panel {
+  top: var(--site-header-h);
+  padding: 1.25rem 0 2.5rem;
+}
+.mobile-nav {
+  display: grid;
+  gap: 1.25rem;
+  width: min(var(--site-shell), calc(100% - 2rem));
+  max-width: none;
+  margin-inline: auto;
+}
+.mobile-groups {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .mobile-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    align-items: start;
+  }
+}
+.mobile-group {
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-background-card);
+}
+.mobile-group h2 {
+  margin: 0 0 0.5rem;
+}
+.mobile-group ul {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mobile-panel .mobile-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.mobile-panel .mobile-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--color-border-emphasized);
+  border-radius: 999px;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.mobile-panel .mobile-chip:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text-accent);
+}
+.mobile-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.mobile-panel .mobile-actions .btn {
+  display: inline-flex;
+  padding: 0.35rem 0.45rem 0.35rem 1.5rem;
+  border-bottom: 0;
+  font-size: 0.9375rem;
+}
+.mobile-panel .mobile-actions .btn-secondary {
+  padding-right: 1.5rem;
+}
+
+/* ============================================================
+   Tablet layouts (641–1024px) — use the width instead of stacking
+   ============================================================ */
+
+/* Product hero keeps two columns down to 760px; stacked art is capped */
+@media (min-width: 761px) and (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+@media (max-width: 760px) {
+  .hero-inner .hero-art {
+    max-width: 20rem;
+    margin-inline: auto;
+  }
+}
+
+/* Stats: a real grid — 4-up, then 2×2 on tablets and phones */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1.75rem 1.5rem;
+}
+@media (max-width: 900px) {
+  .stats-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ============================================================
+   Map band v2 — always-visible labels + a locations panel
+   ============================================================ */
+
+.map-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+@media (min-width: 900px) {
+  .map-grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 0.6fr);
+    align-items: center;
+  }
+  .map-grid .map-stage {
+    max-width: none;
+  }
+}
+.map-stage {
+  aspect-ratio: 2 / 1;
+}
+.map-pin-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.map-locations {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.map-location {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: #ffffff08;
+  color: #faf7ff;
+}
+.map-location b {
+  display: block;
+  font-size: 0.95rem;
+}
+.map-location small {
+  display: block;
+  color: #c5bfd5;
+  font-size: 0.78rem;
+}
+.map-location-dot {
+  flex-shrink: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: #c5bfd5;
+}
+.map-location[data-live="true"] .map-location-dot {
+  background: var(--color-success);
+  box-shadow: 0 0 0 4px #009e8133;
+}
+
+/* ============================================================
+   Rhythm v2 — one spacing scale for every width, no doubled gaps
+   ============================================================ */
+:root {
+  --section-y: clamp(3rem, 5.5vw, 5rem);
+  --section-y-sm: clamp(2rem, 3.5vw, 3rem);
+  --header-gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+@media (max-width: 1024px) {
+  :root {
+    --section-y: clamp(2.5rem, 5vw, 3.25rem);
+    --section-y-sm: clamp(1.75rem, 3.5vw, 2.25rem);
+  }
+}
+/* Two light sections in a row share one gap instead of stacking two
+   paddings; a dark band or the tinted finder keeps its own air. */
+main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
+  + .section:not(.section-dark, .section-deep, .section-royal, .section-tint) {
+  padding-top: calc(var(--section-y) * 0.5);
+}
+
+/* ============================================================
+   Content split v3 — copy beside the art, checklist as a full-width strip
+   ============================================================ */
+.content-split .split {
+  align-items: center;
+}
+.content-split .split-media {
+  display: grid;
+  place-items: center;
+}
+.content-split .split-media .section-art {
+  width: 100%;
+  max-width: 26rem;
+}
+.split-list {
+  --color-text-primary: #faf7ff;
+  --color-text-secondary: #c5bfd5;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 1.25rem 1.5rem;
+  margin: clamp(1.75rem, 4vw, 2.75rem) 0 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  list-style: none;
+  border-radius: 20px;
+  background:
+    radial-gradient(30rem 16rem at 110% -20%, #673de655, transparent 60%),
+    var(--rc-night);
+  box-shadow: var(--shadow-med);
+}
+.split-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 0;
+}
+.split-list .split-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
+  background: #ffffff12;
+  color: var(--rc-gold);
+}
+.split-list h3 {
+  margin: 0 0 0.25rem;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+}
+.split-list p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+@media (min-width: 1024px) {
+  .split-list[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split-list[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .split-list[data-count="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .split-list[data-count="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .split-list[data-count="6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .split-list li + li {
+    padding-left: 1.5rem;
+    border-left: 1px solid #faf7ff1f;
+  }
+  .split-list[data-count="6"] li:nth-child(3n + 1) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .split-list[data-count="6"] li:nth-child(n + 4) {
+    padding-top: 1.25rem;
+    border-top: 1px solid #faf7ff1f;
+  }
+}
+@media (min-width: 641px) and (max-width: 1023px) {
+  .split-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .split-list li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    flex-direction: row;
+  }
+}
+@media (max-width: 640px) {
+  .split-list {
+    gap: 1rem;
+  }
+  .split-list li {
+    flex-direction: row;
+  }
+  .content-split .split-media .section-art {
+    max-width: 18rem;
+  }
+}
+
+/* ============================================================
+   Footer v2 — contact channels as one balanced row, brand row on tablets
+   ============================================================ */
+.footer-contact {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+.footer-contact a {
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 2rem;
+  }
+  .footer-brand img {
+    margin: 0;
+  }
+  .footer-note {
+    max-width: 44ch;
+  }
+  .footer-socials {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 640px) {
+  .footer-contact {
+    grid-template-columns: 1fr;
+  }
+  .footer-contact a {
+    justify-content: flex-start;
+  }
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 1.25rem;
+  }
+  .footer-brand {
+    display: block;
+  }
+  .footer-brand img {
+    margin-bottom: 1rem;
+  }
+}
+
+/* ============================================================
+   Brand marks — vendored Simple Icons glyphs (lib/brand-icons.ts)
+   ============================================================ */
+.brand-mark {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.tech-logo {
+  gap: 0.6rem;
+}
+.os-mark-brand {
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+}
+.section-dark .os-mark-brand,
+.section-deep .os-mark-brand {
+  background: #ffffff14;
+}
+
+/* ============================================================
+   Plan cards v3 — spec tiles, grouped disclosure, includes strip
+   ============================================================ */
+.plan-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  margin: -0.5rem 0 1.75rem;
+}
+.plan-controls .planfinder-banner {
+  margin: 0;
+}
+.plan-head {
+  display: grid;
+  gap: 0.35rem;
+}
+.plan-reco {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  margin: 0.25rem 0 0;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: var(--rc-violet-050);
+  color: #5025d1;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.plan-card[data-recommended="true"] {
+  border-color: var(--color-accent);
+  box-shadow:
+    0 0 0 4px #673de633,
+    var(--shadow-med);
+}
+.plan-card:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+.plan-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+}
+.plan-spec {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 12px;
+  background: var(--rc-violet-050);
+}
+.plan-spec dt {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.plan-spec dt .astryx-icon {
+  color: var(--color-text-accent);
+}
+.plan-spec dd {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.plan-more {
+  margin-top: 0.75rem;
+}
+.plan-more summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+  list-style: none;
+  color: var(--color-text-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.plan-more summary::-webkit-details-marker {
+  display: none;
+}
+.plan-more summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.plan-more-open,
+.plan-more[open] .plan-more-closed {
+  display: none;
+}
+.plan-more[open] .plan-more-open {
+  display: inline;
+}
+.plan-more-chevron {
+  transition: transform var(--duration-fast) ease;
+}
+.plan-more[open] .plan-more-chevron {
+  transform: rotate(180deg);
+}
+.plan-more-panel {
+  display: grid;
+  gap: 0.9rem;
+  padding-top: 0.75rem;
+}
+.plan-feature-group h4 {
+  margin: 0 0 0.45rem;
+  color: var(--color-text-accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.plan-highlights {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.plan-highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.plan-highlights li > span:last-child {
+  display: grid;
+  gap: 0.1rem;
+}
+.plan-highlights b {
+  color: var(--color-text-primary);
+  font-size: 0.85rem;
+}
+.plan-highlights small {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+.plan-highlight-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 8px;
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+}
+@supports (interpolate-size: allow-keywords) {
+  .plan-more {
+    interpolate-size: allow-keywords;
+  }
+  .plan-more::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size var(--duration-medium) ease,
+      content-visibility var(--duration-medium) allow-discrete;
+  }
+  .plan-more[open]::details-content {
+    block-size: auto;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .plan-price {
+    animation: price-in var(--duration-medium) cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  @keyframes price-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.35rem);
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plan-more::details-content {
+    transition: none;
+  }
+}
+
+/* "Every plan includes" — the deck note as brand chips */
+.plan-includes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem 0.75rem;
+  margin-top: 1.5rem;
+}
+.plan-includes-label {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.plan-includes ul {
+  display: contents;
+}
+.plan-includes li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.45rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-background-card);
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  list-style: none;
+}
+.plan-include-mark {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--rc-violet-050);
+  color: var(--color-text-accent);
+}
+.plan-note {
+  margin-top: 1.5rem;
+}
+
+/* Enterprise row — one compact line; copy always readable on night */
+.plan-enterprise {
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.5rem;
+  gap: 0.75rem 1.5rem;
+  border-radius: 16px;
+}
+.plan-enterprise > div {
+  flex: 1 1 24rem;
+  min-width: 0;
+}
+.plan-enterprise h3 {
+  font-size: 1.05rem;
+}
+.plan-enterprise p {
+  color: #c5bfd5;
+}
+.plan-enterprise .btn {
+  min-height: 2.75rem;
+}
+@media (max-width: 640px) {
+  .plan-enterprise .btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* ============================================================
+   Finder drawer — native <dialog>: side panel on wide screens, sheet on phones
+   ============================================================ */
+.finder-drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(32rem, 100vw);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--color-background-card);
+  color: var(--color-text-secondary);
+  box-shadow: var(--shadow-high);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.finder-drawer::backdrop {
+  background: #231252b3;
+}
+.finder-drawer-inner {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+.finder-drawer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.finder-drawer-head .eyebrow {
+  margin-bottom: 0.4rem;
+}
+.finder-drawer-head h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.finder-drawer-head h2:focus {
+  outline: none;
+}
+.finder-drawer-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-background-card);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+.finder-drawer-close:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text-accent);
+}
+.finder-drawer-close:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+:root:has(.finder-drawer[open]) {
+  overflow: hidden;
+}
+.finder-progress {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+.finder-progress-label {
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.finder-progress-bar {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--rc-violet-050);
+  overflow: hidden;
+}
+.finder-progress-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-accent);
+  transition: width var(--duration-medium) ease;
+}
+.finder-flow[data-variant="drawer"] .finder-question {
+  font-size: 1.25rem;
+}
+.finder-flow[data-variant="drawer"] .finder-option {
+  padding: 0.85rem 1rem;
+}
+@media (max-width: 640px) {
+  .finder-drawer {
+    inset: auto 0 0 0;
+    width: 100vw;
+    height: auto;
+    max-height: 92dvh;
+    border-radius: 24px 24px 0 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .finder-drawer {
+    transition:
+      transform var(--duration-slow) cubic-bezier(0.32, 0.72, 0, 1),
+      opacity var(--duration-medium) ease,
+      overlay var(--duration-slow) allow-discrete,
+      display var(--duration-slow) allow-discrete;
+  }
+  .finder-drawer:not([open]) {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  @starting-style {
+    .finder-drawer[open] {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+  .finder-drawer::backdrop {
+    transition:
+      background-color var(--duration-medium) ease,
+      overlay var(--duration-medium) allow-discrete,
+      display var(--duration-medium) allow-discrete;
+  }
+  .finder-drawer:not([open])::backdrop {
+    background-color: transparent;
+  }
+  @starting-style {
+    .finder-drawer[open]::backdrop {
+      background-color: transparent;
+    }
+  }
+  @media (max-width: 640px) {
+    .finder-drawer:not([open]) {
+      transform: translateY(100%);
+    }
+    @starting-style {
+      .finder-drawer[open] {
+        transform: translateY(100%);
+      }
+    }
+  }
+}
+
+/* Sub-nav "Help me choose" — opens the drawer with the page's product set */
+.subnav-help {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+  min-height: 2.25rem;
+  color: var(--color-text-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.subnav-help:hover {
+  text-decoration: underline;
+}
+.subnav-help:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.subnav-help + .subnav-cta {
+  margin-left: 0;
+}

@@ -42,6 +42,7 @@ export function MapBand({
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
+        <div className="map-grid" data-count={pins.length}>
         <div className="map-stage" data-reveal>
           {pins.map((pin) => (
             <button
@@ -59,6 +60,20 @@ export function MapBand({
               </span>
             </button>
           ))}
+        </div>
+        {/* Named locations beside the map: readable on touch, where pin
+            labels have no hover, and honest content for a single-region band. */}
+        <ul className="map-locations" data-reveal>
+          {pins.map((pin) => (
+            <li key={pin.label} className="map-location" data-live={pin.live ? "true" : undefined}>
+              <span className="map-location-dot" aria-hidden="true" />
+              <span>
+                <b>{pin.label}</b>
+                <small>{pin.live ? "Live location" : "Planned location"}</small>
+              </span>
+            </li>
+          ))}
+        </ul>
         </div>
         {note && <p className="map-note">{note}</p>}
       </div>

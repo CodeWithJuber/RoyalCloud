@@ -1,0 +1,1 @@
+{"body":{"id":"D-0023","text":"CMS reachability: /admin is served without a trailing slash, so Decap gets an absolute <link rel=cms-config-url href=/admin/config.yml> and next.config rewrites /admin → /admin/index.html; the backend repo field (codewithjuber/royalfront) is flagged to the owner, not changed"},"kind":"decision","scope":{"level":"repo"},"v":1}

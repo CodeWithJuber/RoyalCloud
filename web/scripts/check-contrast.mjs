@@ -98,6 +98,10 @@ export const PAIRS = [
 
   { label: "benchmark scale caption on night", fg: "#c5bfd5", bg: "#2f1c6a", size: "body" },
 
+  // Plan cards v3: spec tiles and the "recommended" chip on violet-050
+  { label: "spec tile value ink on violet-050", fg: "#2f1c6a", bg: "#f0edff", size: "body" },
+  { label: "spec tile label on violet-050", fg: "#595b68", bg: "#f0edff", size: "body" },
+
   { label: "carousel inactive dot on white", fg: "#8b8c99", bg: "#ffffff", size: "ui" },
 
   // Status

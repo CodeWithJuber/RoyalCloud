@@ -60,7 +60,7 @@ function HeroActions({
 function HelpMeChoose({ plan }: { plan?: string }) {
   const intent = plan ? PLAN_TO_INTENT[plan] : undefined;
   return (
-    <Link className="hero-help" href={finderHref(intent)}>
+    <Link className="hero-help" href={finderHref(intent)} data-finder={intent ?? ""}>
       <Icon name="search" size={16} />
       Help me choose
     </Link>
@@ -78,14 +78,14 @@ function HeroIntents() {
       <ul>
         {INTENTS.filter((intent) => intent.chip).map((intent) => (
           <li key={intent.id}>
-            <Link className="hero-intent" href={finderHref(intent.id)}>
+            <Link className="hero-intent" href={finderHref(intent.id)} data-finder={intent.id}>
               <Icon name={intent.icon} size={14} />
               {intent.label}
             </Link>
           </li>
         ))}
         <li>
-          <Link className="hero-intent hero-intent-help" href={finderHref()}>
+          <Link className="hero-intent hero-intent-help" href={finderHref()} data-finder="">
             <Icon name="search" size={14} />
             Not sure? Help me choose
           </Link>

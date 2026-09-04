@@ -1,0 +1,1 @@
+{"body":{"id":"D-0018","text":"Plan cards read their headline specs from each tier's own feature strings (lib/plan-specs.ts) instead of a second data source — compute-first for server decks, sites-first for shared/WordPress, accounts-first for reseller; the 'All features' disclosure is a native <details> so it works without JS"},"kind":"decision","scope":{"level":"repo"},"v":1}

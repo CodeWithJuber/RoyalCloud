@@ -24,8 +24,12 @@ import { SecurityLayers, type SecurityLayer, type SecurityStat } from "./Securit
 import { MapBand, type MapPin } from "./MapBand";
 import { ShowcaseTabs, type ShowcaseTab } from "./ShowcaseTabs";
 import { artFor } from "../art/artFor";
+import { BrandMark, hasBrandMark } from "../BrandMark";
+import { Icon } from "../Icon";
+import { finderMarks } from "../FinderMarks";
 
 import { PLAN_FILES } from "@/lib/plans";
+import { includeIcon, parseIncludes } from "@/lib/plan-specs";
 
 export interface Section {
   type: string;
@@ -152,6 +156,17 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
           ? planFile.tiers.filter((tier) => featured.includes(tier.name))
           : planFile.tiers;
       if (tiers.length === 0) return null;
+      /* A "·"-separated deck note becomes the "every plan includes" strip,
+         with real brand glyphs rendered here (server) for the client cards. */
+      const note = str(s.note) ?? planFile.billingNote;
+      const includes = parseIncludes(note)?.map((label) => ({
+        label,
+        mark: hasBrandMark(label) ? (
+          <BrandMark name={label} size={16} />
+        ) : (
+          <Icon name={includeIcon(label)} size={14} />
+        ),
+      }));
       return (
         <PlanCards
           id={ctx.anchor ?? "pricing"}
@@ -160,7 +175,9 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
           title={str(s.title) ?? planFile.title}
           subtitle={str(s.subtitle) ?? planFile.subtitle}
           tiers={tiers}
-          note={str(s.note) ?? planFile.billingNote}
+          note={includes ? undefined : note}
+          includes={includes}
+          highlights={planFile.highlights}
           showToggle={bool(s.showToggle)}
         />
       );
@@ -278,7 +295,7 @@ function renderSection(section: Section, ctx: RenderContext): ReactNode {
               <h2 id="planfinder-title">{str(s.title) ?? "Not sure which plan fits?"}</h2>
               <p className="lede">{str(s.subtitle) ?? "Answer four quick questions and we'll point you at the right plan — a real one, with its real price."}</p>
             </header>
-            <PlanFinder />
+            <PlanFinder marks={finderMarks()} />
           </div>
         </section>
       );
