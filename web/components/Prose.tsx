@@ -1,6 +1,6 @@
 import { marked } from "marked";
 
-/* CMS markdown body → HTML. Content is local and trusted (edited via Decap),
+/* CMS markdown body → HTML. Content is local and trusted (edited via the CMS),
    but we still strip script/event-handler markup defensively. */
 const BLOCKED =
   /<(script|style|iframe|object|embed|form|input|button|textarea|select|template)\b[^>]*>[\s\S]*?<\/\1\s*>|<(script|style|iframe|object|embed|form|input|button|textarea|select|template)\b[^>]*\/?>/gi;

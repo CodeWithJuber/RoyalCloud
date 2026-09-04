@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
 
   // The seven approved redirects from the legacy site (WHMCS hand-offs and
   // retired .php URLs). Source of truth: lib/routes.ts REDIRECTS.
-  // Decap CMS lives in public/admin; Next serves public files by exact path,
+  // The CMS (Sveltia) lives in public/admin; Next serves public files by exact path,
   // so /admin (the URL people type) maps onto its index.html here.
   async rewrites() {
     return [{ source: "/admin", destination: "/admin/index.html" }];

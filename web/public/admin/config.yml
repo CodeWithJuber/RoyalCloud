@@ -1,22 +1,23 @@
-# Decap CMS configuration — the visual editor served at /admin.
-# Edits are committed straight to the GitHub repo, which triggers the
-# build & deploy to Cloudflare.
+# CMS configuration — the visual editor served at /admin (Sveltia CMS, a
+# Decap-compatible editor with a phone-friendly UI; same config format).
+# Edits are committed straight to this GitHub repo, which triggers the
+# Vercel build & deploy.
 #
-# Auth: GitHub backend (connect an OAuth provider so editors can log in —
-# see README → "Editing content with the CMS"). To preview the CMS locally,
-# run `npx decap-server` and uncomment `local_backend: true`.
+# Auth: GitHub backend. Login runs through the OAuth proxy built into this
+# app (app/oauth/auth + app/oauth/callback) — see README → "Editing content
+# with the CMS" for the GitHub OAuth App + env vars. Without them, editors can
+# still use "Sign in with Token" (a personal access token with `repo` scope).
 
 backend:
   name: github
-  repo: codewithjuber/royalfront
+  repo: CodeWithJuber/RoyalCloud
   branch: main
-  # Login uses the GitHub OAuth proxy built into the Cloudflare Worker
-  # (src/worker.ts → /oauth/auth + /oauth/callback). base_url MUST be the same
-  # origin that serves /admin. When the custom domain is attached, update
-  # base_url here AND the GitHub OAuth App's callback URL together
-  # (to https://royalclouds.net).
-  base_url: https://royalfront.hostlelo.workers.dev
-  auth_endpoint: /oauth/auth
+  # The OAuth proxy lives on the production origin; previews reuse it (the
+  # popup hands the token back cross-origin). When a custom domain is
+  # attached, update base_url here AND the GitHub OAuth App's callback URL
+  # (<base_url>/oauth/callback) together.
+  base_url: https://royal-cloud.vercel.app
+  auth_endpoint: oauth/auth
   auth_scope: repo
   commit_messages:
     create: "content: create {{collection}} “{{slug}}”"
@@ -24,8 +25,6 @@ backend:
     delete: "content: delete {{collection}} “{{slug}}”"
     uploadMedia: "content: upload {{path}}"
     deleteMedia: "content: delete {{path}}"
-
-# local_backend: true   # uncomment + run `npx decap-server` for local editing
 
 media_folder: "web/public/assets/uploads"
 public_folder: "/assets/uploads"
@@ -900,7 +899,7 @@ collections:
     delete: false
     slug: "{{slug}}"
     extension: md
-    format: frontmatter-with-body
+    format: frontmatter
     preview_path: "{{slug}}"
     summary: "{{title}}"
     fields: *pageFields
@@ -914,7 +913,7 @@ collections:
     delete: true
     slug: "{{slug}}"
     extension: md
-    format: frontmatter-with-body
+    format: frontmatter
     preview_path: "{{slug}}"
     summary: "{{title}}"
     fields: *pageFields

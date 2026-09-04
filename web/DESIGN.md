@@ -139,7 +139,7 @@ Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 mat
 
 ## 9. Contracts and verification
 
-- **CMS lockstep:** a new section type or field changes `lib/content.ts` (use `z.enum` for enumerations — `verify-cms.mjs` reads every `z.literal` as a section type), `components/sections/SectionRenderer.tsx` and `public/admin/config.yml` in the same commit. Decap deletes unknown fields on save.
+- **CMS lockstep:** a new section type or field changes `lib/content.ts` (use `z.enum` for enumerations — `verify-cms.mjs` reads every `z.literal` as a section type), `components/sections/SectionRenderer.tsx` and `public/admin/config.yml` in the same commit. The CMS (Sveltia, Decap-compatible) deletes unknown fields on save; `/admin` login runs through `app/oauth/*` (see README).
 - **Route contract:** 60 content routes and 7 redirects (`tests/routes.test.ts`); every off-site CTA points at `https://my.royalclouds.net`.
 - **Server/client boundary:** section shells are server components; client children receive serialisable props. `lib/billing.ts` is importable everywhere, `lib/billing-store.ts` only from client files.
 - **Gates:** `npm run check` (theme drift, `next typegen`, `tsc`, ESLint, Vitest, CMS lockstep, contrast) and `npm run build` must exit 0. Visual QA: `npm run dev` then `node scripts/qa-shots.mjs` (1440 and 390 widths, zero console errors, above-the-fold assertion).

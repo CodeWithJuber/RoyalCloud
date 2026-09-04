@@ -11,8 +11,12 @@
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
   </head>
   <body>
-    <!-- Decap CMS: Git-backed visual editor. Edits commit to the repo and
-         trigger a GitHub Actions rebuild + deploy. No server required. -->
-    <script src="https://unpkg.com/decap-cms@^3.6.0/dist/decap-cms.js"></script>
+    <!-- Sveltia CMS: Git-backed visual editor, Decap-compatible config, works
+         on phones. Pinned while it is pre-1.0 — bump the version deliberately
+         (https://github.com/sveltia/sveltia-cms/releases). To fall back to
+         Decap, swap in https://unpkg.com/decap-cms@^3.6.0/dist/decap-cms.js
+         (desktop-only UI). No type="module" here: Sveltia documents that as
+         a common mistake. -->
+    <script src="https://unpkg.com/@sveltia/cms@0.205.3/dist/sveltia-cms.js"></script>
   </body>
 </html>
