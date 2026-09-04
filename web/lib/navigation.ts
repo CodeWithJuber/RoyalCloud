@@ -2,7 +2,7 @@ import navData from "@/data/navigation.json";
 import { CONTENT_ROUTES, REDIRECTS } from "@/lib/routes";
 
 /**
- * Header navigation from data/navigation.json (Decap-editable): product
+ * Header navigation from data/navigation.json (CMS-editable): product
  * groups with icons and one-line descriptions, plain links, and the two
  * account actions. Links are filtered to real destinations — a content
  * route, a declared redirect, or an absolute URL — so the menu can never

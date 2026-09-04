@@ -4,9 +4,9 @@
  *
  *   1. web/lib/content.ts              (zod schema: what the build accepts)
  *   2. web/components/sections/SectionRenderer.tsx (what actually renders)
- *   3. web/public/admin/config.yml     (what Decap CMS lets editors touch)
+ *   3. web/public/admin/config.yml     (what the CMS lets editors touch)
  *
- * Decap silently DELETES any block type or field it doesn't know about when
+ * Decap/Sveltia silently DELETE any block type or field it doesn't know about when
  * an editor saves a page, so every section type — and every field — used in
  * content/{pages,landing}/*.md must be declared in config.yml.
  *
@@ -90,14 +90,14 @@ for (const [t, fields] of usedFields) {
   const declared = cmsTypes.get(t);
   if (!declared) {
     problems.push(
-      `type "${t}" is used in content but has NO block def in public/admin/config.yml — Decap will DELETE these blocks on save`,
+      `type "${t}" is used in content but has NO block def in public/admin/config.yml — the CMS will DELETE these blocks on save`,
     );
     continue;
   }
   for (const f of fields)
     if (!declared.has(f) && !declared.has(f.split("[].")[0]))
       problems.push(
-        `type "${t}": field "${f}" is used in content but not declared in config.yml — Decap will DELETE it on save`,
+        `type "${t}": field "${f}" is used in content but not declared in config.yml — the CMS will DELETE it on save`,
       );
 }
 
