@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Icon } from "../Icon";
 import { sectionName, sectionTitleId } from "@/lib/section-name";
+import { ScrollRail } from "../ScrollRail";
 
 export interface FeatureItem {
   icon?: string;
@@ -42,7 +43,7 @@ export function FeatureGrid({
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
-        <div className={`grid grid-${columns}`}>
+        <ScrollRail className={`grid grid-${columns}`} label={title ?? "Features"}>
           {items.map((item, i) => {
             const stagger = { "--reveal-i": i } as CSSProperties;
             const body = (
@@ -75,7 +76,7 @@ export function FeatureGrid({
               </article>
             );
           })}
-        </div>
+        </ScrollRail>
       </div>
     </section>
   );

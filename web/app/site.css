@@ -306,6 +306,54 @@
   --card-min: 9rem;
 }
 
+/* Card families as snap rails on phones.
+   One-up stacking turns the home page into 5,526px of vertical scroll at
+   412px — 2,730px of it the fifteen feature cards alone. Sideways instead:
+   the row keeps the grid it already has and simply flows in one line, with
+   the next card peeking so the gesture is discoverable without dots.
+
+   Only families whose cards carry real content are rails. Stat tiles
+   (.stats-row, .sec-stats) and the split list stay wrapped — they are short
+   enough to read at a glance, and hiding half a proof row behind a swipe
+   would cost more than the height it saves.
+
+   ScrollRail supplies the tab stop, and only while the row overflows. */
+@media (max-width: 640px) {
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .product-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82%, 20rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* overflow-x clips the other axis too, so give the cards' hover lift and
+       focus ring room rather than shearing them off. */
+    padding-block: 0.5rem;
+    margin-block: -0.5rem;
+    scrollbar-width: none;
+  }
+  .grid-2::-webkit-scrollbar,
+  .grid-3::-webkit-scrollbar,
+  .grid-4::-webkit-scrollbar,
+  .product-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .grid-2 > *,
+  .grid-3 > *,
+  .grid-4 > *,
+  .product-grid > * {
+    scroll-snap-align: start;
+  }
+  /* The tab stop only exists while it scrolls, so the ring only needs to
+     exist then too. */
+  [data-rail="true"]:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+}
+
 /* ---------- Reveal (progressive enhancement only) ----------
    Transform-only. Content must never depend on a script to become visible —
    if the observer never fires, the copy is still there. */

@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { CountUp } from "../CountUp";
 import { sectionName, sectionTitleId } from "@/lib/section-name";
+import { ScrollRail } from "../ScrollRail";
 
 export interface SecurityLayer {
   title: string;
@@ -39,7 +40,7 @@ export function SecurityLayers({
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
-        <div className="grid grid-3 sec-grid">
+        <ScrollRail className="grid grid-3 sec-grid" label={title ?? "Security layers"}>
           {layers.map((layer, i) => (
             <article
               key={layer.title}
@@ -52,7 +53,7 @@ export function SecurityLayers({
               <p>{layer.text}</p>
             </article>
           ))}
-        </div>
+        </ScrollRail>
         {stats && stats.length > 0 && (
           <dl className="sec-stats" data-reveal>
             {stats.map((stat) => (

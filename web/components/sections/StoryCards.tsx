@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { sectionName, sectionTitleId } from "@/lib/section-name";
+import { ScrollRail } from "../ScrollRail";
 
 export interface StoryItem {
   tag: string;
@@ -29,7 +30,7 @@ export function StoryCards({ id, eyebrow, title, subtitle, items }: StoryCardsPr
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
-        <div className="grid grid-3">
+        <ScrollRail className="grid grid-3" label={title ?? "Stories"}>
           {items.map((story, i) => (
             <article
               key={story.name}
@@ -54,7 +55,7 @@ export function StoryCards({ id, eyebrow, title, subtitle, items }: StoryCardsPr
               </footer>
             </article>
           ))}
-        </div>
+        </ScrollRail>
       </div>
     </section>
   );
