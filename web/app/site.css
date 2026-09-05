@@ -2815,9 +2815,13 @@ a.feature-card:hover .feature-more {
    exactly that as scrollable-region-focusable, which this first attempt
    tripped. Wrapping needs no focus management and never breaks a word. */
 @media (max-width: 640px) {
+  .plan-finder {
+    padding: 1rem;
+  }
   .plan-finder .astryx-stepper {
     flex-wrap: wrap;
     row-gap: 0.5rem;
+    margin-bottom: 1rem;
   }
   .plan-finder .astryx-step {
     flex: 0 0 auto;
@@ -3070,7 +3074,18 @@ a.feature-card:hover .feature-more {
     grid-template-columns: 1fr;
   }
   .showcase-product-art {
-    max-width: 22rem;
+    max-width: 14rem;
+  }
+}
+@media (max-width: 640px) {
+  .showcase-product {
+    padding: 1rem;
+  }
+  .showcase-product-art {
+    max-width: 10rem;
+  }
+  .showcase-product-features {
+    margin-bottom: 0.75rem;
   }
 }
 
@@ -3131,7 +3146,7 @@ a.feature-card:hover .feature-more {
 @media (max-width: 640px) {
   /* Tighter hero: smaller display, less air, art drops on product heroes */
   .hero {
-    padding-block: 2.25rem;
+    padding-block: 1.5rem 1.25rem;
   }
   .hero h1 {
     font-size: var(--text-display-1-size);
@@ -3146,14 +3161,14 @@ a.feature-card:hover .feature-more {
   .hero-badges {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 0.5rem 1rem;
-    margin-top: 1.5rem;
+    gap: 0.4rem 0.75rem;
+    margin-top: 0.75rem;
   }
   .hero-offer {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
   .hero-rating {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
 
   /* CTAs share one row instead of stacking full-width */
@@ -3161,7 +3176,7 @@ a.feature-card:hover .feature-more {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.6rem;
-    margin-top: 1.5rem;
+    margin-top: 0.75rem;
   }
   .hero-actions .btn .btn-arrow {
     width: 1.9rem;
@@ -3188,22 +3203,23 @@ a.feature-card:hover .feature-more {
     padding-inline: 1rem;
   }
 
-  /* Trustbar: 2-col equal tiles, no ragged wrap */
+  /* Trustbar: horizontal scroll strip — compact, no dead cells */
+  .trustbar {
+    padding-block: 0.5rem;
+  }
   .trustbar-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 0.6rem 1rem;
-    justify-content: stretch;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    padding-inline: 1rem;
   }
   .trustbar-item {
-    justify-content: flex-start;
-  }
-  /* An odd number of proof points left the last one alone with an empty cell
-     beside it — half a row of dead space. Give it the whole row instead. The
-     count is authored in content and changes per page, so this is derived
-     from the DOM rather than a per-page override. */
-  .trustbar-row > :last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    font-size: var(--font-size-sm);
   }
 
   /* .grid-2/3/4 collapse to one column in the ≤640 block near the top of this
@@ -3213,18 +3229,24 @@ a.feature-card:hover .feature-more {
      here, not two 10rem columns.
      The plan deck needs nothing either: its 300px floor collapses it. */
 
-  /* Sections run tighter */
+  /* Sections run tighter — every pixel of vertical air is a scroll the
+     user has to do; 1.5rem + the adjacent-section collapse keeps sections
+     distinct without wasting a fifth of the viewport on padding alone. */
   .section {
-    padding-block: 2.5rem;
+    padding-block: 1.5rem;
   }
   .section-sm {
-    padding-block: 2rem;
+    padding-block: 1.25rem;
   }
   .section-header {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1rem;
   }
   .section-header h2 {
     font-size: var(--text-display-2-size);
+    margin-bottom: 0.4rem;
+  }
+  .section-header .lede {
+    font-size: var(--font-size-base);
   }
 }
 
@@ -4370,6 +4392,12 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   + .section:not(.section-dark, .section-deep, .section-royal, .section-tint) {
   padding-top: calc(var(--section-y) * 0.5);
 }
+@media (max-width: 640px) {
+  main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
+    + .section:not(.section-dark, .section-deep, .section-royal, .section-tint) {
+    padding-top: 0.5rem;
+  }
+}
 
 /* ============================================================
    Content split v3 — copy beside the art, checklist as a full-width strip
@@ -4452,7 +4480,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
     flex-direction: row;
   }
   .content-split .split-media .section-art {
-    max-width: 18rem;
+    max-width: 12rem;
   }
 }
 
@@ -4463,7 +4491,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.75rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 .footer-contact a {
   justify-content: center;
@@ -4517,13 +4545,16 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   }
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.75rem 1.25rem;
+    gap: 1.25rem 1rem;
   }
   .footer-brand {
     display: block;
   }
   .footer-brand img {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .footer-brand p {
+    font-size: var(--font-size-sm);
   }
 }
 
