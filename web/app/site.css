@@ -1567,7 +1567,7 @@ a.feature-card:hover .feature-more {
 }
 .bench-row {
   display: grid;
-  grid-template-columns: minmax(7rem, 10rem) 1fr minmax(4.5rem, auto);
+  grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr) minmax(4.5rem, auto);
   align-items: center;
   gap: 1rem;
   padding: 0.9rem 0;
@@ -1619,7 +1619,7 @@ a.feature-card:hover .feature-more {
 }
 @media (max-width: 640px) {
   .bench-row {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: "label value" "track track";
     gap: 0.45rem 0.75rem;
   }

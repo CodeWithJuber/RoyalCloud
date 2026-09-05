@@ -42,6 +42,36 @@ const RULES = [
     why: "minmax() cannot nest — the browser drops the whole declaration. Use minmax(min(100%, N), 1fr).",
   },
   {
+    id: "bare-1fr-column",
+    /* A bare `1fr` track keeps min-width: auto, so an unshrinkable child
+       pushes the whole grid past its container — the 320px overflow this
+       repo shipped at 12 sites. Only multi-track column lists are flagged:
+       a lone `1fr` has no sibling to squeeze it, and gating those would
+       churn nine idiomatic single-column rules for no measurable gain. */
+    test: (line) => {
+      const m = line.match(/grid-template-columns:\s*([^;]+);/);
+      if (!m) return false;
+      const tracks = m[1].trim();
+      if (!/(^|[\s)])1fr([\s(]|$)/.test(` ${tracks} `)) return false;
+      // Count top-level tracks: split on whitespace outside parentheses.
+      let depth = 0;
+      let count = 1;
+      let prevWasSpace = true;
+      for (const ch of tracks) {
+        if (ch === "(") depth += 1;
+        else if (ch === ")") depth -= 1;
+        else if (/\s/.test(ch) && depth === 0) {
+          if (!prevWasSpace) count += 1;
+          prevWasSpace = true;
+          continue;
+        }
+        prevWasSpace = false;
+      }
+      return count > 1;
+    },
+    why: "a bare 1fr beside other tracks cannot shrink below its content; use minmax(0, 1fr).",
+  },
+  {
     id: "raw-font-size",
     test: (line, i) => !inRoot(i) && /font-size:\s*(\d|\.)/.test(line) && !/var\(/.test(line),
     why: "font-size must come from a token (--font-size-*, --text-*-size); raw values reintroduce the two type scales.",
