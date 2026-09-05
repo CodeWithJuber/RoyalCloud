@@ -17,9 +17,9 @@
   /* Marketing rhythm — dense but breathing; content sections run tight,
      heroes and conversion bands get the air. */
   --site-shell: 1200px;
-  --section-y: clamp(3.5rem, 6.5vw, 5.5rem);
-  --section-y-sm: clamp(2.25rem, 4vw, 3.25rem);
-  --header-gap: clamp(1.75rem, 4vw, 2.75rem);
+  --section-y: clamp(2.5rem, 4vw, 3.5rem);
+  --section-y-sm: clamp(1.75rem, 2.5vw, 2.25rem);
+  --header-gap: clamp(1.25rem, 2.5vw, 2rem);
   /* One measure system and one card padding for the whole site. */
   --measure: 46rem;
   --measure-wide: 56rem;
@@ -882,7 +882,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(2.75rem, 6vw, 5rem);
+  padding-block: clamp(2rem, 4vw, 3.5rem);
 }
 
 /* Aurora mesh: violet bloom corners + a restrained gold glow, over a faint
@@ -927,13 +927,13 @@
 }
 .hero-simple {
   background: var(--rc-lavender);
-  padding-block: clamp(2.5rem, 5vw, 4rem);
+  padding-block: clamp(2rem, 4vw, 3rem);
 }
 
 .hero-inner {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: center;
 }
 .hero-simple .hero-inner {
@@ -1214,7 +1214,7 @@
 @media (min-width: 1800px) {
   :root {
     --site-shell: 1360px;
-    --section-y: clamp(4rem, 4.5vw, 6rem);
+    --section-y: clamp(3rem, 3.5vw, 4rem);
   }
 }
 
@@ -2555,6 +2555,7 @@ a.feature-card:hover .feature-more {
 .section-art svg {
   width: 100%;
   height: auto;
+  max-height: 28rem;
   display: block;
 }
 .section-art svg {
@@ -3007,7 +3008,7 @@ a.feature-card:hover .feature-more {
 .showcase-product {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: center;
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid var(--color-border);
@@ -4376,14 +4377,14 @@ a.os-chip:focus-visible {
    Rhythm v2 — one spacing scale for every width, no doubled gaps
    ============================================================ */
 :root {
-  --section-y: clamp(3rem, 5.5vw, 5rem);
-  --section-y-sm: clamp(2rem, 3.5vw, 3rem);
-  --header-gap: clamp(1.5rem, 3vw, 2.5rem);
+  --section-y: clamp(2.5rem, 4vw, 3.5rem);
+  --section-y-sm: clamp(1.75rem, 2.5vw, 2.25rem);
+  --header-gap: clamp(1.25rem, 2.5vw, 2rem);
 }
 @media (max-width: 1024px) {
   :root {
-    --section-y: clamp(2.5rem, 5vw, 3.25rem);
-    --section-y-sm: clamp(1.75rem, 3.5vw, 2.25rem);
+    --section-y: clamp(2rem, 4vw, 2.75rem);
+    --section-y-sm: clamp(1.5rem, 3vw, 2rem);
   }
 }
 /* Two light sections in a row share one gap instead of stacking two
@@ -4412,6 +4413,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .content-split .split-media .section-art {
   width: 100%;
   max-width: 26rem;
+  max-height: 22rem;
 }
 .split-list {
   --color-text-primary: #faf7ff;
