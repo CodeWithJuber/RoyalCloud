@@ -399,6 +399,10 @@
     box-shadow 0.22s ease;
 }
 .site-header.is-scrolled .header-bar {
+  /* Fully opaque once content is behind it. backdrop-filter is unreliable on
+     mobile Chrome (it computes to none in some compositing paths), and at 92%
+     the page then ghosts through the bar mid-scroll. */
+  background: #ffffff;
   border-bottom-color: var(--color-border);
   box-shadow: var(--shadow-low);
 }
@@ -2710,6 +2714,29 @@ a.feature-card:hover .feature-more {
 .plan-finder .astryx-stepper {
   margin-bottom: 1.75rem;
 }
+/* Astryx gives every step `flex: 1 1 0%`, so four steps split the row evenly
+   and each label gets ~40px — less than "Budget" needs. The base layer's
+   overflow-wrap then chops the word rather than overflowing, which is how
+   "Budget" rendered as "Bud / get".
+   Each step sizes to its own label and the row wraps. Scrolling it instead
+   would need a tab stop nobody expects on a progress indicator — axe flags
+   exactly that as scrollable-region-focusable, which this first attempt
+   tripped. Wrapping needs no focus management and never breaks a word. */
+@media (max-width: 640px) {
+  .plan-finder .astryx-stepper {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+  .plan-finder .astryx-step {
+    flex: 0 0 auto;
+  }
+  .plan-finder .astryx-step * {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    white-space: nowrap;
+  }
+}
 
 .finder-question {
   margin: 0 0 0.35rem;
@@ -3049,18 +3076,22 @@ a.feature-card:hover .feature-more {
     height: 1.9rem;
   }
 
-  /* The /#domains search stays a single compact pill. */
+  /* The submit sizes to its label ("Search domains" is 205px) and the field
+     took whatever was left — 115px at 412, 42px at 320, too narrow to show a
+     domain being typed. On one-column screens the field owns its own row. */
   .domain-row {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.6rem;
+    align-items: stretch;
   }
   .domain-row input {
+    width: 100%;
     min-height: 3rem;
     font-size: var(--font-size-base);
   }
   .domain-row .btn {
-    width: auto;
+    width: 100%;
     min-height: 3rem;
     padding-inline: 1rem;
   }
@@ -3074,6 +3105,13 @@ a.feature-card:hover .feature-more {
   }
   .trustbar-item {
     justify-content: flex-start;
+  }
+  /* An odd number of proof points left the last one alone with an empty cell
+     beside it — half a row of dead space. Give it the whole row instead. The
+     count is authored in content and changes per page, so this is derived
+     from the DOM rather than a per-page override. */
+  .trustbar-row > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   /* .grid-2/3/4 collapse to one column in the ≤640 block near the top of this
@@ -5028,6 +5066,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   .cta-actions,
   .finder-actions,
   .mobile-actions,
+  .showcase-product-actions,
   .cta-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -5037,6 +5076,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   .cta-actions .btn,
   .finder-actions .btn,
   .mobile-actions .btn,
+  .showcase-product-actions .btn,
   .cta-row .btn {
     width: 100%;
   }
