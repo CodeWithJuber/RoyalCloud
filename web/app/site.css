@@ -399,6 +399,10 @@
     box-shadow 0.22s ease;
 }
 .site-header.is-scrolled .header-bar {
+  /* Fully opaque once content is behind it. backdrop-filter is unreliable on
+     mobile Chrome (it computes to none in some compositing paths), and at 92%
+     the page then ghosts through the bar mid-scroll. */
+  background: #ffffff;
   border-bottom-color: var(--color-border);
   box-shadow: var(--shadow-low);
 }
@@ -1535,6 +1539,35 @@ a.feature-card:hover .feature-more {
   padding: 0;
   list-style: none;
 }
+
+/* Six chips of unequal width wrapped 2/2/1/1 on a phone — every row a
+   different length and the last two stranded. One scrolling row instead:
+   equal rhythm, no ragged edges. The list keeps its semantics and takes a tab
+   stop (a scroll container no keyboard can reach is an axe failure), and the
+   right edge fades so it reads as scrollable rather than clipped. */
+@media (max-width: 640px) {
+  .tech-shelf {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding-bottom: 0.35rem;
+    mask-image: linear-gradient(to right, #000 0, #000 88%, transparent 100%);
+  }
+  .tech-shelf::-webkit-scrollbar {
+    display: none;
+  }
+  .tech-shelf:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    mask-image: none;
+  }
+  .tech-logo {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}
 .tech-logo {
   display: inline-flex;
   align-items: center;
@@ -2426,15 +2459,30 @@ a.feature-card:hover .feature-more {
 
 /* Announcement bar on narrow screens — let the message wrap instead of clip */
 @media (max-width: 640px) {
+  /* The message (225px) plus "Explore hosting" (139px) needs 372px; a 412px
+     phone offers 354px inside the padding, 332px at 390. Two lines below
+     ~430px is arithmetic, not a bug — so centre them, which reads as a
+     deliberate two-line notice instead of a row with a ragged right edge.
+     The close button keeps a 24px box (WCAG 2.5.8 minimum) with the 44px hit
+     area from its ::after, which buys back 8px of the right padding. */
   .announcement {
-    padding: 0.6rem 2.75rem 0.6rem 0.9rem;
+    padding: 0.6rem 2.5rem 0.6rem 0.6rem;
     font-size: var(--font-size-sm);
     line-height: 1.4;
-    justify-content: flex-start;
+    justify-content: center;
   }
   .announcement p {
-    justify-content: flex-start;
-    text-align: left;
+    justify-content: center;
+    text-align: center;
+    gap: 0.35rem 0.5rem;
+  }
+  /* 24px box (WCAG 2.5.8 minimum) but the 44px hit area from ::after is
+     centred on it, so the offset cannot shrink below 12px or that invisible
+     area runs 2px past the viewport and the page scrolls sideways. */
+  .announcement-close {
+    width: 24px;
+    height: 24px;
+    right: 0.75rem;
   }
 }
 
@@ -2709,6 +2757,29 @@ a.feature-card:hover .feature-more {
 }
 .plan-finder .astryx-stepper {
   margin-bottom: 1.75rem;
+}
+/* Astryx gives every step `flex: 1 1 0%`, so four steps split the row evenly
+   and each label gets ~40px — less than "Budget" needs. The base layer's
+   overflow-wrap then chops the word rather than overflowing, which is how
+   "Budget" rendered as "Bud / get".
+   Each step sizes to its own label and the row wraps. Scrolling it instead
+   would need a tab stop nobody expects on a progress indicator — axe flags
+   exactly that as scrollable-region-focusable, which this first attempt
+   tripped. Wrapping needs no focus management and never breaks a word. */
+@media (max-width: 640px) {
+  .plan-finder .astryx-stepper {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+  .plan-finder .astryx-step {
+    flex: 0 0 auto;
+  }
+  .plan-finder .astryx-step * {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    white-space: nowrap;
+  }
 }
 
 .finder-question {
@@ -3049,18 +3120,22 @@ a.feature-card:hover .feature-more {
     height: 1.9rem;
   }
 
-  /* The /#domains search stays a single compact pill. */
+  /* The submit sizes to its label ("Search domains" is 205px) and the field
+     took whatever was left — 115px at 412, 42px at 320, too narrow to show a
+     domain being typed. On one-column screens the field owns its own row. */
   .domain-row {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.6rem;
+    align-items: stretch;
   }
   .domain-row input {
+    width: 100%;
     min-height: 3rem;
     font-size: var(--font-size-base);
   }
   .domain-row .btn {
-    width: auto;
+    width: 100%;
     min-height: 3rem;
     padding-inline: 1rem;
   }
@@ -3074,6 +3149,13 @@ a.feature-card:hover .feature-more {
   }
   .trustbar-item {
     justify-content: flex-start;
+  }
+  /* An odd number of proof points left the last one alone with an empty cell
+     beside it — half a row of dead space. Give it the whole row instead. The
+     count is authored in content and changes per page, so this is derived
+     from the DOM rather than a per-page override. */
+  .trustbar-row > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   /* .grid-2/3/4 collapse to one column in the ≤640 block near the top of this
@@ -4367,8 +4449,23 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   .footer-contact {
     grid-template-columns: 1fr;
   }
+  /* Full-width rows with the label hugging the left read as half-empty. Icon,
+     label and a trailing arrow instead: the row is a link, so the space earns
+     its keep as an affordance rather than sitting dead. Full width is kept on
+     purpose — it is the tap target. */
   .footer-contact a {
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    justify-content: stretch;
+    gap: 0.6rem;
+    text-align: left;
+  }
+  .footer-contact a::after {
+    content: "\2192";
+    color: var(--rc-gold);
+    font-size: var(--font-size-base);
+    line-height: 1;
   }
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5028,6 +5125,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   .cta-actions,
   .finder-actions,
   .mobile-actions,
+  .showcase-product-actions,
   .cta-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -5037,6 +5135,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   .cta-actions .btn,
   .finder-actions .btn,
   .mobile-actions .btn,
+  .showcase-product-actions .btn,
   .cta-row .btn {
     width: 100%;
   }

@@ -37,7 +37,12 @@ export function TechLogos({
           <h2 id={sectionTitleId(id)}>{title}</h2>
           {subtitle && <p className="lede">{subtitle}</p>}
         </header>
-        <ul className="tech-shelf" data-reveal>
+        <ul
+          className="tech-shelf"
+          data-reveal
+          tabIndex={0}
+          aria-label="Platform technology"
+        >
           {TECH_STACK.map((name) => (
             <li key={name} className="tech-logo" data-wordmark={hasBrandMark(name) ? undefined : "true"}>
               <BrandMark name={name} size={22} />
