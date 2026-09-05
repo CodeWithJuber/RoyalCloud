@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { Icon } from "../Icon";
 import { Price } from "../Price";
 import { sectionName, sectionTitleId } from "@/lib/section-name";
+import { ScrollRail } from "../ScrollRail";
 
 export interface ProductItem {
   icon?: string;
@@ -38,7 +39,7 @@ export function ProductGrid({ id, eyebrow, title, subtitle, items }: ProductGrid
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
-        <div className="product-grid">
+        <ScrollRail className="product-grid" label={title ?? "Products"}>
           {items.map((item, i) => (
             <a
               key={item.title}
@@ -63,7 +64,7 @@ export function ProductGrid({ id, eyebrow, title, subtitle, items }: ProductGrid
               </span>
             </a>
           ))}
-        </div>
+        </ScrollRail>
       </div>
     </section>
   );
