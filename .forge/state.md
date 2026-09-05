@@ -7,10 +7,10 @@
 - (none)
 
 ## Done this session
-- CMS: in-app OAuth proxy (app/oauth/*), Sveltia editor pinned 0.205.3, config repo/base_url/format fixed; login screen verified offline on phone + desktop; check green (62 tests)
+- Audit-and-fix pass complete: 8 steps on claude/interactive-premium-ui-ux-agnqdq (PR #6). Full matrix 25 pages x 23 widths 320-3840 + landscape + 200% zoom: 0 horizontal overflow across 575 combinations, 0 shell escapes, 0 axe critical/serious, CLS 0.000 and a11y 100 on six Lighthouse pages. New gates: npm run check:css and a shell-containment detector in audit.mjs.
 
 ## Next steps
-- Owner: create GitHub OAuth App (callback https://royal-cloud.vercel.app/oauth/callback) + set GITHUB_OAUTH_CLIENT_ID/SECRET in Vercel, or use Sign in with Token; confirm which browser/viewport shows the site 'unresponsive' (screenshot with URL bar) — emulated Pixel 7/iPhone 13 show no overflow and working taps
+- Measure LCP against the deployed Vercel site — the local 2.86-3.47s is Lighthouse's 4x CPU throttle on a shared container, not the site (hero h1 paints at 188ms unthrottled). Then decide on the open items in the PR body: the orphaned content/pages/domains.md, the two greens (--color-success #007004 vs .plan-check #009e81), and whether the sub-nav 'Get started' should go to the WHMCS cart directly.
 
 ## Gotchas
 - (none)
@@ -19,13 +19,9 @@
 - (none)
 
 ## In-progress files (git, at handoff)
-- M .forge/decisions.md
-- ?? .forge/ledger/claims/5b/
-- ?? .forge/ledger/claims/80/
-- ?? .forge/ledger/provenance/5b028bd9bf19112ad0b5aeb731c70eb0bad7dbf232e85c0377a14dc32280ecd9.log
-- ?? .forge/ledger/provenance/8008cf1df91dda955f13638a82fba9c819683d1b59ba517ab70263e437e487ab.log
+- (clean tree)
 
 ## Decisions
 - append-only log: `.forge/decisions.md` (`forge decide`)
 
-<!-- written 2026-09-04T05:20:52.328Z — forge handoff on claude/interactive-premium-ui-ux-agnqdq -->
+<!-- written 2026-09-04T19:41:35.620Z — forge handoff on claude/interactive-premium-ui-ux-agnqdq -->

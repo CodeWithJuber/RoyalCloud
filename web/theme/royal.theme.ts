@@ -20,7 +20,10 @@ export const royalTheme = defineTheme({
   extends: neutralTheme,
 
   typography: {
-    scale: {base: 14, ratio: 1.2},
+    // 16px body is the one source of truth for the whole site: site.css
+    // consumes --font-size-* / --text-* tokens and Astryx components read
+    // the same scale (sm 13 · base 16 · lg 19 · xl 23 · 2xl 28 · 4xl 40).
+    scale: {base: 16, ratio: 1.2},
     body: {
       family: 'var(--font-dm-sans)',
       fallbacks: 'ui-sans-serif, system-ui, sans-serif',
@@ -65,13 +68,45 @@ export const royalTheme = defineTheme({
     '--color-shadow': ['#2f1c6a1A', '#00000066'],
 
     // ── Status hues keep Astryx defaults; gold is reserved for CTAs ──
+
+    // ── Type pins the scale cannot express ───────────────────────────
+    // Secondary text never drops below 14px; display sizes are fluid so
+    // the same heading reads at 390, 917 and 1280 without media queries.
+    '--text-supporting-size': '0.875rem',
+    '--text-display-1-size': 'clamp(2.25rem, 4vw, 3.25rem)',
+    '--text-display-1-weight': '700',
+    '--text-display-1-leading': '1.05',
+    '--text-display-2-size': 'clamp(1.75rem, 1.1rem + 2.6vw, 2.5rem)',
+    '--text-display-2-weight': '700',
+    '--text-display-2-leading': '1.12',
   },
 
   components: {
     button: {
+      // Sizes are the touch policy for the whole site: md is the 44px floor,
+      // lg (52px) is every conversion row (hero, CTA band, plan cards, mobile
+      // bar), sm is chips and table cells. Astryx pins a fixed height per
+      // size, so height is released and a min-height carries the floor.
       base: {
         borderRadius: '9999px',
         fontWeight: '700',
+        height: 'auto',
+        lineHeight: '1.2',
+      },
+      'size:sm': {
+        minHeight: 'var(--spacing-9)',
+        paddingInline: 'var(--spacing-4)',
+        fontSize: 'var(--font-size-sm)',
+      },
+      'size:md': {
+        minHeight: 'var(--spacing-11)',
+        paddingInline: 'var(--spacing-6)',
+        fontSize: 'var(--font-size-base)',
+      },
+      'size:lg': {
+        minHeight: '3.25rem',
+        paddingInline: 'var(--spacing-7)',
+        fontSize: 'var(--font-size-base)',
       },
       // The conversion action: gold fill, night-ink label. Gold is the ONLY
       // conversion color in the brand system — it never appears elsewhere.
@@ -80,18 +115,24 @@ export const royalTheme = defineTheme({
         color: '#2f1c6a',
         '--color-accent': '#ffc94b',
         '--color-on-accent': '#2f1c6a',
+        boxShadow: '0 10px 22px -10px #c8aa008c',
+        ':hover': {backgroundColor: '#ffd97a'},
       },
       'variant:secondary': {
         borderWidth: '1px',
         borderStyle: 'solid',
         borderColor: 'var(--color-border-emphasized)',
+        backgroundColor: 'var(--color-background-card)',
+        color: 'var(--color-text-primary)',
       },
     },
     badge: {
       base: {borderRadius: '9999px', fontWeight: '700'},
     },
     card: {
-      base: {borderRadius: '20px'},
+      // One card padding for the site (20px phones → 28px desktop), owned by
+      // site.css :root as --rc-card-pad so native .card elements match.
+      base: {borderRadius: '20px', padding: 'var(--rc-card-pad)'},
     },
   },
 

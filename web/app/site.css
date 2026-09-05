@@ -20,6 +20,15 @@
   --section-y: clamp(3.5rem, 6.5vw, 5.5rem);
   --section-y-sm: clamp(2.25rem, 4vw, 3.25rem);
   --header-gap: clamp(1.75rem, 4vw, 2.75rem);
+  /* One measure system and one card padding for the whole site. */
+  --measure: 46rem;
+  --measure-wide: 56rem;
+  --rc-card-pad: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  /* Three radius roles. A surface (card, panel, table, drawer), a tile inside
+     one (spec tiles, avatars, art frames), and a pill (buttons, chips). 50%
+     stays for true circles. Anything else was drift. */
+  --rc-radius-card: 20px;
+  --rc-radius-tile: 12px;
 }
 
 /* ---------- Layout ---------- */
@@ -67,10 +76,9 @@
   display: inline-block;
   margin: 0 0 1rem;
   color: var(--color-text-accent);
-  font-size: 0.8125rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .section-dark .eyebrow,
 .section-deep .eyebrow,
@@ -79,7 +87,7 @@
 }
 
 .section-header {
-  max-width: 46rem;
+  max-width: var(--measure);
   margin-bottom: var(--header-gap);
 }
 .section-header.center {
@@ -88,7 +96,7 @@
 }
 .section-header h2 {
   margin: 0 0 0.75rem;
-  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  font-size: var(--text-display-2-size);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.12;
@@ -98,7 +106,7 @@
   margin: 0;
   max-width: 62ch;
   color: var(--color-text-secondary);
-  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  font-size: var(--text-large-size);
   line-height: 1.55;
 }
 .section-header.center .lede {
@@ -111,11 +119,11 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  min-height: 3rem;
-  padding: 0.35rem 0.45rem 0.35rem 1.5rem;
+  min-height: var(--spacing-11);
+  padding: 0.5rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 999px;
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   line-height: 1.2;
   text-decoration: none;
@@ -133,7 +141,7 @@
   height: 2.1rem;
   place-items: center;
   border-radius: 50%;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   transition: transform 0.22s ease;
 }
 .btn:hover .btn-arrow {
@@ -181,7 +189,10 @@
 .section-deep .btn-secondary,
 .section-royal .btn-secondary {
   color: #faf7ff;
-  border-color: #faf7ff33;
+  /* 38% white measures 3.07:1 against night, clearing the 3:1 non-text
+     minimum; #faf7ff33 was 2.03:1 and the border is this button's only
+     shape indicator. */
+  border-color: #faf7ff60;
   background: #ffffff0a;
 }
 .section-dark .btn-secondary .btn-arrow,
@@ -205,7 +216,7 @@
 .card {
   background: var(--color-background-card);
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   padding: 1.75rem;
   transition:
     transform 0.22s ease,
@@ -235,7 +246,7 @@
   gap: 0.35rem;
   padding: 0.28rem 0.7rem;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   line-height: 1.3;
 }
@@ -243,10 +254,6 @@
   color: var(--color-text-accent);
   border: 1px solid #673de633;
   background: #673de60f;
-}
-.chip-gold {
-  color: var(--rc-night);
-  background: var(--rc-gold);
 }
 .section-dark .chip-save,
 .section-deep .chip-save,
@@ -261,14 +268,42 @@
   display: grid;
   gap: 1.25rem;
 }
-.grid-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+/* One contract for every card row on the site. The column count follows the
+   space available and the family's smallest acceptable card — never a
+   hardcoded count, so a four-step process is four across on a desktop and a
+   snap rail on a phone without either being written down as a breakpoint.
+   Families set --card-min; that is the whole vocabulary. */
+.grid-2,
+.grid-3,
+.grid-4,
+.product-grid,
+.steps-grid,
+.split-list,
+.stats-row,
+.sec-stats {
+  display: grid;
+  gap: var(--card-gap, 1.25rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min, 18rem)), 1fr));
 }
-.grid-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
+.grid-2,
+.grid-3,
 .grid-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  --card-min: 17rem;
+}
+.product-grid {
+  --card-min: 16rem;
+}
+.steps-grid {
+  --card-min: 15rem;
+}
+.split-list {
+  --card-min: 14rem;
+}
+.stats-row {
+  --card-min: 10rem;
+}
+.sec-stats {
+  --card-min: 9rem;
 }
 
 /* ---------- Reveal (progressive enhancement only) ----------
@@ -285,27 +320,13 @@
   transform: none;
 }
 
-/* ---------- Mobile ---------- */
-@media (max-width: 1024px) {
-  .grid-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .grid-3 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 640px) {
-  .grid-2,
-  .grid-3,
-  .grid-4 {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ============================================================
    Site header — announcement bar + sticky nav + mega menu
    ============================================================ */
 
+/* Holds the bar and the drawer only — the announcement is a sibling above it,
+   so it scrolls away while this stays pinned. */
 .site-header {
   position: sticky;
   top: 0;
@@ -320,7 +341,7 @@
   padding: 0.55rem 2.5rem 0.55rem 1rem;
   background: var(--rc-night-deep);
   color: #f4f1ff;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   position: relative;
 }
@@ -387,7 +408,7 @@
   margin-inline: auto;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   min-height: 4.5rem;
 }
 
@@ -421,12 +442,12 @@
   align-items: center;
   gap: 0.35rem;
   min-height: 44px;
-  padding: 0 0.85rem;
+  padding: 0 0.65rem;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   cursor: pointer;
   transition:
@@ -457,7 +478,7 @@
   min-width: 15rem;
   padding: 0.5rem;
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-popover);
   box-shadow: var(--shadow-med);
   opacity: 0;
@@ -476,9 +497,9 @@
 .nav-panel a {
   display: block;
   padding: 0.65rem 0.85rem;
-  border-radius: 10px;
+  border-radius: var(--rc-radius-tile);
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   text-decoration: none;
   transition:
@@ -502,7 +523,7 @@
 }
 .login-link {
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   text-decoration: none;
 }
@@ -517,7 +538,7 @@
 .header-cta {
   min-height: 2.75rem;
   padding-left: 1.25rem;
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
 }
 
 /* Currency switch (header) */
@@ -539,7 +560,7 @@
   border-radius: 999px;
   color: var(--color-text-secondary);
   background: transparent;
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -567,7 +588,7 @@
   width: 44px;
   height: 44px;
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: transparent;
   cursor: pointer;
   position: relative;
@@ -642,7 +663,7 @@
 .mobile-panel h2 {
   margin: 0 0 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -652,7 +673,7 @@
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--color-border);
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
   text-decoration: none;
 }
@@ -661,7 +682,12 @@
   outline-offset: 2px;
 }
 
-@media (max-width: 1080px) {
+/* 1169px is measured, not chosen. Bisected against the rendered header: the
+   actions row spills past the shell by 13px at 1155 and reaches 0 at 1170, so
+   the nav appears from 1170 up and the drawer — which already exists and is
+   tested — takes over below it. Note the overflow detector cannot see this
+   class of fault: content escaping its own column is not page overflow. */
+@media (max-width: 1169px) {
   .desktop-nav,
   .login-link {
     display: none;
@@ -696,7 +722,7 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr repeat(4, 1fr);
+  grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr));
   gap: 2.5rem;
   padding-bottom: 3rem;
 }
@@ -711,7 +737,7 @@
   margin: 0;
   max-width: 26ch;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 .footer-socials {
@@ -722,10 +748,18 @@
   list-style: none;
 }
 .footer-socials a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--spacing-11);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
+}
+.footer-socials a:focus-visible {
+  outline: 2px solid #faf7ff;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 .footer-socials a:hover {
   color: #ffffff;
@@ -734,7 +768,7 @@
 .footer-group h2 {
   margin: 0 0 1rem;
   color: var(--color-text-primary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -748,7 +782,7 @@
 }
 .footer-group a {
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   text-decoration: none;
   transition: color 0.15s ease;
 }
@@ -772,13 +806,12 @@
 .footer-bottom p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 @media (max-width: 1024px) {
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  /* Columns are set by the later tablet block; only the brand span belongs
+     here (an earlier grid-template-columns was dead against it). */
   .footer-brand {
     grid-column: 1 / -1;
   }
@@ -804,9 +837,7 @@
    grid. Depth without noise. */
 .hero-home {
   background:
-    radial-gradient(46rem 26rem at 82% -12%, #7d59d980, transparent 62%),
-    radial-gradient(38rem 24rem at -8% 108%, #5025d166, transparent 65%),
-    radial-gradient(30rem 20rem at 55% 118%, #ffc94b21, transparent 70%),
+    radial-gradient(58rem 32rem at 80% -16%, #7d59d98c, transparent 64%),
     var(--rc-night);
   color: #f4f1ff;
   --color-text-primary: #ffffff;
@@ -849,18 +880,13 @@
 
 .hero-inner {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
 }
-.hero-simple .hero-inner,
-.hero-home .hero-inner {
+.hero-simple .hero-inner {
   grid-template-columns: 1fr;
-  max-width: 52rem;
-}
-.hero-home .hero-inner {
-  text-align: center;
-  margin-inline: auto;
+  max-width: var(--measure-wide);
 }
 
 .hero .eyebrow {
@@ -872,12 +898,11 @@
 
 .hero h1 {
   margin: 0 0 1.25rem;
-  font-size: clamp(2.5rem, 5.4vw, 4.2rem);
+  font-size: var(--text-display-1-size);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.05;
   color: var(--color-text-primary);
-  text-wrap: balance;
 }
 .hero h1 em {
   font-style: normal;
@@ -891,11 +916,8 @@
   margin: 0;
   max-width: 58ch;
   color: var(--color-text-secondary);
-  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-size: var(--text-large-size);
   line-height: 1.6;
-}
-.hero-home .hero-lede {
-  margin-inline: auto;
 }
 
 .hero-offer {
@@ -906,7 +928,7 @@
   border-radius: 999px;
   background: #ffffff0d;
   color: var(--rc-gold-light);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
 }
 .hero-simple .hero-offer {
@@ -921,9 +943,6 @@
   gap: 0.75rem;
   margin-top: 2rem;
 }
-.hero-home .hero-actions {
-  justify-content: center;
-}
 
 .hero-badges {
   display: flex;
@@ -933,15 +952,12 @@
   padding: 0;
   list-style: none;
 }
-.hero-home .hero-badges {
-  justify-content: center;
-}
 .hero-badges li {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
 }
 .hero-badges svg {
@@ -965,13 +981,6 @@
     min-height: 0;
   }
 }
-@media (max-width: 640px) {
-  .hero-actions .btn {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
-
 /* ============================================================
    Plan cards — the money component
    ============================================================ */
@@ -980,70 +989,31 @@
   background: var(--color-background-body);
 }
 
-.billing-toggle {
-  display: flex;
-  justify-content: center;
-  gap: 0.25rem;
-  margin: 0 auto 2.5rem;
-  width: fit-content;
-  padding: 0.25rem;
-  border: 1px solid var(--color-border-emphasized);
-  border-radius: 999px;
-  background: var(--color-background-card);
-}
-.billing-toggle button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 44px;
-  padding: 0.4rem 1.25rem;
-  border: 0;
-  border-radius: 999px;
-  color: var(--color-text-secondary);
-  background: transparent;
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-.billing-toggle button[aria-pressed="true"] {
-  color: #ffffff;
-  background: var(--color-accent);
-}
-.billing-toggle button:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-}
-.billing-toggle .chip-gold {
-  padding: 0.15rem 0.5rem;
-  font-size: 0.7rem;
-}
-
-.plan-grid {
+/* One contract for every deck (3, 4, 5 and 6 tiers all ship): a card is never
+   narrower than 300px, and the column count follows from the shell instead of
+   a hardcoded per-deck number. At the 1200px shell that is three up, so the
+   4-tier deck stops rendering 285px columns. */
+.plan-rail {
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-.plan-grid[data-cols="3"] {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.plan-grid[data-cols="4"] {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-.plan-grid[data-cols="5"] {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  /* Four tracks per card row — the last one absorbs the slack so every card
+     in a row ends level. The list repeats for the second row of a 4-up deck. */
+  grid-auto-rows: auto auto auto 1fr;
 }
 
+/* Four rows — head, price, CTA, body — in every state, so the subgrid below
+   has something consistent to inherit. The query container is .plan-body, not
+   the card: an element with inline-size containment cannot be a subgrid, and
+   putting it here silently dropped the card out of the chain. */
 .plan-card {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
   gap: 0;
   padding: 1.75rem;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
   transition:
     transform 0.22s ease,
@@ -1069,7 +1039,7 @@
   border-radius: 999px;
   background: var(--color-accent);
   color: #ffffff;
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1078,14 +1048,14 @@
 
 .plan-card h3 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: var(--text-heading-3-size);
   font-weight: 700;
   color: var(--color-text-primary);
 }
 .plan-summary {
   margin: 0.35rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.45;
 }
 
@@ -1094,17 +1064,6 @@
   padding-block: 1rem;
   border-block: 1px solid var(--color-border);
 }
-.plan-was {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.35rem;
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-}
-.plan-was .px {
-  text-decoration: line-through;
-}
 .plan-price {
   display: flex;
   align-items: baseline;
@@ -1112,21 +1071,21 @@
   color: var(--color-text-primary);
 }
 .plan-price .px {
-  font-size: 2.25rem;
+  font-size: var(--font-size-4xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 .plan-period {
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
 }
 .plan-ledger {
   display: block;
   margin-top: 0.35rem;
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   line-height: 1.4;
 }
 
@@ -1146,7 +1105,7 @@
   align-items: flex-start;
   gap: 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.45;
 }
 .plan-features svg {
@@ -1157,25 +1116,65 @@
 
 .plan-note {
   margin: 2rem auto 0;
-  max-width: 46rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   text-align: center;
 }
 
-@media (max-width: 1100px) {
-  .plan-grid[data-cols="5"],
-  .plan-grid[data-cols="4"] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+/* Tablets: a snap rail, two cards at a time. Three or more tiers in a 730px
+   shell gave 225px columns — narrower than a phone's single card. The owner
+   chose the rail over a squeezed grid; Rail supplies prev/next, dots and the
+   live "n of N", and shows them only because it measures the overflow. */
+@media (min-width: 641px) and (max-width: 1023px) {
+  /* Still a grid, so the subgrid chain survives and the two visible cards
+     stay aligned — columns simply flow sideways instead of wrapping. */
+  .plan-rail {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 1.25rem) / 2);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* Room for the "Most Popular" badge (-0.85rem) and the 4px hover lift:
+       overflow-x on a box clips the other axis too. */
+    padding-block: 1.25rem 0.75rem;
+    margin-block: -1.25rem -0.75rem;
+    scrollbar-width: thin;
+  }
+  .plan-slide {
+    scroll-snap-align: start;
   }
 }
-@media (max-width: 640px) {
-  .plan-grid,
-  .plan-grid[data-cols="3"],
-  .plan-grid[data-cols="4"],
-  .plan-grid[data-cols="5"] {
-    grid-template-columns: 1fr;
+
+/* Centre a lone card on the last row rather than letting it hug the left
+   edge — a 4-tier deck is three up plus one. Scoped to the width band where
+   the deck is actually three up: past 1800px the shell widens and a fourth
+   card fills the row, where moving it would be the bug. Keep this range and
+   the --site-shell step below in step. */
+@media (min-width: 1024px) and (max-width: 1799px) {
+  .plan-slide:last-child:nth-child(3n + 1) {
+    grid-column: 2;
   }
+}
+
+/* Very wide screens. A 1200px column in a 2560px field reads as a mistake,
+   not as restraint: the shell and the vertical rhythm both step up once. */
+@media (min-width: 1800px) {
+  :root {
+    --site-shell: 1360px;
+    --section-y: clamp(4rem, 4.5vw, 6rem);
+  }
+}
+
+.plan-rail-controls {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.plan-carousel[data-controls="true"] .plan-rail-controls {
+  display: flex;
 }
 
 /* ============================================================
@@ -1205,7 +1204,7 @@
   border-radius: 50%;
   background: var(--color-accent);
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 
@@ -1232,7 +1231,7 @@
   align-items: center;
   gap: 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -1251,7 +1250,7 @@
   width: 3rem;
   height: 3rem;
   margin-bottom: 1.1rem;
-  border-radius: 14px;
+  border-radius: var(--rc-radius-card);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -1267,13 +1266,13 @@
 .feature-card h3 {
   margin: 0 0 0.5rem;
   color: var(--color-text-primary);
-  font-size: 1.075rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 .feature-card p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 a.feature-card {
@@ -1289,7 +1288,7 @@ a.feature-card:focus-visible {
   gap: 0.35rem;
   margin-top: 0.9rem;
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 a.feature-card:hover .feature-more {
@@ -1305,9 +1304,6 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .product-grid {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
 .product-card {
   display: flex;
@@ -1317,20 +1313,20 @@ a.feature-card:hover .feature-more {
 .product-card h3 {
   margin: 0 0 0.5rem;
   color: var(--color-text-primary);
-  font-size: 1.15rem;
+  font-size: var(--text-heading-3-size);
   font-weight: 700;
 }
 .product-text {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 .product-price {
   margin: auto 0 0;
   padding-top: 1.1rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .product-price .px {
   color: var(--color-text-primary);
@@ -1347,7 +1343,7 @@ a.feature-card:hover .feature-more {
   gap: 0.35rem;
   margin-top: 0.6rem;
   color: var(--color-text-accent);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .product-card:hover .product-link {
@@ -1359,54 +1355,41 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .steps-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.step-num {
+/* One numbered marker. Steps carry it on light grounds, security layers on a
+   dark card — the only difference is the fill, so that is all each sets. */
+.step-num,
+.sec-num {
   display: inline-grid;
   place-items: center;
   min-width: 2.5rem;
   height: 2.5rem;
   padding-inline: 0.5rem;
   margin-bottom: 1rem;
-  border-radius: 12px;
-  background: var(--rc-violet-050);
-  color: var(--color-text-accent);
+  border-radius: var(--rc-radius-tile);
+  background: var(--num-fill, var(--rc-violet-050));
+  color: var(--num-ink, var(--color-text-accent));
   font-family: var(--font-family-code);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .step-card h3 {
   margin: 0 0 0.5rem;
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 .step-card p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 
-@media (min-width: 641px) {
-  .steps-grid[data-cols="2"],
-  .steps-grid[data-cols="3"],
-  .steps-grid[data-cols="4"] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
 @media (min-width: 1025px) {
-  .steps-grid[data-cols="3"] {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .steps-grid[data-cols="4"] {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
   /* Connector only exists when every card sits in a single row. */
   .step-card {
     position: relative;
@@ -1428,19 +1411,13 @@ a.feature-card:hover .feature-more {
 .stats-band {
   padding-block: var(--section-y-sm);
 }
-.stats-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.75rem clamp(2.5rem, 6vw, 4.5rem);
-}
 .stat {
   text-align: center;
 }
 .stat-value {
   display: block;
   color: var(--color-text-primary);
-  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-size: var(--text-display-1-size);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -1450,10 +1427,9 @@ a.feature-card:hover .feature-more {
   display: block;
   margin-top: 0.55rem;
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 /* ============================================================
@@ -1464,18 +1440,17 @@ a.feature-card:hover .feature-more {
   padding-block: var(--section-y-sm);
 }
 .cta-inner {
-  max-width: 44rem;
+  max-width: var(--measure);
   margin-inline: auto;
   text-align: center;
 }
 .cta-inner h2 {
   margin: 0 0 0.9rem;
   color: var(--color-text-primary);
-  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  font-size: var(--text-display-2-size);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.12;
-  text-wrap: balance;
 }
 .cta-inner h2 em {
   font-style: normal;
@@ -1484,7 +1459,7 @@ a.feature-card:hover .feature-more {
 .cta-lede {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  font-size: var(--text-large-size);
   line-height: 1.55;
 }
 .cta-actions {
@@ -1494,13 +1469,6 @@ a.feature-card:hover .feature-more {
   gap: 0.75rem;
   margin-top: 2rem;
 }
-@media (max-width: 640px) {
-  .cta-actions .btn {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
-
 /* ============================================================
    OsStrip — OS chips with colored letter marks
    ============================================================ */
@@ -1544,12 +1512,12 @@ a.feature-card:hover .feature-more {
   border-radius: 50%;
   background: var(--os-c, var(--color-accent));
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 800;
 }
 .os-chip b {
   color: var(--color-text-primary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 
@@ -1572,10 +1540,10 @@ a.feature-card:hover .feature-more {
   align-items: center;
   padding: 0.7rem 1.35rem;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: var(--color-background-card);
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   letter-spacing: 0.01em;
   transition:
@@ -1594,7 +1562,7 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .bench-panel {
-  max-width: 52rem;
+  max-width: var(--measure-wide);
   margin-inline: auto;
 }
 .bench-row {
@@ -1609,7 +1577,7 @@ a.feature-card:hover .feature-more {
 }
 .bench-label {
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
 }
 .bench-track {
@@ -1625,11 +1593,12 @@ a.feature-card:hover .feature-more {
   width: var(--w);
   border-radius: 999px;
   background: #7a68ad;
+  transform-origin: left center;
 }
 .bench-value {
   color: var(--color-text-secondary);
   font-family: var(--font-family-code);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -1642,9 +1611,9 @@ a.feature-card:hover .feature-more {
 }
 .bench-note {
   margin: 1.75rem auto 0;
-  max-width: 44rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
-  font-size: 0.82rem;
+  font-size: var(--font-size-sm);
   line-height: 1.5;
   text-align: center;
 }
@@ -1670,39 +1639,27 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .sec-num {
-  display: inline-grid;
-  place-items: center;
-  min-width: 2.5rem;
-  height: 2.5rem;
-  padding-inline: 0.5rem;
-  margin-bottom: 1rem;
-  border-radius: 12px;
-  background: var(--color-accent);
-  color: #ffffff;
-  font-family: var(--font-family-code);
-  font-size: 0.85rem;
-  font-weight: 700;
+  --num-fill: var(--color-accent);
+  --num-ink: #ffffff;
 }
 .sec-card h3 {
   margin: 0 0 0.5rem;
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 .sec-card p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 .sec-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: 1rem;
+  --card-gap: 1rem;
   margin: 2.5rem 0 0;
   padding: 1.75rem;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
 }
 .sec-stat {
@@ -1712,16 +1669,15 @@ a.feature-card:hover .feature-more {
 }
 .sec-stat dt {
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .sec-stat dd {
   margin: 0 0 0.4rem;
   color: var(--rc-gold);
   font-family: var(--font-family-code);
-  font-size: 1.5rem;
+  font-size: var(--font-size-2xl);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -1734,7 +1690,7 @@ a.feature-card:hover .feature-more {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
 }
 .compare-table {
@@ -1757,12 +1713,12 @@ a.feature-card:hover .feature-more {
 .compare-table td {
   padding: 0.85rem 1.25rem;
   border-bottom: 1px solid var(--color-border);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   text-align: center;
 }
 .compare-table thead th {
   color: var(--color-text-primary);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   border-bottom: 2px solid var(--color-border-emphasized);
 }
@@ -1795,7 +1751,7 @@ a.feature-card:hover .feature-more {
   border-radius: 999px;
   background: var(--rc-gold);
   color: var(--rc-night);
-  font-size: 0.65rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1803,14 +1759,14 @@ a.feature-card:hover .feature-more {
 }
 .compare-price .px {
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 .compare-period {
   margin-left: 0.15rem;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 .compare-cta-row th,
 .compare-cta-row td {
@@ -1820,7 +1776,7 @@ a.feature-card:hover .feature-more {
 .compare-table .btn {
   min-height: 2.5rem;
   padding: 0.25rem 0.35rem 0.25rem 1.1rem;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .compare-table .btn .btn-arrow {
   width: 1.8rem;
@@ -1828,9 +1784,9 @@ a.feature-card:hover .feature-more {
 }
 .compare-note {
   margin: 1.5rem auto 0;
-  max-width: 46rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.5;
   text-align: center;
 }
@@ -1854,7 +1810,7 @@ a.feature-card:hover .feature-more {
   flex: 1;
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   line-height: 1.65;
 }
 .testi-footer {
@@ -1865,11 +1821,11 @@ a.feature-card:hover .feature-more {
 .testi-footer strong {
   display: block;
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .testi-footer small {
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 
 /* ============================================================
@@ -1887,7 +1843,7 @@ a.feature-card:hover .feature-more {
 .story-metric strong {
   display: block;
   color: var(--color-text-accent);
-  font-size: 2.25rem;
+  font-size: var(--font-size-4xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.05;
@@ -1896,13 +1852,13 @@ a.feature-card:hover .feature-more {
   display: block;
   margin-top: 0.25rem;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 .story-card blockquote {
   flex: 1;
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.92rem;
+  font-size: var(--font-size-base);
   line-height: 1.65;
 }
 .story-footer {
@@ -1915,12 +1871,12 @@ a.feature-card:hover .feature-more {
 .story-footer b {
   display: block;
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.3;
 }
 .story-footer small {
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 
 /* ============================================================
@@ -1930,12 +1886,12 @@ a.feature-card:hover .feature-more {
 .faq-list {
   display: grid;
   gap: 0.75rem;
-  max-width: 48rem;
+  max-width: var(--measure);
   margin-inline: auto;
 }
 .faq-item {
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
   overflow: hidden;
 }
@@ -1945,7 +1901,7 @@ a.feature-card:hover .feature-more {
   gap: 1rem;
   padding: 1.1rem 1.25rem;
   color: var(--color-text-primary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   line-height: 1.4;
   cursor: pointer;
@@ -1979,7 +1935,7 @@ a.feature-card:hover .feature-more {
   margin: 0;
   padding: 0 1.25rem 1.2rem;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.65;
 }
 
@@ -1989,24 +1945,21 @@ a.feature-card:hover .feature-more {
 
 .split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
 }
 .split-reverse .split-copy {
   order: 2;
 }
-.split-reverse .split-panel {
-  order: 1;
-}
 .split-solo {
   grid-template-columns: 1fr;
-  max-width: 46rem;
+  max-width: var(--measure);
 }
 .split-copy h2 {
   margin: 0 0 0.75rem;
   color: var(--color-text-primary);
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-size: var(--text-display-2-size);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -2014,62 +1967,27 @@ a.feature-card:hover .feature-more {
 .split-copy .lede {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   line-height: 1.6;
 }
 .split-body {
   margin: 1rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   line-height: 1.7;
 }
 
 /* The panel inverts: night field on a light section, so text roles re-point. */
-.split-panel {
-  --color-text-primary: #faf7ff;
-  --color-text-secondary: #c5bfd5;
-  padding: clamp(1.5rem, 3vw, 2.25rem);
-  border-radius: 20px;
-  background:
-    radial-gradient(30rem 16rem at 110% -20%, #673de655, transparent 60%),
-    var(--rc-night);
-  box-shadow: var(--shadow-med);
-}
-.split-panel ul {
-  display: grid;
-  gap: 1.1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.split-panel li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-}
 .split-icon {
   display: grid;
   place-items: center;
   flex-shrink: 0;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 10px;
+  border-radius: var(--rc-radius-tile);
   background: #ffffff12;
   color: var(--rc-gold);
 }
-.split-panel h3 {
-  margin: 0 0 0.2rem;
-  color: var(--color-text-primary);
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-.split-panel p {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: 0.85rem;
-  line-height: 1.55;
-}
-
 @media (max-width: 860px) {
   .split,
   .split-reverse {
@@ -2087,11 +2005,11 @@ a.feature-card:hover .feature-more {
 
 .map-stage {
   position: relative;
-  max-width: 58rem;
+  max-width: var(--measure-wide);
   margin-inline: auto;
   aspect-ratio: 5 / 2;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background-image: radial-gradient(circle, #ffffff1c 1.4px, transparent 1.5px);
   background-size: 22px 22px;
   background-position: center;
@@ -2142,7 +2060,7 @@ a.feature-card:hover .feature-more {
   background: var(--color-background-card);
   --color-text-primary: #2f1c6a; /* white pill on the dark field */
   color: var(--color-text-primary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   white-space: nowrap;
   box-shadow: var(--shadow-low);
@@ -2160,15 +2078,15 @@ a.feature-card:hover .feature-more {
 .map-pin-label em {
   margin-left: 0.35rem;
   color: var(--color-success);
-  font-size: 0.65rem;
+  font-size: var(--font-size-sm);
   font-style: normal;
   font-weight: 700;
 }
 .map-note {
   margin: 1.75rem auto 0;
-  max-width: 44rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.5;
   text-align: center;
 }
@@ -2200,50 +2118,14 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .showcase-stage {
-  max-width: 46rem;
+  max-width: var(--measure);
   margin-inline: auto;
 }
-.showcase-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.showcase-tab {
-  min-height: 2.75rem;
-  padding: 0 1.25rem;
-  border: 1px solid var(--color-border-emphasized);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--color-text-secondary);
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
-}
-.showcase-tab:hover {
-  color: var(--color-text-primary);
-  border-color: #faf7ff66;
-}
-.showcase-tab[aria-selected="true"] {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: #ffffff;
-}
-.showcase-tab:focus-visible {
-  outline: 2px solid #faf7ff;
-  outline-offset: 2px;
-}
-
 /* The window is a light card on a dark field — re-point text roles back. */
 .showcase-window {
   --color-text-primary: #2f1c6a;
   --color-text-secondary: #595b68;
-  border-radius: 18px;
+  border-radius: var(--rc-radius-card);
   overflow: hidden;
   background: var(--color-background-card);
   box-shadow: var(--shadow-high);
@@ -2273,7 +2155,7 @@ a.feature-card:hover .feature-more {
   margin-left: 0.6rem;
   color: #c5bfd5;
   font-family: var(--font-family-code);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
 }
 .showcase-panel {
@@ -2286,14 +2168,14 @@ a.feature-card:hover .feature-more {
 .showcase-panel h3 {
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 1.25rem;
+  font-size: var(--text-heading-3-size);
   font-weight: 700;
 }
 .showcase-panel p {
   margin: 0;
   max-width: 52ch;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   line-height: 1.65;
 }
 
@@ -2302,20 +2184,20 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .domain-shell {
-  max-width: 56rem;
+  max-width: var(--measure-wide);
   margin-inline: auto;
 }
 .domain-card {
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid var(--color-border);
-  border-radius: 24px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
 }
 .domain-card label {
   display: block;
   margin-bottom: 0.6rem;
   color: var(--color-text-primary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .domain-row {
@@ -2330,11 +2212,11 @@ a.feature-card:hover .feature-more {
   border-radius: 999px;
   background: #ffffff;
   color: #2f1c6a;
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
 }
 .domain-row input::placeholder {
-  color: #8b8c99;
+  color: var(--color-text-secondary);
 }
 .domain-row input:focus-visible {
   outline: 2px solid var(--rc-gold);
@@ -2344,7 +2226,7 @@ a.feature-card:hover .feature-more {
 .domain-help {
   margin: 0.75rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 .domain-tlds {
   display: flex;
@@ -2362,7 +2244,7 @@ a.feature-card:hover .feature-more {
   border: 1px solid var(--color-border);
   border-radius: 999px;
   background: #ffffff08;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .tld-name {
   color: var(--color-text-primary);
@@ -2375,7 +2257,7 @@ a.feature-card:hover .feature-more {
 }
 .tld-note {
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
 }
 @media (max-width: 640px) {
   .domain-row {
@@ -2403,11 +2285,8 @@ a.feature-card:hover .feature-more {
   justify-content: center;
   min-height: 3rem;
   padding: 0 0.9rem;
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   box-shadow: none;
-}
-.mobile-cta .btn-secondary {
-  flex: 0 0 38%;
 }
 @media (max-width: 768px) {
   .mobile-cta {
@@ -2433,9 +2312,9 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .prose-section .prose {
-  max-width: 48rem;
+  max-width: var(--measure);
   color: var(--color-text-secondary);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   line-height: 1.75;
 }
 .prose h2,
@@ -2447,10 +2326,10 @@ a.feature-card:hover .feature-more {
   line-height: 1.25;
 }
 .prose h2 {
-  font-size: 1.6rem;
+  font-size: var(--font-size-2xl);
 }
 .prose h3 {
-  font-size: 1.25rem;
+  font-size: var(--text-heading-3-size);
 }
 .prose p {
   margin: 0 0 1rem;
@@ -2472,7 +2351,7 @@ a.feature-card:hover .feature-more {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .prose th,
 .prose td {
@@ -2496,7 +2375,7 @@ a.feature-card:hover .feature-more {
   color: var(--rc-night);
   background: var(--rc-gold-light);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   text-decoration: none;
   transform: translateY(-200%);
 }
@@ -2549,7 +2428,7 @@ a.feature-card:hover .feature-more {
 @media (max-width: 640px) {
   .announcement {
     padding: 0.6rem 2.75rem 0.6rem 0.9rem;
-    font-size: 0.78rem;
+    font-size: var(--font-size-sm);
     line-height: 1.4;
     justify-content: flex-start;
   }
@@ -2583,7 +2462,7 @@ a.feature-card:hover .feature-more {
   display: block;
 }
 .section-art svg {
-  border-radius: 24px;
+  border-radius: var(--rc-radius-card);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -2617,98 +2496,32 @@ a.feature-card:hover .feature-more {
 }
 
 /* ============================================================
-   Home hero — 2-col composition with embedded domain search
+   Home hero — hosting-first copy column beside decorative art
    ============================================================ */
 
+/* Two columns only while both can hold a 26rem measure; auto-fit collapses the
+   second track rather than leaving half the band blank once the art is gone,
+   so there is no width where the copy sits in a squeezed half. */
 .hero-home-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
   text-align: left;
 }
-.hero-home-grid .hero-actions {
-  justify-content: flex-start;
-}
-.hero-home-grid .hero-badges {
-  justify-content: flex-start;
-}
-
-.hero-search {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.75rem;
-  padding: 0.5rem;
-  max-width: 30rem;
-  border-radius: 999px;
-  background: #ffffff;
-  box-shadow: var(--shadow-med);
-}
-.hero-search-icon {
-  margin-left: 0.75rem;
-  color: #595b68;
-  flex-shrink: 0;
-}
-.hero-search input {
-  flex: 1;
-  min-width: 0;
-  min-height: 2.9rem;
-  border: 0;
-  background: transparent;
-  color: #2f1c6a;
-  font-size: 1rem;
-  font-weight: 600;
-}
-.hero-search input::placeholder {
-  color: #8b8c99;
-}
-.hero-search input:focus {
-  outline: none;
-}
-.hero-search:focus-within {
-  outline: 2px solid var(--rc-gold);
-  outline-offset: 3px;
-}
-.hero-search .btn {
-  min-height: 2.9rem;
-}
-
 .hero-no-art .hero-inner,
 .hero-inner.hero-no-art {
   grid-template-columns: 1fr;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-@media (max-width: 900px) {
-  .hero-home-grid {
-    grid-template-columns: 1fr;
-  }
+/* The art is decorative. Drop it once the shell is too narrow to give both
+   tracks a real 26rem measure — measured on the shell, not the viewport, so a
+   917px "desktop mode" phone gets the full width for copy instead of a
+   squeezed pair. auto-fit then collapses the vacated track; nothing is left
+   holding empty space. */
+@container shell (max-width: 55rem) {
   .hero-home-grid .hero-art {
     display: none;
-  }
-  .hero-search {
-    border-radius: 20px;
-    flex-wrap: wrap;
-  }
-  .hero-search input {
-    flex: 1 1 100%;
-    padding-left: 0.5rem;
-  }
-  .hero-search .btn {
-    width: 100%;
-    justify-content: space-between;
   }
 }
 
@@ -2719,29 +2532,15 @@ a.feature-card:hover .feature-more {
   gap: 0.5rem;
   margin-top: 1.5rem;
   color: #c5bfd5;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .hero-rating strong {
   color: #ffffff;
 }
-.hero-stars {
-  display: inline-flex;
-  gap: 2px;
-}
-
 /* ============================================================
    Plan cards v2 — Astryx composition (SegmentedControl, Badge,
    Collapsible) + enterprise banner
    ============================================================ */
-
-.plan-toggle-row {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto 2.5rem;
-}
-.plan-toggle-row .astryx-segmented-control {
-  box-shadow: var(--shadow-low);
-}
 
 .plan-price-row {
   display: flex;
@@ -2755,23 +2554,20 @@ a.feature-card:hover .feature-more {
   align-items: center;
   gap: 0.45rem;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .plan-was-inline .px {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
-.plan-features-rest {
-  margin-top: 0.55rem;
-}
 .plan-more {
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
 }
 .astryx-collapsible-trigger {
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   min-height: 32px;
 }
@@ -2784,19 +2580,19 @@ a.feature-card:hover .feature-more {
   flex-wrap: wrap;
   margin-top: 2.5rem;
   padding: 1.5rem 2rem;
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background: var(--rc-night);
   color: #c5bfd5;
 }
 .plan-enterprise h3 {
   margin: 0 0 0.25rem;
   color: #ffffff;
-  font-size: 1.15rem;
+  font-size: var(--text-heading-3-size);
   font-weight: 700;
 }
 .plan-enterprise p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .plan-enterprise .btn:focus-visible {
   outline-color: #faf7ff;
@@ -2835,10 +2631,10 @@ a.feature-card:hover .feature-more {
   padding: 1.35rem;
 }
 .feature-card h3 {
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
 }
 .feature-card p {
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.55;
 }
 .feature-icon {
@@ -2847,7 +2643,7 @@ a.feature-card:hover .feature-more {
   width: 2.6rem;
   height: 2.6rem;
   margin-bottom: 0.9rem;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -2870,10 +2666,10 @@ a.feature-card:hover .feature-more {
   gap: 0.6rem;
   padding: 0.7rem 1.1rem;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
   transition: border-color 0.2s ease, color 0.2s ease;
@@ -2901,13 +2697,13 @@ a.feature-card:hover .feature-more {
    ============================================================ */
 
 .planfinder-shell {
-  max-width: 52rem;
+  max-width: var(--measure-wide);
   margin-inline: auto;
 }
 .plan-finder {
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid var(--color-border);
-  border-radius: 24px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
   box-shadow: var(--shadow-med);
 }
@@ -2917,14 +2713,14 @@ a.feature-card:hover .feature-more {
 
 .finder-question {
   margin: 0 0 0.35rem;
-  font-size: 1.4rem;
+  font-size: var(--font-size-xl);
   font-weight: 700;
   color: var(--color-text-primary);
 }
 .finder-hint {
   margin: 0 0 1.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
 }
 .finder-options {
   display: grid;
@@ -2936,7 +2732,7 @@ a.feature-card:hover .feature-more {
   gap: 1rem;
   padding: 1rem 1.25rem;
   border: 1.5px solid var(--color-border-emphasized);
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
   text-align: left;
   cursor: pointer;
@@ -2960,7 +2756,7 @@ a.feature-card:hover .feature-more {
   width: 2.75rem;
   height: 2.75rem;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -2975,11 +2771,11 @@ a.feature-card:hover .feature-more {
 }
 .finder-option-copy strong {
   color: var(--color-text-primary);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
 }
 .finder-option-copy span {
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .finder-option-arrow {
   color: var(--color-text-secondary);
@@ -2995,7 +2791,7 @@ a.feature-card:hover .feature-more {
   border: 0;
   background: transparent;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   cursor: pointer;
   min-height: 32px;
@@ -3012,10 +2808,9 @@ a.feature-card:hover .feature-more {
 .finder-kicker {
   margin: 0 0 0.35rem;
   color: var(--color-text-accent);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .finder-price {
   display: flex;
@@ -3025,7 +2820,7 @@ a.feature-card:hover .feature-more {
   margin: 1rem 0 1.25rem;
 }
 .finder-price .px {
-  font-size: 2.25rem;
+  font-size: var(--font-size-4xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--color-text-primary);
@@ -3037,11 +2832,11 @@ a.feature-card:hover .feature-more {
 .finder-ledger {
   width: 100%;
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 .finder-features {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.5rem 1.25rem;
   margin: 0 0 1.5rem;
   padding: 0;
@@ -3052,7 +2847,7 @@ a.feature-card:hover .feature-more {
   align-items: center;
   gap: 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
 }
 .finder-actions {
   display: flex;
@@ -3062,16 +2857,12 @@ a.feature-card:hover .feature-more {
 .finder-note {
   margin: 1.25rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 @media (max-width: 560px) {
   .finder-features {
     grid-template-columns: 1fr;
-  }
-  .finder-actions .btn {
-    width: 100%;
-    justify-content: space-between;
   }
 }
 
@@ -3092,43 +2883,43 @@ a.feature-card:hover .feature-more {
 
 .showcase-product {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid var(--color-border);
-  border-radius: 24px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
 }
 .showcase-product-art .product-art svg {
-  border-radius: 18px;
+  border-radius: var(--rc-radius-card);
 }
 .showcase-product-copy h3 {
   margin: 0.9rem 0 0.5rem;
-  font-size: 1.6rem;
+  font-size: var(--font-size-2xl);
   font-weight: 700;
   color: var(--color-text-primary);
 }
 .showcase-product-sub {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 .showcase-product-price {
   margin: 1.1rem 0;
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
 }
 .showcase-product-price strong {
   color: var(--color-text-primary);
-  font-size: 1.5rem;
+  font-size: var(--font-size-2xl);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 .showcase-per {
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
 }
 .showcase-product-features {
@@ -3143,7 +2934,7 @@ a.feature-card:hover .feature-more {
   align-items: center;
   gap: 0.5rem;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .showcase-product-actions {
   display: flex;
@@ -3181,21 +2972,12 @@ a.feature-card:hover .feature-more {
   box-shadow: var(--shadow-high);
 }
 
-/* Glass chrome on dark fields */
-.section-dark .card,
-.section-deep .card,
-.showcase-product {
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
+/* No glass on dark fields: these cards sit on flat --rc-night / --rc-night-deep
+   fills, so a backdrop blur has nothing to blur — it only bought one extra
+   compositing layer per card, re-snapshotted on every scroll. Real glass stays
+   on .header-bar and .product-subnav, where page content scrolls underneath. */
 
 /* Consistent card hover across the marketing chrome */
-.feature-card,
-.plan-card,
-.finder-option,
-.footer-contact a {
-  will-change: transform;
-}
 .feature-card:hover,
 .finder-option:hover {
   border-color: var(--color-accent);
@@ -3215,6 +2997,10 @@ a.feature-card:hover .feature-more {
 .section-deep :focus-visible,
 .section-royal :focus-visible,
 .hero :focus-visible {
+  /* Width and style too: setting only the colour recolours the UA's
+     `outline-style: auto` ring, which Chromium ignores. */
+  outline: 2px solid #faf7ff;
+  outline-offset: 2px;
   outline-color: #faf7ff;
 }
 
@@ -3229,18 +3015,18 @@ a.feature-card:hover .feature-more {
     padding-block: 2.25rem;
   }
   .hero h1 {
-    font-size: clamp(2rem, 9.4vw, 2.6rem);
+    font-size: var(--text-display-1-size);
     margin-bottom: 0.9rem;
   }
   .hero-lede {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
   }
   .hero-art {
     display: none;
   }
   .hero-badges {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.5rem 1rem;
     margin-top: 1.5rem;
   }
@@ -3254,40 +3040,24 @@ a.feature-card:hover .feature-more {
   /* CTAs share one row instead of stacking full-width */
   .hero-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.6rem;
     margin-top: 1.5rem;
-  }
-  .hero-actions .btn {
-    width: auto;
-    justify-content: space-between;
-    padding-left: 1.1rem;
-    min-height: 48px;
   }
   .hero-actions .btn .btn-arrow {
     width: 1.9rem;
     height: 1.9rem;
   }
 
-  /* Domain search stays a single compact pill — icon-only submit */
-  .hero-search,
+  /* The /#domains search stays a single compact pill. */
   .domain-row {
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
   }
-  .hero-search .btn {
-    width: auto;
-    min-width: 48px;
-    padding: 0 0.5rem 0 1rem;
-    justify-content: center;
-  }
-  .hero-search .btn .btn-arrow {
-    display: none;
-  }
   .domain-row input {
     min-height: 3rem;
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
   }
   .domain-row .btn {
     width: auto;
@@ -3298,7 +3068,7 @@ a.feature-card:hover .feature-more {
   /* Trustbar: 2-col equal tiles, no ragged wrap */
   .trustbar-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.6rem 1rem;
     justify-content: stretch;
   }
@@ -3306,18 +3076,12 @@ a.feature-card:hover .feature-more {
     justify-content: flex-start;
   }
 
-  /* Grids densify instead of stacking tall */
-  .grid-2,
-  .grid-3,
-  .grid-4 {
-    grid-template-columns: 1fr 1fr;
-  }
-  .plan-grid,
-  .plan-grid[data-cols="3"],
-  .plan-grid[data-cols="4"],
-  .plan-grid[data-cols="5"] {
-    grid-template-columns: 1fr;
-  }
+  /* .grid-2/3/4 collapse to one column in the ≤640 block near the top of this
+     file — the duplicate that used to sit here carried a nested minmax(),
+     which is invalid CSS, so it never applied. Its only two users
+     (StoryCards, SecurityLayers) are prose cards that want the full width
+     here, not two 10rem columns.
+     The plan deck needs nothing either: its 300px floor collapses it. */
 
   /* Sections run tighter */
   .section {
@@ -3330,7 +3094,7 @@ a.feature-card:hover .feature-more {
     margin-bottom: 1.75rem;
   }
   .section-header h2 {
-    font-size: clamp(1.55rem, 7.4vw, 2rem);
+    font-size: var(--text-display-2-size);
   }
 }
 
@@ -3338,13 +3102,34 @@ a.feature-card:hover .feature-more {
    Alignment — shared baselines inside card rows
    ============================================================ */
 
-/* Plan cards: name+summary hold a fixed band so price/CTA/features align
-   across a row regardless of copy length. */
-.plan-summary {
-  min-height: 2.6em;
+/* The summary's `min-height: 2.6em` band is gone: it was a guess at "two
+   lines" that could not align a three-line summary against a one-line one,
+   and the subgrid below does the real job at every width where cards sit
+   side by side. */
+
+/* Every card in a row shares the deck's four tracks, so head, price and CTA
+   land on the same lines however long each tier's copy runs — in the rail and
+   in the grid alike. This is what the min-height band could only approximate:
+   it cannot align a three-line summary against a one-line one, subgrid can.
+   The chain has to be unbroken — rail -> slide -> card — because a subgrid
+   passes its contents' sizes up to the tracks it borrows. */
+.plan-slide,
+.plan-card {
+  grid-row: span 4;
+  grid-template-rows: subgrid;
 }
-.plan-card .plan-pricing {
-  margin-top: auto;
+.plan-slide {
+  display: grid;
+}
+
+/* The body is the query container: how many spec tiles fit is a question
+   about the card's own width, not the viewport, so one rule covers the phone
+   column, the tablet rail and the desktop grid. The query itself lives beside
+   .plan-specs further down — @container adds no specificity, so it has to
+   come after the rule it overrides. */
+.plan-body {
+  container-type: inline-size;
+  container-name: plan;
 }
 
 /* Feature cards: "learn more" link pins to the bottom of each card. */
@@ -3396,9 +3181,14 @@ a.feature-card:hover .feature-more {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  margin-top: 1rem;
+  /* Standalone link, so WCAG 2.5.8 applies: give it a real hit box and pull
+     the padding back so the optical left edge does not move. */
+  min-height: var(--spacing-11);
+  padding-inline: 0.75rem;
+  margin-inline-start: -0.75rem;
+  margin-top: 0.75rem;
   color: #c5bfd5;
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
 }
@@ -3434,7 +3224,7 @@ a.feature-card:hover .feature-more {
   border-radius: 999px;
   background: var(--color-background-card);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
   transition: border-color 0.2s ease, color 0.2s ease;
@@ -3487,7 +3277,7 @@ html {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 .rating-badge strong {
   font-weight: 700;
@@ -3530,10 +3320,9 @@ html {
   display: block;
   margin-bottom: 0.5rem;
   color: #c5bfd5;
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .hero-intents ul {
   display: flex;
@@ -3553,7 +3342,7 @@ html {
   border-radius: 999px;
   background: #ffffff14;
   color: #faf7ff;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -3604,12 +3393,12 @@ html {
   }
 }
 .finder-budget .finder-option-copy strong .px {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
 }
 .finder-alt {
   width: 100%;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .finder-alt .px {
   font-weight: 700;
@@ -3658,25 +3447,25 @@ html {
 .compare-flag {
   background: #ffffff;
   color: var(--color-accent);
-  font-size: 0.62rem;
+  font-size: var(--font-size-sm);
 }
 
 .compare-term {
   display: block;
   margin-top: 0.15rem;
   color: var(--color-text-secondary);
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
 }
 .compare-best td {
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   line-height: 1.4;
 }
 
 .compare-table .compare-group th {
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -3734,7 +3523,7 @@ html {
   border-radius: 999px;
   background: var(--color-background-card);
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   cursor: pointer;
 }
@@ -3751,21 +3540,10 @@ html {
   }
 }
 
-/* Wide screens: the header row sticks under the site header (+ sub-nav) */
-@media (min-width: 1024px) {
-  .compare-scroll {
-    overflow: visible;
-  }
-  .compare-table thead th {
-    position: sticky;
-    top: calc(var(--site-header-h) + var(--subnav-h));
-    z-index: 3;
-    background: var(--color-background-card);
-  }
-  .compare-table thead th.compare-popular {
-    background: var(--color-accent);
-  }
-}
+/* The comparison table always scrolls inside its own container. Releasing it
+   to `overflow: visible` on wide screens let a 7-column deck (1142px of
+   min-content) push the page sideways at 1024-1150px; a sticky header is not
+   worth a horizontally scrolling document. */
 
 /* ============================================================
    Stats count-up + benchmark bars fill on reveal
@@ -3774,10 +3552,9 @@ html {
 .bench-scale {
   margin: 0 0 0.75rem;
   color: #c5bfd5;
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   text-align: right;
 }
 
@@ -3785,11 +3562,11 @@ html {
    longer than the one above. Reduced motion: full width, no transition. */
 @media (prefers-reduced-motion: no-preference) {
   [data-js="true"] .bench-panel .bench-fill {
-    transition: width var(--duration-slow, 700ms) cubic-bezier(0.32, 0.72, 0, 1)
+    transition: transform var(--duration-slow, 700ms) cubic-bezier(0.32, 0.72, 0, 1)
       calc(var(--i, 0) * 90ms);
   }
   [data-js="true"] .bench-panel:not([data-visible="true"]) .bench-fill {
-    width: 0;
+    transform: scaleX(0);
   }
 }
 
@@ -3828,7 +3605,7 @@ html {
 .testi-rail:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 4px;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
 }
 .testi-slide {
   scroll-snap-align: start;
@@ -3862,7 +3639,10 @@ html {
 .testi-carousel[data-controls="true"] .testi-controls {
   display: flex;
 }
-.testi-nav {
+/* One set of rail controls: the testimonial carousel and the plan deck run
+   the same Rail component, so they get the same buttons and dots. */
+.testi-nav,
+.plan-rail-nav {
   display: grid;
   place-items: center;
   width: 2.75rem;
@@ -3877,26 +3657,31 @@ html {
     background-color 0.2s ease,
     opacity 0.2s ease;
 }
-.testi-nav:hover:not(:disabled) {
+.testi-nav:hover:not(:disabled),
+.plan-rail-nav:hover:not(:disabled) {
   border-color: var(--color-accent);
   background: var(--rc-violet-050);
 }
-.testi-nav:disabled {
+.testi-nav:disabled,
+.plan-rail-nav:disabled {
   opacity: 0.4;
   cursor: default;
 }
-.testi-nav:focus-visible {
+.testi-nav:focus-visible,
+.plan-rail-nav:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
-.testi-dots {
+.testi-dots,
+.plan-rail-dots {
   display: flex;
   gap: 0.35rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.testi-dots button {
+.testi-dots button,
+.plan-rail-dots button {
   display: grid;
   place-items: center;
   width: 1.5rem;
@@ -3906,7 +3691,8 @@ html {
   background: transparent;
   cursor: pointer;
 }
-.testi-dots button::before {
+.testi-dots button::before,
+.plan-rail-dots button::before {
   content: "";
   width: 0.5rem;
   height: 0.5rem;
@@ -3916,11 +3702,13 @@ html {
     transform 0.2s ease,
     background-color 0.2s ease;
 }
-.testi-dots button[aria-current="true"]::before {
+.testi-dots button[aria-current="true"]::before,
+.plan-rail-dots button[aria-current="true"]::before {
   background: var(--color-accent);
   transform: scale(1.4);
 }
-.testi-dots button:focus-visible {
+.testi-dots button:focus-visible,
+.plan-rail-dots button:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
   border-radius: 50%;
@@ -3979,7 +3767,7 @@ html {
 }
 .os-text {
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   line-height: 1.45;
 }
@@ -3994,7 +3782,7 @@ a.os-chip:focus-visible {
   align-items: flex-start;
   max-width: 22rem;
   padding: 0.9rem 1.1rem 0.9rem 0.85rem;
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
 }
 .os-chip[data-rich="true"] .os-mark {
   margin-top: 0.1rem;
@@ -4011,7 +3799,7 @@ a.os-chip:focus-visible {
 .deploy-tabs .os-grid:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 6px;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
 }
 
 /* ============================================================
@@ -4052,7 +3840,7 @@ a.os-chip:focus-visible {
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -4077,12 +3865,14 @@ a.os-chip:focus-visible {
   gap: 0.35rem;
   min-height: 2.5rem;
   padding-block: 0.25rem;
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   white-space: nowrap;
 }
 .subnav-cta small {
+  /* The theme's prose rule paints <small> secondary grey, which lands at
+     2.9:1 on gold — this line is button ink, so it inherits. */
+  color: inherit;
   font-weight: 500;
-  opacity: 0.85;
 }
 @media (max-width: 768px) {
   .product-subnav {
@@ -4102,7 +3892,7 @@ a.os-chip:focus-visible {
 }
 .feature-metric strong {
   color: var(--color-text-accent);
-  font-size: 1.6rem;
+  font-size: var(--font-size-2xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -4110,16 +3900,15 @@ a.os-chip:focus-visible {
 }
 .feature-metric small {
   color: var(--color-text-secondary);
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 /* Tiles: icon beside the copy, no card chrome — for dense landing grids */
 .features[data-variant="tiles"] .feature-card {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   column-gap: 1rem;
   padding: 0.75rem 0.5rem;
   border-color: transparent;
@@ -4136,7 +3925,7 @@ a.os-chip:focus-visible {
   margin-bottom: 0;
 }
 .features[data-variant="tiles"] .feature-card h3 {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
 }
 
 /* ============================================================
@@ -4174,7 +3963,7 @@ a.os-chip:focus-visible {
    ============================================================ */
 
 /* The drawer is a fixed layer inside the sticky header's stacking context;
-   the bars must sit above it so the logo, currency and close stay usable. */
+   the bar must sit above it so the logo, currency and close stay usable. */
 .announcement,
 .header-bar {
   position: relative;
@@ -4185,10 +3974,10 @@ a.os-chip:focus-visible {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0 0.85rem;
+  padding: 0 0.65rem;
   border-radius: 999px;
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   text-decoration: none;
   transition:
@@ -4221,7 +4010,7 @@ a.os-chip:focus-visible {
   gap: 0.75rem;
   padding: 0.6rem 0.7rem;
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   color: var(--color-text-primary);
   text-decoration: none;
   transition:
@@ -4247,7 +4036,7 @@ a.os-chip:focus-visible {
   flex-shrink: 0;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 10px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -4256,19 +4045,21 @@ a.os-chip:focus-visible {
   gap: 0.1rem;
 }
 .nav-item-copy b {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
   line-height: 1.3;
 }
 .nav-item-copy small {
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
   line-height: 1.35;
 }
 
-/* Drawer: starts under the header bar, uses the full shell width */
+/* Drawer: starts under the header bar wherever it currently sits — below the
+   announcement at the top of the page, at 0 once the announcement has scrolled
+   away. SiteHeader publishes the live bottom edge when the sheet opens. */
 .mobile-panel {
-  top: var(--site-header-h);
+  top: var(--site-header-bottom, var(--site-header-h));
   padding: 1.25rem 0 2.5rem;
 }
 .mobile-nav {
@@ -4292,7 +4083,7 @@ a.os-chip:focus-visible {
 .mobile-group {
   padding: 1rem;
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
   background: var(--color-background-card);
 }
 .mobile-group h2 {
@@ -4318,7 +4109,7 @@ a.os-chip:focus-visible {
   border: 1px solid var(--color-border-emphasized);
   border-radius: 999px;
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   text-decoration: none;
 }
@@ -4335,7 +4126,7 @@ a.os-chip:focus-visible {
   display: inline-flex;
   padding: 0.35rem 0.45rem 0.35rem 1.5rem;
   border-bottom: 0;
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
 }
 .mobile-panel .mobile-actions .btn-secondary {
   padding-right: 1.5rem;
@@ -4348,7 +4139,7 @@ a.os-chip:focus-visible {
 /* Product hero keeps two columns down to 760px; stacked art is capped */
 @media (min-width: 761px) and (max-width: 900px) {
   .hero-inner {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   }
 }
 @media (max-width: 760px) {
@@ -4358,16 +4149,10 @@ a.os-chip:focus-visible {
   }
 }
 
-/* Stats: a real grid — 4-up, then 2×2 on tablets and phones */
+/* Stats: the contract packs as many 10rem tiles as fit — 4-up wide, 2×2 on a
+   tablet, one column on a phone, with no breakpoint written down. */
 .stats-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: 1.75rem 1.5rem;
-}
-@media (max-width: 900px) {
-  .stats-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  --card-gap: 1.75rem 1.5rem;
 }
 
 /* ============================================================
@@ -4387,8 +4172,11 @@ a.os-chip:focus-visible {
     max-width: none;
   }
 }
-.map-stage {
-  aspect-ratio: 2 / 1;
+/* Gated: unconditional, this beat the 4/3 phone ratio declared earlier. */
+@media (min-width: 641px) {
+  .map-stage {
+    aspect-ratio: 2 / 1;
+  }
 }
 .map-pin-label {
   opacity: 1;
@@ -4407,18 +4195,18 @@ a.os-chip:focus-visible {
   gap: 0.85rem;
   padding: 0.85rem 1rem;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: var(--rc-radius-card);
   background: #ffffff08;
   color: #faf7ff;
 }
 .map-location b {
   display: block;
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
 }
 .map-location small {
   display: block;
   color: #c5bfd5;
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
 }
 .map-location-dot {
   flex-shrink: 0;
@@ -4470,13 +4258,11 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .split-list {
   --color-text-primary: #faf7ff;
   --color-text-secondary: #c5bfd5;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-  gap: 1.25rem 1.5rem;
+  --card-gap: 1.25rem 1.5rem;
   margin: clamp(1.75rem, 4vw, 2.75rem) 0 0;
   padding: clamp(1.25rem, 3vw, 2rem);
   list-style: none;
-  border-radius: 20px;
+  border-radius: var(--rc-radius-card);
   background:
     radial-gradient(30rem 16rem at 110% -20%, #673de655, transparent 60%),
     var(--rc-night);
@@ -4492,28 +4278,23 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .split-list .split-icon {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: #ffffff12;
   color: var(--rc-gold);
 }
 .split-list h3 {
   margin: 0 0 0.25rem;
   color: var(--color-text-primary);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-weight: 700;
 }
 .split-list p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-supporting-size);
   line-height: 1.55;
 }
 @media (min-width: 1024px) {
-  .split-list[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .split-list[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .split-list[data-count="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .split-list[data-count="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-  .split-list[data-count="6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .split-list li + li {
     padding-left: 1.5rem;
     border-left: 1px solid #faf7ff1f;
@@ -4528,9 +4309,6 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   }
 }
 @media (min-width: 641px) and (max-width: 1023px) {
-  .split-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .split-list li:last-child:nth-child(odd) {
     grid-column: 1 / -1;
     flex-direction: row;
@@ -4652,7 +4430,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   border-radius: 999px;
   background: var(--rc-violet-050);
   color: #5025d1;
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
 }
 .plan-card[data-recommended="true"] {
@@ -4671,11 +4449,20 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   gap: 0.5rem;
   margin: 0 0 1rem;
 }
+/* Tiles pair up while the card can hold two readable columns and drop to one
+   when it cannot. Asked of the card (.plan-body is the query container), so
+   one rule covers the phone column, the tablet rail and the desktop grid —
+   a 287px card in the rail gets the same treatment as a 288px phone card. */
+@container plan (max-width: 15rem) {
+  .plan-specs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 .plan-spec {
   display: grid;
   gap: 0.15rem;
   padding: 0.6rem 0.75rem;
-  border-radius: 12px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
 }
 .plan-spec dt {
@@ -4684,7 +4471,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   gap: 0.35rem;
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.72rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -4694,7 +4481,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .plan-spec dd {
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
   font-weight: 800;
   letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
@@ -4707,10 +4494,11 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  min-height: 2rem;
+  /* "All features" is a primary control inside the card, not a footnote. */
+  min-height: var(--spacing-11);
   list-style: none;
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   cursor: pointer;
 }
@@ -4743,10 +4531,9 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .plan-feature-group h4 {
   margin: 0 0 0.45rem;
   color: var(--color-text-accent);
-  font-size: 0.7rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .plan-highlights {
   display: grid;
@@ -4766,11 +4553,11 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 }
 .plan-highlights b {
   color: var(--color-text-primary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
 }
 .plan-highlights small {
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   line-height: 1.45;
 }
 .plan-highlight-icon {
@@ -4779,7 +4566,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   flex-shrink: 0;
   width: 1.75rem;
   height: 1.75rem;
-  border-radius: 8px;
+  border-radius: var(--rc-radius-tile);
   background: var(--rc-violet-050);
   color: var(--color-text-accent);
 }
@@ -4827,10 +4614,9 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .plan-includes-label {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 0.78rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .plan-includes ul {
   display: contents;
@@ -4844,7 +4630,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   border-radius: 999px;
   background: var(--color-background-card);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 600;
   list-style: none;
 }
@@ -4866,14 +4652,14 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   margin-top: 1.5rem;
   padding: 1.1rem 1.5rem;
   gap: 0.75rem 1.5rem;
-  border-radius: 16px;
+  border-radius: var(--rc-radius-card);
 }
 .plan-enterprise > div {
   flex: 1 1 24rem;
   min-width: 0;
 }
 .plan-enterprise h3 {
-  font-size: 1.05rem;
+  font-size: var(--font-size-lg);
 }
 .plan-enterprise p {
   color: #c5bfd5;
@@ -4927,7 +4713,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 .finder-drawer-head h2 {
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 1.35rem;
+  font-size: var(--font-size-xl);
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -4965,10 +4751,9 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 }
 .finder-progress-label {
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 .finder-progress-bar {
   height: 5px;
@@ -4984,7 +4769,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   transition: width var(--duration-medium) ease;
 }
 .finder-flow[data-variant="drawer"] .finder-question {
-  font-size: 1.25rem;
+  font-size: var(--text-heading-3-size);
 }
 .finder-flow[data-variant="drawer"] .finder-option {
   padding: 0.85rem 1rem;
@@ -4995,7 +4780,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
     width: 100vw;
     height: auto;
     max-height: 92dvh;
-    border-radius: 24px 24px 0 0;
+    border-radius: var(--rc-radius-card) var(--rc-radius-card) 0 0;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -5050,7 +4835,7 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
   margin-left: auto;
   min-height: 2.25rem;
   color: var(--color-text-accent);
-  font-size: 0.85rem;
+  font-size: var(--text-supporting-size);
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
@@ -5065,4 +4850,256 @@ main > .section:not(.section-dark, .section-deep, .section-royal, .section-tint)
 }
 .subnav-help + .subnav-cta {
   margin-left: 0;
+}
+
+/* ============================================================
+   Layout tokens v4 — container queries + touch-first hover
+   ============================================================ */
+
+/* The shell is the site's container: card internals respond to the shell
+   (or their own track) width, never to the viewport. */
+.site-shell {
+  container-type: inline-size;
+  container-name: shell;
+}
+
+/* Hover lifts only where a hover exists; touch gets a press instead. */
+@media (hover: none) {
+  .card:hover,
+  .plan-card:hover,
+  .feature-card:hover,
+  .product-card:hover,
+  .finder-option:hover,
+  .os-chip:hover,
+  .tech-logo:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+.card:active,
+.plan-card:active,
+.finder-option:active,
+.os-chip:active {
+  transform: scale(0.995);
+}
+
+/* ============================================================
+   Base layer — focus, hit area, wrapping
+   One block instead of forty restatements: Astryx ships no global
+   :focus-visible for hand-written HTML, so any selector that forgot its own
+   ring simply had none.
+   ============================================================ */
+
+/* Headings balance their last line instead of leaving one orphan word;
+   body copy avoids the single-word last line. Two declarations replace the
+   two ad-hoc `text-wrap: balance` calls that covered the hero and one h2. */
+:is(h1, h2, h3, .section-header h2, .cta-inner h2, blockquote) {
+  text-wrap: balance;
+}
+:is(p, li, dd, figcaption) {
+  text-wrap: pretty;
+}
+
+:is(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* No double-tap-zoom delay on anything that acts like a control. */
+:is(a, button, summary, [role="tab"], input, select) {
+  touch-action: manipulation;
+}
+
+/* Long tokens (URLs in legal copy, distro names in narrow cards) break
+   instead of widening the page. */
+.prose,
+.prose a,
+.card,
+.feature-card,
+.product-card,
+.os-chip b,
+.os-text,
+.testi-card blockquote,
+.story-card blockquote {
+  overflow-wrap: anywhere;
+}
+
+/* Cards are grid/flex children: without this they refuse to shrink below
+   their longest word and push the row past the viewport. */
+.card,
+.feature-card,
+.product-card,
+.os-chip,
+.finder-option-copy,
+.faq-q,
+.nav-item-copy,
+.testi-card blockquote,
+.story-card blockquote {
+  min-width: 0;
+}
+
+.feature-card h3,
+.product-card h3,
+.os-chip b {
+  hyphens: auto;
+}
+
+/* Phone header: logo 140 + currency 121 + toggle 44 did not fit a 296px
+   shell at 320. The currency labels shorten to their symbols — the buttons
+   keep their aria-labels, so nothing is lost to assistive tech. */
+@media (max-width: 420px) {
+  .brand img {
+    width: 116px;
+  }
+  .currency-name {
+    display: none;
+  }
+  .currency-switch button {
+    padding-inline: 0.5rem;
+  }
+  .header-inner {
+    gap: 0.5rem;
+  }
+}
+
+/* ============================================================
+   Button system — three sizes, one policy
+   md (44px) is the default floor, lg (52px) is every conversion row, sm
+   (36px) is table and chip context. Size is driven by context so no call
+   site carries a size class, and the five competing phone rules that used
+   to fight over width are gone.
+   ============================================================ */
+
+/* The arrow chip is the only reason a button is ever asymmetric. */
+.btn:has(.btn-arrow) {
+  padding-inline-end: 0.45rem;
+}
+
+/* lg — conversion rows */
+.hero-actions .btn,
+.cta-actions .btn,
+.plan-card .btn,
+.plan-enterprise .btn,
+.finder-actions .btn,
+.domain-row .btn,
+.mobile-cta .btn {
+  min-height: 3.25rem;
+  padding-inline: 1.75rem;
+  font-size: var(--font-size-base);
+}
+.hero-actions .btn:has(.btn-arrow),
+.cta-actions .btn:has(.btn-arrow),
+.plan-card .btn:has(.btn-arrow),
+.plan-enterprise .btn:has(.btn-arrow),
+.finder-actions .btn:has(.btn-arrow),
+.domain-row .btn:has(.btn-arrow),
+.mobile-cta .btn:has(.btn-arrow) {
+  padding-inline-end: 0.5rem;
+}
+
+/* sm — dense contexts */
+.compare-table .btn,
+.showcase-panel .btn {
+  min-height: var(--spacing-9);
+  padding-inline: 1rem;
+  font-size: var(--text-supporting-size);
+}
+
+/* Peers in a CTA row are equal citizens: same height, same weight, and on
+   phones the same full width, stacked. `space-between` used to strand up to
+   175px of dead pill between a short label and its chip. */
+.cta-row,
+.hero-actions,
+.cta-actions,
+.finder-actions,
+.mobile-actions {
+  align-items: stretch;
+}
+.btn {
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btn-block {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .hero-actions,
+  .cta-actions,
+  .finder-actions,
+  .mobile-actions,
+  .cta-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+  .hero-actions .btn,
+  .cta-actions .btn,
+  .finder-actions .btn,
+  .mobile-actions .btn,
+  .cta-row .btn {
+    width: 100%;
+  }
+  /* The sticky bar keeps its two peers side by side — it is the one row
+     where stacking would eat the viewport. */
+  .mobile-cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.65rem;
+  }
+  .mobile-cta .btn {
+    width: 100%;
+    min-height: 3rem;
+    padding-inline: 0.75rem;
+  }
+}
+
+/* ============================================================
+   Home hero on phones — one screen, one job
+   ============================================================ */
+
+/* The close button stays a 28px dot but takes a 44px tap: growing the box
+   would push the notice text into a third line for a control nobody aims at.
+   (WCAG 2.2 SC 2.5.8 asks 24×24; this gives the comfort target as hit area.) */
+.announcement-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 640px) {
+  /* The offer is a line of reassurance, not a chip: at this width the pill
+     wraps to two rows and spends 30px of the fold on its own border. */
+  .hero-home .hero-offer {
+    display: block;
+    padding-inline: 0;
+    padding-block: 0;
+    border: 0;
+    background: none;
+  }
+  /* Every badge here is repeated in the trust bar immediately below (and
+     "SSD RAID-10" leads the lede), so on one-column screens this is 74px of
+     duplicate text between the CTA and the next section. */
+  .hero-home .hero-badges {
+    display: none;
+  }
+}
+
+/* The active OS chip's tick — the non-colour half of "you are here". */
+.os-chip-current {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--color-text-accent);
+}
+
+/* Stands in for the term toggle on decks with no annual price, so the slot
+   is never just empty. */
+.plan-term-note {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-supporting-size);
 }

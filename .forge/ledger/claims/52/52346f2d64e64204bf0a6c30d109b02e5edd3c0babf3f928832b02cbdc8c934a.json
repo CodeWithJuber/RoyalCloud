@@ -1,0 +1,1 @@
+{"body":{"id":"D-0046","text":"npm run check:css (scripts/check-css.mjs) encodes the five CSS mistakes this repo actually shipped — nested minmax, raw font-size outside :root, will-change, a non-token surface radius, a hardcoded repeat(N) on a --card-min family — so none of them can return silently"},"kind":"decision","scope":{"level":"repo"},"v":1}

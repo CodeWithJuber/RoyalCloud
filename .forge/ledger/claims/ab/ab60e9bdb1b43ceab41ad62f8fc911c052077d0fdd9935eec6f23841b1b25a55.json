@@ -1,0 +1,1 @@
+{"body":{"id":"D-0035","text":"Sections are named for assistive tech via lib/section-name.ts: aria-labelledby the visible heading where the band has a stable anchor id, aria-label with the title where it does not — inventing ids risked collisions, and an unnamed <section> is not exposed as a region at all"},"kind":"decision","scope":{"level":"repo"},"v":1}

@@ -2,6 +2,7 @@ import { getPlanFile } from "@/lib/plans";
 import { groupRows } from "@/lib/feature-groups";
 import { hasAnnualSaving } from "@/lib/billing";
 import { CompareTable } from "./CompareTable";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 interface ComparisonTableProps {
   id?: string;
@@ -30,12 +31,12 @@ export function ComparisonTable({
   const tableId = `${id ?? "compare"}-table`;
 
   return (
-    <section className="section compare-section" id={id}>
+    <section className="section compare-section" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}

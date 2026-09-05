@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { siteSettings } from "@/lib/settings";
+import { NewTabHint } from "../NewTabHint";
 
 /**
  * Sticky mobile action bar — keeps the primary conversion action in the thumb
@@ -45,6 +46,7 @@ export function MobileCtaBar() {
       >
         Get started
         <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
       </a>
     </div>
   );

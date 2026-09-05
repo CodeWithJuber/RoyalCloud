@@ -1,0 +1,1 @@
+{"body":{"id":"D-0048","text":"app/opengraph-image.tsx generates the share card from the theme palette instead of shipping a PNG, so the wordmark and claim cannot drift; every share rendered a blank grey placeholder before. Satori needs an explicit display on any element with more than one child"},"kind":"decision","scope":{"level":"repo"},"v":1}

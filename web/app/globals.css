@@ -9,6 +9,12 @@
 /* Smooth scrolling is declared on <html data-scroll-behavior="smooth"> per
    Next.js route-transition guidance — no CSS scroll-behavior rule here. */
 
+/* Reserve the scrollbar gutter so locking scroll behind the drawer or the
+   finder dialog does not shift the whole page sideways. */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background: var(--color-background-body);
   color: var(--color-text-primary);

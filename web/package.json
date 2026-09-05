@@ -14,8 +14,10 @@
     "prebuild": "npm run theme:build",
     "test": "vitest run",
     "check:cms": "node scripts/verify-cms.mjs",
+    "audit": "node scripts/audit.mjs",
     "check:contrast": "node scripts/check-contrast.mjs",
-    "check": "npm run theme:check && npm run typegen && npx tsc --noEmit && npm run lint && npm test && npm run check:cms && npm run check:contrast"
+    "check": "npm run theme:check && npm run typegen && npx tsc --noEmit && npm run lint && npm test && npm run check:cms && npm run check:css && npm run check:contrast",
+    "check:css": "node scripts/check-css.mjs"
   },
   "dependencies": {
     "@astryxdesign/core": "^0.5.2",
@@ -32,11 +34,13 @@
   },
   "devDependencies": {
     "@astryxdesign/cli": "^0.5.2",
+    "@axe-core/playwright": "^4.13.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
+    "lighthouse": "^13.4.1",
     "typescript": "^5",
     "vitest": "^4.1.11"
   }

@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
+import { Icon } from "../Icon";
 
 /* Shared chip for the OS strip and the deploy tabs (plain JSX — usable from
    server and client). Rich chips (with copy) become small cards; chips with
@@ -36,14 +37,28 @@ export function OsChip({ item }: { item: DeployItem }) {
         <b>{item.name}</b>
         {item.text && <span className="os-text">{item.text}</span>}
       </span>
+      {/* "This is the one this page is about" was a violet border and a 4%
+          tint — colour alone, and nothing at all for a screen reader.
+          aria-current carries it to assistive tech, the tick carries it to
+          anyone who cannot pick that border out. */}
+      {item.active && <Icon name="check" size={14} className="os-chip-current" aria-hidden="true" />}
     </>
   );
   return item.href ? (
-    <Link className={className} href={item.href} data-rich={item.text ? "true" : undefined}>
+    <Link
+      className={className}
+      href={item.href}
+      aria-current={item.active ? "page" : undefined}
+      data-rich={item.text ? "true" : undefined}
+    >
       {body}
     </Link>
   ) : (
-    <span className={className} data-rich={item.text ? "true" : undefined}>
+    <span
+      className={className}
+      aria-current={item.active ? "true" : undefined}
+      data-rich={item.text ? "true" : undefined}
+    >
       {body}
     </span>
   );

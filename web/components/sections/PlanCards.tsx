@@ -6,6 +6,7 @@ import { Badge } from "@astryxdesign/core/Badge";
 import { SegmentedControl, SegmentedControlItem } from "@astryxdesign/core/SegmentedControl";
 import { Icon } from "../Icon";
 import { Price } from "../Price";
+import { Rail } from "../Rail";
 import { siteSettings } from "@/lib/settings";
 import { PLAN_TO_INTENT, finderHref } from "@/lib/intents";
 import { groupFeatures, pickSpecs, restFeatures } from "@/lib/plan-specs";
@@ -20,6 +21,7 @@ import {
   useBilling,
   type Billing,
 } from "@/lib/billing-store";
+import { NewTabHint } from "../NewTabHint";
 
 export interface PlanTier {
   name: string;
@@ -118,6 +120,11 @@ export function PlanCards({
               />
             </SegmentedControl>
           )}
+          {/* An empty slot where every other deck shows a term toggle reads as
+              a bug. Say why it is absent. */}
+          {!canToggle && (
+            <p className="plan-term-note">Billed monthly — this range has no annual term.</p>
+          )}
           <Link className="planfinder-banner" href={finderHref(intent)} data-finder={intent ?? ""}>
             <Icon name="search" size={15} />
             Not sure which plan fits? Answer 4 quick questions
@@ -125,7 +132,23 @@ export function PlanCards({
           </Link>
         </div>
 
-        <div className="plan-grid" data-cols={tiers.length >= 5 ? 3 : Math.min(tiers.length, 5)}>
+        {/* One DOM, three layouts. CSS makes this a stacked column on phones,
+            a two-up snap rail on tablets (where a 5-tier deck used to squeeze
+            into 225px columns) and an auto-fit grid from 1024px. Rail turns
+            its controls and carousel semantics off in the two grid states
+            because it measures whether it actually overflows. */}
+        <Rail
+          className="plan-carousel"
+          railClassName="plan-rail"
+          slideClassName="plan-slide"
+          controlsClassName="plan-rail-controls"
+          navClassName="plan-rail-nav"
+          dotsClassName="plan-rail-dots"
+          label={title}
+          itemNoun="plan"
+          keys={tiers.map((tier) => tier.name)}
+          reveal={false}
+        >
           {tiers.map((tier, i) => (
             <PlanCard
               key={tier.name}
@@ -138,7 +161,7 @@ export function PlanCards({
               recommended={recommended?.deck === planId && recommended.tier === tier.name}
             />
           ))}
-        </div>
+        </Rail>
 
         {includes && includes.length > 0 ? (
           <div className="plan-includes" data-reveal>
@@ -171,6 +194,7 @@ export function PlanCards({
           >
             Talk to sales
             <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
           </a>
         </div>
       </div>
@@ -183,7 +207,7 @@ function FeatureList({ features }: { features: string[] }) {
     <ul className="plan-features">
       {features.map((feature) => (
         <li key={feature}>
-          <Icon name="check" size={14} color="success" className="plan-check" />
+          <Icon name="check" size={16} color="success" className="plan-check" />
           {feature}
         </li>
       ))}
@@ -236,7 +260,7 @@ function PlanCard({
         {tier.summary && <p className="plan-summary">{tier.summary}</p>}
         {recommended && (
           <p className="plan-reco" role="status">
-            <Icon name="check" size={14} />
+            <Icon name="check" size={16} />
             Recommended for you
           </p>
         )}
@@ -267,59 +291,66 @@ function PlanCard({
       >
         {tier.cta ?? "Get Started"}
         <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
       </a>
 
-      {specs.length > 0 && (
-        <dl className="plan-specs" data-count={specs.length}>
-          {specs.map((spec) => (
-            <div key={spec.key} className="plan-spec">
-              <dt>
-                <Icon name={spec.icon} size={14} />
-                {spec.label}
-              </dt>
-              <dd>{spec.value}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
-
-      {visible.length > 0 && <FeatureList features={visible} />}
-
-      {hasMore && (
-        <details className="plan-more">
-          <summary>
-            <span className="plan-more-closed">All features</span>
-            <span className="plan-more-open">Fewer features</span>
-            <Icon name="chevronDown" size={16} className="plan-more-chevron" />
-          </summary>
-          <div className="plan-more-panel">
-            {hiddenGroups.map((group) => (
-              <div key={group.group} className="plan-feature-group">
-                <h4>{group.group}</h4>
-                <FeatureList features={group.features} />
+      {/* Always rendered, even when it has nothing in it: the card is a
+          four-row grid whose rows are shared across the deck (subgrid), so
+          head, price and CTA line up across a row however long each tier's
+          copy runs. A card that skipped this row would shift its neighbours. */}
+      <div className="plan-body">
+        {specs.length > 0 && (
+          <dl className="plan-specs" data-count={specs.length}>
+            {specs.map((spec) => (
+              <div key={spec.key} className="plan-spec">
+                <dt>
+                  <Icon name={spec.icon} size={16} />
+                  {spec.label}
+                </dt>
+                <dd>{spec.value}</dd>
               </div>
             ))}
-            {highlights.length > 0 && (
-              <div className="plan-feature-group">
-                <h4>Also included</h4>
-                <ul className="plan-highlights">
-                  {highlights.map((item) => (
-                    <li key={item.title}>
-                      <span className="plan-highlight-icon">
-                        <Icon name={item.icon} size={16} />
-                      </span>
-                      <span>
-                        <b>{item.title}</b>
-                        <small>{item.text}</small>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </details>
-      )}
+          </dl>
+        )}
+
+        {visible.length > 0 && <FeatureList features={visible} />}
+
+        {hasMore && (
+          <details className="plan-more">
+            <summary>
+              <span className="plan-more-closed">All features</span>
+              <span className="plan-more-open">Fewer features</span>
+              <Icon name="chevronDown" size={16} className="plan-more-chevron" />
+            </summary>
+            <div className="plan-more-panel">
+              {hiddenGroups.map((group) => (
+                <div key={group.group} className="plan-feature-group">
+                  <h4>{group.group}</h4>
+                  <FeatureList features={group.features} />
+                </div>
+              ))}
+              {highlights.length > 0 && (
+                <div className="plan-feature-group">
+                  <h4>Also included</h4>
+                  <ul className="plan-highlights">
+                    {highlights.map((item) => (
+                      <li key={item.title}>
+                        <span className="plan-highlight-icon">
+                          <Icon name={item.icon} size={16} />
+                        </span>
+                        <span>
+                          <b>{item.title}</b>
+                          <small>{item.text}</small>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </details>
+        )}
+      </div>
     </article>
   );
 }

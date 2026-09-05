@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Icon } from "../Icon";
 import { Price } from "../Price";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 export interface ProductItem {
   icon?: string;
@@ -28,12 +29,12 @@ function StartingPrice({ value }: { value: string }) {
 
 export function ProductGrid({ id, eyebrow, title, subtitle, items }: ProductGridProps) {
   return (
-    <section className="section products" id={id}>
+    <section className="section products" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}

@@ -13,7 +13,6 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    eyebrow: Dedicated VPS
     title: Dedicated VPS with <em>Guaranteed, Single-Tenant Resources</em>
     subtitle: >-
       KVM-isolated CPU, RAM and pure SSD RAID-10 that are yours alone and never oversold, with full root

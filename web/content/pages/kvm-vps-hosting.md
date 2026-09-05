@@ -13,7 +13,6 @@ sections:
   - type: hero
     variant: product
     art: il-vps
-    eyebrow: KVM VPS Hosting
     title: High-Performance KVM VPS Hosting
     subtitle: >-
       The ultimate in performance, speed, stability and isolation. Every KVM VPS includes full root access,

@@ -1,4 +1,5 @@
 import { BrandMark, hasBrandMark } from "../BrandMark";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
 
 /**
  * "Logo shelf" of the platform stack: the real brand glyph (Simple Icons,
@@ -29,11 +30,11 @@ export function TechLogos({
   subtitle,
 }: TechLogosProps) {
   return (
-    <section className="section-sm techlogos" id={id}>
+    <section className="section-sm techlogos" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         <header className="section-header center" data-reveal>
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-          <h2>{title}</h2>
+          <h2 id={sectionTitleId(id)}>{title}</h2>
           {subtitle && <p className="lede">{subtitle}</p>}
         </header>
         <ul className="tech-shelf" data-reveal>

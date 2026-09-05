@@ -38,7 +38,9 @@ Light mode is the shipping mode (`app/providers.tsx` mounts the theme with `mode
 
 ## 3. Typography
 
-Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM Sans** (`--font-dm-sans`) for body and headings, **JetBrains Mono** (`--font-jetbrains-mono`) for code and tabular data (benchmark values, prices use `font-variant-numeric: tabular-nums`). Type scale base 14 / ratio 1.2; heading weights 700. Display sizes are inline `clamp()` values in `app/site.css` (hero `h1` ≈ `clamp(2rem, 9.4vw, 2.6rem)` on phones). Helpers: `.eyebrow` (uppercase, tracked, accent), `.lede` (intro paragraph), `.section-header` (eyebrow + h2 + lede block).
+Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM Sans** (`--font-dm-sans`) for body and headings, **JetBrains Mono** (`--font-jetbrains-mono`) for code and tabular data (benchmark values, prices use `font-variant-numeric: tabular-nums`). Type scale base 16 / ratio 1.2 (body 16px, secondary `--text-supporting-size` 14px, tracked micro-labels `--font-size-sm` 13px — nothing smaller); heading weights 700. Display sizes are theme tokens: `--text-display-1-size: clamp(2.25rem, 4vw, 3.25rem)`, `--text-display-2-size: clamp(1.75rem, 1.1rem + 2.6vw, 2.5rem)`. No raw `font-size` values outside `:root`. Helpers: `.eyebrow` (accent micro-label, sentence case), `.lede` (intro paragraph), `.section-header` (eyebrow + h2 + lede block).
+
+**Eyebrows earn their place.** One only ships where it adds a word its own heading does not already say — an eyebrow above every section is decoration, not navigation, and reads as machine-generated. The home page carries four, not thirteen. **All-caps is reserved for flags and badges** (`.plan-badge`, `.compare-flag`, comparison group headers) and the nav/footer group headings; the nine micro-label classes are sentence case with 0.01em tracking, because tracking that wide only reads as deliberate on capitals.
 
 ---
 
@@ -46,10 +48,14 @@ Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM 
 
 - **Shell:** `--site-shell: 1200px` (`.site-shell`). Section rhythm `--section-y: clamp(3rem, 5.5vw, 5rem)` (`clamp(2.5rem, 5vw, 3.25rem)` at ≤1024px), `--section-y-sm` for shallow bands, `--header-gap` under section headers; two consecutive light sections share one gap (the second's top padding halves), dark/royal/tint bands keep full padding.
 - **Bands:** `.section` (light), `.section-tint` (lavender), `.section-dark` (night), `.section-deep` (night-deep), `.section-royal` (violet gradient), `.section-sm` (shallow).
-- **Grids:** `.grid`, `.grid-2/-3/-4` (2-up on phones, 1-up for `.grid-4` under 1024px).
-- **Radius:** cards 20px (theme), plan finder and tables 24px/20px, chips and buttons 999px.
+- **Card grid contract:** one rule drives every card row — `repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr))`. A family sets `--card-min` (and `--card-gap` when it needs a different gutter); the column count then follows the space available, so no card family carries a breakpoint or a hardcoded count. Current minimums: `.grid-2/-3/-4` 17rem, `.product-grid` 16rem, `.steps-grid` 15rem, `.split-list` 14rem, `.stats-row` 10rem, `.sec-stats` 9rem, plan deck 300px. Adding a family means adding a `--card-min`, never a media query.
+- **Plan deck:** three layouts over one DOM — stacked ≤640px, a two-up snap rail 641–1023px (`Rail`), auto-fit from 1024px. Cards align through `subgrid` (rail → slide → card, four rows: head, price, CTA, body), so price and CTA sit on the same line across a row. A card's query container is `.plan-body`, never `.plan-card` — inline-size containment disqualifies an element from being a subgrid.
+- **Scrollers:** `useOverflow` (`lib/use-overflow.ts`) measures whether a box really scrolls. Tab stops, prev/next buttons, dots and `aria-roledescription="carousel"` are all conditioned on it — a static grid must not announce itself as a carousel, and a box that fits must not be a focus stop.
+- **Radius — three roles, nothing else.** `--rc-radius-card: 20px` for any surface (card, panel, table, drawer), `--rc-radius-tile: 12px` for a tile inside a surface (spec tiles, avatars, art frames, numbered markers), `999px` for pills (buttons, chips), plus `50%` for true circles. Nine ad-hoc values (24/20/18/16/14/12/10/8) collapsed into these; a new radius means picking a role, not a number. The 2px/4px on focus rings are ring rounding, not surface radius.
 - **Shadow:** Astryx `--shadow-low / --shadow-med / --shadow-high` (ink-violet tinted via `--color-shadow`).
 - **Motion tokens:** `--duration-fast 125ms`, `--duration-medium 300ms`, `--duration-slow 700ms` (theme `motion`), easing `cubic-bezier(0.32, 0.72, 0, 1)` for reveals and slides.
+- **Measure:** `--measure: 46rem` for a centred column of prose, `--measure-wide: 56rem` for a centred panel that holds more than prose (hero-simple, benchmark panel, map stage, domain shell, finder shell). Fifteen ad-hoc `max-width` values between 44rem and 58rem now point at these two.
+- **Very wide screens:** past 1800px `--site-shell` steps to 1360px and `--section-y` to `clamp(4rem, 4.5vw, 6rem)`. The plan deck's orphan-centring rule is scoped to 1024–1799px for the same reason — above that the deck is four up and a fourth card is not an orphan. Change one, check the other.
 - **Sticky offsets:** `SiteHeader` measures itself into `--site-header-h`; `ProductSubnav` adds `--subnav-h`; `html { scroll-padding-top }` and every sticky element use those two variables. Never hardcode a header height.
 
 ---
@@ -64,7 +70,7 @@ Two self-hosted variable fonts from `next/font/google` (`app/layout.tsx`): **DM 
 
 | `type` | Component | Notes |
 | --- | --- | --- |
-| `hero` | `Hero` | gradient/product/simple; home hero carries the domain search and intent chips |
+| `hero` | `Hero` | gradient/product/simple; the home hero is hosting-first — eyebrow, h1, lede, rating, offer, CTA pair, intent chips, no domain field. Domain search lives in the `domainsearch` section and on `/domains`. |
 | `trustbar` | `TrustBar` | four items become four tiles ≥900px |
 | `pricing` | `PlanCards` (client) | spec tiles read from each tier's features (`lib/plan-specs.ts`), native `<details>` "All features" with grouped rest + deck highlights, "Every plan includes" brand strip from a "·" deck note, shared billing store, term-only labels |
 | `comparison` | `ComparisonTable` → `CompareTable` (client) | grouped rows, best-for, synced billing, sticky header |
@@ -119,8 +125,11 @@ Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 mat
 
 - Visible `:focus-visible` on every interactive element: violet on light grounds, lavender (`#faf7ff`) on night/violet bands, gold only on the violet CTA button.
 - Tap targets ≥24px (dots 24px, chips and sub-nav pills ≥36px, buttons ≥44px).
-- Native semantics first: `<details>` accordion, `<table>` with `scope`, `<nav aria-label>`, `role="region"` + `aria-roledescription="carousel"`, `aria-live` for step and slide announcements, `aria-current` for the active pill.
-- Mobile above-the-fold: at ≤640px the hero's `.hero-search` / `.domain-row` and `.hero-actions .btn-primary` must sit within the first 844px (`scripts/qa-shots.mjs` asserts it; keep those class names).
+- Native semantics first: `<details>` accordion, `<table>` with `scope`, `<nav aria-label>`, `role="region"` + `aria-roledescription="carousel"`, `aria-live` for step and slide announcements, `aria-current` for the active pill and the active OS chip.
+- **Every band is a named landmark.** `lib/section-name.ts` gives each `<section>` an accessible name — `aria-labelledby` its visible heading where the band has a stable anchor id, `aria-label` where it does not. An unnamed `<section>` is not exposed as a region at all, so it cannot be jumped to.
+- **Never claim a widget you do not have.** Carousel semantics, dots, prev/next and a scroll container's tab stop are all conditioned on `useOverflow` — the box has to actually scroll first.
+- **Every link that leaves the site says so.** `<NewTabHint />` on each `target="_blank"`, gated by `isExternalCta` where the href is authored, so an in-site link never claims to open a tab (WCAG 2.2 G201).
+- Mobile above-the-fold: at ≤640px `.hero-actions .btn-primary` must sit within the first 844px (`scripts/qa-shots.mjs` asserts it; keep that class name). The home hero leads with the hosting CTA pair — no domain field; `.domain-row` lives in the mid-page `#domains` section and on `/domains`.
 
 ---
 
@@ -142,4 +151,7 @@ Enforced by `npm run check:contrast` (`scripts/check-contrast.mjs`, WCAG 2.1 mat
 - **CMS lockstep:** a new section type or field changes `lib/content.ts` (use `z.enum` for enumerations — `verify-cms.mjs` reads every `z.literal` as a section type), `components/sections/SectionRenderer.tsx` and `public/admin/config.yml` in the same commit. The CMS (Sveltia, Decap-compatible) deletes unknown fields on save; `/admin` login runs through `app/oauth/*` (see README).
 - **Route contract:** 60 content routes and 7 redirects (`tests/routes.test.ts`); every off-site CTA points at `https://my.royalclouds.net`.
 - **Server/client boundary:** section shells are server components; client children receive serialisable props. `lib/billing.ts` is importable everywhere, `lib/billing-store.ts` only from client files.
-- **Gates:** `npm run check` (theme drift, `next typegen`, `tsc`, ESLint, Vitest, CMS lockstep, contrast) and `npm run build` must exit 0. Visual QA: `npm run dev` then `node scripts/qa-shots.mjs` (1440 and 390 widths, zero console errors, above-the-fold assertion).
+- **Gates:** `npm run check` (theme drift, `next typegen`, `tsc`, ESLint, Vitest, CMS lockstep, **CSS rules**, contrast) and `npm run build` must exit 0.
+- **`npm run check:css`** (`scripts/check-css.mjs`) fails the build on five mistakes this stylesheet has actually made, each of which shipped silently once: a nested `minmax()` (invalid CSS — the browser drops the whole declaration), a raw numeric `font-size` outside `:root`, `will-change`, a surface `border-radius` that is not a role token (2px/4px focus rings and 999px pills excepted), and a hardcoded `repeat(N, …)` on a card family that `--card-min` drives. Adding a rule here is cheaper than finding the same bug twice.
+- **`npm run audit`** (`scripts/audit.mjs`) drives Playwright against `npm run start`: the horizontal-overflow detector and axe-core (WCAG 2.2 AA) over every content route at 8 widths, `--full` for the whole 320→3840 matrix plus landscape and 200% zoom, `--lighthouse` for the six sample pages. Gate: zero overflow offenders, zero axe critical/serious. Read the Lighthouse caveat in the generated report before quoting an LCP number.
+- Visual QA: `npm run dev` then `node scripts/qa-shots.mjs` (1440 and 390 widths, zero console errors, above-the-fold assertion).

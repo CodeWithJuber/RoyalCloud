@@ -13,7 +13,6 @@ transparentHeader: true
 sections:
   - type: hero
     variant: gradient
-    eyebrow: Cheap KVM VPS
     title: Cheap KVM VPS on <em>Pure SSD</em>, Built for Speed
     subtitle: >-
       Premium KVM VPS with pure SSD RAID-10 storage, full root access, instant setup, DDoS protection and

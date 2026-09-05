@@ -28,6 +28,9 @@ export function DeployTabs({
     })),
   ];
   const [active, setActive] = useState("all");
+  const GROUP_PANEL_LABEL: Record<string, string> = {
+    all: `${label} — all options`,
+  };
 
   return (
     <div className="deploy-tabs" data-reveal>
@@ -36,21 +39,25 @@ export function DeployTabs({
           <Tab key={tab.value} value={tab.value} label={tab.label} panelId={`${baseId}-${tab.value}`} />
         ))}
       </TabList>
+      {/* The panel is the div: role="tabpanel" on the <ul> would strip the
+          list role its <li> children need. */}
       {tabs.map((tab) => (
-        <ul
+        <div
           key={tab.value}
           id={`${baseId}-${tab.value}`}
           role="tabpanel"
+          aria-label={GROUP_PANEL_LABEL[tab.value] ?? tab.label}
           tabIndex={0}
           hidden={tab.value !== active}
-          className="os-row os-grid"
         >
-          {items.filter(tab.filter).map((item) => (
-            <li key={item.name}>
-              <OsChip item={item} />
-            </li>
-          ))}
-        </ul>
+          <ul className="os-row os-grid">
+            {items.filter(tab.filter).map((item) => (
+              <li key={item.name}>
+                <OsChip item={item} />
+              </li>
+            ))}
+          </ul>
+        </div>
       ))}
     </div>
   );

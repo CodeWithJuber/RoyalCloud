@@ -7,7 +7,7 @@ export const siteSettings: SiteSettings = {
   logoDark: "/assets/brand/royalclouds-blues.png",
   logoLight: "/assets/brand/royalclouds_w_logo.png",
   announcement: {
-    message: "Built for fast launches, deliberate scaling, and human support.",
+    message: "Fast launches, human support.",
     action: { label: "Explore hosting", href: "/shared-hosting" },
   },
   marquee: [

@@ -7,6 +7,8 @@ import { Icon } from "../Icon";
 import { Price } from "../Price";
 import { ProductArt, type ProductKind } from "../art/ProductArt";
 import { PLAN_FILES, type PlanFile } from "@/lib/plans";
+import { sectionName, sectionTitleId } from "@/lib/section-name";
+import { NewTabHint } from "../NewTabHint";
 
 export interface ShowcaseTab {
   label: string;
@@ -57,7 +59,7 @@ function ProductPanel({ plan }: { plan: PlanFile }) {
         <ul className="showcase-product-features">
           {popular.features.slice(0, 4).map((feature) => (
             <li key={feature}>
-              <Icon name="check" size={14} color="success" />
+              <Icon name="check" size={16} color="success" />
               {feature}
             </li>
           ))}
@@ -66,6 +68,7 @@ function ProductPanel({ plan }: { plan: PlanFile }) {
           <a className="btn btn-primary" href={popular.ctaUrl} target="_blank" rel="noopener noreferrer">
             {popular.cta ?? "Get started"}
             <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
           </a>
           <a className="btn btn-secondary" href={`/${plan.slug}`}>
             Compare plans
@@ -88,12 +91,12 @@ export function ShowcaseTabs({
   const baseId = "showcase";
 
   return (
-    <section className="section section-dark showcase" id={id}>
+    <section className="section section-dark showcase" id={id} {...sectionName(id, title)}>
       <div className="site-shell">
         {(eyebrow || title || subtitle) && (
           <header className="section-header center" data-reveal>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-            {title && <h2>{title}</h2>}
+            {title && <h2 id={sectionTitleId(id)}>{title}</h2>}
             {subtitle && <p className="lede">{subtitle}</p>}
           </header>
         )}
@@ -110,6 +113,7 @@ export function ShowcaseTabs({
             {tabs.map((tab, i) => (
               <Tab
                 key={tab.label}
+                id={`${baseId}-tab-${i}`}
                 value={tab.label}
                 label={tab.label}
                 panelId={`${baseId}-panel-${i}`}
@@ -124,6 +128,7 @@ export function ShowcaseTabs({
                 key={tab.label}
                 role="tabpanel"
                 id={`${baseId}-panel-${i}`}
+                aria-labelledby={`${baseId}-tab-${i}`}
                 className="showcase-panel-wrap"
                 tabIndex={0}
                 hidden={tab.label !== active}

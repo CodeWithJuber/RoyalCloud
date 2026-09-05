@@ -1,0 +1,1 @@
+{"body":{"id":"D-0037","text":"lib/use-overflow.ts is the single source for 'does this box actually scroll' — Rail and CompareTable both condition their tab stop, controls and carousel semantics on it, and its equality bail replaces Rail's per-frame scroll re-render"},"kind":"decision","scope":{"level":"repo"},"v":1}

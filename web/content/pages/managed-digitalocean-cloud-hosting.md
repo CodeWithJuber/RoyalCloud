@@ -13,7 +13,6 @@ sections:
   - type: hero
     variant: product
     art: il-cloud
-    eyebrow: Managed Cloud
     title: Fully Managed DigitalOcean Cloud Hosting
     subtitle: >-
       Scalable, global cloud servers we deploy, secure, monitor and manage 24/7. Pick a DigitalOcean
@@ -46,7 +45,6 @@ sections:
   - type: pricing
     id: pricing
     plan: cloud
-    eyebrow: Managed Cloud
     title: Managed Cloud Hosting plans
     subtitle: Transparent pricing with everything you need included.
   - type: comparison

@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Icon } from "../Icon";
 import { SectionArt, type SectionArtKind } from "../art/SectionArt";
+import { sectionName } from "@/lib/section-name";
 
 export interface ChecklistItem {
   icon?: string;
@@ -47,7 +48,11 @@ export function ContentSplit({
   const hasItems = items !== undefined && items.length > 0;
   const artKind = image ? (ART_KINDS[image] ?? "generic") : undefined;
   return (
-    <section className="section content-split" data-strip={hasItems ? "true" : undefined}>
+    <section
+      className="section content-split"
+      data-strip={hasItems ? "true" : undefined}
+      {...sectionName(undefined, title)}
+    >
       <div className="site-shell">
         <div
           className={`split${reverse ? " split-reverse" : ""}${artKind ? "" : " split-solo"}`}

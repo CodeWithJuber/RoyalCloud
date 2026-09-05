@@ -13,7 +13,6 @@ sections:
   - type: hero
     variant: product
     art: il-cyberpanel
-    eyebrow: cPanel Hosting
     title: SSD cPanel Hosting
     subtitle: >-
       Industry-standard cPanel hosting on SSD drives with the LiteSpeed Web Server and CloudLinux, free cPanel & SSL,

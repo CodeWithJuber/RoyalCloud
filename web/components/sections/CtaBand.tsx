@@ -1,4 +1,7 @@
 import type { CtaLink } from "./Hero";
+import { emphasize } from "@/lib/emphasize";
+import { isExternalCta, targetProps } from "@/lib/external-link";
+import { NewTabHint } from "../NewTabHint";
 
 interface CtaBandProps {
   title: string; // may contain <em> accents — trusted local content
@@ -6,11 +9,6 @@ interface CtaBandProps {
   primaryCta?: CtaLink;
   secondaryCta?: CtaLink;
 }
-
-const targetProps = (cta?: CtaLink) =>
-  cta?.external || /^https?:\/\//.test(cta?.href ?? "")
-    ? { target: "_blank", rel: "noopener noreferrer" }
-    : {};
 
 export function CtaBand({
   title,
@@ -23,9 +21,9 @@ export function CtaBand({
   secondaryCta,
 }: CtaBandProps) {
   return (
-    <section className="section-royal cta-band">
+    <section className="section-royal cta-band" aria-labelledby="cta-band-title">
       <div className="site-shell cta-inner" data-reveal>
-        <h2 dangerouslySetInnerHTML={{ __html: title }} />
+        <h2 id="cta-band-title">{emphasize(title)}</h2>
         {subtitle && <p className="cta-lede">{subtitle}</p>}
         {(primaryCta || secondaryCta) && (
           <div className="cta-actions">
@@ -33,12 +31,14 @@ export function CtaBand({
               <a className="btn btn-primary" href={primaryCta.href} {...targetProps(primaryCta)}>
                 {primaryCta.text}
                 <span className="btn-arrow" aria-hidden="true">↗</span>
+                {isExternalCta(primaryCta) && <NewTabHint />}
               </a>
             )}
             {secondaryCta && (
               <a className="btn btn-secondary" href={secondaryCta.href} {...targetProps(secondaryCta)}>
                 {secondaryCta.text}
                 <span className="btn-arrow" aria-hidden="true">→</span>
+                {isExternalCta(secondaryCta) && <NewTabHint />}
               </a>
             )}
           </div>

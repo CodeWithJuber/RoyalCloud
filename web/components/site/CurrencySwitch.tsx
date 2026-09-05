@@ -56,7 +56,7 @@ export function CurrencySwitch() {
         onClick={() => setGlobalCurrency("INR")}
         aria-label="Display prices in Indian rupees"
       >
-        ₹ INR
+        ₹ <span className="currency-name">INR</span>
       </button>
       <button
         type="button"
@@ -64,7 +64,7 @@ export function CurrencySwitch() {
         onClick={() => setGlobalCurrency("USD")}
         aria-label="Display prices in US dollars"
       >
-        $ USD
+        $ <span className="currency-name">USD</span>
       </button>
     </div>
   );

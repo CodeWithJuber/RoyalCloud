@@ -20,6 +20,8 @@ import {
   type Size,
   type Stack,
 } from "@/lib/plan-finder";
+import { NewTabHint } from "../NewTabHint";
+import { siteSettings } from "@/lib/settings";
 
 /**
  * FinderFlow — "Help me choose" in four answers: build → stack → size →
@@ -258,6 +260,38 @@ export function FinderFlow({
             </button>
           )}
         </div>
+      ) : !result ? (
+        /* No tier matched — four answered questions must not end in a blank
+           panel. Say so plainly and give the two ways forward. */
+        <div className="finder-body finder-result" key="empty" data-dir={dir} aria-live="polite">
+          <p className="finder-kicker">No exact match</p>
+          <h3 className="finder-question" ref={headingRef} tabIndex={-1}>
+            Nothing in the catalog fits that combination
+          </h3>
+          <p className="finder-hint">
+            Usually it is the budget: the smallest plan for this workload costs more
+            than the range you picked. Widen the budget, or let us size it with you.
+          </p>
+          <div className="finder-actions">
+            <button type="button" className="btn btn-primary" onClick={back}>
+              Change the budget
+              <span className="btn-arrow" aria-hidden="true">←</span>
+            </button>
+            <a
+              className="btn btn-secondary"
+              href={`${siteSettings.whmcsUrl}/submitticket.php`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ask us to size it
+              <span className="btn-arrow" aria-hidden="true">↗</span>
+              <NewTabHint />
+            </a>
+          </div>
+          <button type="button" className="finder-back" onClick={restart}>
+            Start over
+          </button>
+        </div>
       ) : (
         result && (
           <div className="finder-body finder-result" key="result" data-dir={dir} aria-live="polite">
@@ -282,7 +316,7 @@ export function FinderFlow({
             <ul className="finder-features">
               {result.tier.features.slice(0, 4).map((feature) => (
                 <li key={feature}>
-                  <Icon name="check" size={14} color="success" />
+                  <Icon name="check" size={16} color="success" />
                   {feature}
                 </li>
               ))}
@@ -296,6 +330,7 @@ export function FinderFlow({
               >
                 Get {result.tier.name}
                 <span className="btn-arrow" aria-hidden="true">↗</span>
+            <NewTabHint />
               </a>
               {onThisPage ? (
                 <button

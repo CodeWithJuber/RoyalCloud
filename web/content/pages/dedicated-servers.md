@@ -13,7 +13,6 @@ sections:
   - type: hero
     variant: product
     art: il-dedicated
-    eyebrow: Dedicated Servers
     title: Enterprise Dedicated Servers
     subtitle: >-
       Single-tenant power for larger businesses and high-traffic websites, full root access, SSD storage, DDoS

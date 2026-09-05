@@ -13,7 +13,6 @@ sections:
   - type: hero
     variant: product
     art: il-wordpress
-    eyebrow: Managed WordPress
     title: Managed WordPress Hosting, Up to 10x Faster
     subtitle: >-
       Deploy a WordPress site in minutes on SSD RAID-10 with LiteSpeed, LSCache and the Cloudflare CDN, plus
@@ -46,7 +45,6 @@ sections:
   - type: pricing
     id: pricing
     plan: wordpress
-    eyebrow: WordPress
     title: Managed WordPress Hosting plans
     subtitle: Transparent pricing with everything you need included.
   - type: comparison
